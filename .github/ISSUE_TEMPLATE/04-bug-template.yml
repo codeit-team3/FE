@@ -1,7 +1,7 @@
 name: '🐛 BUG'
 description: '버글 발생/해결 템플릿'
 title: '🐛 [Bug] 제목'
-labels: ['bug']
+labels: ['🐛 Bug']
 body:
   - type: markdown
     attributes:
