@@ -15,7 +15,7 @@
     {
       "files": [".test.ts", ".test.js", "*.stories.tsx"],
       "rules": {
-        "no-unused-vars": "off", // 사용되지 않는 변수 검사 비활성화
+        "no-unused-vars": "off",
         "no-console": "off", // console.log 허용
         "max-lines": "off" // 파일 최대 줄 수 검사 비활성화
       }
