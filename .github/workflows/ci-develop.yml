@@ -1,0 +1,40 @@
+name: CI for develop
+
+on:
+  pull_request:
+    branches:
+      - develop
+  push:
+    branches:
+      - develop
+
+jobs:
+  ci-develop:
+    name: Lint, Test, and Build (develop)
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20] 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}  
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run Tests
+        run: npm test
+
+      - name: Build Next.js app
+        run: npm run build
+
+      - name: Build Storybook
+        run: npm run storybook:build
