@@ -1,0 +1,40 @@
+name: '♻️ REFACTOR'
+description: '코드 리팩토링 기록 템플릿'
+title: '♻️ [Refactor] #관련 작업 이슈 번호'
+labels: ['♻️ Refactor']
+
+body:
+  - type: input
+    id: refactor_overview
+    attributes:
+      label: '📄 리팩토링 개요'
+      description: '리팩토링의 목표나 이유를 간략하게 작성해주세요.'
+      placeholder: '예: 중복 코드 제거, 성능 최적화'
+    validations:
+      required: true
+
+  - type: textarea
+    id: refactor_changes
+    attributes:
+      label: '✅ 변경 내용'
+      description: '리팩토링한 코드의 주요 변경 사항을 간략히 설명해주세요.'
+      placeholder: |
+        예:
+          - 함수 분리로 코드 재사용성 향상
+          - 불필요한 변수 제거
+    validations:
+      required: true
+
+  - type: textarea
+    id: before_after_effect
+    attributes:
+      label: '🪄 변경 전후 효과'
+      description: '리팩토링 전후의 차이점이나 코드 개선 효과를 작성해주세요.'
+      placeholder: '예: 성능이 20% 개선됨, 코드 가독성 향상됨'
+
+  - type: textarea
+    id: additional_info
+    attributes:
+      label: '🙋🏻 기타'
+      description: '추가적으로 기록할 내용이 있다면 작성해주세요.'
+      placeholder: '예: 다음 단계에서 추가로 개선할 부분'
