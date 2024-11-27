@@ -11,7 +11,8 @@
     "build-storybook": "storybook build",
     "test": "jest",
     "format": "prettier --write .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "chromatic": "npx chromatic --project-token=chpt_35cf07bf9b7deca"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
