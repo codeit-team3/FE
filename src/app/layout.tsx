@@ -14,9 +14,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <ReactQueryProviders>{children}</ReactQueryProviders>
+    <html lang="ko">
+      <body className="min-h-screen bg-gray-100 px-4 md:px-6 lg:px-10">
+        <ReactQueryProviders>
+          <main className="mx-auto min-h-screen max-w-[1200px] bg-gray-50">
+            {children}
+          </main>
+        </ReactQueryProviders>
       </body>
     </html>
   );
