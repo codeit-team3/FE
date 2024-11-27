@@ -17,3 +17,5 @@ export const Primary2: Story = {
     // 버튼 props
   },
 };
+
+// 버튼 컴포넌트 스토리 추가
