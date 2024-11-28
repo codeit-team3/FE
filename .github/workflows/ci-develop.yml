@@ -38,3 +38,18 @@ jobs:
 
       - name: Build Storybook
         run: npm run build-storybook
+
+  notify-discord:
+    needs: ci-develop
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      - name: Send Discord Notification
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        with:
+          args: |
+            🎉 develop 브랜치 ${{ github.event_name == 'pull_request' && 'PR' || 'Push' }} 성공!
+            Repository: ${{ github.repository }}
+            ${{ github.event_name == 'pull_request' && format('PR: {0}', github.event.pull_request.html_url) || format('Commit: {0}', github.event.head_commit.url) }}

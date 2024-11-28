@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x, 20.x]  # Node.js 18.x와 20.x 버전으로 테스트
+        node-version: [18.x, 20.x] # Node.js 18.x와 20.x 버전으로 테스트
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -22,10 +22,25 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}  # 매트릭스를 사용하여 버전 설정
+          node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
         run: npm install
 
       - name: Build Next.js app
         run: npm run build
+
+  notify-discord:
+    needs: deploy-production
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      - name: Send Discord Notification
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        with:
+          args: |
+            🚀 main 브랜치 ${{ github.event_name == 'pull_request' && 'PR' || 'Push' }} 성공!
+            Repository: ${{ github.repository }}
+            ${{ github.event_name == 'pull_request' && format('PR: {0}', github.event.pull_request.html_url) || format('Commit: {0}', github.event.head_commit.url) }}
