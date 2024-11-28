@@ -41,6 +41,6 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         with:
           args: |
-            🚀 main 브랜치 ${{ github.event_name == 'pull_request' && 'PR' || 'Push' }} 성공!
+            🚀 main 브랜치 ${{ github.event_name == 'pull_request' && 'PR' || 'Push' }} 성공!!
             Repository: ${{ github.repository }}
             ${{ github.event_name == 'pull_request' && format('PR: {0}', github.event.pull_request.html_url) || format('Commit: {0}', github.event.head_commit.url) }}
