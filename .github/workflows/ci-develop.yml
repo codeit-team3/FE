@@ -38,3 +38,34 @@ jobs:
 
       - name: Build Storybook
         run: npm run build-storybook
+
+  notify-discord:
+    needs: ci-develop
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      - name: Send Discord Notification
+        env:
+          WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DATA: >
+            {
+              "embeds": [
+                {
+                  "title": "🎉 develop 브랜치 알림",
+                  "description": "${{ github.event_name == 'pull_request' && '새로운 PR이 성공적으로 등록되었습니다!' || 'Push가 성공적으로 완료되었습니다!' }}",
+                  "url": "${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+                  "color": 5814783,
+                  "fields": [
+                    {
+                      "name": "Repository",
+                      "value": "${{ github.repository }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        run: |
+          curl -X POST \
+            -H "Content-Type: application/json" \
+            -d "$DATA" \
+            $WEBHOOK_URL
