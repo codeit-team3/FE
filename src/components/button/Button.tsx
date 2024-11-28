@@ -30,7 +30,7 @@ const Button = ({
       stateClasses = 'bg-orange-600 text-white';
       break;
     case 'disabled':
-      stateClasses = 'bg-gray-400 text-white cursor-not-allowed';
+      stateClasses = 'bg-gray-400 text-white';
       break;
     case 'none':
     default:
@@ -39,7 +39,8 @@ const Button = ({
   }
 
   const buttonClassName = twMerge(
-    `${sizeClasses} ${stateClasses} rounded-[12px] font-semibold`,
+    `${sizeClasses} ${stateClasses} rounded-[12px] font-semibold cursor-pointer`,
+    state === 'disabled' && 'cursor-not-allowed',
   );
 
   // state가 none일 때, 사용자가 스타일 지정
