@@ -1,13 +1,13 @@
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
-type ButtonProps = {
+interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   text: string;
   size: 'large' | 'small';
   state: 'active' | 'disabled' | 'none';
   borderColor?: string; // 사용자 지정
   textColor?: string; // 사용자 지정
-} & React.ComponentPropsWithoutRef<'button'>;
+}
 
 const Button = ({
   text,
