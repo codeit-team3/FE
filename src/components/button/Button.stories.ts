@@ -12,8 +12,10 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const Primary: Story = {
+export const CustomizedButton: Story = {
   args: {
-    // 버튼 props
+    text: '생성하기',
+    size: 'large',
+    state: 'active',
   },
 };
