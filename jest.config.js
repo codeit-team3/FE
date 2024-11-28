@@ -1,9 +1,9 @@
 module.exports = {
-  testEnvironment: "jest-environment-jsdom",
+  testEnvironment: 'jest-environment-jsdom',
   transform: {
-    "^.+.tsx?$": "ts-jest",
+    '^.+.tsx?$': 'ts-jest',
   },
   moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/$1",
+    '^@/(.*)$': '<rootDir>/$1',
   },
 };
