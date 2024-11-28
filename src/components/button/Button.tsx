@@ -19,9 +19,9 @@ const Button = ({
 }: ButtonProps) => {
   let sizeClasses = '';
   if (size === 'large') {
-    sizeClasses = 'w-[332px] h-[44px] text-base';
+    sizeClasses = 'min-w-[332px] h-[44px] px-4 text-base';
   } else if (size === 'small') {
-    sizeClasses = 'w-[120px] h-[40px] text-sm';
+    sizeClasses = 'min-w-[120px] h-[40px] px-3 text-sm';
   }
 
   let stateClasses = '';
