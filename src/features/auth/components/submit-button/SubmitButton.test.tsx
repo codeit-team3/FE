@@ -16,4 +16,10 @@ describe('SubmitButton', () => {
 
     expect(screen.getByText('로그인')).toBeInTheDocument();
   });
+
+  it('isSubmitting prop이 true일 때 버튼이 비활성화되어야 한다', () => {
+    render(<SubmitButton isSubmitting>로그인</SubmitButton>);
+
+    expect(screen.getByRole('button')).toBeDisabled();
+  });
 });
