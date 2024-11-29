@@ -4,21 +4,18 @@ import React from 'react';
 import FormField from '../../components/form-field/FormField';
 import SubmitButton from '../../components/submit-button/SubmitButton';
 import { useForm } from 'react-hook-form';
-
-interface LoginFormValues {
-  email: string;
-  password: string;
-}
+import { zodResolver } from '@hookform/resolvers/zod';
+import { loginFormSchema, LoginFormData } from '../../types/loginFormSchema';
 
 function LoginForm() {
   const {
     register,
     handleSubmit,
     reset,
-    formState: { isSubmitting },
-  } = useForm<LoginFormValues>();
+    formState: { isSubmitting, errors },
+  } = useForm<LoginFormData>({ resolver: zodResolver(loginFormSchema) });
 
-  const onSubmit = (data: LoginFormValues) => {
+  const onSubmit = (data: LoginFormData) => {
     console.log(data);
     reset();
   };
@@ -38,6 +35,7 @@ function LoginForm() {
             placeholder="이메일을 입력해주세요"
             id="email"
             register={register('email')}
+            error={errors.email?.message}
           />
           <FormField
             label="비밀번호"
@@ -45,6 +43,7 @@ function LoginForm() {
             placeholder="비밀번호를 입력해주세요."
             id="password"
             register={register('password')}
+            error={errors.password?.message}
           />
           <SubmitButton isSubmitting={isSubmitting}>로그인</SubmitButton>
         </form>
