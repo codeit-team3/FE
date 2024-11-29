@@ -6,18 +6,26 @@ import SubmitButton from '../../components/submit-button/SubmitButton';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginFormSchema, LoginFormData } from '../../types/loginFormSchema';
+import { login } from '../../api/auth';
 
 function LoginForm() {
   const {
     register,
     handleSubmit,
-    reset,
-    formState: { isSubmitting, errors },
-  } = useForm<LoginFormData>({ resolver: zodResolver(loginFormSchema) });
+    formState: { isSubmitting, errors, isValid },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginFormSchema),
+    mode: 'onChange',
+  });
 
-  const onSubmit = (data: LoginFormData) => {
-    console.log(data);
-    reset();
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      console.log(data);
+      const response = await login(data);
+      console.log('로그인 성공:', response);
+    } catch (error) {
+      console.error('로그인 실패:', error);
+    }
   };
 
   return (
@@ -45,7 +53,9 @@ function LoginForm() {
             register={register('password')}
             error={errors.password?.message}
           />
-          <SubmitButton isSubmitting={isSubmitting}>로그인</SubmitButton>
+          <SubmitButton isSubmitting={isSubmitting} disabled={!isValid}>
+            로그인
+          </SubmitButton>
         </form>
       </div>
     </div>
