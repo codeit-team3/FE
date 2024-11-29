@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
 import VisibilityOn from '../../../../../public/icons/visibility_on';
 import VisibilityOff from '../../../../../public/icons/visibility_off';
 import { UseFormRegisterReturn } from 'react-hook-form';
+import { usePasswordVisibility } from '../../hooks/usePasswordVisibility';
 
 interface FormFieldProps {
   label: string;
@@ -11,10 +11,19 @@ interface FormFieldProps {
   placeholder: string;
   id: string;
   register: UseFormRegisterReturn;
+  error?: string;
 }
 
-function FormField({ label, type, placeholder, id, register }: FormFieldProps) {
-  const [showPassword, setShowPassword] = useState(false);
+function FormField({
+  label,
+  type,
+  placeholder,
+  id,
+  register,
+  error,
+}: FormFieldProps) {
+  const { showPassword, togglePassword, passwordType } =
+    usePasswordVisibility();
 
   return (
     <div className="flex w-full flex-col gap-2">
@@ -25,22 +34,24 @@ function FormField({ label, type, placeholder, id, register }: FormFieldProps) {
         <input
           {...register}
           id={id}
-          type={
-            type === 'password' ? (showPassword ? 'text' : 'password') : type
-          }
+          type={type === 'password' ? passwordType : type}
           placeholder={placeholder}
-          className="w-full rounded-lg bg-gray-50 p-2 sm:p-3"
+          className={`w-full rounded-lg bg-gray-50 p-2 sm:p-3 ${
+            error ? 'border-2 border-red-500' : ''
+          }`}
         />
         {type === 'password' && (
           <button
             type="button"
-            onClick={() => setShowPassword(!showPassword)}
+            onClick={togglePassword}
             className="absolute right-3 top-1/2 -translate-y-1/2"
+            aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 표시'}
           >
             {showPassword ? <VisibilityOn /> : <VisibilityOff />}
           </button>
         )}
       </div>
+      {error && <p className="text-sm text-red-500">{error}</p>}
     </div>
   );
 }
