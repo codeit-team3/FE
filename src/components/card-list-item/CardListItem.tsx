@@ -3,7 +3,7 @@ import { TextChip } from '../text-chip/TextChip';
 import ParticipantCounter from '../participant-counter/ParticipantCounter';
 import ConfirmedLabel from '../confirmed-label/ConfirmedLabel';
 import ProgressBar from '../progress-bar/ProgressBar';
-import { HeartIcon, RightArrow } from '../../../public/icons';
+import { HeartIcon, RightArrow, WaveIcon } from '../../../public/icons';
 
 interface CardListItemProps {
   title: string;
@@ -14,6 +14,7 @@ interface CardListItemProps {
   maxParticipants: number;
   isConfirmed?: boolean;
   isLiked?: boolean;
+  isEnded?: boolean;
   imageUrl: string;
   onClick?: () => void;
   onLikeClick?: () => void;
@@ -28,7 +29,8 @@ function CardListItem({
   currentParticipants,
   maxParticipants,
   isConfirmed = false,
-  isLiked = false,
+  isLiked = true,
+  isEnded = false,
   imageUrl,
   onClick,
   onLikeClick,
@@ -36,7 +38,7 @@ function CardListItem({
 }: CardListItemProps) {
   return (
     <article
-      className="flex w-full min-w-[340px] flex-col overflow-hidden rounded-[24px] border-2 border-gray-100 bg-white sm:h-[156px] sm:flex-row"
+      className="relative flex w-full min-w-[340px] flex-col overflow-hidden rounded-[24px] border-2 border-gray-100 bg-white sm:h-[156px] sm:flex-row"
       onClick={onClick}
     >
       {/* 이미지 섹션 */}
@@ -101,6 +103,57 @@ function CardListItem({
           </div>
         </div>
       </div>
+
+      {/* 마감 오버레이 */}
+      {isEnded && (
+        <>
+          {/* 블러 오버레이 */}
+          <div className="absolute inset-0 z-10 bg-black/80">
+            {/* 모바일 레이아웃 */}
+            <div className="flex h-full w-full flex-col items-center justify-center gap-6 px-3 py-[6px] sm:hidden">
+              <p className="whitespace-pre-line text-center text-sm font-medium text-white">
+                {'마감된 챌린지에요,\n다음 기회에 만나요 🙏'}
+              </p>
+              {isLiked && (
+                <button
+                  className="flex w-fit items-center justify-center gap-1 rounded-xl bg-orange-50 px-3 py-[6px]"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onLikeClick?.();
+                  }}
+                >
+                  <WaveIcon />
+                  <span className="text-xs font-semibold text-orange-600">
+                    모임 보내주기
+                  </span>
+                </button>
+              )}
+            </div>
+
+            {/* 데스크톱 레이아웃 */}
+            <div className="hidden h-full w-full items-center justify-center sm:flex">
+              <p className="whitespace-pre-line text-center text-sm font-medium text-white">
+                {'마감된 챌린지에요,\n다음 기회에 만나요 🙏'}
+              </p>
+            </div>
+          </div>
+
+          {/* 데스크톱에서만 보이는 찜하기 아이콘 */}
+          {isLiked && (
+            <div className="absolute right-6 top-6 z-20 hidden sm:block">
+              <button
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-50"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onLikeClick?.();
+                }}
+              >
+                <WaveIcon />
+              </button>
+            </div>
+          )}
+        </>
+      )}
     </article>
   );
 }
