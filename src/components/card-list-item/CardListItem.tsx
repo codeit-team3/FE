@@ -13,8 +13,11 @@ interface CardListItemProps {
   currentParticipants: number;
   maxParticipants: number;
   isConfirmed?: boolean;
+  isLiked?: boolean;
   imageUrl: string;
   onClick?: () => void;
+  onLikeClick?: () => void;
+  onJoinClick?: () => void;
 }
 
 function CardListItem({
@@ -25,8 +28,11 @@ function CardListItem({
   currentParticipants,
   maxParticipants,
   isConfirmed = false,
+  isLiked = false,
   imageUrl,
   onClick,
+  onLikeClick,
+  onJoinClick,
 }: CardListItemProps) {
   return (
     <article
@@ -55,8 +61,14 @@ function CardListItem({
               <TextChip text={time} isTime={true} />
             </div>
           </div>
-          <button className="flex justify-center rounded-full">
-            <HeartIcon />
+          <button
+            className="flex justify-center"
+            onClick={(e) => {
+              e.stopPropagation();
+              onLikeClick?.();
+            }}
+          >
+            <HeartIcon isActive={isLiked} />
           </button>
         </div>
 
@@ -76,10 +88,16 @@ function CardListItem({
 
           {/* 오른쪽: Join Now 버튼 */}
           <div className="flex shrink-0 items-end">
-            <div className="flex items-center gap-2 text-orange-600">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onJoinClick?.();
+              }}
+              className="flex items-center gap-2 text-orange-600 hover:cursor-pointer"
+            >
               <span className="font-medium">join now</span>
               <RightArrow />
-            </div>
+            </button>
           </div>
         </div>
       </div>
