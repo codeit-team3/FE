@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import VisibilityOn from '../../../../public/icons/visibility_on';
-import VisibilityOff from '../../../../public/icons/visibility_off';
+import VisibilityOn from '../../../../../public/icons/visibility_on';
+import VisibilityOff from '../../../../../public/icons/visibility_off';
 
 interface FormFieldProps {
   label: string;
