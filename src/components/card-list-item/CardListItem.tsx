@@ -30,16 +30,16 @@ function CardListItem({
 }: CardListItemProps) {
   return (
     <article
-      className="flex min-w-[340px] flex-col overflow-hidden rounded-[24px] border-2 border-gray-100 bg-white"
+      className="flex w-full min-w-[340px] flex-col overflow-hidden rounded-[24px] border-2 border-gray-100 bg-white sm:h-[156px] sm:flex-row"
       onClick={onClick}
     >
       {/* 이미지 섹션 */}
-      <div className="relative h-[156px] w-full">
+      <div className="relative h-[156px] w-full sm:h-full sm:w-[280px]">
         <Image src={imageUrl} alt={title} fill className="object-cover" />
       </div>
 
       {/* 컨텐츠 섹션 */}
-      <div className="flex flex-col gap-5 p-4">
+      <div className="flex flex-col gap-5 p-4 sm:flex-1 sm:justify-between">
         {/* 상단 섹션: 제목/위치, 좋아요 아이콘, 날짜/시간 칩 */}
         <div className="flex justify-between">
           <div className="flex flex-col gap-2">
@@ -52,7 +52,7 @@ function CardListItem({
             </div>
             <div className="flex gap-2">
               <TextChip text={date} />
-              <TextChip text={time} />
+              <TextChip text={time} isTime={true} />
             </div>
           </div>
           <button className="flex justify-center rounded-full">
