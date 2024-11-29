@@ -12,6 +12,8 @@ function LoginForm() {
   const {
     register,
     handleSubmit,
+    setError,
+    reset,
     formState: { isSubmitting, errors, isValid },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginFormSchema),
@@ -20,11 +22,24 @@ function LoginForm() {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      console.log(data);
       const response = await login(data);
       console.log('로그인 성공:', response);
-    } catch (error) {
-      console.error('로그인 실패:', error);
+      reset();
+    } catch (error: any) {
+      if (error.response?.data?.code) {
+        const { code } = error.response.data;
+        if (code === 'USER_NOT_FOUND') {
+          setError('email', {
+            type: 'manual',
+            message: '존재하지 않는 아이디입니다.',
+          });
+        } else if (code === 'INVALID_CREDENTIALS') {
+          setError('password', {
+            type: 'manual',
+            message: '비밀번호가 아이디와 일치하지 않습니다.',
+          });
+        }
+      }
     }
   };
 

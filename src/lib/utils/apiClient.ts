@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'https://api.example.com/',
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ apiClient.interceptors.response.use(
   (error) => {
     // 예: 에러 메시지 처리
     if (error.response?.status === 401) {
-      alert('로그인이 필요합니다.');
+      // alert('로그인이 필요합니다.');
     }
     return Promise.reject(error);
   },
