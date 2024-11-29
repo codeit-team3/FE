@@ -10,7 +10,7 @@ interface PopUpButtonProps {
 function PopUpButton({ isConfirm }: PopUpButtonProps) {
   return (
     <button
-      className={`h-[44px] w-[120px] rounded-lg ${isConfirm ? THEME_COLOR.confirm : THEME_COLOR.cancel}`}
+      className={`h-[44px] w-[120px] rounded-xl ${isConfirm ? THEME_COLOR.confirm : THEME_COLOR.cancel}`}
     >
       {isConfirm ? '확인' : '취소'}
     </button>
