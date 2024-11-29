@@ -3,15 +3,17 @@
 import { useState } from 'react';
 import VisibilityOn from '../../../../../public/icons/visibility_on';
 import VisibilityOff from '../../../../../public/icons/visibility_off';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface FormFieldProps {
   label: string;
   type: string;
   placeholder: string;
   id: string;
+  register: UseFormRegisterReturn;
 }
 
-function FormField({ label, type, placeholder, id }: FormFieldProps) {
+function FormField({ label, type, placeholder, id, register }: FormFieldProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -21,6 +23,7 @@ function FormField({ label, type, placeholder, id }: FormFieldProps) {
       </label>
       <div className="relative w-full">
         <input
+          {...register}
           id={id}
           type={
             type === 'password' ? (showPassword ? 'text' : 'password') : type
