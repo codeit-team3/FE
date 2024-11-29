@@ -21,7 +21,6 @@ export const useAuthStore = create<AuthState>((set) => ({
     const { expiresAt } = JSON.parse(authData);
     const isValid = new Date().getTime() < expiresAt;
     if (!isValid) {
-      localStorage.removeItem('token');
       localStorage.removeItem('auth');
       set({ isLoggedIn: false });
     }
@@ -32,7 +31,6 @@ export const useAuthStore = create<AuthState>((set) => ({
     const timeUntilExpiration = expiresAt - new Date().getTime();
     if (timeUntilExpiration > 0) {
       setTimeout(() => {
-        localStorage.removeItem('token');
         localStorage.removeItem('auth');
         set({ isLoggedIn: false });
       }, timeUntilExpiration);

@@ -6,7 +6,6 @@ export const checkTokenExpiration = () => {
   const isValid = new Date().getTime() < expiresAt;
 
   if (!isValid) {
-    localStorage.removeItem('token');
     localStorage.removeItem('auth');
   }
 

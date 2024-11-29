@@ -14,8 +14,7 @@ apiClient.interceptors.request.use(
   (config) => {
     // 토큰 유효성 검사
     const isTokenValid = checkTokenExpiration();
-    const token = localStorage.getItem('token');
-
+    const token = JSON.parse(localStorage.getItem('auth') || '{}').token;
     if (isTokenValid && token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

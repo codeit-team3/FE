@@ -21,7 +21,6 @@ export const login = async (data: LoginFormData) => {
       expiresAt: new Date().getTime() + 10000,
     };
 
-    localStorage.setItem('token', token);
     localStorage.setItem('auth', JSON.stringify(tokenData));
 
     const { setIsLoggedIn, startTokenExpiration } = useAuthStore.getState();
