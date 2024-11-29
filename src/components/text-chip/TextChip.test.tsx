@@ -15,9 +15,9 @@ describe('TextChip', () => {
     expect(chip).toHaveClass(COLORS.default, COLORS.background);
   });
 
-  it('isDueSoon이 true일 때 텍스트 색상이 변경되어야 한다.', () => {
-    render(<TextChip text="테스트" isDueSoon={true} />);
+  it('isTime이 true일 때 텍스트 색상이 변경되어야 한다.', () => {
+    render(<TextChip text="테스트" isTime={true} />);
     const chip = screen.getByRole('text-chip');
-    expect(chip).toHaveClass(COLORS.dueSoon, COLORS.background);
+    expect(chip).toHaveClass(COLORS.isTime, COLORS.background);
   });
 });
