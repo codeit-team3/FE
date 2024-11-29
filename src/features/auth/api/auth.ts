@@ -1,5 +1,6 @@
 import apiClient from '@/lib/utils/apiClient';
 import { LoginFormData } from '../types/loginFormSchema';
+import { useAuthStore } from '@/store/authStore';
 
 interface LoginResponse {
   token: string;
@@ -17,13 +18,15 @@ export const login = async (data: LoginFormData) => {
 
     const tokenData = {
       token,
-      expiresAt: new Date().getTime() + 3600000,
+      expiresAt: new Date().getTime() + 10000,
     };
 
     localStorage.setItem('token', token);
     localStorage.setItem('auth', JSON.stringify(tokenData));
 
-    console.log('토큰 저장 완료:', tokenData);
+    const { setIsLoggedIn, startTokenExpiration } = useAuthStore.getState();
+    setIsLoggedIn(true);
+    startTokenExpiration(tokenData.expiresAt);
 
     return response.data;
   } catch (error) {
