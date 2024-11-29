@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { checkTokenExpiration } from '@/features/auth/utils/tokenUtils';
 
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -11,9 +12,11 @@ const apiClient = axios.create({
 // Request Interceptor
 apiClient.interceptors.request.use(
   (config) => {
-    // 예: 인증 토큰 추가
+    // 토큰 유효성 검사
+    const isTokenValid = checkTokenExpiration();
     const token = localStorage.getItem('token');
-    if (token) {
+
+    if (isTokenValid && token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
