@@ -30,7 +30,7 @@ function CardListItem({
 }: CardListItemProps) {
   return (
     <article
-      className="flex min-w-[340px] flex-col overflow-hidden rounded-[24px] border-2 border-gray-100 bg-white pb-2"
+      className="flex min-w-[340px] flex-col overflow-hidden rounded-[24px] border-2 border-gray-100 bg-white"
       onClick={onClick}
     >
       {/* 이미지 섹션 */}
@@ -61,7 +61,7 @@ function CardListItem({
         </div>
 
         {/* 하단 섹션: 왼쪽(참가자/확정/프로그레스), 오른쪽(join now) */}
-        <div className="flex gap-6">
+        <div className="flex gap-6 py-2">
           {/* 왼쪽: 참가자 정보, 확정 라벨, 프로그레스바 */}
           <div className="flex flex-1 flex-col gap-2">
             <div className="flex items-center gap-2">
