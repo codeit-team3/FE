@@ -37,4 +37,27 @@ describe('LoginForm', () => {
 
     expect(handleSubmit).toHaveBeenCalled();
   });
+
+  it('로그인 버튼을 누르면 콘솔에 데이터가 출력되어야 한다', async () => {
+    const consoleSpy = jest.spyOn(console, 'log');
+    render(<LoginForm />);
+
+    const testEmail = 'test@example.com';
+    const testPassword = 'password123';
+
+    const emailInput = screen.getByLabelText('아이디');
+    const passwordInput = screen.getByLabelText('비밀번호');
+
+    await userEvent.type(emailInput, testEmail);
+    await userEvent.type(passwordInput, testPassword);
+
+    await userEvent.click(screen.getByRole('button', { name: '로그인' }));
+
+    expect(consoleSpy).toHaveBeenCalledWith({
+      email: testEmail,
+      password: testPassword,
+    });
+
+    consoleSpy.mockRestore();
+  });
 });
