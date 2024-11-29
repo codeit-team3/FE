@@ -16,6 +16,7 @@ export const CustomizedButton: Story = {
   args: {
     text: '생성하기',
     size: 'large',
-    state: 'active',
+    hasBackground: true,
+    disabled: false,
   },
 };
