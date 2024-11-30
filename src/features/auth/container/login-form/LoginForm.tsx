@@ -7,8 +7,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginFormSchema, LoginFormData } from '../../types/loginFormSchema';
 import { login } from '../../api/auth';
+import { useRouter } from 'next/navigation';
 
 function LoginForm() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -25,6 +27,7 @@ function LoginForm() {
       const response = await login(data);
       console.log('로그인 성공:', response);
       reset();
+      router.replace('/');
     } catch (error: any) {
       if (error.response?.data?.code) {
         const { code } = error.response.data;
