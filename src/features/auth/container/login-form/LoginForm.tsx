@@ -20,7 +20,7 @@ interface LoginError {
   };
 }
 
-function LoginForm() {
+export default function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const {
@@ -98,5 +98,3 @@ function LoginForm() {
     </div>
   );
 }
-
-export default LoginForm;
