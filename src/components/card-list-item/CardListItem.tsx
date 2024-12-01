@@ -17,7 +17,7 @@ interface CardListItemProps {
   isEnded?: boolean;
   imageUrl: string;
   onClick?: () => void;
-  onLikeClick?: () => void;
+  onLikeToggleClick?: () => void;
   onJoinClick?: () => void;
 }
 
@@ -33,7 +33,7 @@ function CardListItem({
   isEnded = false,
   imageUrl,
   onClick,
-  onLikeClick,
+  onLikeToggleClick,
   onJoinClick,
 }: CardListItemProps) {
   return (
@@ -67,7 +67,7 @@ function CardListItem({
             className="flex justify-center"
             onClick={(e) => {
               e.stopPropagation();
-              onLikeClick?.();
+              onLikeToggleClick?.();
             }}
           >
             <HeartIcon isActive={isLiked} />
@@ -119,7 +119,7 @@ function CardListItem({
                   className="flex w-fit items-center justify-center gap-1 rounded-xl bg-orange-50 px-3 py-[6px]"
                   onClick={(e) => {
                     e.stopPropagation();
-                    onLikeClick?.();
+                    onLikeToggleClick?.();
                   }}
                 >
                   <WaveIcon />
@@ -145,7 +145,7 @@ function CardListItem({
                 className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-50"
                 onClick={(e) => {
                   e.stopPropagation();
-                  onLikeClick?.();
+                  onLikeToggleClick?.();
                 }}
               >
                 <WaveIcon />

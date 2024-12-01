@@ -10,7 +10,7 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     onClick: { action: 'clicked' },
-    onLikeClick: { action: 'like clicked' },
+    onLikeToggleClick: { action: 'like toggled' },
     onJoinClick: { action: 'join clicked' },
     isConfirmed: {
       control: 'boolean',
