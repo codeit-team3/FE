@@ -5,6 +5,9 @@ const THEME_COLOR = {
 
 interface PopUpButtonProps {
   isConfirm: boolean;
+  // onClick: (
+  //   event: MouseEvent<HTMLButtonElement> | MouseEvent<HTMLDivElement>,
+  // ) => void;
 }
 
 function PopUpButton({ isConfirm }: PopUpButtonProps) {
