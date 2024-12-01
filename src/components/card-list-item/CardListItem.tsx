@@ -94,7 +94,7 @@ function CardListItem({
               }}
               className="flex items-center gap-2 text-orange-600 hover:cursor-pointer"
             >
-              <span className="font-medium">join now</span>
+              <span className="text-base font-semibold">join now</span>
               <RightArrow />
             </button>
           </div>
