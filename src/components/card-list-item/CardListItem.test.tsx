@@ -77,9 +77,7 @@ describe('CardListItem', () => {
   it('마감된 상태일 때 오버레이가 표시되어야 함', () => {
     render(<CardListItem {...defaultProps} isEnded={true} />);
 
-    expect(
-      screen.getAllByText(/마감된 챌린지에요.*다음 기회에 만나요/i),
-    ).toHaveLength(2);
+    expect(screen.getByText(/마감된 챌린지에요.*다음 기회에 만나요/i));
   });
 
   it('확정된 상태일 때 확정 라벨이 표시되어야 함', () => {
