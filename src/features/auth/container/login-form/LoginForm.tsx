@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { loginFormSchema, LoginFormData } from '../../types/loginFormSchema';
 import { login } from '../../api/auth';
 import { useRouter } from 'next/navigation';
+import { AUTH_ERROR_MESSAGES } from '../../constants/messages';
 
 type LoginErrorCode = 'USER_NOT_FOUND' | 'INVALID_CREDENTIALS' | 'SERVER_ERROR';
 
@@ -45,20 +46,18 @@ function LoginForm() {
         case 'USER_NOT_FOUND':
           setError('email', {
             type: 'manual',
-            message: '존재하지 않는 아이디입니다.',
+            message: AUTH_ERROR_MESSAGES.USER_NOT_FOUND,
           });
           break;
         case 'INVALID_CREDENTIALS':
           setError('password', {
             type: 'manual',
-            message: '비밀번호가 아이디와 일치하지 않습니다.',
+            message: AUTH_ERROR_MESSAGES.INVALID_CREDENTIALS,
           });
           break;
         case 'SERVER_ERROR':
-          console.error('서버 오류가 발생했습니다');
+          console.error(AUTH_ERROR_MESSAGES.SERVER_ERROR);
           break;
-        default:
-          console.error('알 수 없는 에러:', error);
       }
     }
   };
