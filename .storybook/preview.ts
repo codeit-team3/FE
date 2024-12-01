@@ -15,14 +15,14 @@ const preview: Preview = {
           name: 'Mobile',
           styles: {
             width: '375px',
-            height: '1232px',
+            height: '1168px',
           },
         },
         tablet: {
           name: 'Tablet',
           styles: {
             width: '744px',
-            height: '1133px',
+            height: '1343px',
           },
         },
         desktop: {
