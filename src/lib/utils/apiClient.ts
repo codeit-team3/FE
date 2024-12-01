@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { checkTokenExpiration } from '@/features/auth/utils/tokenUtils';
+import { getCookie, deleteCookie } from '@/features/auth/utils/cookies';
+import { useAuthStore } from '@/store/authStore';
 
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -12,10 +13,8 @@ const apiClient = axios.create({
 // Request Interceptor
 apiClient.interceptors.request.use(
   (config) => {
-    // 토큰 유효성 검사
-    const isTokenValid = checkTokenExpiration();
-    const token = JSON.parse(localStorage.getItem('auth') || '{}').token;
-    if (isTokenValid && token) {
+    const token = getCookie('auth_token');
+    if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
@@ -29,9 +28,11 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    // 예: 에러 메시지 처리
     if (error.response?.status === 401) {
-      // alert('로그인이 필요합니다.');
+      const { setIsLoggedIn } = useAuthStore.getState();
+      setIsLoggedIn(false);
+      deleteCookie('auth_token');
+      alert('로그인이 필요합니다.');
     }
     return Promise.reject(error);
   },

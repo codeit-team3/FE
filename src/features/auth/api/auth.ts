@@ -1,31 +1,19 @@
 import apiClient from '@/lib/utils/apiClient';
 import { LoginFormData } from '../types/loginFormSchema';
 import { useAuthStore } from '@/store/authStore';
-
-interface LoginResponse {
-  token: string;
-  user: {
-    id: number;
-    email: string;
-    name: string;
-  };
-}
+import { setCookie } from '@/features/auth/utils/cookies';
 
 export const login = async (data: LoginFormData) => {
   try {
-    const response = await apiClient.post<LoginResponse>('/auths/signin', data);
+    const response = await apiClient.post<{ token: string }>(
+      '/auths/signin',
+      data,
+    );
     const { token } = response.data;
 
-    const tokenData = {
-      token,
-      expiresAt: new Date().getTime() + 10000,
-    };
-
-    localStorage.setItem('auth', JSON.stringify(tokenData));
-
-    const { setIsLoggedIn, startTokenExpiration } = useAuthStore.getState();
+    setCookie('auth_token', token);
+    const { setIsLoggedIn } = useAuthStore.getState();
     setIsLoggedIn(true);
-    startTokenExpiration(tokenData.expiresAt);
 
     return response.data;
   } catch (error) {

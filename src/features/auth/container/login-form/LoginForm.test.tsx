@@ -3,6 +3,27 @@ import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import LoginForm from './LoginForm';
 
+jest.mock('react-hook-form', () => ({
+  useForm: () => ({
+    register: () => ({}),
+    handleSubmit: (fn: any) => fn,
+    formState: {
+      isSubmitting: false,
+      errors: {},
+      isValid: true,
+    },
+    setError: jest.fn(),
+    reset: jest.fn(),
+  }),
+}));
+
+// next/navigation mock
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    replace: jest.fn(),
+  }),
+}));
+
 describe('LoginForm', () => {
   it('폼이 올바르게 렌더링되어야 한다', () => {
     render(<LoginForm />);
@@ -24,5 +45,12 @@ describe('LoginForm', () => {
 
     expect(emailInput).toHaveValue('test@example.com');
     expect(passwordInput).toHaveValue('password123');
+  });
+
+  it('로그인 버튼이 제출 가능한 상태여야 한다', () => {
+    render(<LoginForm />);
+
+    const submitButton = screen.getByRole('button', { name: '로그인' });
+    expect(submitButton).toBeEnabled();
   });
 });
