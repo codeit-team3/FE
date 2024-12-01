@@ -1,12 +1,7 @@
 import type { Config } from 'tailwindcss';
 
-export default {
-  content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/*/.{html,js}',
-  ],
+const config: Config = {
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
       colors: {
@@ -14,6 +9,13 @@ export default {
         foreground: 'var(--foreground)',
       },
     },
+    screens: {
+      sm: '380px',
+      md: '744px',
+      lg: '1920px',
+    },
   },
   plugins: [],
-} satisfies Config;
+};
+
+export default config;
