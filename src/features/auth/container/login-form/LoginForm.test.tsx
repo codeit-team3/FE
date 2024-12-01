@@ -22,6 +22,7 @@ jest.mock('next/navigation', () => ({
   useRouter: () => ({
     replace: jest.fn(),
   }),
+  useSearchParams: () => null,
 }));
 
 describe('LoginForm', () => {
