@@ -65,6 +65,7 @@ function CardListItem({
           </div>
           <button
             className="flex justify-center"
+            aria-label="좋아요"
             onClick={(e) => {
               e.stopPropagation();
               onLikeToggleClick?.();
