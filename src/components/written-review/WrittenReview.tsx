@@ -1,5 +1,12 @@
+'use client';
+
 import Image from 'next/image';
 import RatingDisplay from '../rating/RatingDisplay';
+import { useState, useEffect } from 'react';
+
+// 디자인 확정시, 기본 이미지 변경
+const defaultProfileImage =
+  'https://cdn.pixabay.com/photo/2018/02/12/10/45/heart-3147976_1280.jpg';
 
 interface WrittenReviewProps {
   ratingCount: number;
@@ -16,10 +23,15 @@ export default function WrittenReview({
   userName,
   createdAt,
 }: WrittenReviewProps) {
-  // 디자인 확정시, 기본 이미지 변경
-  const defaultProfileImage = profileImage
-    ? profileImage
-    : 'https://cdn.pixabay.com/photo/2024/02/17/00/18/cat-8578562_1280.jpg';
+  const [imgSrc, setImgSrc] = useState(profileImage || defaultProfileImage);
+
+  useEffect(() => {
+    setImgSrc(profileImage || defaultProfileImage);
+  }, [profileImage]);
+
+  const handleImageError = () => {
+    setImgSrc(defaultProfileImage);
+  };
 
   return (
     <article className="flex flex-col items-start">
@@ -31,9 +43,10 @@ export default function WrittenReview({
         <Image
           width={24}
           height={24}
-          src={defaultProfileImage}
+          src={imgSrc}
           alt={`${userName}'s profile picture`}
           className="h-6 w-6 rounded-full"
+          onError={handleImageError}
         />
         <p className="flex h-[1em] items-center border-r-2 border-r-gray-700 px-2 text-xs text-gray-700">
           {userName}
