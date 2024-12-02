@@ -3,15 +3,16 @@ import { SVGProps } from 'react';
 interface RatingIconProps extends SVGProps<SVGSVGElement> {
   width?: number;
   height?: number;
-  heartColor?: string;
+  checked: boolean;
 }
 
 function RatingIcon({
   width = 24,
   height = 24,
-  heartColor = '#EA580C',
+  checked = false,
   ...props
 }: RatingIconProps) {
+  const heartColor = checked ? '#EA580C' : '#D1D5DB';
   return (
     <svg
       width={width}
