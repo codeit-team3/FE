@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import RatingDisplay from '../rating/RatingDisplay';
+import RatingDisplay from '../rating-display/RatingDisplay';
 import { useState, useEffect } from 'react';
 
 // 디자인 확정시, 기본 이미지 변경
