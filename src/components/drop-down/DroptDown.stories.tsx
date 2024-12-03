@@ -17,16 +17,18 @@ type Story = StoryObj<typeof meta>;
 export const NavBarLarge: Story = {
   argTypes: {
     variant: {
-      options: ['navbar', 'find', 'profile', 'review'],
-      control: { type: 'select' },
+      // options: ['navbar', 'find', 'profile', 'review'],
+      options: ['navbar', 'filtering', 'sorting'],
+      control: { type: 'radio' },
     },
     size: {
-      options: ['navbar', 'small', 'large'],
+      options: ['small', 'large'],
       control: { type: 'radio' },
     },
   },
   args: {
-    variant: 'find',
+    variant: 'filtering',
+    items: ['3명 이하', '7명 이하', '10명 이하', '10명 이상'],
     size: 'large',
   },
 };

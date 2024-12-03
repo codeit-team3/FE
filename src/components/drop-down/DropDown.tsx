@@ -1,24 +1,38 @@
 import { useState } from 'react';
 import IcSorting from '../../../public/icons/IcSorting';
+import IcFiltering from '../../../public/icons/IcFiltering';
 
 interface DropDownProps {
-  variant: 'navbar' | 'find' | 'profile' | 'review';
-  size: 'navbar' | 'large' | 'small';
+  variant: 'navbar' | 'filtering' | 'sorting';
+  items: Array<string>;
+  // variant?: 'navbar' | 'find' | 'profile' | 'review';
+  size?: 'large' | 'small';
   color?: 'orange-100' | 'gray-50' | 'gray-100' | 'gray-900';
   label?: string;
 }
 
-const VARIANTS = {
-  navbar: ['마이페이지', '로그아웃'],
-  find: ['마감임박 순', '모임임박 순'],
-  profile: ['최신순', '오래된 순'],
-  review: ['평점 높은 순', '평점 낮은 순'],
+const JUSTIFIY_ITEMS = {
+  navbar: `justify-items-end`,
+  filtering: `justify-items-start`,
+  sorting: `justify-items-end`,
 } as const;
 
-const SIZE = {
-  navbar: `w-[40px] h-[40px] justify-center `,
+// const ITEM_LIST = {
+//   navbar: ['마이페이지', '로그아웃'],
+//   find: ['마감 임박', '빠른 모임'],
+//   profile: ['최신순', '오래된 순'],
+//   review: ['평점 높은 순', '평점 낮은 순'],
+// } as const;
+
+const SIZES = {
+  // navbar: `w-[40px] h-[40px] justify-center `,
   small: `w-[36px] h-[36px] px-[6px] py-[6px] justify-center`,
   large: `h-[40px] px-[12px] py-[6px] justify-start`,
+} as const;
+
+const LABEL_MARGIN = {
+  filtering: `mr-[4px]`,
+  sorting: `ml-[4px]`,
 } as const;
 
 const COLORS = {
@@ -44,30 +58,40 @@ const COLORS = {
   },
 } as const;
 
-function DropDown({ variant, size, color = 'gray-900' }: DropDownProps) {
-  const itemList = VARIANTS[variant];
-  const label = itemList[0];
+function DropDown({
+  variant,
+  items,
+  size,
+  color = 'gray-900',
+  label,
+}: DropDownProps) {
   const [isActive, setIsActive] = useState(true);
 
   return (
-    <div className={`h-[40px] flex-col justify-items-end`}>
+    <div className={`${JUSTIFIY_ITEMS[variant]} flex-col`}>
       {variant === 'navbar' ? (
         <button
-          className={`${SIZE[size]} flex items-center rounded-full bg-white`}
+          className="h-[40px] w-[40px] justify-center"
           onClick={() => {
             setIsActive(!isActive);
           }}
-        ></button>
+        >
+          {/* 프로필 이미지가 들어갈 부분 */}
+          <img />
+        </button>
       ) : (
         <button
-          className={`${SIZE[size]} flex items-center rounded-xl ${isActive ? COLORS[color].background.concat(' ', 'text-white') : 'border-2 border-gray-100 bg-white'.concat(' ', COLORS[color].text)}`}
+          className={`${size && SIZES[size]} flex items-center justify-between rounded-xl ${isActive ? COLORS[color].background.concat(' ', 'text-white') : 'border-2 border-gray-100 bg-white'.concat(' ', COLORS[color].text)}`}
         >
-          <IcSorting isActive={isActive} />
-          {size === 'large' && <span className="ml-[4px]">{label}</span>}
+          {variant === 'sorting' && <IcSorting isActive={isActive} />}
+          {size === 'large' && (
+            <span className={`${LABEL_MARGIN[variant]}`}>{label}</span>
+          )}
+          {variant === 'filtering' && <IcFiltering isActive={isActive} />}
         </button>
       )}
       <ul className="pt-[8px] shadow-[0px_10px_10px_-5px_#0000000A]">
-        {itemList.map((item, index) => (
+        {items.map((item, index) => (
           <li
             key={index}
             className={`flex h-[40px] w-[110px] items-center justify-center bg-white px-[4px] py-[4px] first:rounded-t-xl last:rounded-b-xl`}
