@@ -3,6 +3,7 @@ type BorderColorType = 'gray' | 'orange';
 interface BorderedBoxProps {
   children: React.ReactNode;
   borderColor?: BorderColorType;
+  nonePadding?: boolean;
 }
 
 const BORDER_COLOR = {
@@ -10,10 +11,16 @@ const BORDER_COLOR = {
   orange: 'border-orange-500',
 } as const;
 
-function BorderedBox({ children, borderColor = 'gray' }: BorderedBoxProps) {
+function BorderedBox({
+  children,
+  borderColor = 'gray',
+  nonePadding = false,
+}: BorderedBoxProps) {
   return (
     <div
-      className={`border-2 bg-white ${BORDER_COLOR[borderColor]} rounded-3xl py-6`}
+      className={`h-full w-full border-2 bg-white ${BORDER_COLOR[borderColor]} rounded-3xl ${
+        nonePadding ? '' : 'py-6'
+      }`}
     >
       {children}
     </div>
