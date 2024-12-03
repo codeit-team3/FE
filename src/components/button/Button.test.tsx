@@ -5,7 +5,14 @@ import Button from './Button';
 
 describe('Button', () => {
   it('버튼이 정상적으로 렌더링', () => {
-    render(<Button size="small" hasBackground={true} text="생성하기" />);
+    render(
+      <Button
+        size="small"
+        fillType="solid"
+        themeColor="orange-600"
+        text="생성하기"
+      />,
+    );
     const buttonElement = screen.getByText('생성하기');
     expect(buttonElement).toBeInTheDocument();
   });
@@ -17,7 +24,8 @@ describe('Button', () => {
       <Button
         onClick={handleClick}
         size="small"
-        hasBackground={true}
+        fillType="solid"
+        themeColor="orange-600"
         text="제출하기"
       />,
     );
