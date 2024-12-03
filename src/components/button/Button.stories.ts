@@ -12,9 +12,9 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const CustomizedButton: Story = {
+export const DefaultButton: Story = {
   args: {
-    text: '생성하기',
+    text: '기본 버튼',
     size: 'large',
     hasBackground: true,
     disabled: false,
