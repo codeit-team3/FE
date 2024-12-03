@@ -12,8 +12,12 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const Primary: Story = {
+export const DefaultButton: Story = {
   args: {
-    // 버튼 props
+    text: '기본 버튼',
+    size: 'large',
+    fillType: 'solid',
+    themeColor: 'orange-600',
+    disabled: false,
   },
 };
