@@ -13,7 +13,7 @@ const BORDER_COLOR = {
 function BorderedBox({ children, borderColor = 'gray' }: BorderedBoxProps) {
   return (
     <div
-      className={`border-2 bg-white ${BORDER_COLOR[borderColor]} rounded-lg py-6`}
+      className={`border-2 bg-white ${BORDER_COLOR[borderColor]} rounded-3xl py-6`}
     >
       {children}
     </div>
