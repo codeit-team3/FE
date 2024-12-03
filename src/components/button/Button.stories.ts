@@ -16,7 +16,8 @@ export const DefaultButton: Story = {
   args: {
     text: '기본 버튼',
     size: 'large',
-    hasBackground: true,
+    fillType: 'solid',
+    themeColor: 'orange-600',
     disabled: false,
   },
 };
