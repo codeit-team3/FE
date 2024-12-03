@@ -25,13 +25,13 @@ const BACKGROUND_VARIANTS = {
   },
 };
 
-const Button = ({
+export default function Button({
   text,
   size,
   hasBackground,
   variantColor = 'default',
   ...buttonProps
-}: ButtonProps) => {
+}: ButtonProps) {
   const { disabled } = buttonProps;
 
   const sizeClasses = SIZE_VARIANTS[size];
@@ -49,6 +49,4 @@ const Button = ({
       {text}
     </button>
   );
-};
-
-export default Button;
+}
