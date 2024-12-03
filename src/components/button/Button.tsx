@@ -8,13 +8,13 @@ interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   variantColor?: 'default' | 'gray';
 }
 
-const sizeVariants = {
+const SIZE_VARIANTS = {
   modal: 'min-w-[120px] h-[44px] px-4 text-base',
   large: 'min-w-[332px] h-[44px] px-4 text-base',
   small: 'min-w-[120px] h-[40px] px-3 text-sm',
 };
 
-const backgroundVariants = {
+const BACKGROUND_VARIANTS = {
   filled: {
     default: 'bg-orange-600 text-white cursor-pointer',
     gray: 'bg-gray-400 text-white cursor-pointer',
@@ -34,11 +34,11 @@ const Button = ({
 }: ButtonProps) => {
   const { disabled } = buttonProps;
 
-  const sizeClasses = sizeVariants[size];
+  const sizeClasses = SIZE_VARIANTS[size];
   const baseClasses = 'rounded-[12px] font-semibold';
   const styleType = hasBackground ? 'filled' : 'outline';
   const bgClasses = twMerge(
-    backgroundVariants[styleType][variantColor],
+    BACKGROUND_VARIANTS[styleType][variantColor],
     disabled && 'cursor-not-allowed',
   );
 
