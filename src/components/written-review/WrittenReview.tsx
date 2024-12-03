@@ -36,7 +36,7 @@ export default function WrittenReview({
   return (
     <article className="flex flex-col items-start">
       <RatingDisplay ratingCount={ratingCount} />
-      <p className="mb-2 mt-[10px] flex-wrap text-sm text-gray-700">
+      <p className="mb-2 mt-[10px] flex-wrap text-sm font-medium text-gray-700">
         {comment}
       </p>
       <div className="flex items-center">
@@ -48,10 +48,10 @@ export default function WrittenReview({
           className="h-6 w-6 rounded-full"
           onError={handleImageError}
         />
-        <p className="flex h-[1em] items-center border-r-2 border-r-gray-700 px-2 text-xs text-gray-700">
+        <p className="flex h-[1em] items-center border-r-2 border-r-gray-700 px-2 text-xs font-medium text-gray-700">
           {userName}
         </p>
-        <p className="ml-3 text-xs text-gray-500">{createdAt}</p>
+        <p className="ml-3 text-xs font-medium text-gray-500">{createdAt}</p>
       </div>
       <hr className="mt-4 w-full border-t-2 border-dashed border-gray-200" />
     </article>
