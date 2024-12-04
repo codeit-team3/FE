@@ -1,4 +1,8 @@
+import AvatarGroup from '@/components/avatar-group/AvatarGroup';
+import Avatar from '@/components/avatar/Avatar';
 import BorderedBox from '@/components/bordered-box/BorderedBox';
+import ConfirmedLabel from '@/components/confirmed-label/ConfirmedLabel';
+import ProgressBar from '@/components/progress-bar/ProgressBar';
 import { TextChip } from '@/components/text-chip/TextChip';
 import Image from 'next/image';
 
@@ -48,12 +52,43 @@ function BookClubDetailPage({}) {
           {/* 하단 정보 영역 */}
           <div className="flex w-full flex-col gap-2 px-6 pt-3">
             <div className="flex flex-col gap-3">
-              <div>정원 + 아바타</div>
-              <div>프로그레스바</div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="flex gap-1.5 text-sm font-semibold text-gray-900">
+                    <span>모집 정원</span>
+                    <span>16명</span>
+                  </div>
+                  <div>
+                    <AvatarGroup maxCount={4}>
+                      {Array(16)
+                        .fill(null)
+                        .map((_, i) => (
+                          <Avatar
+                            key={i}
+                            src={`https://picsum.photos/200/200?random=${i}`}
+                            alt={`Avatar ${i + 1}`}
+                          />
+                        ))}
+                    </AvatarGroup>
+                  </div>
+                </div>
+                <div>
+                  <ConfirmedLabel />
+                </div>
+              </div>
+              <div>
+                <ProgressBar current={12} max={16} />
+              </div>
             </div>
-            <div className="flex w-full items-center justify-between">
-              <span>최소 인원</span>
-              <span>최대 인원</span>
+            <div className="flex w-full items-center justify-between text-xs font-medium text-gray-700">
+              <div className="flex items-center gap-1.5">
+                <span>최소 인원</span>
+                <span>5명</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span>최대 인원</span>
+                <span>20명</span>
+              </div>
             </div>
           </div>
         </div>
