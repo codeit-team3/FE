@@ -5,7 +5,7 @@ import ConfirmedLabel from '../confirmed-label/ConfirmedLabel';
 import ProgressBar from '../progress-bar/ProgressBar';
 import { HeartIcon, RightArrow, WaveIcon } from '../../../public/icons';
 
-interface CardListItemProps {
+interface CardProps {
   title: string;
   location: string;
   date: string;
@@ -21,7 +21,7 @@ interface CardListItemProps {
   onJoinClick?: () => void;
 }
 
-function CardListItem({
+function Card({
   title,
   location,
   date,
@@ -35,7 +35,7 @@ function CardListItem({
   onClick,
   onLikeToggleClick,
   onJoinClick,
-}: CardListItemProps) {
+}: CardProps) {
   return (
     <article
       className="relative flex w-full min-w-[340px] flex-col overflow-hidden rounded-[24px] border-2 border-gray-100 bg-white sm:h-[156px] sm:flex-row"
@@ -146,4 +146,4 @@ function CardListItem({
   );
 }
 
-export default CardListItem;
+export default Card;
