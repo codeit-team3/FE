@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import IcSorting from '../../../public/icons/IcSorting';
 import IcFiltering from '../../../public/icons/IcFiltering';
+import Image from 'next/image';
 
 interface DropDownProps {
   variant: 'navbar' | 'filtering' | 'sorting';
   items: Array<string>;
-  // variant?: 'navbar' | 'find' | 'profile' | 'review';
   size?: 'large' | 'small';
   color?: 'orange-100' | 'gray-50' | 'gray-100' | 'gray-900';
   label?: string;
+  imgSrc?: string;
 }
 
 const JUSTIFIY_ITEMS = {
@@ -17,15 +18,7 @@ const JUSTIFIY_ITEMS = {
   sorting: `justify-items-end`,
 } as const;
 
-// const ITEM_LIST = {
-//   navbar: ['마이페이지', '로그아웃'],
-//   find: ['마감 임박', '빠른 모임'],
-//   profile: ['최신순', '오래된 순'],
-//   review: ['평점 높은 순', '평점 낮은 순'],
-// } as const;
-
 const SIZES = {
-  // navbar: `w-[40px] h-[40px] justify-center `,
   small: `w-[36px] h-[36px] px-[6px] py-[6px] justify-center`,
   large: `h-[40px] px-[12px] py-[6px] justify-start`,
 } as const;
@@ -64,6 +57,7 @@ function DropDown({
   size,
   color = 'gray-900',
   label,
+  imgSrc,
 }: DropDownProps) {
   const [isActive, setIsActive] = useState(true);
 
@@ -71,13 +65,18 @@ function DropDown({
     <div className={`${JUSTIFIY_ITEMS[variant]} flex-col`}>
       {variant === 'navbar' ? (
         <button
-          className="h-[40px] w-[40px] justify-center"
+          className="relative h-[40px] w-[40px] justify-center"
           onClick={() => {
             setIsActive(!isActive);
           }}
         >
           {/* 프로필 이미지가 들어갈 부분 */}
-          <img />
+          <Image
+            src={imgSrc || '/images/profile.png'}
+            alt={'nav_profile'}
+            layout="fill"
+            className="rounded-full object-cover"
+          />
         </button>
       ) : (
         <button
