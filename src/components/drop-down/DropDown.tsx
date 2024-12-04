@@ -70,7 +70,6 @@ function DropDown({
             setIsActive(!isActive);
           }}
         >
-          {/* 프로필 이미지가 들어갈 부분 */}
           <Image
             src={imgSrc || '/images/profile.png'}
             alt={'nav_profile'}
