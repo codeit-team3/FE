@@ -1,10 +1,11 @@
 import Avatar from '@/components/avatar/Avatar';
+import { AVATAR_SIZE, AvatarSize } from '@/constants';
 import { Children, ReactElement, cloneElement } from 'react';
 
 interface AvatarGroupProps {
   children: ReactElement<typeof Avatar> | ReactElement<typeof Avatar>[];
   maxCount?: number;
-  size?: 'sm' | 'md' | 'lg';
+  size?: AvatarSize;
 }
 
 function AvatarGroup({
@@ -27,7 +28,7 @@ function AvatarGroup({
 
         {remainingCount > 0 && (
           <div
-            className={`relative flex items-center justify-center rounded-full border border-white bg-gray-100 ${SIZE[size]}`}
+            className={`relative flex items-center justify-center rounded-full border border-white bg-gray-100 ${AVATAR_SIZE[size]}`}
           >
             <span className="text-sm font-medium text-gray-900">
               +{remainingCount}
@@ -40,9 +41,3 @@ function AvatarGroup({
 }
 
 export default AvatarGroup;
-
-const SIZE = {
-  sm: 'h-[29px] w-[29px]',
-  md: 'h-[40px] w-[40px]',
-  lg: 'h-[56px] w-[56px]',
-} as const;
