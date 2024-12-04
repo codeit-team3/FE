@@ -1,16 +1,17 @@
-name: CI for develop
+name: CI
 
 on:
   pull_request:
     branches:
-      - develop
+      - '**'
+      - '!main'
   push:
     branches:
       - develop
 
 jobs:
-  ci-develop:
-    name: Lint, Test, and Build (develop)
+  ci:
+    name: Lint, Test, and Build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -40,7 +41,7 @@ jobs:
         run: npm run build-storybook
 
   notify-discord:
-    needs: ci-develop
+    needs: ci
     runs-on: ubuntu-latest
     if: success()
     steps:
@@ -51,14 +52,33 @@ jobs:
             {
               "embeds": [
                 {
-                  "title": "🎉 develop 브랜치 알림",
-                  "description": "${{ github.event_name == 'pull_request' && '새로운 PR이 성공적으로 등록되었습니다!' || 'Push가 성공적으로 완료되었습니다!' }}",
+                  "title": "${{ 
+                    format('{0}', 
+                      (github.base_ref == 'develop' || github.ref_name == 'develop') 
+                      && '🚀 Develop 브랜치 CI 알림' 
+                      || '🎉 새 작업 CI 알림'
+                    )
+                  }}",
+                  "description": "${{ 
+                    format('{0}',
+                      github.event_name == 'pull_request' 
+                      && (github.base_ref == 'develop' 
+                        && format('Develop 브랜치로 새로운 PR이 등록되었습니다! ({0} → develop)', github.head_ref)
+                        || format('새로운 PR이 등록되었습니다! ({0} → {1})', github.head_ref, github.base_ref)
+                      )
+                      || 'Develop 브랜치에 Push가 완료되었습니다!'
+                    )
+                  }}",
                   "url": "${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
                   "color": 5814783,
                   "fields": [
                     {
                       "name": "Repository",
                       "value": "${{ github.repository }}"
+                    },
+                    {
+                      "name": "Branch",
+                      "value": "${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}"
                     }
                   ]
                 }
