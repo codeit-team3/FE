@@ -19,8 +19,8 @@ const JUSTIFIY_ITEMS = {
 } as const;
 
 const SIZES = {
-  small: `w-[36px] h-[36px] px-[6px] py-[6px] justify-center`,
-  large: `h-[40px] px-[12px] py-[6px] justify-start`,
+  small: ` h-[36px] px-[6px] py-[6px] justify-center`,
+  large: `h-[40px] px-[12px] py-[8px] justify-start`,
 } as const;
 
 const LABEL_MARGIN = {
