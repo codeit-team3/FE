@@ -35,3 +35,12 @@ export const Large: Story = {
     size: 'lg',
   },
 };
+
+export const Clickable: Story = {
+  args: {
+    src: 'https://picsum.photos/200',
+    alt: 'Clickable Avatar',
+    size: 'md',
+    onClick: () => alert('Avatar clicked!'),
+  },
+};

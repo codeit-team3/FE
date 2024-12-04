@@ -6,12 +6,14 @@ interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
   src: string;
   alt: string;
   size?: AvatarSize;
+  onClick?: () => void;
 }
 
-function Avatar({ src, alt, size = 'sm', ...props }: AvatarProps) {
+function Avatar({ src, alt, size = 'sm', onClick, ...props }: AvatarProps) {
   return (
     <div
-      className={`relative overflow-hidden rounded-full ${AVATAR_SIZE[size]} ${props.className || ''}`}
+      className={`relative cursor-pointer overflow-hidden rounded-full ${AVATAR_SIZE[size]} ${props.className || ''}`}
+      onClick={onClick}
       {...props}
     >
       <Image src={src} alt={alt} fill className="object-cover" />
