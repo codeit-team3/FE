@@ -19,7 +19,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-gray-100">
         <ReactQueryProviders>
           <HeaderBar />
-          <main className="mx-auto min-h-screen max-w-[1200px] bg-gray-50 px-4 md:px-6 lg:px-10">
+          <main className="mx-auto min-h-screen max-w-[1200px] bg-gray-50 px-4 pt-[56px] md:px-6 lg:px-10">
             {children}
           </main>
         </ReactQueryProviders>
