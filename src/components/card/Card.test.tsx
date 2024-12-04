@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import CardListItem from './CardListItem';
+import Card from './Card';
 import '@testing-library/jest-dom';
 
 const defaultProps = {
@@ -13,9 +13,9 @@ const defaultProps = {
   imageUrl: '/test-image.jpg',
 };
 
-describe('CardListItem', () => {
+describe('Card', () => {
   it('기본 정보가 올바르게 렌더링되어야 함', () => {
-    render(<CardListItem {...defaultProps} />);
+    render(<Card {...defaultProps} />);
 
     expect(screen.getByText('테스트 모임')).toBeInTheDocument();
     expect(screen.getByText('서울 강남구')).toBeInTheDocument();
@@ -26,7 +26,7 @@ describe('CardListItem', () => {
   it('클릭 이벤트가 발생하면 onClick 핸들러가 호출되어야 함', async () => {
     const user = userEvent.setup();
     const handleClick = jest.fn();
-    render(<CardListItem {...defaultProps} onClick={handleClick} />);
+    render(<Card {...defaultProps} onClick={handleClick} />);
 
     const article = screen.getByRole('article');
     await user.click(article);
@@ -40,7 +40,7 @@ describe('CardListItem', () => {
     const handleLikeToggleClick = jest.fn();
 
     render(
-      <CardListItem
+      <Card
         {...defaultProps}
         onClick={handleClick}
         onLikeToggleClick={handleLikeToggleClick}
@@ -60,7 +60,7 @@ describe('CardListItem', () => {
     const handleJoinClick = jest.fn();
 
     render(
-      <CardListItem
+      <Card
         {...defaultProps}
         onClick={handleClick}
         onJoinClick={handleJoinClick}
@@ -75,19 +75,19 @@ describe('CardListItem', () => {
   });
 
   it('마감된 상태일 때 오버레이가 표시되어야 함', () => {
-    render(<CardListItem {...defaultProps} isEnded={true} />);
+    render(<Card {...defaultProps} isEnded={true} />);
 
     expect(screen.getByText(/마감된 챌린지에요.*다음 기회에 만나요/i));
   });
 
   it('확정된 상태일 때 확정 라벨이 표시되어야 함', () => {
-    render(<CardListItem {...defaultProps} isConfirmed={true} />);
+    render(<Card {...defaultProps} isConfirmed={true} />);
 
     expect(screen.getByText(/확정/)).toBeInTheDocument();
   });
 
   it('참가자 수가 올바르게 표시되어야 함', () => {
-    render(<CardListItem {...defaultProps} />);
+    render(<Card {...defaultProps} />);
 
     expect(screen.getByText('5/10')).toBeInTheDocument();
   });

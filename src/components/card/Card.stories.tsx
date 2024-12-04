@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import CardListItem from './CardListItem';
+import Card from './Card';
 
 const meta = {
-  title: 'Components/CardListItem',
-  component: CardListItem,
+  title: 'Components/Card',
+  component: Card,
   parameters: {
     layout: 'centered',
   },
@@ -12,10 +12,10 @@ const meta = {
     onLikeToggleClick: { action: 'like toggled' },
     onJoinClick: { action: 'join clicked' },
   },
-} satisfies Meta<typeof CardListItem>;
+} satisfies Meta<typeof Card>;
 
 export default meta;
-type Story = StoryObj<typeof CardListItem>;
+type Story = StoryObj<typeof Card>;
 
 const defaultArgs = {
   title: '테스트 모임',
