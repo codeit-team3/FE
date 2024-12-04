@@ -21,6 +21,20 @@ function BookClubDetailPage({}) {
         </div>
       </BorderedBox>
 
+      {/* ~님의 모임 */}
+      <BorderedBox>
+        <div className="flex items-center gap-1.5 px-6">
+          <Avatar
+            src="https://picsum.photos/200/200?random=1"
+            alt="북클럽 이미지"
+          />
+          <div className="text-lg font-semibold">
+            <span>럽윈즈올님</span>
+            <span className="text-gray-400">의 모임</span>
+          </div>
+        </div>
+      </BorderedBox>
+
       {/* 모임 정보 */}
       <BorderedBox>
         <div className="flex w-full flex-col">
@@ -29,7 +43,7 @@ function BookClubDetailPage({}) {
             {/* 왼쪽: 모임 정보 */}
             <div className="flex flex-col gap-3">
               <div className="flex flex-col gap-0.5">
-                <h1 className="text-lg font-semibold text-gray-900">
+                <h1 className="text-lg font-extrabold text-gray-900">
                   달램핏 오피스 스트레칭
                 </h1>
                 <p className="text-sm font-medium text-gray-700">
