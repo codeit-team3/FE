@@ -4,17 +4,14 @@ interface IcSortingProps extends SVGProps<SVGSVGElement> {
   width?: number;
   height?: number;
   isActive?: boolean;
+  color?: string;
 }
-
-const TEXT_COLOR = {
-  default: '#111827',
-  active: '#F9FAFB',
-};
 
 function IcSorting({
   width = 20,
   height = 14,
   isActive = false,
+  color = '#111827',
 }: IcSortingProps) {
   return (
     <svg
@@ -24,7 +21,7 @@ function IcSorting({
       fill="none"
     >
       <path
-        stroke={isActive ? TEXT_COLOR.active : TEXT_COLOR.default}
+        stroke={isActive ? '#F9FAFB' : color}
         strokeLinecap="round"
         strokeWidth="1.8"
         d="m1 6 4-4m0 0 4 4M5 2v10M19 8l-4 4m0 0-4-4m4 4V2"
