@@ -1,12 +1,10 @@
-import AvatarGroup from '@/components/avatar-group/AvatarGroup';
 import Avatar from '@/components/avatar/Avatar';
 import BorderedBox from '@/components/bordered-box/BorderedBox';
 import Button from '@/components/button/Button';
-import ConfirmedLabel from '@/components/confirmed-label/ConfirmedLabel';
 import ProgressBar from '@/components/progress-bar/ProgressBar';
 import RatingDisplay from '@/components/rating-display/RatingDisplay';
-import { TextChip } from '@/components/text-chip/TextChip';
 import WrittenReview from '@/components/written-review/WrittenReview';
+import { BookClubInfo } from '@/features/bookclub/components';
 import Image from 'next/image';
 
 const MOCK_REVIEWS = [
@@ -30,7 +28,7 @@ const MOCK_REVIEWS = [
     id: '3',
     ratingCount: 3,
     comment:
-      '강사분도 ���하시고 ~ ^^ 너무 좋은 공간에서 긴장과 스트레스 모두 잘 풀고 가요 ~ ^^',
+      '강사분도 하시고 ~ ^^ 너무 좋은 공간에서 긴장과 스트레스 모두 잘 풀고 가요 ~ ^^',
     userName: '모닝러너',
     createdAt: '2024.01.25',
     profileImage: 'https://picsum.photos/200/200?random=3',
@@ -82,77 +80,24 @@ function BookClubDetailPage({}) {
             </BorderedBox>
 
             {/* 모임 정보 */}
-            <BorderedBox>
-              <div className="flex w-full flex-col">
-                {/* 상단 정보 영역 */}
-                <div className="flex justify-between px-6 pb-6">
-                  {/* 왼쪽: 모임 정보 */}
-                  <div className="flex flex-col gap-3">
-                    <div className="flex flex-col gap-0.5">
-                      <h1 className="text-lg font-extrabold text-gray-900">
-                        달램핏 오피스 스트레칭
-                      </h1>
-                      <p className="text-sm font-medium text-gray-700">
-                        을지로 3가 울시 중구 청계천로 100
-                      </p>
-                    </div>
-                    <div className="flex gap-2">
-                      <TextChip text="1월 7일" />
-                      <TextChip text="17:30" isDueSoon />
-                    </div>
-                  </div>
-
-                  {/* 오른쪽: 하트 아이콘 */}
-                  <div className="text-gray-300">♡</div>
-                </div>
-
-                {/* 구분선 */}
-                <hr className="mx-1 border-t-2 border-dashed border-gray-200" />
-
-                {/* 하단 정보 영역 */}
-                <div className="flex w-full flex-col gap-2 px-6 pt-3">
-                  <div className="flex flex-col gap-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="flex gap-1.5 text-sm font-semibold text-gray-900">
-                          <span>모집 정원</span>
-                          <span>16명</span>
-                        </div>
-                        <div>
-                          <AvatarGroup maxCount={4}>
-                            {Array(16)
-                              .fill(null)
-                              .map((_, i) => (
-                                <Avatar
-                                  key={i}
-                                  src={`https://picsum.photos/200/200?random=${i}`}
-                                  alt={`Avatar ${i + 1}`}
-                                />
-                              ))}
-                          </AvatarGroup>
-                        </div>
-                      </div>
-                      <div>
-                        <ConfirmedLabel />
-                      </div>
-                    </div>
-                    <div>
-                      <ProgressBar current={12} max={16} />
-                    </div>
-                  </div>
-                  <div className="flex w-full items-center justify-between text-xs font-medium text-gray-700">
-                    <div className="flex items-center gap-1.5">
-                      <span>최소 인원</span>
-                      <span>5명</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span>최대 인원</span>
-                      <span>20명</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </BorderedBox>
+            <BookClubInfo
+              title="달램핏 오피스 스트레칭"
+              location="을지로 3가 울시 중구 청계천로 100"
+              date="1월 7일"
+              time="17:30"
+              isDueSoon
+              currentParticipants={12}
+              maxParticipants={16}
+              minParticipants={5}
+              isConfirmed
+              participants={Array(16)
+                .fill(null)
+                .map((_, i) => ({
+                  id: String(i),
+                  imageUrl: `https://picsum.photos/200/200?random=${i}`,
+                  name: `참가자 ${i + 1}`,
+                }))}
+            />
           </div>
         </div>
 
@@ -243,7 +188,7 @@ function BookClubDetailPage({}) {
           <div className="mx-auto flex max-w-[1200px] items-center justify-between gap-6 p-4">
             <div className="flex flex-col gap-1">
               <p className="text-sm font-semibold text-gray-900">
-                더 건강한 ��와 팀을 위한 프그램
+                더 건강한 와 팀을 위한 프그램
               </p>
               <p className="text-xs font-medium text-gray-700">
                 국내 최고 웰니스 전문가와 프로그램을 통해 지친 몸과 마음을
