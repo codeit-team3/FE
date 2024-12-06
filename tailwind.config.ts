@@ -1,8 +1,13 @@
 import type { Config } from 'tailwindcss';
 
-export default {
+const config: Config = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
+    screens: {
+      sm: '375px',
+      md: '744px',
+      lg: '1920px',
+    },
     extend: {
       colors: {
         background: 'var(--background)',
@@ -35,4 +40,6 @@ export default {
     },
   },
   plugins: [],
-} satisfies Config;
+};
+
+export default config;
