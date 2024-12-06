@@ -38,11 +38,6 @@ const config: Config = {
         },
       },
     },
-    screens: {
-      sm: '380px',
-      md: '744px',
-      lg: '1920px',
-    },
   },
   plugins: [],
 };
