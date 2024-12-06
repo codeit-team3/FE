@@ -1,26 +1,26 @@
-export const PARTICIPANT_COLORS = {
-  default: 'text-gray-700',
-  full: 'text-orange-500',
-} as const;
-
-interface ParticipantCounterProps {
+interface ParticipantCounterProps
+  extends React.ComponentPropsWithoutRef<'div'> {
   current: number;
   max: number;
+  isPast?: boolean;
 }
 
-function ParticipantCounter({ current, max }: ParticipantCounterProps) {
-  const displayCount = current > max ? max : current;
+function ParticipantCounter({
+  current,
+  max,
+  isPast = false,
+  ...props
+}: ParticipantCounterProps) {
   const isFull = current >= max;
-  const colorStyle = isFull
-    ? PARTICIPANT_COLORS.full
-    : PARTICIPANT_COLORS.default;
+  const primaryColor = isPast ? 'text-gray-darker' : 'text-green-normal';
+  const maxColor = isFull ? primaryColor : 'text-gray-dark';
 
   return (
-    <div className="flex items-center gap-0.5">
+    <div className="flex items-center gap-0.5" {...props}>
       <svg
         role="participant-icon"
         aria-label="참가자 아이콘"
-        className={`h-4 w-4 ${colorStyle}`}
+        className={`h-4 w-4 ${primaryColor}`}
         fill="currentColor"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
@@ -30,8 +30,11 @@ function ParticipantCounter({ current, max }: ParticipantCounterProps) {
       <span
         role="participant-count"
         aria-label="참가자 현황"
-        className={`text-sm font-medium ${colorStyle}`}
-      >{`${displayCount}/${max}`}</span>
+        className="text-sm font-medium"
+      >
+        <span className={primaryColor}>{current}</span>
+        <span className={maxColor}>/{max}</span>
+      </span>
     </div>
   );
 }
