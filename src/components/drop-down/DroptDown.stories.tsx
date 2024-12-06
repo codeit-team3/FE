@@ -1,6 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
 import DropDown from './DropDown';
-import { Radio } from '@headlessui/react';
 
 const meta = {
   title: 'Components/DropDown',
@@ -17,18 +16,17 @@ type Story = StoryObj<typeof meta>;
 export const NavBarLarge: Story = {
   argTypes: {
     variant: {
-      options: ['navbar', 'filtering', 'sorting'],
-      control: { type: 'radio' },
-    },
-    size: {
-      options: ['small', 'large'],
-
+      options: ['navbar', 'filtering'],
       control: { type: 'radio' },
     },
   },
   args: {
     variant: 'filtering',
-    items: ['3명 이하', '7명 이하', '10명 이하', '10명 이상'],
-    size: 'large',
+    items: [
+      { value: 1, label: '2~4명' },
+      { value: 2, label: '5~7명' },
+      { value: 3, label: '8~10명' },
+      { value: 4, label: '11명 이상' },
+    ],
   },
 };
