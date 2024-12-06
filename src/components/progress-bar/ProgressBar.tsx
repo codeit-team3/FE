@@ -1,40 +1,33 @@
-export const PROGRESS_COLORS = {
-  background: 'bg-orange-50',
-  default: 'bg-orange-600',
-  full: 'bg-orange-400',
-} as const;
+import React from 'react';
 
-interface ProgressBarProps {
-  current: number;
-  max: number;
-  height?: number;
-  borderRadius?: number;
+interface ProgressBarProps extends React.ComponentPropsWithoutRef<'div'> {
+  percentage: number;
+  isPast?: boolean;
+  color?: string;
 }
 
 function ProgressBar({
-  current,
-  max,
-  height = 4,
-  borderRadius = 6,
+  percentage,
+  isPast = false,
+  color,
+  className,
+  ...props
 }: ProgressBarProps) {
-  const percentage = Math.min((current / max) * 100, 100);
-  const isFull = current >= max;
-  const fillColor = isFull ? PROGRESS_COLORS.full : PROGRESS_COLORS.default;
+  const fillColor = color || (isPast ? 'bg-gray-darker' : 'bg-green-normal');
 
   return (
     <div
       role="progressbar"
-      aria-valuenow={current}
+      aria-valuenow={percentage}
       aria-valuemin={0}
-      aria-valuemax={max}
-      className={`w-full ${PROGRESS_COLORS.background}`}
-      style={{ height, borderRadius }}
+      aria-valuemax={100}
+      className={`h-1 w-full rounded-md bg-gray-normal ${className || ''}`}
+      {...props}
     >
       <div
-        className={`h-full transition-all duration-300 ${fillColor}`}
+        className={`h-full rounded-md transition-all duration-300 ${fillColor}`}
         style={{
           width: `${percentage}%`,
-          borderRadius,
         }}
       />
     </div>
