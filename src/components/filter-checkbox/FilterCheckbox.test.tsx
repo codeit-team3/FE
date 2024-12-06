@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import AvailableClubsFilter from './AvailableClubsFilter';
+import AvailableClubsFilter from './FilterCheckbox';
 
 describe('AvailableClubsFilter 컴포넌트', () => {
   it('체크박스가 정상적으로 렌더링되고, 기본적으로 체크되지 않은 상태이다', () => {
