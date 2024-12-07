@@ -1,14 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import HeaderBar from './HeaderBar';
 import '@testing-library/jest-dom';
+import { NAV_ITEMS } from '@/constants/navigation';
 
-const navigationLinks = [
-  { name: 'bookco' },
-  { name: '책 모임' },
-  { name: '책 교환' },
-  { name: '찜 목록' },
-  { name: '로그인' },
-];
+jest.mock('next/navigation', () => ({
+  usePathname: jest.fn(() => '/exchange'),
+}));
 
 describe('HeaderBar 컴포넌트 테스트', () => {
   beforeEach(() => {
@@ -16,45 +13,40 @@ describe('HeaderBar 컴포넌트 테스트', () => {
   });
 
   describe('네비게이션 링크', () => {
-    it('모든 네비게이션 링크가 올바르게 렌더링되어야 한다', () => {
-      navigationLinks.forEach((link) => {
-        const linkElement = screen.getByRole('link', { name: link.name });
+    it('NAV_ITEMS의 모든 링크가 올바르게 렌더링되어야 한다', () => {
+      NAV_ITEMS.forEach((item) => {
+        const linkElement = screen.getByRole('link', { name: item.label });
         expect(linkElement).toBeInTheDocument();
+        expect(linkElement).toHaveAttribute('href', item.href);
       });
     });
 
-    it('홈 링크에 올바른 스타일이 적용되어야 한다', () => {
-      const homeLink = screen.getByRole('link', { name: 'bookco' });
-      expect(homeLink).toHaveClass('hover:scale-105 md:text-base');
+    it('로그인 링크가 올바르게 렌더링되어야 한다', () => {
+      const loginLink = screen.getByRole('link', { name: '로그인' });
+      expect(loginLink).toBeInTheDocument();
+      expect(loginLink).toHaveAttribute('href', '/login');
     });
-  });
-});
 
-jest.mock('next/navigation', () => ({
-  usePathname: () => '/',
-}));
+    it('bookco 링크는 항상 활성화되어야 한다', () => {
+      const bookcoItem = NAV_ITEMS.find((item) => item.id === 'bookco');
+      const bookcoLink = screen.getByRole('link', { name: bookcoItem!.label });
+      expect(bookcoLink).toHaveClass('font-bold');
+    });
 
-describe('HeaderBar 컴포넌트 테스트', () => {
-  beforeEach(() => {
-    render(<HeaderBar />);
-  });
+    it('현재 경로와 일치하는 링크는 활성화되어야 한다', () => {
+      const exchangeItem = NAV_ITEMS.find((item) => item.id === 'exchange');
+      const exchangeLink = screen.getByRole('link', {
+        name: exchangeItem!.label,
+      });
+      expect(exchangeLink).toHaveClass('font-bold');
+    });
 
-  it('책 모임 링크가 올바른 href를 가져야 한다', () => {
-    const bookclubLink = screen.getByRole('link', { name: '책 모임' });
-    expect(bookclubLink).toHaveAttribute('href', '/bookclub');
-  });
-});
-
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn(),
-  usePathname: jest.fn(),
-}));
-
-describe('HeaderBar 네비게이션 테스트', () => {
-  it('각 네비게이션 버튼 클릭시 올바른 href 속성을 가져야 한다', () => {
-    render(<HeaderBar />);
-
-    const homeLink = screen.getByRole('link', { name: 'bookco' });
-    expect(homeLink).toHaveAttribute('href', '/exchange');
+    it('현재 경로와 일치하지 않는 링크는 비활성화되어야 한다', () => {
+      const bookclubItem = NAV_ITEMS.find((item) => item.id === 'bookclub');
+      const bookclubLink = screen.getByRole('link', {
+        name: bookclubItem!.label,
+      });
+      expect(bookclubLink).toHaveClass('text-green-light');
+    });
   });
 });
