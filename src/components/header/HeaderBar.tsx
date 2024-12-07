@@ -5,7 +5,7 @@ import NavButton from './NavButton';
 
 function HeaderBar() {
   const navItems = [
-    { href: '/', label: '홈' },
+    { href: '/exchange', label: 'bookco' },
     { href: '/bookclub', label: '책 모임' },
     { href: '/exchange', label: '책 교환' },
     { href: '/wish', label: '찜 목록' },

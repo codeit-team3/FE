@@ -3,7 +3,7 @@ import HeaderBar from './HeaderBar';
 import '@testing-library/jest-dom';
 
 const navigationLinks = [
-  { name: '홈' },
+  { name: 'bookco' },
   { name: '책 모임' },
   { name: '책 교환' },
   { name: '찜 목록' },
@@ -24,7 +24,7 @@ describe('HeaderBar 컴포넌트 테스트', () => {
     });
 
     it('홈 링크에 올바른 스타일이 적용되어야 한다', () => {
-      const homeLink = screen.getByRole('link', { name: '홈' });
+      const homeLink = screen.getByRole('link', { name: 'bookco' });
       expect(homeLink).toHaveClass('hover:scale-105 md:text-base');
     });
   });
@@ -54,7 +54,7 @@ describe('HeaderBar 네비게이션 테스트', () => {
   it('각 네비게이션 버튼 클릭시 올바른 href 속성을 가져야 한다', () => {
     render(<HeaderBar />);
 
-    const homeLink = screen.getByRole('link', { name: '홈' });
-    expect(homeLink).toHaveAttribute('href', '/');
+    const homeLink = screen.getByRole('link', { name: 'bookco' });
+    expect(homeLink).toHaveAttribute('href', '/exchange');
   });
 });
