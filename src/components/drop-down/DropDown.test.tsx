@@ -4,7 +4,15 @@ import { render, screen } from '@testing-library/react';
 
 describe('DropDown', () => {
   it('variant:sorting 일 때 렌더링 확인', () => {
-    render(<DropDown variant="sorting" items={['최신순, 오래된순']} />);
+    render(
+      <DropDown
+        variant="filtering"
+        items={[
+          { value: 1, label: '온라인' },
+          { value: 2, label: '오프라인' },
+        ]}
+      />,
+    );
     expect(screen.getByRole('button'));
   });
 });
