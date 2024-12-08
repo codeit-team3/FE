@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { IcDropDown } from '../../../public/icons';
-import Image from 'next/image';
+import Avatar from '../avatar/Avatar';
 
 interface DropDownProps {
   variant: 'navbar' | 'filtering';
@@ -14,12 +14,7 @@ interface DropDownItem {
   value: number;
 }
 
-function DropDown({
-  variant,
-  items,
-  label = '온/오프라인',
-  imgSrc,
-}: DropDownProps) {
+function DropDown({ variant, items, label, imgSrc }: DropDownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
@@ -44,11 +39,10 @@ function DropDown({
             className="relative h-[40px] w-[40px] justify-center"
             onClick={handleDropDown}
           >
-            <Image
+            <Avatar
               src={imgSrc || '/images/profile.png'}
-              alt={'nav_profile'}
-              layout="fill"
-              className="rounded-full object-cover"
+              alt="nav_profile"
+              size="md"
             />
           </button>
         );
