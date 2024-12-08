@@ -19,9 +19,11 @@ function IcDropDown({
       height={height}
       viewBox="0 0 24 24"
       fill="none"
+      className={`${isActive ? color : 'stroke-gray-dark-hover'}`}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
+        // className={`${isActive ? color : 'stroke-gray-dark-hover'}`}
         d="M17 10L12 15L7 10"
         stroke={isActive ? color : '#909192'}
         strokeWidth="1.4"
