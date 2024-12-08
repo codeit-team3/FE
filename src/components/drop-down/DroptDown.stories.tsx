@@ -15,13 +15,27 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const NavBarLarge: Story = {
-  argTypes: {
-    variant: {
-      options: ['navbar', 'filtering'],
-
-      control: { type: 'radio' },
-    },
+  args: {
+    variant: 'navbar',
+    items: [
+      { value: 1, label: '마이페이지' },
+      { value: 2, label: '로그아웃' },
+    ],
   },
+};
+
+export const FilteringLarge: Story = {
+  args: {
+    variant: 'filtering',
+    items: [
+      { value: 1, label: '온라인' },
+      { value: 2, label: '오프라인' },
+    ],
+    label: '온/오프라인',
+  },
+};
+
+export const FilteringSmall: Story = {
   args: {
     variant: 'filtering',
     items: [
@@ -30,5 +44,6 @@ export const NavBarLarge: Story = {
       { value: 3, label: '8~10명' },
       { value: 4, label: '11명 이상' },
     ],
+    label: '인원수',
   },
 };
