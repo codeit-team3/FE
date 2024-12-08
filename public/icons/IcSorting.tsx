@@ -11,7 +11,7 @@ function IcSorting({
   width = 24,
   height = 24,
   isActive = false,
-  color = '#111827',
+  color,
 }: IcSortingProps) {
   return (
     <svg
@@ -20,16 +20,17 @@ function IcSorting({
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={`${isActive ? color : 'stroke-gray-dark-hover'}`}
     >
       <path
         d="M3 11L7 7M7 7L11 11M7 7V17"
-        stroke={isActive ? '#F9FAFB' : color}
+        stroke={isActive ? color : '#909192'}
         strokeWidth="1.8"
         strokeLinecap="round"
       />
       <path
         d="M21 13L17 17M17 17L13 13M17 17V7"
-        stroke={isActive ? '#F9FAFB' : color}
+        stroke={isActive ? color : '#909192'}
         strokeWidth="1.8"
         strokeLinecap="round"
       />

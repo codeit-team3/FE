@@ -12,33 +12,14 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const LargeDefault: Story = {
+export const byDate: Story = {
   args: {
-    label: '마감 임박',
-    isActive: false,
-    isLarge: true,
-  },
-};
-export const LargeActive: Story = {
-  args: {
-    label: '마감 임박',
-    isActive: true,
-    isLarge: true,
+    variant: 'byDate',
   },
 };
 
-export const SmallDefault: Story = {
+export const byDeadline: Story = {
   args: {
-    label: '마감 임박',
-    isActive: false,
-    isLarge: false,
-  },
-};
-
-export const SmallActive: Story = {
-  args: {
-    label: '마감 임박',
-    isActive: true,
-    isLarge: false,
+    variant: 'byDeadline',
   },
 };
