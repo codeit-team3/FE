@@ -9,7 +9,7 @@ function FilterCheckbox({ label, ...props }: FilterCheckboxProps) {
   const checked = props.checked;
   return (
     <label
-      className={`inline-flex h-10 w-fit min-w-24 cursor-pointer items-center gap-x-1 rounded-xl border bg-white px-[14px] py-2 transition duration-200 ${
+      className={`inline-flex h-10 w-fit min-w-24 cursor-pointer items-center gap-x-2 rounded-xl border bg-white px-[14px] py-2 transition duration-200 ${
         checked ? 'border-green-normal' : 'border-gray-normal-hover'
       }`}
     >
@@ -25,7 +25,7 @@ function FilterCheckbox({ label, ...props }: FilterCheckboxProps) {
           type="checkbox"
           id="checkbox"
           {...props}
-          className="peer absolute h-5 w-5 appearance-none rounded-[5px] border-2 border-gray-normal-hover bg-transparent transition duration-200 checked:border-green-normal checked:bg-green-normal"
+          className="peer absolute h-5 w-5 appearance-none rounded-[5px] border border-gray-dark-hover bg-transparent transition duration-200 checked:border-green-normal checked:bg-green-normal"
         />
         <IcCheck
           className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform transition duration-200 ${
