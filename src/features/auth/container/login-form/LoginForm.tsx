@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginFormSchema, LoginFormData } from '../../types/loginFormSchema';
 import { login } from '../../api/auth';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { AUTH_ERROR_MESSAGES } from '../../constants/messages';
 
 type LoginErrorCode = 'USER_NOT_FOUND' | 'INVALID_CREDENTIALS' | 'SERVER_ERROR';
@@ -20,8 +20,9 @@ interface LoginError {
   };
 }
 
-function LoginForm() {
+export default function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const {
     register,
     handleSubmit,
@@ -38,7 +39,9 @@ function LoginForm() {
       const response = await login(data);
       console.log('로그인 성공:', response);
       reset();
-      router.replace('/');
+
+      const returnUrl = searchParams.get('returnUrl') || '/';
+      router.replace(returnUrl);
     } catch (error) {
       const { code } = (error as LoginError).response.data;
 
@@ -95,5 +98,3 @@ function LoginForm() {
     </div>
   );
 }
-
-export default LoginForm;
