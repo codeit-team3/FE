@@ -1,9 +1,9 @@
 import Image from 'next/image';
-import { TextChip } from '../text-chip/TextChip';
 import ParticipantCounter from '../participant-counter/ParticipantCounter';
 import ConfirmedLabel from '../confirmed-label/ConfirmedLabel';
 import ProgressBar from '../progress-bar/ProgressBar';
 import { HeartIcon, RightArrow, WaveIcon } from '../../../public/icons';
+import Chip from '@/components/chip/Chip';
 
 interface CardProps {
   title: string;
@@ -57,8 +57,8 @@ function Card({
               </span>
             </div>
             <div className="flex gap-2">
-              <TextChip text={date} />
-              <TextChip text={time} isTime={true} />
+              <Chip text={date} />
+              <Chip text={time} />
             </div>
           </div>
           <button
