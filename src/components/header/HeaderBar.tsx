@@ -1,9 +1,16 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import NavButton from './NavButton';
+import { useAuthStore } from '@/store/authStore';
 
 function HeaderBar() {
+  const { isLoggedIn, checkLoginStatus } = useAuthStore();
+
+  useEffect(() => {
+    checkLoginStatus();
+  }, [checkLoginStatus]);
+
   const navItems = [
     { href: '/', label: '홈' },
     { href: '/bookclub', label: '책 모임' },
@@ -23,7 +30,9 @@ function HeaderBar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <NavButton href="/login">로그인</NavButton>
+          <NavButton href={isLoggedIn ? '/profile' : '/login'}>
+            {isLoggedIn ? '프로필' : '로그인'}
+          </NavButton>
         </div>
       </div>
     </nav>
