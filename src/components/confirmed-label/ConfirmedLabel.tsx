@@ -23,11 +23,8 @@ function ConfirmedLabel({
   if (!visible) return null;
 
   const text = variant === LABEL_VARIANTS.confirmed ? '개설확정' : '모집마감';
-  const colorClass = isPast
-    ? 'text-gray-darker'
-    : variant === LABEL_VARIANTS.confirmed
-      ? 'text-green-normal'
-      : 'text-[#007aff]'; // TODO: 포인트 컬러 수정될 수 있음
+  const isConfirmed = variant === LABEL_VARIANTS.confirmed;
+  const colorClass = isPast ? 'text-gray-dark-02' : 'text-[#007aff]'; // TODO: 포인트 컬러 수정될 수 있음
 
   return (
     <div className={`flex items-center gap-0.5 ${className || ''}`} {...props}>
@@ -37,6 +34,7 @@ function ConfirmedLabel({
         className={colorClass}
         width={20}
         height={20}
+        filled={!isConfirmed}
       />
       <span
         role="confirmed-text"
