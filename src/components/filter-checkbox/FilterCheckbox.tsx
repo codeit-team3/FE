@@ -10,12 +10,12 @@ function FilterCheckbox({ label, ...props }: FilterCheckboxProps) {
   return (
     <label
       className={`inline-flex h-10 w-fit min-w-24 cursor-pointer items-center gap-x-2 rounded-xl border bg-white px-[14px] py-2 transition duration-200 ${
-        checked ? 'border-green-normal' : 'border-gray-normal-hover'
+        checked ? 'border-green-normal-01' : 'border-gray-normal-02'
       }`}
     >
       <span
         className={`text-sm font-medium ${
-          checked ? 'text-green-normal' : 'text-gray-dark-hover'
+          checked ? 'text-green-normal-01' : 'text-gray-dark-02'
         }`}
       >
         {label}
@@ -25,7 +25,7 @@ function FilterCheckbox({ label, ...props }: FilterCheckboxProps) {
           type="checkbox"
           id="checkbox"
           {...props}
-          className="peer absolute h-5 w-5 appearance-none rounded-[5px] border border-gray-dark-hover bg-transparent transition duration-200 checked:border-green-normal checked:bg-green-normal"
+          className="peer absolute h-5 w-5 appearance-none rounded-[5px] border border-gray-dark-02 bg-transparent transition duration-200 checked:border-green-normal-01 checked:bg-green-normal-01"
         />
         <IcCheck
           className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform transition duration-200 ${
