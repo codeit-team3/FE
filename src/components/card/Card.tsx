@@ -83,7 +83,9 @@ function Card({
               />
               {isConfirmed && <ConfirmedLabel />}
             </div>
-            <ProgressBar current={currentParticipants} max={maxParticipants} />
+            <ProgressBar
+              percentage={(currentParticipants / maxParticipants) * 100}
+            />
           </div>
 
           <div className="flex shrink-0 items-end">
