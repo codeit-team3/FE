@@ -40,13 +40,29 @@ export const SquareFilled: Story = {
   },
 };
 
-export const AllVariants: Story = {
+export const Past: Story = {
+  args: {
+    text: '자유책',
+    variant: 'rounded-filled',
+    isPast: true,
+  },
+};
+
+export const AllStates: Story = {
   render: () => (
-    <div className="flex gap-2">
-      <Chip text="모집중" variant="rounded-filled" />
-      <Chip text="1월 7일" variant="rounded-light" />
-      <Chip text="오프라인" variant="square-light" />
-      <Chip text="마감" variant="square-filled" />
+    <div className="flex flex-col gap-4">
+      <div className="flex gap-2">
+        <Chip text="모집중" variant="rounded-filled" />
+        <Chip text="1월 7일" variant="rounded-light" />
+        <Chip text="오프라인" variant="square-light" />
+        <Chip text="마감" variant="square-filled" />
+      </div>
+      <div className="flex gap-2">
+        <Chip text="자유책" variant="rounded-filled" isPast={true} />
+        <Chip text="1월 7일" variant="rounded-light" isPast={true} />
+        <Chip text="오프라인" variant="square-light" isPast={true} />
+        <Chip text="마감" variant="square-filled" isPast={true} />
+      </div>
     </div>
   ),
 };

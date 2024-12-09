@@ -56,6 +56,7 @@ export const Past: Story = {
           category="자유책"
           location="을지로 3가"
           datetime="12/14(토) 오전 10:00"
+          isPast={true}
         />
         <Card.Footer
           currentParticipants={17}

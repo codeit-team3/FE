@@ -31,13 +31,11 @@ function AvatarGroup({
 
         {remainingCount > 0 && (
           <div
-            className={`relative flex items-center justify-center rounded-full border border-white bg-gray-100 ${
+            className={`relative flex items-center justify-center rounded-full border border-white bg-gray-normal-01 ${
               AVATAR_SIZE[size]
-            } ${isPast ? 'opacity-60' : ''}`}
+            } ${isPast ? 'opacity-40' : ''}`}
           >
-            <span
-              className={`text-sm font-medium ${isPast ? 'text-gray-600' : 'text-gray-900'}`}
-            >
+            <span className={`text-sm font-medium text-gray-dark-01`}>
               +{remainingCount}
             </span>
           </div>

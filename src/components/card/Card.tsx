@@ -36,14 +36,21 @@ interface CardHeaderProps {
   category: string;
   location: string;
   datetime: string;
+  isPast?: boolean;
 }
 
-function CardHeader({ title, category, location, datetime }: CardHeaderProps) {
+function CardHeader({
+  title,
+  category,
+  location,
+  datetime,
+  isPast = false,
+}: CardHeaderProps) {
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-semibold text-gray-black">{title}</h3>
-        <Chip text={category} />
+        <Chip text={category} isPast={isPast} />
       </div>
       <div className="flex items-center gap-1.5 text-sm text-gray-dark-03">
         <span className="font-semibold">{location}</span>

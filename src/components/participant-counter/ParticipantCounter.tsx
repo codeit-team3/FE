@@ -12,7 +12,7 @@ function ParticipantCounter({
   ...props
 }: ParticipantCounterProps) {
   const isFull = current >= max;
-  const primaryColor = isPast ? 'text-gray-darker' : 'text-green-normal-01';
+  const primaryColor = isPast ? 'text-gray-dark-02' : 'text-green-normal-01';
   const maxColor = isFull ? primaryColor : 'text-gray-dark-01';
 
   return (
