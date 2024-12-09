@@ -28,6 +28,7 @@ export const FilteringLarge: Story = {
   args: {
     variant: 'filtering',
     items: [
+      { value: 1, label: '온/오프라인' },
       { value: 1, label: '온라인' },
       { value: 2, label: '오프라인' },
     ],
@@ -39,6 +40,7 @@ export const FilteringSmall: Story = {
   args: {
     variant: 'filtering',
     items: [
+      { value: 1, label: '전체' },
       { value: 1, label: '2~4명' },
       { value: 2, label: '5~7명' },
       { value: 3, label: '8~10명' },
