@@ -9,7 +9,7 @@ const useDropDownClose = (
   useEffect(() => {
     const onClickPage = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
-        setIsOpen((prev) => !prev);
+        setIsOpen(false);
       }
     };
 

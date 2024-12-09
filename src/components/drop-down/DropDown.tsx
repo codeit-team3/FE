@@ -32,7 +32,7 @@ function DropDown({ variant, imgSrc, onChangeSelection }: DropDownProps) {
     if (onChangeSelection) {
       onChangeSelection(item.value);
     }
-    setIsOpen(!isOpen);
+    setIsOpen(false);
   };
 
   const renderButton = (variant: string, isActive: boolean) => {
