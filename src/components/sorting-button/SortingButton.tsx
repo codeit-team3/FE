@@ -25,13 +25,13 @@ function SortingButton({ variant }: SortingButtonProps) {
     <button
       className={`flex h-[40px] items-center rounded-xl border px-[12px] py-[8px] text-sm ${
         isActive
-          ? 'border-green-normal text-green-normal'
-          : 'border-gray-dark-hover text-gray-dark-hover'
+          ? 'border-green-normal-01 text-green-normal-01'
+          : 'border-gray-normal-02 text-gray-dark-02'
       }`}
       onClick={onClickSorting}
     >
       <span className="pr-[4px]">
-        <IcSorting isActive={isActive} color="stroke-green-normal" />
+        <IcSorting isActive={isActive} color="stroke-green-normal-02" />
       </span>
       {getLabel(variant)}
     </button>

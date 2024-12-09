@@ -20,7 +20,7 @@ function IcSorting({
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={`${isActive ? color : 'stroke-gray-dark-hover'}`}
+      className={`${isActive ? color : 'stroke-gray-dark-02'}`}
     >
       <path
         d="M3 11L7 7M7 7L11 11M7 7V17"
