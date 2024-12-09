@@ -31,7 +31,7 @@ export const Default: Story = {
     );
   },
   args: {
-    label: '신청 가능',
+    label: '신청가능',
     'aria-label': '신청 가능한 모임 필터',
   },
 };
