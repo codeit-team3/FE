@@ -2,28 +2,34 @@ import React, { useRef, useState } from 'react';
 import { IcDropDown } from '../../../public/icons';
 import Avatar from '../avatar/Avatar';
 import useDropDownClose from './hooks/useDropDownClose';
+import { MENU_ITEMS, DROPDOWN_LABELS } from '@/constants/index';
 
 interface DropDownProps {
-  variant: 'navbar' | 'filtering';
-  items: Array<DropDownItem>;
-  label?: string;
+  variant: 'navbar' | 'onOff' | 'memberCount' | 'sortingReview';
+  onChangeSelection?: (selectedLabel: string | undefined) => void;
   imgSrc?: string;
 }
 
 interface DropDownItem {
   label: string;
-  value: number;
+  value: string;
 }
 
-function DropDown({ variant, items, label, imgSrc }: DropDownProps) {
+function DropDown({ variant, imgSrc, onChangeSelection }: DropDownProps) {
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useDropDownClose(dropDownRef, false);
   const [isActive, setIsActive] = useState(false);
-  const [seletedLabel, setSeletedLabel] = useState(label);
+  const [seletedLabel, setSeletedLabel] = useState<string>(
+    DROPDOWN_LABELS[variant],
+  );
 
+  const items = MENU_ITEMS[variant];
   const onClickDropDownItem = (item: DropDownItem): void => {
     setIsActive(true);
     setSeletedLabel(item.label);
+    if (onChangeSelection) {
+      onChangeSelection(item.value);
+    }
     setIsOpen(!isOpen);
   };
 
@@ -46,7 +52,7 @@ function DropDown({ variant, items, label, imgSrc }: DropDownProps) {
             />
           </button>
         );
-      case 'filtering':
+      default:
         return (
           <button
             className={`box-border flex h-[40px] items-center justify-start rounded-xl border py-[8px] pl-[14px] pr-[6px] text-sm font-medium ${colorClass}`}
@@ -62,7 +68,7 @@ function DropDown({ variant, items, label, imgSrc }: DropDownProps) {
   return (
     <div
       ref={dropDownRef}
-      className={`relative flex w-max min-w-max ${variant === 'navbar' && 'justify-end'}`}
+      className={`relative flex w-max min-w-max ${(variant === 'navbar' || variant == 'sortingReview') && 'justify-end'}`}
     >
       {renderButton(variant, isActive)}
 

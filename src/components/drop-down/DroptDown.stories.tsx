@@ -14,38 +14,26 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const NavBarLarge: Story = {
+export const NavBar: Story = {
   args: {
     variant: 'navbar',
-    items: [
-      { value: 1, label: '마이페이지' },
-      { value: 2, label: '로그아웃' },
-    ],
   },
 };
 
-export const FilteringLarge: Story = {
+export const OnOff: Story = {
   args: {
-    variant: 'filtering',
-    items: [
-      { value: 1, label: '온/오프라인' },
-      { value: 1, label: '온라인' },
-      { value: 2, label: '오프라인' },
-    ],
-    label: '온/오프라인',
+    variant: 'onOff',
   },
 };
 
-export const FilteringSmall: Story = {
+export const MemberCount: Story = {
   args: {
-    variant: 'filtering',
-    items: [
-      { value: 1, label: '전체' },
-      { value: 1, label: '2~4명' },
-      { value: 2, label: '5~7명' },
-      { value: 3, label: '8~10명' },
-      { value: 4, label: '11명 이상' },
-    ],
-    label: '인원수',
+    variant: 'memberCount',
+  },
+};
+
+export const SortingReview: Story = {
+  args: {
+    variant: 'sortingReview',
   },
 };
