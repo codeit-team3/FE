@@ -13,122 +13,186 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof Card>;
 
-const Template = (args: CardProps) => (
-  <div className="w-[336px]">
-    <div className="mb-4">
-      <Card.Image
-        url="https://picsum.photos/seed/bookclub/800/450"
-        alt="독서 모임 이미지"
-      />
-    </div>
-    <Card {...args}>
-      <Card.Header
-        title="울지로에서 만나는 독서 모임"
-        category="자유책"
-        location="을지로 3가"
-        datetime="12/14(토) 오전 10:00"
-      />
-      <Card.Host nickname="김모임" />
-      <Card.Footer
-        currentParticipants={17}
-        maxParticipants={20}
-        isConfirmed={true}
-        isPast={false}
-        participants={[
-          { src: 'https://picsum.photos/seed/1/200', alt: '참가자1' },
-          { src: 'https://picsum.photos/seed/2/200', alt: '참가자2' },
-          { src: 'https://picsum.photos/seed/3/200', alt: '참가자3' },
-          { src: 'https://picsum.photos/seed/4/200', alt: '참가자4' },
-          { src: 'https://picsum.photos/seed/5/200', alt: '참가자5' },
-          { src: 'https://picsum.photos/seed/6/200', alt: '참가자6' },
-        ]}
-      />
-      <Card.EndedOverlay />
-    </Card>
-  </div>
-);
-
-export const Default: Story = {
-  render: Template,
-  args: {
-    isEnded: false,
-  },
-};
-
-export const Past: Story = {
+// 기본 데스크톱 레이아웃
+export const Desktop: Story = {
   render: (args: CardProps) => (
-    <div className="w-[336px]">
-      <div className="mb-4">
+    <div className="w-[800px]">
+      <Card {...args}>
         <Card.Image
           url="https://picsum.photos/seed/bookclub/800/450"
           alt="독서 모임 이미지"
         />
-      </div>
+        <Card.Box className="flex-1 justify-between">
+          <Card.Info
+            title="을지로에서 만나는 독서 모임"
+            category="자유책"
+            location="을지로 3가"
+            datetime="12/14(토) 오전 10:00"
+          />
+          <Card.Status
+            currentParticipants={17}
+            maxParticipants={20}
+            isConfirmed={true}
+            isPast={false}
+            participants={[
+              { src: 'https://picsum.photos/seed/1/200', alt: '참가자1' },
+              { src: 'https://picsum.photos/seed/2/200', alt: '참가자2' },
+              { src: 'https://picsum.photos/seed/3/200', alt: '참가자3' },
+            ]}
+          />
+        </Card.Box>
+      </Card>
+    </div>
+  ),
+};
+
+// 호스트 정보가 포함된 레이아웃
+export const WithHost: Story = {
+  render: (args: CardProps) => (
+    <div className="w-[800px]">
       <Card {...args}>
-        <Card.Header
-          title="울지로에서 만나는 독서 모임"
-          category="자유책"
-          location="을지로 3가"
-          datetime="12/14(토) 오전 10:00"
-          isPast={true}
+        <Card.Image
+          url="https://picsum.photos/seed/bookclub/800/450"
+          alt="독서 모임 이미지"
+        />
+        <Card.Box className="flex-1 justify-between">
+          <div className="space-y-4">
+            <Card.Info
+              title="을지로에서 만나는 독서 모임"
+              category="자유책"
+              location="을지로 3가"
+              datetime="12/14(토) 오전 10:00"
+            />
+            <Card.Host nickname="김모임" />
+          </div>
+          <Card.Status
+            currentParticipants={17}
+            maxParticipants={20}
+            isConfirmed={true}
+            isPast={false}
+            participants={[
+              { src: 'https://picsum.photos/seed/1/200', alt: '참가자1' },
+              { src: 'https://picsum.photos/seed/2/200', alt: '참가자2' },
+              { src: 'https://picsum.photos/seed/3/200', alt: '참가자3' },
+            ]}
+          />
+        </Card.Box>
+      </Card>
+    </div>
+  ),
+};
+
+// 모바일 레이아웃
+export const Mobile: Story = {
+  render: (args: CardProps) => (
+    <div className="w-[360px]">
+      <Card {...args}>
+        <Card.Image
+          url="https://picsum.photos/seed/bookclub/800/450"
+          alt="독서 모임 이미지"
+          isLiked={true}
+          onLikeClick={() => console.log('좋아요 클릭')}
         />
         <Card.Host nickname="김모임" />
-        <Card.Footer
-          currentParticipants={17}
-          maxParticipants={20}
-          isConfirmed={true}
-          isPast={true}
-          participants={[
-            { src: 'https://picsum.photos/seed/1/200', alt: '참가자1' },
-            { src: 'https://picsum.photos/seed/2/200', alt: '참가자2' },
-            { src: 'https://picsum.photos/seed/3/200', alt: '참가자3' },
-            { src: 'https://picsum.photos/seed/4/200', alt: '참가자4' },
-            { src: 'https://picsum.photos/seed/5/200', alt: '참가자5' },
-            { src: 'https://picsum.photos/seed/6/200', alt: '참가자6' },
-          ]}
+        <Card.Box>
+          <Card.Info
+            title="을지로에서 만나는 독서 모임"
+            category="자유책"
+            location="을지로 3가"
+            datetime="12/14(토) 오전 10:00"
+          />
+          <Card.Status
+            currentParticipants={17}
+            maxParticipants={20}
+            isConfirmed={true}
+            isPast={false}
+            participants={[
+              { src: 'https://picsum.photos/seed/1/200', alt: '참가자1' },
+              { src: 'https://picsum.photos/seed/2/200', alt: '참가자2' },
+              { src: 'https://picsum.photos/seed/3/200', alt: '참가자3' },
+            ]}
+          />
+        </Card.Box>
+        <button className="w-full rounded-xl bg-green-normal-01 py-4 text-white">
+          참여하기
+        </button>
+      </Card>
+    </div>
+  ),
+};
+
+// 종료된 모임 카드
+export const Ended: Story = {
+  render: (args: CardProps) => (
+    <div className="w-[800px]">
+      <Card {...args}>
+        <Card.Image
+          url="https://picsum.photos/seed/bookclub/800/450"
+          alt="독서 모임 이미지"
         />
+        <Card.Box className="flex-1 justify-between">
+          <div className="space-y-4">
+            <Card.Info
+              title="을지로에서 만나는 독서 모임"
+              category="자유책"
+              location="을지로 3가"
+              datetime="12/14(토) 오전 10:00"
+              isPast={true}
+            />
+            <Card.Host nickname="김모임" />
+          </div>
+          <Card.Status
+            currentParticipants={17}
+            maxParticipants={20}
+            isConfirmed={true}
+            isPast={true}
+            participants={[
+              { src: 'https://picsum.photos/seed/1/200', alt: '참가자1' },
+              { src: 'https://picsum.photos/seed/2/200', alt: '참가자2' },
+              { src: 'https://picsum.photos/seed/3/200', alt: '참가자3' },
+            ]}
+          />
+        </Card.Box>
         <Card.EndedOverlay />
       </Card>
     </div>
   ),
   args: {
-    isEnded: false,
+    isEnded: true,
   },
 };
 
-export const Host: Story = {
-  args: {
-    children: <Card.Host nickname="김모임" />,
-  },
-};
-
-export const HostOnly: StoryObj<typeof Card.Host> = {
-  render: (args) => <Card.Host {...args} />,
-  args: {
-    nickname: '김모임',
-  },
-};
-
-// 다양한 호스트 이미지를 보여주기 위한 추가 스토리
-export const MultipleHosts: Story = {
-  render: () => (
-    <div className="flex">
-      <Card.Host nickname="김모임" />
-      <Card.Host nickname="이모임" />
-      <Card.Host nickname="박모임" />
+// 좋아요 기능이 있는 카드
+export const WithLike: Story = {
+  render: (args: CardProps) => (
+    <div className="w-[800px]">
+      <Card {...args}>
+        <Card.Image
+          url="https://picsum.photos/seed/bookclub/800/450"
+          alt="독서 모임 이미지"
+          isLiked={true}
+          onLikeClick={() => console.log('좋아요 클릭')}
+        />
+        <Card.Box className="flex-1 justify-between">
+          <Card.Info
+            title="을지로에서 만나는 독서 모임"
+            category="자유책"
+            location="을지로 3가"
+            datetime="12/14(토) 오전 10:00"
+          />
+          <Card.Status
+            currentParticipants={17}
+            maxParticipants={20}
+            isConfirmed={true}
+            isPast={false}
+            participants={[
+              { src: 'https://picsum.photos/seed/1/200', alt: '참가자1' },
+              { src: 'https://picsum.photos/seed/2/200', alt: '참가자2' },
+              { src: 'https://picsum.photos/seed/3/200', alt: '참가자3' },
+            ]}
+          />
+        </Card.Box>
+      </Card>
     </div>
   ),
-};
-
-// Image 컴포넌트만 보여주는 스토리
-export const ImageOnly: StoryObj<typeof Card.Image> = {
-  render: (args) => (
-    <div className="relative h-[200px] w-[336px]">
-      <Card.Image {...args} />
-    </div>
-  ),
-  args: {
-    url: 'https://picsum.photos/seed/bookclub/800/450',
-    alt: '독서 모임 이미지',
-  },
 };

@@ -20,20 +20,34 @@ export interface CardProps {
   isEnded?: boolean;
 }
 
+// Box 컴포넌트 추가
+interface CardBoxProps {
+  children: ReactNode;
+  className?: string;
+}
+
+function CardBox({ children, className = '' }: CardBoxProps) {
+  return (
+    <div
+      className={`flex min-h-[180px] flex-col justify-between rounded-2xl border border-gray-200 p-6 ${className}`}
+    >
+      {children}
+    </div>
+  );
+}
+
 function Card({ children, isEnded = false }: CardProps) {
   return (
     <CardContext.Provider value={{ isEnded }}>
-      <article className="relative h-full min-h-[180px] w-full min-w-[336px] rounded-2xl border border-gray-200 p-4">
-        <div className="flex h-full w-full flex-col justify-between">
-          {children}
-        </div>
+      <article className="relative flex h-full w-full min-w-[336px] flex-col gap-4">
+        {children}
       </article>
     </CardContext.Provider>
   );
 }
 
-// Header 컴포넌트
-interface CardHeaderProps {
+// CardInfo 컴포넌트 (기존 CardMeetingInfo)
+interface CardInfoProps {
   title: string;
   category: string;
   location: string;
@@ -41,13 +55,13 @@ interface CardHeaderProps {
   isPast?: boolean;
 }
 
-function CardHeader({
+function CardInfo({
   title,
   category,
   location,
   datetime,
   isPast = false,
-}: CardHeaderProps) {
+}: CardInfoProps) {
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-between">
@@ -65,8 +79,8 @@ function CardHeader({
   );
 }
 
-// Footer 컴포넌트
-interface CardFooterProps {
+// CardStatus 컴포넌트 (기존 CardParticipantInfo)
+interface CardStatusProps {
   currentParticipants: number;
   maxParticipants: number;
   isConfirmed?: boolean;
@@ -77,13 +91,13 @@ interface CardFooterProps {
   }>;
 }
 
-function CardFooter({
+function CardStatus({
   currentParticipants,
   maxParticipants,
   isConfirmed = false,
   isPast = false,
   participants,
-}: CardFooterProps) {
+}: CardStatusProps) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
@@ -170,7 +184,7 @@ function CardImage({
   onLikeClick,
 }: CardImageProps) {
   return (
-    <div className="relative h-full w-full overflow-hidden rounded-[20px]">
+    <div className="relative h-[200px] w-full overflow-hidden rounded-[20px]">
       <Image src={url} alt={alt} fill className="object-cover" />
       <div className="absolute right-5 top-[15px] z-10">
         <HeartIcon isLiked={isLiked} onClick={onLikeClick} />
@@ -180,8 +194,9 @@ function CardImage({
 }
 
 // Compound Components 설정
-Card.Header = CardHeader;
-Card.Footer = CardFooter;
+Card.Box = CardBox;
+Card.Info = CardInfo;
+Card.Status = CardStatus;
 Card.EndedOverlay = CardEndedOverlay;
 Card.Host = CardHost;
 Card.Image = CardImage;
