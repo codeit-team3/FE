@@ -7,10 +7,11 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
+  tags: ['autodocs'],
 } satisfies Meta<typeof Card>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Card>;
 
 const Template = (args: CardProps) => (
   <div className="h-[180px] w-[336px]">
@@ -31,7 +32,7 @@ const Template = (args: CardProps) => (
           { src: 'https://picsum.photos/seed/2/200', alt: '참가자2' },
           { src: 'https://picsum.photos/seed/3/200', alt: '참가자3' },
           { src: 'https://picsum.photos/seed/4/200', alt: '참가자4' },
-          { src: 'https://picsum.photos/seed/5/200', alt: '참가자5' },
+          { src: 'https://picsum.photos/seed/5/200', alt: '참가��5' },
           { src: 'https://picsum.photos/seed/6/200', alt: '참가자6' },
         ]}
       />
@@ -79,4 +80,28 @@ export const Past: Story = {
   args: {
     isEnded: false,
   },
+};
+
+export const Host: Story = {
+  args: {
+    children: <Card.Host nickname="김모임" />,
+  },
+};
+
+export const HostOnly: StoryObj<typeof Card.Host> = {
+  render: (args) => <Card.Host {...args} />,
+  args: {
+    nickname: '김모임',
+  },
+};
+
+// 다양한 호스트 이미지를 보여주기 위한 추가 스토리
+export const MultipleHosts: Story = {
+  render: () => (
+    <div className="flex">
+      <Card.Host nickname="김모임" />
+      <Card.Host nickname="이모임" />
+      <Card.Host nickname="박모임" />
+    </div>
+  ),
 };

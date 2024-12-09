@@ -5,7 +5,7 @@ import AvatarGroup from '../avatar-group/AvatarGroup';
 import ConfirmedLabel from '../confirmed-label/ConfirmedLabel';
 import ProgressBar from '../progress-bar/ProgressBar';
 import Avatar from '../avatar/Avatar';
-import { LocationIcon } from '../../../public/icons';
+import { LocationIcon, HostIcon } from '../../../public/icons';
 
 interface CardContextType {
   isEnded?: boolean;
@@ -124,9 +124,39 @@ function CardEndedOverlay() {
   );
 }
 
+// Host 컴포넌트 인터페이스
+interface CardHostProps {
+  nickname: string;
+}
+
+// Host 컴포넌트
+function CardHost({ nickname }: CardHostProps) {
+  return (
+    <div className="flex items-center gap-2">
+      <div className="relative">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-normal-01">
+          <Avatar
+            size="md"
+            src={`https://picsum.photos/200/200?random=${Math.floor(Math.random() * 1000)}`}
+            alt={`${nickname}님의 프로필`}
+          />
+        </div>
+        <div className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-gray-normal-01 bg-green-normal-01">
+          <HostIcon />
+        </div>
+      </div>
+      <span className="text-sm">
+        <span className="text-green-normal-01">{nickname}님</span>
+        <span className="text-gray-darker">의 모임</span>
+      </span>
+    </div>
+  );
+}
+
 // Compound Components 설정
 Card.Header = CardHeader;
 Card.Footer = CardFooter;
 Card.EndedOverlay = CardEndedOverlay;
+Card.Host = CardHost;
 
 export default Card;
