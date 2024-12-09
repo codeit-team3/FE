@@ -25,7 +25,7 @@ function FilterCheckbox({ label, ...props }: FilterCheckboxProps) {
           type="checkbox"
           id="checkbox"
           {...props}
-          className="peer absolute h-5 w-5 appearance-none rounded-[5px] border border-gray-dark-02 bg-transparent transition duration-200 checked:border-green-normal-01 checked:bg-green-normal-01"
+          className="absolute h-5 w-5 appearance-none rounded-[5px] border border-gray-dark-02 bg-transparent transition duration-200 checked:border-green-normal-01 checked:bg-green-normal-01"
         />
         <IcCheck
           className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform transition duration-200 ${
