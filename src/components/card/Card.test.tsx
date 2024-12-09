@@ -89,6 +89,6 @@ describe('Card', () => {
   it('참가자 수가 올바르게 표시되어야 함', () => {
     render(<Card {...defaultProps} />);
 
-    expect(screen.getByText('5/10')).toBeInTheDocument();
+    expect(screen.getByRole('participant-count')).toHaveTextContent('5/10');
   });
 });
