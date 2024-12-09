@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-const AUTH_REQUIRED_PATHS = ['/exchange', '/wish', '/profile'];
+const AUTH_REQUIRED_PATHS = ['/wish', '/profile'];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -24,5 +24,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/exchange', '/wish', '/profile', '/login'],
+  matcher: ['/wish', '/profile', '/login'],
 };
