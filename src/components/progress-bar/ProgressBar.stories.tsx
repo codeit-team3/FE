@@ -78,15 +78,15 @@ export const AllStates: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
       <div>
-        <p className="mb-2 text-sm text-gray-dark">기본 상태</p>
+        <p className="mb-2 text-sm">기본 상태</p>
         <ProgressBar percentage={25} />
       </div>
       <div>
-        <p className="mb-2 text-sm text-gray-dark">지난 모임</p>
+        <p className="mb-2 text-sm">지난 모임</p>
         <ProgressBar percentage={75} isPast={true} />
       </div>
       <div>
-        <p className="mb-2 text-sm text-gray-dark">커스텀 색상</p>
+        <p className="mb-2 text-sm">커스텀 색상</p>
         <ProgressBar percentage={50} color="bg-blue-500" />
       </div>
     </div>

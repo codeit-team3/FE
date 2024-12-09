@@ -13,7 +13,8 @@ function ProgressBar({
   className,
   ...props
 }: ProgressBarProps) {
-  const fillColor = color || (isPast ? 'bg-gray-darker' : 'bg-green-normal');
+  const fillColor =
+    color || (isPast ? 'bg-gray-dark-02' : 'bg-green-normal-01');
 
   return (
     <div
@@ -21,7 +22,7 @@ function ProgressBar({
       aria-valuenow={percentage}
       aria-valuemin={0}
       aria-valuemax={100}
-      className={`h-1 w-full rounded-md bg-gray-normal ${className || ''}`}
+      className={`h-1 w-full rounded-md bg-gray-normal-01 ${className || ''}`}
       {...props}
     >
       <div
