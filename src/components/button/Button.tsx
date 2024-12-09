@@ -12,12 +12,12 @@ const SIZE = {
   modal: 'min-w-[120px] h-[44px] px-4 text-base',
   large: 'min-w-[332px] h-[44px] px-4 text-base',
   small: 'min-w-[120px] h-[40px] px-3 text-sm',
-};
+} as const;
 
 const COLOR_STYLES = {
   'orange-600': ['bg-orange-600', 'text-orange-600', 'border-orange-600'],
   'gray-400': ['bg-gray-400', 'text-gray-400', 'border-gray-400'],
-};
+} as const;
 
 export default function Button({
   text,
