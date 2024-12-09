@@ -46,7 +46,7 @@ describe('HeaderBar 컴포넌트 테스트', () => {
       const bookclubLink = screen.getByRole('link', {
         name: bookclubItem!.label,
       });
-      expect(bookclubLink).toHaveClass('text-green-light');
+      expect(bookclubLink).toHaveClass('text-green-light-01');
     });
   });
 });

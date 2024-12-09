@@ -16,7 +16,7 @@ function NavButton({ href, children, isActive }: NavButtonProps) {
   return (
     <Link
       href={href}
-      className={`hover:scale-105 ${active ? 'font-bold' : 'text-green-light'}`}
+      className={`hover:scale-105 ${active ? 'font-bold' : 'text-green-light-01'}`}
     >
       {children}
     </Link>
