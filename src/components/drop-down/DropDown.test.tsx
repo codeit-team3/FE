@@ -3,7 +3,7 @@ import DropDown from './DropDown';
 import { render, screen } from '@testing-library/react';
 
 describe('DropDown', () => {
-  it('variant:sorting 일 때 렌더링 확인', () => {
+  it('variant:filtering 일 때 렌더링 확인', () => {
     render(
       <DropDown
         variant="filtering"

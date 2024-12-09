@@ -23,7 +23,7 @@ function DropDown({ variant, items, label, imgSrc }: DropDownProps) {
     setIsActive(!isActive);
   };
 
-  const getButton = (
+  const renderButton = (
     variant: string,
     label: string | undefined,
     isActive: boolean,
@@ -63,7 +63,7 @@ function DropDown({ variant, items, label, imgSrc }: DropDownProps) {
     <div
       className={`relative flex w-max min-w-max ${variant === 'navbar' && 'justify-end'}`}
     >
-      {getButton(variant, label, isActive)}
+      {renderButton(variant, label, isActive)}
 
       <ul
         className={`absolute top-[50px] w-full min-w-max rounded-xl shadow-[0_10px_10px_-5px_rgba(0,0,0,0.08)] ${isOpen ? 'block' : 'hidden'}`}
