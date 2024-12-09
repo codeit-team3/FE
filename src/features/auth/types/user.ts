@@ -5,6 +5,6 @@ export interface User {
   name: string;
   companyName: string | null;
   image: string | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
