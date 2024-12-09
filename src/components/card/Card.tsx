@@ -5,7 +5,8 @@ import AvatarGroup from '../avatar-group/AvatarGroup';
 import ConfirmedLabel from '../confirmed-label/ConfirmedLabel';
 import ProgressBar from '../progress-bar/ProgressBar';
 import Avatar from '../avatar/Avatar';
-import { LocationIcon, HostIcon } from '../../../public/icons';
+import { LocationIcon, HostIcon, HeartIcon } from '../../../public/icons';
+import Image from 'next/image';
 
 interface CardContextType {
   isEnded?: boolean;
@@ -153,10 +154,36 @@ function CardHost({ nickname }: CardHostProps) {
   );
 }
 
+// Image 컴포넌트 인터페이스
+interface CardImageProps {
+  url: string;
+  alt?: string;
+  isLiked?: boolean;
+  onLikeClick?: () => void;
+}
+
+// Image 컴포넌트
+function CardImage({
+  url,
+  alt = '모임 이미지',
+  isLiked = false,
+  onLikeClick,
+}: CardImageProps) {
+  return (
+    <div className="relative h-full w-full overflow-hidden rounded-[20px]">
+      <Image src={url} alt={alt} fill className="object-cover" />
+      <div className="absolute right-5 top-[15px] z-10">
+        <HeartIcon isLiked={isLiked} onClick={onLikeClick} />
+      </div>
+    </div>
+  );
+}
+
 // Compound Components 설정
 Card.Header = CardHeader;
 Card.Footer = CardFooter;
 Card.EndedOverlay = CardEndedOverlay;
 Card.Host = CardHost;
+Card.Image = CardImage;
 
 export default Card;

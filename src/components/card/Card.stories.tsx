@@ -14,7 +14,13 @@ export default meta;
 type Story = StoryObj<typeof Card>;
 
 const Template = (args: CardProps) => (
-  <div className="h-[180px] w-[336px]">
+  <div className="w-[336px]">
+    <div className="mb-4">
+      <Card.Image
+        url="https://picsum.photos/seed/bookclub/800/450"
+        alt="독서 모임 이미지"
+      />
+    </div>
     <Card {...args}>
       <Card.Header
         title="울지로에서 만나는 독서 모임"
@@ -22,6 +28,7 @@ const Template = (args: CardProps) => (
         location="을지로 3가"
         datetime="12/14(토) 오전 10:00"
       />
+      <Card.Host nickname="김모임" />
       <Card.Footer
         currentParticipants={17}
         maxParticipants={20}
@@ -32,7 +39,7 @@ const Template = (args: CardProps) => (
           { src: 'https://picsum.photos/seed/2/200', alt: '참가자2' },
           { src: 'https://picsum.photos/seed/3/200', alt: '참가자3' },
           { src: 'https://picsum.photos/seed/4/200', alt: '참가자4' },
-          { src: 'https://picsum.photos/seed/5/200', alt: '참가��5' },
+          { src: 'https://picsum.photos/seed/5/200', alt: '참가자5' },
           { src: 'https://picsum.photos/seed/6/200', alt: '참가자6' },
         ]}
       />
@@ -50,7 +57,13 @@ export const Default: Story = {
 
 export const Past: Story = {
   render: (args: CardProps) => (
-    <div className="h-[180px] w-[336px]">
+    <div className="w-[336px]">
+      <div className="mb-4">
+        <Card.Image
+          url="https://picsum.photos/seed/bookclub/800/450"
+          alt="독서 모임 이미지"
+        />
+      </div>
       <Card {...args}>
         <Card.Header
           title="울지로에서 만나는 독서 모임"
@@ -59,6 +72,7 @@ export const Past: Story = {
           datetime="12/14(토) 오전 10:00"
           isPast={true}
         />
+        <Card.Host nickname="김모임" />
         <Card.Footer
           currentParticipants={17}
           maxParticipants={20}
@@ -104,4 +118,17 @@ export const MultipleHosts: Story = {
       <Card.Host nickname="박모임" />
     </div>
   ),
+};
+
+// Image 컴포넌트만 보여주는 스토리
+export const ImageOnly: StoryObj<typeof Card.Image> = {
+  render: (args) => (
+    <div className="relative h-[200px] w-[336px]">
+      <Card.Image {...args} />
+    </div>
+  ),
+  args: {
+    url: 'https://picsum.photos/seed/bookclub/800/450',
+    alt: '독서 모임 이미지',
+  },
 };
