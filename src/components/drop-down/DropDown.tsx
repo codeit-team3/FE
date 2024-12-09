@@ -1,104 +1,79 @@
 import { useState } from 'react';
-import IcSorting from '../../../public/icons/IcSorting';
-import IcFiltering from '../../../public/icons/IcFiltering';
-import Image from 'next/image';
+import { IcDropDown } from '../../../public/icons';
+import Avatar from '../avatar/Avatar';
 
 interface DropDownProps {
-  variant: 'navbar' | 'filtering' | 'sorting';
-  items: Array<string>;
-  size?: 'large' | 'small';
-  color?: 'orange-100' | 'gray-50' | 'gray-100' | 'gray-900';
+  variant: 'navbar' | 'filtering';
+  items: Array<DropDownItem>;
   label?: string;
   imgSrc?: string;
 }
 
-const JUSTIFIY_ITEMS = {
-  navbar: `justify-items-end`,
-  filtering: `justify-items-start`,
-  sorting: `justify-items-end`,
-} as const;
+interface DropDownItem {
+  label: string;
+  value: number;
+}
 
-const SIZES = {
-  small: ` h-[36px] px-[6px] py-[6px] justify-center`,
-  large: `h-[40px] px-[12px] py-[8px] justify-start`,
-} as const;
+function DropDown({ variant, items, label, imgSrc }: DropDownProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
-const LABEL_MARGIN = {
-  filtering: `mr-[4px]`,
-  sorting: `ml-[4px]`,
-} as const;
+  const handleDropDown = (): void => {
+    setIsOpen(!isOpen);
+    setIsActive(!isActive);
+  };
 
-const COLORS = {
-  'orange-100': {
-    background: `bg-orange-100`,
-    text: `text-orange-100`,
-    border: `border-orange-100`,
-  },
-  'gray-50': {
-    background: `bg-gray-50`,
-    text: `text-gray-50`,
-    border: `border-gray-50`,
-  },
-  'gray-100': {
-    background: `bg-gray-100`,
-    text: `text-gray-100`,
-    border: `border-gray-100`,
-  },
-  'gray-900': {
-    background: 'bg-gray-900',
-    text: `text-gray-900`,
-    border: `border-gray-900`,
-  },
-} as const;
+  const renderButton = (
+    variant: string,
+    label: string | undefined,
+    isActive: boolean,
+  ) => {
+    const colorClass = isActive
+      ? 'border-green-normal-01 text-green-normal-01'
+      : 'border-gray-normal-02 text-gray-dark-02';
 
-function DropDown({
-  variant,
-  items,
-  size,
-  color = 'gray-900',
-  label,
-  imgSrc,
-}: DropDownProps) {
-  const [isActive, setIsActive] = useState(true);
+    switch (variant) {
+      case 'navbar':
+        return (
+          <button
+            className="relative h-[40px] w-[40px] justify-center"
+            onClick={handleDropDown}
+          >
+            <Avatar
+              src={imgSrc || '/images/profile.png'}
+              alt="nav_profile"
+              size="md"
+            />
+          </button>
+        );
+      case 'filtering':
+        return (
+          <button
+            className={`box-border flex h-[40px] items-center justify-start rounded-xl border py-[8px] pl-[14px] pr-[6px] text-sm font-medium ${colorClass}`}
+            onClick={handleDropDown}
+          >
+            {label}
+            <IcDropDown isActive={isActive} color="stroke-green-normal-01" />
+          </button>
+        );
+    }
+  };
 
   return (
-    <div className={`${JUSTIFIY_ITEMS[variant]} flex-col`}>
-      {variant === 'navbar' ? (
-        <button
-          className="relative h-[40px] w-[40px] justify-center"
-          onClick={() => {
-            setIsActive(!isActive);
-          }}
-        >
-          <Image
-            src={imgSrc || '/images/profile.png'}
-            alt={'nav_profile'}
-            layout="fill"
-            className="rounded-full object-cover"
-          />
-        </button>
-      ) : (
-        <button
-          className={`${size && SIZES[size]} flex items-center justify-between rounded-xl ${isActive ? COLORS[color].background.concat(' ', 'text-white') : 'border-2 border-gray-100 bg-white'.concat(' ', COLORS[color].text)}`}
-        >
-          {variant === 'sorting' && <IcSorting isActive={isActive} />}
-          {size === 'large' && (
-            <span className={`${LABEL_MARGIN[variant]}`}>{label}</span>
-          )}
-          {variant === 'filtering' && <IcFiltering isActive={isActive} />}
-        </button>
-      )}
-      <ul className="pt-[8px] shadow-[0px_10px_10px_-5px_#0000000A]">
-        {items.map((item, index) => (
+    <div
+      className={`relative flex w-max min-w-max ${variant === 'navbar' && 'justify-end'}`}
+    >
+      {renderButton(variant, label, isActive)}
+
+      <ul
+        className={`absolute top-[50px] w-full min-w-max rounded-xl shadow-[0_10px_10px_-5px_rgba(0,0,0,0.08)] ${isOpen ? 'block' : 'hidden'}`}
+      >
+        {items.map((item) => (
           <li
-            key={index}
-            className={`flex h-[40px] w-[110px] items-center justify-center bg-white px-[4px] py-[4px] first:rounded-t-xl last:rounded-b-xl`}
+            key={item.value}
+            className={`flex h-[40px] w-full items-center justify-start bg-gray-white px-[16px] py-[10px] text-sm font-medium text-gray-dark-01 first:rounded-t-xl last:rounded-b-xl hover:bg-gray-light-02 hover:font-semibold hover:text-gray-darker`}
           >
-            <div
-              className={`flex h-[32px] w-[102px] items-center justify-start rounded-xl px-[8px] py-[6px] hover:bg-orange-100`}
-            >
-              {item}
-            </div>
+            {item.label}
           </li>
         ))}
       </ul>
