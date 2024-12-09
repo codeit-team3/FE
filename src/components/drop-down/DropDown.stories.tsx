@@ -17,23 +17,27 @@ type Story = StoryObj<typeof meta>;
 export const NavBar: Story = {
   args: {
     variant: 'navbar',
+    onChangeSelection: (e) => alert(e),
   },
 };
 
 export const OnOff: Story = {
   args: {
     variant: 'onOff',
+    onChangeSelection: (e) => alert(e),
   },
 };
 
 export const MemberCount: Story = {
   args: {
     variant: 'memberCount',
+    onChangeSelection: (e) => alert(e),
   },
 };
 
 export const SortingReview: Story = {
   args: {
     variant: 'sortingReview',
+    onChangeSelection: (e) => alert(e),
   },
 };

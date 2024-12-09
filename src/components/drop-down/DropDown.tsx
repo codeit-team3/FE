@@ -6,7 +6,7 @@ import { MENU_ITEMS, DROPDOWN_LABELS } from '@/constants/index';
 
 interface DropDownProps {
   variant: 'navbar' | 'onOff' | 'memberCount' | 'sortingReview';
-  onChangeSelection?: (selectedLabel: string | undefined) => void;
+  onChangeSelection: (selectedLabel: string | undefined) => void;
   imgSrc?: string;
 }
 
@@ -24,6 +24,7 @@ function DropDown({ variant, imgSrc, onChangeSelection }: DropDownProps) {
   );
 
   const items = MENU_ITEMS[variant];
+
   const onClickDropDownItem = (item: DropDownItem): void => {
     setIsActive(true);
     setSelectedLabel(item.label);
