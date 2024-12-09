@@ -26,7 +26,7 @@ const BASE_CLASSES = {
   lightSolid: '',
 } as const;
 
-const COLOR_CLASSES = {
+const COLOR_GROUPS = {
   'green-normal-01': {
     bg: 'bg-green-normal-01',
     text: 'text-green-normal-01',
@@ -49,7 +49,6 @@ const COLOR_CLASSES = {
   },
 } as const;
 
-// 기본 색상 정의
 const DEFAULT_COLOR = {
   bg: 'bg-gray-normal-03',
   text: 'text-gray-darker',
@@ -66,11 +65,9 @@ export default function Button({
 }: ButtonProps) {
   const { disabled } = buttonProps;
 
-  // 공통 클래스
   const sizeClasses = SIZE[size];
   const baseClasses = 'rounded-[12px] font-semibold cursor-pointer';
 
-  // resolvedColor 계산
   const resolvedColor =
     isSubmitting !== undefined
       ? isSubmitting
@@ -78,16 +75,9 @@ export default function Button({
         : 'green-normal-01'
       : themeColor;
 
-  // 상태에 따른 스타일 조합
   const variantClasses = (() => {
-    // 색상 데이터 가져오기, 없는 경우 기본 색상 사용
-    const color = COLOR_CLASSES[resolvedColor] || DEFAULT_COLOR;
+    const color = COLOR_GROUPS[resolvedColor] || DEFAULT_COLOR;
 
-    // TypeScript는 COLOR_CLASSES 객체에서 text 값의 타입을 "text-green-normal-01" 또는 "text-gray-darker"로 고정한다.
-    // 따라서 "text-white"와 같은 값은 허용되지 않는다.
-    // 이를 해결하려면 textClass 변수의 타입을 명시적으로 확장하여 "text-white"를 포함시켜야 한다.
-
-    // textClass 변수에 "text-white"를 허용하도록 타입을 확장
     type TextClassType =
       | 'text-green-normal-01'
       | 'text-gray-darker'
@@ -100,7 +90,7 @@ export default function Button({
       fillType === 'lightSolid' &&
       color.bg.includes(color.text.replace('text-', 'bg-'))
     ) {
-      textClass = 'text-white'; // text-white 허용
+      textClass = 'text-white';
     }
 
     switch (fillType) {
@@ -115,7 +105,6 @@ export default function Button({
     }
   })();
 
-  // 버튼 비활성화 처리
   const isButtonDisabled = isSubmitting || disabled;
 
   const buttonClassName = twMerge(
