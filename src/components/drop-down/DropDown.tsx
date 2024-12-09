@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { IcDropDown } from '../../../public/icons';
 import Avatar from '../avatar/Avatar';
 
@@ -14,11 +14,36 @@ interface DropDownItem {
   value: number;
 }
 
+const useDropDownClose = (
+  ref: React.RefObject<HTMLElement>,
+  initialState: boolean,
+) => {
+  const [isOpen, setIsOpen] = useState(initialState);
+
+  useEffect(() => {
+    const onClickPage = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setIsOpen((prev) => !prev);
+      }
+    };
+
+    if (isOpen) {
+      window.addEventListener('click', onClickPage);
+    }
+
+    return () => {
+      window.removeEventListener('click', onClickPage);
+    };
+  }, [isOpen, ref]);
+  return [isOpen, setIsOpen] as const;
+};
+
 function DropDown({ variant, items, label, imgSrc }: DropDownProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const dropDownRef = useRef(null);
+  const [isOpen, setIsOpen] = useDropDownClose(dropDownRef, false);
   const [isActive, setIsActive] = useState(false);
 
-  const handleDropDown = (): void => {
+  const onclickDropDown = (): void => {
     setIsOpen(!isOpen);
     setIsActive(!isActive);
   };
@@ -37,7 +62,7 @@ function DropDown({ variant, items, label, imgSrc }: DropDownProps) {
         return (
           <button
             className="relative h-[40px] w-[40px] justify-center"
-            onClick={handleDropDown}
+            onClick={() => setIsOpen(!isOpen)}
           >
             <Avatar
               src={imgSrc || '/images/profile.png'}
@@ -50,7 +75,7 @@ function DropDown({ variant, items, label, imgSrc }: DropDownProps) {
         return (
           <button
             className={`box-border flex h-[40px] items-center justify-start rounded-xl border py-[8px] pl-[14px] pr-[6px] text-sm font-medium ${colorClass}`}
-            onClick={handleDropDown}
+            onClick={onclickDropDown}
           >
             {label}
             <IcDropDown isActive={isActive} color="stroke-green-normal-01" />
@@ -61,6 +86,7 @@ function DropDown({ variant, items, label, imgSrc }: DropDownProps) {
 
   return (
     <div
+      ref={dropDownRef}
       className={`relative flex w-max min-w-max ${variant === 'navbar' && 'justify-end'}`}
     >
       {renderButton(variant, label, isActive)}
