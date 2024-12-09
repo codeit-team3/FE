@@ -1,11 +1,11 @@
 import { twMerge } from 'tailwind-merge';
 
 const CHIP_VARIANTS = {
-  'rounded-filled': 'rounded-full bg-green-light-hover text-green-dark',
-  'rounded-light': 'rounded-full bg-green-normal text-white',
+  'rounded-filled': 'rounded-full bg-green-light-02 text-green-dark-01',
+  'rounded-light': 'rounded-full bg-green-normal-01 text-gray-white',
   'square-light':
-    'rounded border border-gray-normal-hover bg-gray-light text-gray-dark',
-  'square-filled': 'rounded bg-green-dark text-gray-dark',
+    'rounded border border-gray-normal-02 bg-gray-light-01 text-gray-dark-01',
+  'square-filled': 'rounded bg-green-dark-01 text-gray-dark-01',
 } as const;
 
 type ChipVariant = keyof typeof CHIP_VARIANTS;
