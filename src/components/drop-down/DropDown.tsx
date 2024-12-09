@@ -29,8 +29,8 @@ function DropDown({ variant, items, label, imgSrc }: DropDownProps) {
     isActive: boolean,
   ) => {
     const colorClass = isActive
-      ? 'border-green-normal text-green-normal'
-      : 'border-gray-dark-hover text-gray-dark-hover';
+      ? 'border-green-normal-01 text-green-normal-01'
+      : 'border-gray-normal-02 text-gray-dark-02';
 
     switch (variant) {
       case 'navbar':
@@ -49,11 +49,11 @@ function DropDown({ variant, items, label, imgSrc }: DropDownProps) {
       case 'filtering':
         return (
           <button
-            className={`box-border flex h-[40px] items-center justify-start rounded-xl border py-[8px] pl-[14px] pr-[6px] text-sm ${colorClass}`}
+            className={`box-border flex h-[40px] items-center justify-start rounded-xl border py-[8px] pl-[14px] pr-[6px] text-sm font-medium ${colorClass}`}
             onClick={handleDropDown}
           >
             {label}
-            <IcDropDown isActive={isActive} color="stroke-green-normal" />
+            <IcDropDown isActive={isActive} color="stroke-green-normal-01" />
           </button>
         );
     }
@@ -71,7 +71,7 @@ function DropDown({ variant, items, label, imgSrc }: DropDownProps) {
         {items.map((item) => (
           <li
             key={item.value}
-            className={`flex h-[40px] w-full items-center justify-start bg-white px-[16px] py-[10px] text-sm text-gray-dark first:rounded-t-xl last:rounded-b-xl hover:bg-gray-light-active hover:font-semibold hover:text-gray-darker`}
+            className={`flex h-[40px] w-full items-center justify-start bg-gray-white px-[16px] py-[10px] text-sm font-medium text-gray-dark-01 first:rounded-t-xl last:rounded-b-xl hover:bg-gray-light-02 hover:font-semibold hover:text-gray-darker`}
           >
             {item.label}
           </li>
