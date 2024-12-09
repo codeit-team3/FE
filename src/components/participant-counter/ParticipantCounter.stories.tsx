@@ -85,19 +85,19 @@ export const AllStates: Story = {
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-2">
         <ParticipantCounter current={5} max={20} isPast={false} />
-        <span className="text-sm text-gray-dark">기본 상태</span>
+        <span className="text-sm">기본 상태</span>
       </div>
       <div className="flex items-center gap-2">
         <ParticipantCounter current={20} max={20} isPast={false} />
-        <span className="text-sm text-gray-dark">정원 마감</span>
+        <span className="text-sm">정원 마감</span>
       </div>
       <div className="flex items-center gap-2">
         <ParticipantCounter current={15} max={20} isPast={true} />
-        <span className="text-sm text-gray-dark">지난 모임</span>
+        <span className="text-sm">지난 모임</span>
       </div>
       <div className="flex items-center gap-2">
         <ParticipantCounter current={20} max={20} isPast={true} />
-        <span className="text-sm text-gray-dark">지난 모임 & 정원 마감</span>
+        <span className="text-sm">지난 모임 & 정원 마감</span>
       </div>
     </div>
   ),

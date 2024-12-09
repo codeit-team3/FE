@@ -12,8 +12,8 @@ function ParticipantCounter({
   ...props
 }: ParticipantCounterProps) {
   const isFull = current >= max;
-  const primaryColor = isPast ? 'text-gray-darker' : 'text-green-normal';
-  const maxColor = isFull ? primaryColor : 'text-gray-dark';
+  const primaryColor = isPast ? 'text-gray-darker' : 'text-green-normal-01';
+  const maxColor = isFull ? primaryColor : 'text-gray-dark-01';
 
   return (
     <div className="flex items-center gap-0.5" {...props}>
