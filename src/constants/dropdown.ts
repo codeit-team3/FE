@@ -8,7 +8,7 @@ export const DROPDOWN_LABELS = {
 export const MENU_ITEMS = {
   navbar: [
     { value: 'MY_PAGE', label: '마이페이지' },
-    { value: 'LOG_OUT', label: '로그아웃' },
+    { value: 'LOGOUT', label: '로그아웃' },
   ],
   onOff: [
     { value: 'TOTAL', label: '온/오프라인' },
@@ -24,7 +24,7 @@ export const MENU_ITEMS = {
   ],
   sortingReview: [
     { value: 'LATEST', label: '최신순' },
-    { value: 'HIGEST', label: '리뷰높은순' },
+    { value: 'HIGHEST', label: '리뷰높은순' },
     { value: 'LOWEST', label: '리뷰낮은순' },
   ],
 } as const;

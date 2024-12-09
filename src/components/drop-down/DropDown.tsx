@@ -19,14 +19,15 @@ function DropDown({ variant, imgSrc, onChangeSelection }: DropDownProps) {
   const dropDownRef = useRef(null);
   const [isOpen, setIsOpen] = useDropDownClose(dropDownRef, false);
   const [isActive, setIsActive] = useState(false);
-  const [seletedLabel, setSeletedLabel] = useState<string>(
+  const [selectedLabel, setSelectedLabel] = useState<string>(
     DROPDOWN_LABELS[variant],
   );
 
   const items = MENU_ITEMS[variant];
   const onClickDropDownItem = (item: DropDownItem): void => {
     setIsActive(true);
-    setSeletedLabel(item.label);
+    setSelectedLabel(item.label);
+
     if (onChangeSelection) {
       onChangeSelection(item.value);
     }
@@ -58,7 +59,7 @@ function DropDown({ variant, imgSrc, onChangeSelection }: DropDownProps) {
             className={`box-border flex h-[40px] items-center justify-start rounded-xl border py-[8px] pl-[14px] pr-[6px] text-sm font-medium ${colorClass}`}
             onClick={() => setIsOpen(!isOpen)}
           >
-            {seletedLabel}
+            {selectedLabel}
             <IcDropDown isActive={isActive} color="stroke-green-normal-01" />
           </button>
         );
