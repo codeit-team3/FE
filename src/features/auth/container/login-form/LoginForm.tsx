@@ -8,7 +8,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { loginFormSchema, LoginFormData } from '../../types/loginFormSchema';
 import { login } from '../../api/auth';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { AUTH_ERROR_MESSAGES } from '../../constants/messages';
+import {
+  AUTH_ERROR_MESSAGES,
+  LOGIN_FORM_PLACEHOLDERS,
+} from '../../constants/messages';
 
 type LoginErrorCode = 'USER_NOT_FOUND' | 'INVALID_CREDENTIALS' | 'SERVER_ERROR';
 
@@ -77,7 +80,7 @@ export default function LoginForm() {
           <FormField
             label="아이디"
             type="text"
-            placeholder="이메일을 입력해주세요"
+            placeholder={LOGIN_FORM_PLACEHOLDERS.EMAIL}
             id="email"
             register={register('email')}
             error={errors.email?.message}
@@ -85,7 +88,7 @@ export default function LoginForm() {
           <FormField
             label="비밀번호"
             type="password"
-            placeholder="비밀번호를 입력해주세요."
+            placeholder={LOGIN_FORM_PLACEHOLDERS.PASSWORD}
             id="password"
             register={register('password')}
             error={errors.password?.message}
