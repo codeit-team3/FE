@@ -30,7 +30,7 @@ function ParticipantCounter({ current, max }: ParticipantCounterProps) {
       <span
         role="participant-count"
         aria-label="참가자 현황"
-        className={colorStyle}
+        className={`text-sm font-medium ${colorStyle}`}
       >{`${displayCount}/${max}`}</span>
     </div>
   );
