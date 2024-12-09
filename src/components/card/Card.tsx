@@ -5,6 +5,7 @@ import AvatarGroup from '../avatar-group/AvatarGroup';
 import ConfirmedLabel from '../confirmed-label/ConfirmedLabel';
 import ProgressBar from '../progress-bar/ProgressBar';
 import Avatar from '../avatar/Avatar';
+import { LocationIcon } from '../../../public/icons';
 
 interface CardContextType {
   isEnded?: boolean;
@@ -53,7 +54,10 @@ function CardHeader({
         <Chip text={category} isPast={isPast} />
       </div>
       <div className="flex items-center gap-1.5 text-sm text-gray-dark-03">
-        <span className="font-semibold">{location}</span>
+        <div className="flex items-center">
+          <LocationIcon />
+          <span className="font-semibold">{location}</span>
+        </div>
         <span className="font-medium">{datetime}</span>
       </div>
     </div>
