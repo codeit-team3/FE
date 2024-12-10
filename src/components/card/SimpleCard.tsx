@@ -20,28 +20,11 @@ function SimpleCard({ meeting, className, ...props }: SimpleCardProps) {
     <Card isCanceled={isCanceled} className={className} {...props}>
       <div className="flex flex-col gap-6 md:flex-row">
         <div className="w-[336px] lg:w-[384px]">
-          <Card.Image
-            url={imageInfo.url}
-            alt={meetingInfo.title}
-            isLiked={imageInfo.isLiked}
-            onLikeClick={imageInfo.onLikeClick}
-          />
+          <Card.Image {...imageInfo} />
         </div>
         <Card.Box className="relative flex-1" onClick={actions?.onClick}>
-          <Card.Info
-            title={meetingInfo.title}
-            category={meetingInfo.category}
-            location={meetingInfo.location}
-            datetime={meetingInfo.datetime}
-            isPast={isPast}
-          />
-          <Card.Status
-            currentParticipants={participationStatus.currentParticipants}
-            maxParticipants={participationStatus.maxParticipants}
-            isConfirmed={participationStatus.isConfirmed}
-            isPast={isPast}
-            participants={participationStatus.participants}
-          />
+          <Card.Info {...meetingInfo} isPast={isPast} />
+          <Card.Status {...participationStatus} isPast={isPast} />
           <Card.EndedOverlay onDelete={actions?.onDelete} />
         </Card.Box>
       </div>
