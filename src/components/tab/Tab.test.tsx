@@ -16,7 +16,7 @@ describe('Tab 컴포넌트', () => {
         items={items}
         activeTab="탭1"
         onTabChange={mockOnTabChange}
-        tabType="BOOK"
+        tabType="MAIN_TAB"
       />,
     );
 
@@ -31,7 +31,7 @@ describe('Tab 컴포넌트', () => {
         items={items}
         activeTab="탭1"
         onTabChange={mockOnTabChange}
-        tabType="BOOK"
+        tabType="MAIN_TAB"
       />,
     );
 
@@ -45,7 +45,7 @@ describe('Tab 컴포넌트', () => {
         items={items}
         activeTab="탭1"
         onTabChange={mockOnTabChange}
-        tabType="BOOK"
+        tabType="MAIN_TAB"
       />,
     );
 
@@ -61,21 +61,21 @@ describe('Tab 컴포넌트', () => {
         items={items}
         activeTab="탭1"
         onTabChange={mockOnTabChange}
-        tabType="BOOK"
+        tabType="MAIN_TAB"
       />,
     );
 
-    expect(screen.getByText('탭1')).toHaveClass('text-lg');
+    expect(screen.getByText('탭1')).toHaveClass('text-xl');
 
     rerender(
       <Tab
         items={items}
         activeTab="탭1"
         onTabChange={mockOnTabChange}
-        tabType="CONTENT"
+        tabType="SUB_TAB"
       />,
     );
 
-    expect(screen.getByText('탭1')).toHaveClass('text-xl');
+    expect(screen.getByText('탭1')).toHaveClass('text-lg');
   });
 });

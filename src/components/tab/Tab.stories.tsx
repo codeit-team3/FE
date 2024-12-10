@@ -12,7 +12,7 @@ const meta = {
   argTypes: {
     tabType: {
       control: 'select',
-      options: ['BOOK', 'CONTENT', 'MY_PAGE'],
+      options: ['MAIN_TAB', 'SUB_TAB'],
       description: '탭의 종류를 선택합니다',
     },
     items: {
@@ -41,6 +41,6 @@ export const Default: Story = {
     items: BOOK_TABS,
     activeTab: '전체',
     onTabChange: (tab) => console.log(`Selected tab: ${tab}`),
-    tabType: 'BOOK',
+    tabType: 'MAIN_TAB',
   },
 };

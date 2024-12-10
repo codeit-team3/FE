@@ -1,4 +1,4 @@
-type TabType = 'BOOK' | 'CONTENT' | 'MY_PAGE';
+import { TabType } from '@/constants/tabs';
 
 interface TabProps<T extends string> {
   items: readonly T[];
@@ -15,11 +15,9 @@ function Tab<T extends string>({
 }: TabProps<T>) {
   const getTabStyle = () => {
     switch (tabType) {
-      case 'BOOK':
-        return 'text-lg';
-      case 'CONTENT':
+      case 'MAIN_TAB':
         return 'text-xl';
-      case 'MY_PAGE':
+      case 'SUB_TAB':
         return 'text-lg';
     }
   };
