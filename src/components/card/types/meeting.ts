@@ -23,6 +23,7 @@ export interface ParticipationStatus {
   currentParticipants: number;
   maxParticipants: number;
   isConfirmed: boolean;
+  confirmedVariant: 'confirmed' | 'closed';
   participants: ParticipantInfo[];
 }
 

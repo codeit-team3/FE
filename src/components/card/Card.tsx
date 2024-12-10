@@ -89,6 +89,7 @@ function CardStatus({
   currentParticipants,
   maxParticipants,
   isConfirmed = false,
+  confirmedVariant = 'confirmed',
   isPast = false,
   participants,
   className,
@@ -109,7 +110,9 @@ function CardStatus({
             ))}
           </AvatarGroup>
         </div>
-        {isConfirmed && <ConfirmedLabel variant="confirmed" isPast={isPast} />}
+        {isConfirmed && (
+          <ConfirmedLabel variant={confirmedVariant} isPast={isPast} />
+        )}
       </div>
       <ProgressBar
         percentage={(currentParticipants / maxParticipants) * 100}
