@@ -17,8 +17,8 @@ interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
 export default function Button({
   text,
   size,
-  fillType,
-  themeColor,
+  fillType = 'solid',
+  themeColor = 'green-normal-01',
   isSubmitting,
   ...buttonProps
 }: ButtonProps) {
