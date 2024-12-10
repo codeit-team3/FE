@@ -1,11 +1,6 @@
 import { SVGProps } from 'react';
 
-interface SearchIconProps extends SVGProps<SVGSVGElement> {
-  width?: number;
-  height?: number;
-}
-
-function SearchIcon({ ...props }: SearchIconProps) {
+function SearchIcon({ ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg
       width={12}
