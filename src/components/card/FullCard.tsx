@@ -35,12 +35,14 @@ function FullCard({ meeting, className, ...props }: FullCardProps) {
               <Card.Status {...participationStatus} isPast={isPast} />
             </Card.Box>
           </div>
-          <button
-            onClick={actions.onJoinClick}
-            className="w-full rounded-xl bg-green-normal-01 px-4 py-2 text-white"
-          >
-            참여하기
-          </button>
+          <div className="w-[336px] md:w-full">
+            <button
+              onClick={actions.onJoinClick}
+              className="w-full rounded-xl bg-green-normal-01 px-4 py-2 text-white"
+            >
+              참여하기
+            </button>
+          </div>
         </div>
       </div>
     </Card>
