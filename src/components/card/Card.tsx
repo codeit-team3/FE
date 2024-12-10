@@ -113,11 +113,12 @@ function CardEndedOverlay() {
   if (!isEnded) return null;
 
   return (
-    <div className="absolute inset-0 z-10 bg-black/80">
-      <div className="flex h-full w-full flex-col items-center justify-center gap-6">
-        <p className="whitespace-pre-line text-center text-sm font-medium text-white">
-          {'마감된 챌린지에요,\n다음 기회에 만나요 🙏'}
+    <div className="absolute inset-0 z-10 rounded-2xl bg-black/80">
+      <div className="flex h-full w-full flex-col items-center justify-center gap-[10px]">
+        <p className="whitespace-pre-line text-center font-semibold text-white">
+          {'호스트가 모임을 취소했어요.'}
         </p>
+        <button className="w-[120px] rounded-xl bg-white py-2">삭제하기</button>
       </div>
     </div>
   );

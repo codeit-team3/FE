@@ -17,6 +17,7 @@ interface SimpleCardProps extends ComponentPropsWithoutRef<'article'> {
     src: string;
     alt: string;
   }>;
+  isEnded?: boolean;
 }
 
 function SimpleCard({
@@ -32,11 +33,12 @@ function SimpleCard({
   isLiked = false,
   onLikeClick,
   participants,
+  isEnded = false,
   className,
   ...props
 }: SimpleCardProps) {
   return (
-    <Card className={className} {...props}>
+    <Card isEnded={isEnded} className={className} {...props}>
       <div className="flex flex-col gap-6 md:flex-row">
         <div className="w-[336px] lg:w-[384px]">
           <Card.Image
@@ -46,7 +48,7 @@ function SimpleCard({
             onLikeClick={onLikeClick}
           />
         </div>
-        <Card.Box className="flex-1">
+        <Card.Box className="relative flex-1">
           <Card.Info
             title={title}
             category={category}
@@ -61,6 +63,7 @@ function SimpleCard({
             isPast={isPast}
             participants={participants}
           />
+          <Card.EndedOverlay />
         </Card.Box>
       </div>
     </Card>
