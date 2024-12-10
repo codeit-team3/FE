@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge';
 
 interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   text: string;
-  size: 'large' | 'small' | 'modal';
+  size: 'large' | 'medium' | 'small' | 'modal';
   fillType: 'solid' | 'outline' | 'lightSolid';
   themeColor:
     | 'green-normal-01'
@@ -22,7 +22,7 @@ const SIZE = {
 
 const BASE_CLASSES = {
   solid: 'text-white',
-  bordered: 'bg-white border',
+  outline: 'bg-white border',
   lightSolid: '',
 } as const;
 
@@ -97,7 +97,7 @@ export default function Button({
       case 'solid':
         return `${color.bg} ${BASE_CLASSES.solid}`;
       case 'outline':
-        return `${BASE_CLASSES.bordered} ${color.text} ${color.border}`;
+        return `${BASE_CLASSES.outline} ${color.text} ${color.border}`;
       case 'lightSolid':
         return `${color.bg} ${textClass}`;
       default:
