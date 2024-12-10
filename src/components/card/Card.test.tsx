@@ -3,92 +3,142 @@ import userEvent from '@testing-library/user-event';
 import Card from './Card';
 import '@testing-library/jest-dom';
 
-const defaultProps = {
-  title: '테스트 모임',
-  location: '서울 강남구',
-  date: '2024.04.01',
-  time: '19:00',
-  currentParticipants: 5,
-  maxParticipants: 10,
-  imageUrl: '/test-image.jpg',
-};
-
 describe('Card', () => {
-  it('기본 정보가 올바르게 렌더링되어야 함', () => {
-    render(<Card {...defaultProps} />);
+  describe('Card.Box', () => {
+    it('onClick 핸들러가 호출되어야 함', async () => {
+      const user = userEvent.setup();
+      const handleClick = jest.fn();
 
-    expect(screen.getByText('테스트 모임')).toBeInTheDocument();
-    expect(screen.getByText('서울 강남구')).toBeInTheDocument();
-    expect(screen.getByText('2024.04.01')).toBeInTheDocument();
-    expect(screen.getByText('19:00')).toBeInTheDocument();
+      render(
+        <Card>
+          <Card.Box onClick={handleClick}>내용</Card.Box>
+        </Card>,
+      );
+
+      await user.click(screen.getByText('내용'));
+      expect(handleClick).toHaveBeenCalled();
+    });
   });
 
-  it('클릭 이벤트가 발생하면 onClick 핸들러가 호출되어야 함', async () => {
-    const user = userEvent.setup();
-    const handleClick = jest.fn();
-    render(<Card {...defaultProps} onClick={handleClick} />);
+  describe('Card.Image', () => {
+    it('좋아요 버튼 클릭 시 onLikeClick이 호출되어야 함', async () => {
+      const user = userEvent.setup();
+      const handleLikeClick = jest.fn();
 
-    const article = screen.getByRole('article');
-    await user.click(article);
+      render(
+        <Card>
+          <Card.Image
+            url="/test.jpg"
+            isLiked={false}
+            onLikeClick={handleLikeClick}
+          />
+        </Card>,
+      );
 
-    expect(handleClick).toHaveBeenCalled();
+      await user.click(screen.getByRole('button', { name: '좋아요' }));
+      expect(handleLikeClick).toHaveBeenCalled();
+    });
+
+    it('좋아요 상태에 따라 적절한 aria-label이 표시되어야 함', () => {
+      const { rerender } = render(
+        <Card>
+          <Card.Image url="/test.jpg" isLiked={false} onLikeClick={() => {}} />
+        </Card>,
+      );
+
+      expect(screen.getByRole('button')).toHaveAttribute(
+        'aria-label',
+        '좋아요',
+      );
+      expect(screen.getByRole('button')).toHaveAttribute(
+        'aria-pressed',
+        'false',
+      );
+
+      rerender(
+        <Card>
+          <Card.Image url="/test.jpg" isLiked={true} onLikeClick={() => {}} />
+        </Card>,
+      );
+
+      expect(screen.getByRole('button')).toHaveAttribute(
+        'aria-label',
+        '좋아요 취소',
+      );
+      expect(screen.getByRole('button')).toHaveAttribute(
+        'aria-pressed',
+        'true',
+      );
+    });
   });
 
-  it('좋아요 버튼 클릭 시 이벤트 전파가 중단되고 onLikeToggleClick이 호출되어야 함', async () => {
-    const user = userEvent.setup();
-    const handleClick = jest.fn();
-    const handleLikeToggleClick = jest.fn();
+  describe('Card.Host', () => {
+    it('호스트 프로필 클릭 시 onClick이 호출되어야 함', async () => {
+      const user = userEvent.setup();
+      const handleClick = jest.fn();
 
-    render(
-      <Card
-        {...defaultProps}
-        onClick={handleClick}
-        onLikeToggleClick={handleLikeToggleClick}
-      />,
-    );
+      render(
+        <Card>
+          <Card.Host nickname="호스트" onClick={handleClick} />
+        </Card>,
+      );
 
-    const likeButton = screen.getByRole('button', { name: /좋아요/i });
-    await user.click(likeButton);
-
-    expect(handleLikeToggleClick).toHaveBeenCalled();
-    expect(handleClick).not.toHaveBeenCalled();
+      await user.click(screen.getByRole('img'));
+      expect(handleClick).toHaveBeenCalled();
+    });
   });
 
-  it('참여하기 버튼 클릭 시 이벤트 전파가 중단되고 onJoinClick이 호출되어야 함', async () => {
-    const user = userEvent.setup();
-    const handleClick = jest.fn();
-    const handleJoinClick = jest.fn();
+  describe('Card.EndedOverlay', () => {
+    it('isCanceled가 true일 때만 오버레이가 표시되어야 함', () => {
+      const { rerender } = render(
+        <Card isCanceled={false}>
+          <Card.EndedOverlay onDelete={() => {}} />
+        </Card>,
+      );
 
-    render(
-      <Card
-        {...defaultProps}
-        onClick={handleClick}
-        onJoinClick={handleJoinClick}
-      />,
-    );
+      expect(
+        screen.queryByText(/호스트가 모임을 취소했어요/),
+      ).not.toBeInTheDocument();
 
-    const joinButton = screen.getByRole('button', { name: /join now/i });
-    await user.click(joinButton);
+      rerender(
+        <Card isCanceled={true}>
+          <Card.EndedOverlay onDelete={() => {}} />
+        </Card>,
+      );
 
-    expect(handleJoinClick).toHaveBeenCalled();
-    expect(handleClick).not.toHaveBeenCalled();
-  });
+      expect(
+        screen.getByText(/호스트가 모임을 취소했어요/),
+      ).toBeInTheDocument();
+    });
 
-  it('마감된 상태일 때 오버레이가 표시되어야 함', () => {
-    render(<Card {...defaultProps} isEnded={true} />);
+    it('삭제하기 버튼 클릭 시 onDelete가 호출되어야 함', async () => {
+      const user = userEvent.setup();
+      const handleDelete = jest.fn();
 
-    expect(screen.getByText(/마감된 챌린지에요.*다음 기회에 만나요/i));
-  });
+      render(
+        <Card isCanceled={true}>
+          <Card.EndedOverlay onDelete={handleDelete} />
+        </Card>,
+      );
 
-  it('확정된 상태일 때 확정 라벨이 표시되어야 함', () => {
-    render(<Card {...defaultProps} isConfirmed={true} />);
+      await user.click(screen.getByText('삭제하기'));
+      expect(handleDelete).toHaveBeenCalled();
+    });
 
-    expect(screen.getByText(/확정/)).toBeInTheDocument();
-  });
+    it('삭제하기 버튼 클릭 시 이벤트 전파가 중단되어야 함', async () => {
+      const user = userEvent.setup();
+      const handleDelete = jest.fn();
+      const handleCardClick = jest.fn();
 
-  it('참가자 수가 올바르게 표시되어야 함', () => {
-    render(<Card {...defaultProps} />);
+      render(
+        <Card isCanceled={true} onClick={handleCardClick}>
+          <Card.EndedOverlay onDelete={handleDelete} />
+        </Card>,
+      );
 
-    expect(screen.getByText('5/10')).toBeInTheDocument();
+      await user.click(screen.getByText('삭제하기'));
+      expect(handleDelete).toHaveBeenCalled();
+      expect(handleCardClick).not.toHaveBeenCalled();
+    });
   });
 });

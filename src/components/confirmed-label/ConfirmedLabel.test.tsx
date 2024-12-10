@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import ConfirmedLabel from './ConfirmedLabel';
 
 describe('ConfirmedLabel', () => {
-  it('컴포넌트가 올바르게 렌더링되는지 확인', () => {
+  it('기본 상태에서 개설확정으로 표시되는지 확인', () => {
     render(<ConfirmedLabel />);
     expect(screen.getByRole('confirmed-text')).toHaveTextContent('개설확정');
   });
@@ -13,8 +13,13 @@ describe('ConfirmedLabel', () => {
     expect(screen.queryByRole('confirmed-text')).not.toBeInTheDocument();
   });
 
-  it('visible prop이 없을 때 기본적으로 보이는지 확인', () => {
-    render(<ConfirmedLabel />);
-    expect(screen.getByRole('confirmed-text')).toBeInTheDocument();
+  it('variant가 closed일 때 모집마감으로 표시되는지 확인', () => {
+    render(<ConfirmedLabel variant="closed" />);
+    expect(screen.getByRole('confirmed-text')).toHaveTextContent('모집마감');
+  });
+
+  it('isPast가 true일 때도 텍스트가 올바르게 표시되는지 확인', () => {
+    render(<ConfirmedLabel variant="closed" isPast={true} />);
+    expect(screen.getByRole('confirmed-text')).toHaveTextContent('모집마감');
   });
 });

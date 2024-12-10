@@ -33,8 +33,7 @@ function FilterCheckbox({ label, checked, ...props }: FilterCheckboxProps) {
           }`}
           width={28}
           height={28}
-          circleColor="none"
-          strokeColor="#e6f6f4"
+          filled={checked}
         />
       </div>
     </label>
