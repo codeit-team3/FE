@@ -1,6 +1,7 @@
 import React from 'react';
 
-interface CreateClubFormFieldProps {
+interface CreateClubFormFieldProps
+  extends React.ComponentPropsWithoutRef<'div'> {
   label: string;
   children: React.ReactNode;
   error?: string;
@@ -14,11 +15,12 @@ function CreateClubFormField({
   error,
   currentLength = 0,
   maxLength,
+  ...props
 }: CreateClubFormFieldProps) {
   const isOverMaxLength = maxLength !== undefined && currentLength > maxLength;
 
   return (
-    <div className="flex w-full flex-col gap-3">
+    <div className="flex w-full flex-col gap-3" {...props}>
       <div className="flex w-full items-center justify-between">
         <label className="font-semibold text-gray-black">{label}</label>
         {maxLength !== undefined && (
