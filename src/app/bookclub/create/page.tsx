@@ -1,10 +1,10 @@
 'use client';
 
-import FormField from '@/components/FormField';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useState } from 'react';
+import { CreateClubFormField } from '@/features/club-create/components';
 
 const bookClubSchema = z.object({
   title: z.string().min(1, '모임 이름을 입력해주세요'),
@@ -52,23 +52,26 @@ export default function CreateBookClub() {
       <h1 className="mb-8 text-2xl font-bold">모임 만들기</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10">
-        <FormField label="모임 이름" error={errors.title?.message}>
+        <CreateClubFormField label="모임 이름" error={errors.title?.message}>
           <input
             {...register('title')}
             className="w-full rounded-xl border p-3"
             placeholder="지정책인 경우, 책 이름을 넣어주세요"
           />
-        </FormField>
+        </CreateClubFormField>
 
-        <FormField label="모임 상세 설명" error={errors.description?.message}>
+        <CreateClubFormField
+          label="모임 상세 설명"
+          error={errors.description?.message}
+        >
           <textarea
             {...register('description')}
             className="h-32 w-full rounded-xl border p-3"
             placeholder="상세 설명을 입력해주세요"
           />
-        </FormField>
+        </CreateClubFormField>
 
-        <FormField label="이미지" error={errors.image?.message}>
+        <CreateClubFormField label="이미지" error={errors.image?.message}>
           <div className="flex w-full items-center gap-2">
             <input
               type="text"
@@ -101,9 +104,9 @@ export default function CreateBookClub() {
               </button>
             )}
           </div>
-        </FormField>
+        </CreateClubFormField>
 
-        <FormField label="자유책 / 지정책">
+        <CreateClubFormField label="자유책 / 지정책">
           <div className="flex gap-4">
             <label className="flex w-full cursor-pointer items-center gap-2 rounded-xl bg-gray-light-01 p-4">
               <input
@@ -146,9 +149,9 @@ export default function CreateBookClub() {
               </div>
             </label>
           </div>
-        </FormField>
+        </CreateClubFormField>
 
-        <FormField label="온라인 / 오프라인">
+        <CreateClubFormField label="온라인 / 오프라인">
           <div className="flex gap-4">
             <label className="flex w-full cursor-pointer items-center gap-2 rounded-xl bg-gray-light-01 p-4">
               <input
@@ -185,17 +188,20 @@ export default function CreateBookClub() {
               </div>
             </label>
           </div>
-        </FormField>
+        </CreateClubFormField>
 
-        <FormField label="언제 만나나요?" error={errors.startDate?.message}>
+        <CreateClubFormField
+          label="언제 만나나요?"
+          error={errors.startDate?.message}
+        >
           <input
             type="datetime-local"
             {...register('startDate')}
             className="w-full rounded-xl border p-3"
           />
-        </FormField>
+        </CreateClubFormField>
 
-        <FormField
+        <CreateClubFormField
           label="언제 모임을 마감할까요?"
           error={errors.endDate?.message}
         >
@@ -204,15 +210,18 @@ export default function CreateBookClub() {
             {...register('endDate')}
             className="w-full rounded-xl border p-3"
           />
-        </FormField>
+        </CreateClubFormField>
 
-        <FormField label="모임 정원" error={errors.maxParticipants?.message}>
+        <CreateClubFormField
+          label="모임 정원"
+          error={errors.maxParticipants?.message}
+        >
           <input
             type="number"
             {...register('maxParticipants', { valueAsNumber: true })}
             className="w-full rounded-xl border p-3"
           />
-        </FormField>
+        </CreateClubFormField>
 
         <button
           type="submit"

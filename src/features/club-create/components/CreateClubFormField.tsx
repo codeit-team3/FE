@@ -1,10 +1,14 @@
-interface FormFieldProps {
+interface CreateClubFormFieldProps {
   label: string;
   children: React.ReactNode;
   error?: string;
 }
 
-function FormField({ label, children, error }: FormFieldProps) {
+function CreateClubFormField({
+  label,
+  children,
+  error,
+}: CreateClubFormFieldProps) {
   return (
     <div className="flex flex-col gap-3">
       <label className="font-semibold text-gray-black">{label}</label>
@@ -14,4 +18,4 @@ function FormField({ label, children, error }: FormFieldProps) {
   );
 }
 
-export default FormField;
+export default CreateClubFormField;
