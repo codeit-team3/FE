@@ -5,8 +5,7 @@ import RatingDisplay from '../rating-display/RatingDisplay';
 import { useState, useEffect } from 'react';
 
 // 디자인 확정시, 기본 이미지 변경
-const defaultProfileImage =
-  'https://cdn.pixabay.com/photo/2018/02/12/10/45/heart-3147976_1280.jpg';
+const defaultProfileImage = '/images/profile.png';
 
 interface WrittenReviewProps {
   ratingCount: number;
@@ -34,26 +33,26 @@ export default function WrittenReview({
   };
 
   return (
-    <article className="flex flex-col items-start">
+    <article className="flex w-full max-w-[948px] flex-col items-start">
       <RatingDisplay ratingCount={ratingCount} />
-      <p className="mb-2 mt-[10px] flex-wrap text-sm font-medium text-gray-700">
+      <p className="mb-2 mt-[10px] max-w-full flex-wrap text-sm font-medium text-gray-darker">
         {comment}
       </p>
-      <div className="flex items-center">
+      <div className="flex items-center gap-x-[6px]">
         <Image
           width={24}
           height={24}
           src={imgSrc}
           alt={`${userName}'s profile picture`}
-          className="h-6 w-6 rounded-full"
+          className="h-6 w-6 rounded-full object-cover"
           onError={handleImageError}
         />
-        <p className="flex h-[1em] items-center border-r-2 border-r-gray-700 px-2 text-xs font-medium text-gray-700">
+        <p className="flex h-[1em] items-center text-xs font-semibold text-gray-darker">
           {userName}
         </p>
-        <p className="ml-3 text-xs font-medium text-gray-500">{createdAt}</p>
+        <p className="text-xs font-medium text-gray-normal-03">{createdAt}</p>
       </div>
-      <hr className="mt-4 w-full border-t-2 border-dashed border-gray-200" />
+      <hr className="border-t-1 mt-4 w-full border-gray-normal-01" />
     </article>
   );
 }
