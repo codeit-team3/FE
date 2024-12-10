@@ -93,13 +93,13 @@ export default function CreateBookClub() {
               type="file"
               accept="image/*"
               {...register('image')}
-              className="hidden"
+              className="hidden border"
               id="image-upload"
               onChange={handleFileChange}
             />
             <label
               htmlFor="image-upload"
-              className="flex h-10 cursor-pointer items-center rounded-xl border border-gray-normal-02 px-4 text-gray-dark-02"
+              className="flex h-10 cursor-pointer items-center rounded-xl border border-gray-normal-02 border-green-normal-01 px-4 text-gray-dark-02 text-green-normal-01"
             >
               파일 찾기
             </label>
@@ -338,9 +338,9 @@ export default function CreateBookClub() {
         <Button
           type="submit"
           text="확인"
-          size="large"
+          size="medium"
           fillType="solid"
-          themeColor="orange-600"
+          themeColor="green-normal-01"
         />
       </form>
     </main>
