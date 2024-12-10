@@ -9,7 +9,7 @@ describe('Button', () => {
       <Button
         size="small"
         fillType="solid"
-        themeColor="orange-600"
+        themeColor="green-normal-01"
         text="생성하기"
       />,
     );
@@ -25,7 +25,7 @@ describe('Button', () => {
         onClick={handleClick}
         size="small"
         fillType="solid"
-        themeColor="orange-600"
+        themeColor="green-normal-01"
         text="제출하기"
       />,
     );
