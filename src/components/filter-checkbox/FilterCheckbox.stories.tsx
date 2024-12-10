@@ -32,6 +32,7 @@ export const Default: Story = {
   },
   args: {
     label: '신청가능',
+    checked: false,
     'aria-label': '신청 가능한 모임 필터',
   },
 };
