@@ -15,11 +15,12 @@ import {
   CardStatusProps,
   CardHostProps,
   CardImageProps,
+  CardEndedOverlayProps,
 } from './types';
 
 const CardContext = createContext<CardContextType>({ isCanceled: false });
 
-// 메인 Card 컴포넌트
+// 메인 Card
 function Card({
   children,
   isCanceled = false,
@@ -38,7 +39,7 @@ function Card({
   );
 }
 
-// Box 컴포넌트
+// Box 컴포넌트 (CardInfo + CardStatus)
 function CardBox({
   children,
   className = '',
@@ -56,7 +57,7 @@ function CardBox({
   );
 }
 
-// Info 컴포넌트
+// Info 컴포넌트 (모임에 관한 정보 - 제목, 위치, 날짜 등)
 function CardInfo({
   title,
   category,
@@ -83,7 +84,7 @@ function CardInfo({
   );
 }
 
-// Status 컴포넌트
+// Status 컴포넌트 (참가지 및 개설 여부 현황)
 function CardStatus({
   currentParticipants,
   maxParticipants,
@@ -118,11 +119,7 @@ function CardStatus({
   );
 }
 
-// Overlay 컴포넌트
-interface CardEndedOverlayProps {
-  onDelete?: () => void;
-}
-
+// Overlay (모임 취소시 표시되는 오버레이)
 function CardEndedOverlay({ onDelete }: CardEndedOverlayProps) {
   const { isCanceled } = useContext(CardContext);
 
@@ -139,6 +136,7 @@ function CardEndedOverlay({ onDelete }: CardEndedOverlayProps) {
         <p className="whitespace-pre-line text-center font-semibold text-white">
           {'호스트가 모임을 취소했어요.'}
         </p>
+        {/* TODO:: 삭제 버튼 공통 컴포넌트 변경 필요 */}
         <button
           onClick={handleDeleteClick}
           className="w-[120px] rounded-xl bg-white py-2"
@@ -150,7 +148,7 @@ function CardEndedOverlay({ onDelete }: CardEndedOverlayProps) {
   );
 }
 
-// Host 컴포넌트
+// Host 컴포넌트 (호스트 정보)
 function CardHost({ nickname, className, onClick, ...props }: CardHostProps) {
   return (
     <div className={`flex items-center gap-2 ${className || ''}`} {...props}>
@@ -175,7 +173,7 @@ function CardHost({ nickname, className, onClick, ...props }: CardHostProps) {
   );
 }
 
-// Image 컴포넌트
+// Image 컴포넌트 (모임 이미지)
 function CardImage({
   url,
   alt = '모임 이미지',
@@ -197,7 +195,6 @@ function CardImage({
   );
 }
 
-// Compound Components 설정
 Card.Box = CardBox;
 Card.Info = CardInfo;
 Card.Status = CardStatus;

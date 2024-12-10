@@ -35,3 +35,7 @@ export interface CardHostProps
 export interface CardImageProps
   extends ComponentPropsWithoutRef<'div'>,
     ImageInfo {}
+
+export interface CardEndedOverlayProps extends ComponentPropsWithoutRef<'div'> {
+  onDelete?: () => void;
+}
