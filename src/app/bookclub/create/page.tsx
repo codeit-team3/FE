@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useState } from 'react';
 import { CreateClubFormField } from '@/features/club-create/components';
+import Button from '@/components/button/Button';
 
 const bookClubSchema = z.object({
   title: z
@@ -67,25 +68,23 @@ export default function CreateBookClub() {
             placeholder="지정책인 경우, 책 이름을 넣어주세요"
           />
         </CreateClubFormField>
-
         <CreateClubFormField
           label="모임 상세 설명"
           error={errors.description?.message}
           currentLength={watch('description')?.length || 0}
           maxLength={30}
         >
-          <textarea
+          <input
             {...register('description')}
-            className="h-32 w-full rounded-xl border bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02"
+            className="w-full rounded-xl bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02"
             placeholder="상세 설명을 입력해주세요"
           />
         </CreateClubFormField>
-
         <CreateClubFormField label="이미지" error={errors.image?.message}>
           <div className="flex w-full items-center gap-2">
             <input
               type="text"
-              className="flex-1 rounded-xl border border-gray-normal-02 bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02"
+              className="w-full flex-1 rounded-xl bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02"
               placeholder="이미지를 첨부해주세요"
               value={selectedFileName}
               readOnly
@@ -117,44 +116,96 @@ export default function CreateBookClub() {
         </CreateClubFormField>
 
         <CreateClubFormField label="자유책 / 지정책">
-          <div className="flex gap-4">
-            <label className="flex w-full cursor-pointer items-center gap-2 rounded-xl bg-gray-light-01 p-4">
+          <div className="flex gap-4 md:gap-6">
+            <label
+              className={`flex w-full cursor-pointer items-start gap-2 rounded-xl p-4 ${
+                watch('bookType') === '자유책'
+                  ? 'border-2 border-green-normal-01'
+                  : ''
+              } bg-gray-light-02`}
+            >
               <input
                 type="radio"
+                id="freeBook"
                 value="자유책"
                 {...register('bookType')}
                 className="hidden"
               />
-              <div className="flex h-5 w-5 items-center justify-center rounded-full border border-gray-normal-02 bg-white">
-                <div
-                  className="h-3 w-3 rounded-full bg-green-normal-01 opacity-0 transition-opacity data-[checked=true]:opacity-100"
-                  data-checked={watch('bookType') === '자유책'}
-                />
+              <div
+                className={`flex h-6 w-6 items-center justify-center rounded border bg-white ${
+                  watch('bookType') === '자유책'
+                    ? 'border-green-normal-01'
+                    : 'border-gray-normal-02'
+                }`}
+              >
+                {watch('bookType') === '자유책' && (
+                  <svg
+                    className="h-4 w-4 text-green-normal-01"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={4} // 체크 두께 설정
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                )}
               </div>
-              <div>
-                <p className="font-medium">자유책</p>
-                <p className="text-sm text-gray-dark-02">
-                  시간과 장소에 구애받지 않고 자유롭게 참여할 수 있어요.
+              <div className="flex flex-col gap-0.5">
+                <p className="font-semibold">자유책</p>
+                <p className="text-xs font-medium text-gray-dark-02">
+                  읽고 싶은 책을 자유롭게 선택하고 각자의 생각을 나눠요.
                 </p>
               </div>
             </label>
-            <label className="flex w-full cursor-pointer items-center gap-2 rounded-xl bg-gray-light-01 p-4">
+
+            <label
+              className={`flex w-full cursor-pointer items-start gap-2 rounded-xl p-4 ${
+                watch('bookType') === '지정책'
+                  ? 'border-2 border-green-normal-01'
+                  : ''
+              } bg-gray-light-02`}
+            >
               <input
                 type="radio"
+                id="designatedBook"
                 value="지정책"
                 {...register('bookType')}
                 className="hidden"
               />
-              <div className="flex h-5 w-5 items-center justify-center rounded-full border border-gray-normal-02 bg-white">
-                <div
-                  className="h-3 w-3 rounded-full bg-green-normal-01 opacity-0 transition-opacity data-[checked=true]:opacity-100"
-                  data-checked={watch('bookType') === '지정책'}
-                />
+              <div
+                className={`flex h-6 w-6 items-center justify-center rounded border bg-white ${
+                  watch('bookType') === '지정책'
+                    ? 'border-green-normal-01'
+                    : 'border-gray-normal-02'
+                }`}
+              >
+                {watch('bookType') === '지정책' && (
+                  <svg
+                    className="h-4 w-4 text-green-normal-01"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={4} // 체크 두께 설정
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                )}
               </div>
-              <div>
-                <p className="font-medium">지정책</p>
-                <p className="text-sm text-gray-dark-02">
-                  멤버들과 직접 만나 더욱 깊이 있는 대화를 나눌 수 있어요.
+
+              <div className="flex flex-col gap-0.5">
+                <p className="font-semibold">지정책</p>
+                <p className="text-xs font-medium text-gray-dark-02">
+                  한 권의 책을 선정해 깊이 있는 토론을 진행해요.
                 </p>
               </div>
             </label>
@@ -162,39 +213,90 @@ export default function CreateBookClub() {
         </CreateClubFormField>
 
         <CreateClubFormField label="온라인 / 오프라인">
-          <div className="flex gap-4">
-            <label className="flex w-full cursor-pointer items-center gap-2 rounded-xl bg-gray-light-01 p-4">
+          <div className="flex gap-4 md:gap-6">
+            <label
+              className={`flex w-full cursor-pointer items-start gap-2 rounded-xl p-4 ${
+                watch('location') === '온라인'
+                  ? 'border-2 border-green-normal-01'
+                  : ''
+              } bg-gray-light-02`}
+            >
               <input
                 type="radio"
+                id="online"
                 value="온라인"
                 {...register('location')}
                 className="hidden"
               />
-              <div className="flex h-5 w-5 items-center justify-center rounded-full border border-gray-normal-02 bg-white">
-                <div
-                  className="h-3 w-3 rounded-full bg-green-normal-01 opacity-0 transition-opacity data-[checked=true]:opacity-100"
-                  data-checked={watch('location') === '온라인'}
-                />
+              <div
+                className={`flex h-6 w-6 items-center justify-center rounded border bg-white ${
+                  watch('location') === '온라인'
+                    ? 'border-green-normal-01'
+                    : 'border-gray-normal-02'
+                }`}
+              >
+                {watch('location') === '온라인' && (
+                  <svg
+                    className="h-4 w-4 text-green-normal-01"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={4} // 체크 두께 설정
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                )}
               </div>
-              <div>
-                <p>온라인</p>
+              <div className="flex flex-col gap-0.5">
+                <p className="font-semibold">온라인</p>
               </div>
             </label>
-            <label className="flex w-full cursor-pointer items-center gap-2 rounded-xl bg-gray-light-01 p-4">
+
+            <label
+              className={`flex w-full cursor-pointer items-start gap-2 rounded-xl p-4 ${
+                watch('location') === '오프라인'
+                  ? 'border-2 border-green-normal-01'
+                  : ''
+              } bg-gray-light-02`}
+            >
               <input
                 type="radio"
+                id="offline"
                 value="오프라인"
                 {...register('location')}
                 className="hidden"
               />
-              <div className="flex h-5 w-5 items-center justify-center rounded-full border border-gray-normal-02 bg-white">
-                <div
-                  className="h-3 w-3 rounded-full bg-green-normal-01 opacity-0 transition-opacity data-[checked=true]:opacity-100"
-                  data-checked={watch('location') === '오프라인'}
-                />
+              <div
+                className={`flex h-6 w-6 items-center justify-center rounded border bg-white ${
+                  watch('location') === '오프라인'
+                    ? 'border-green-normal-01'
+                    : 'border-gray-normal-02'
+                }`}
+              >
+                {watch('location') === '오프라인' && (
+                  <svg
+                    className="h-4 w-4 text-green-normal-01"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={4} // 체크 두께 설정
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                )}
               </div>
-              <div>
-                <p>오프라인</p>
+              <div className="flex flex-col gap-0.5">
+                <p className="font-semibold">오프라인</p>
               </div>
             </label>
           </div>
@@ -210,7 +312,6 @@ export default function CreateBookClub() {
             className="w-full rounded-xl border bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02"
           />
         </CreateClubFormField>
-
         <CreateClubFormField
           label="언제 모임을 마감할까요?"
           error={errors.endDate?.message}
@@ -221,7 +322,6 @@ export default function CreateBookClub() {
             className="w-full rounded-xl border bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02"
           />
         </CreateClubFormField>
-
         <CreateClubFormField
           label="모임 정원"
           error={errors.maxParticipants?.message}
@@ -235,13 +335,13 @@ export default function CreateBookClub() {
             className="w-full rounded-xl border bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02"
           />
         </CreateClubFormField>
-
-        <button
+        <Button
           type="submit"
-          className="rounded-xl bg-green-normal-01 px-6 py-3 text-white"
-        >
-          확인
-        </button>
+          text="확인"
+          size="large"
+          fillType="solid"
+          themeColor="orange-600"
+        />
       </form>
     </main>
   );
