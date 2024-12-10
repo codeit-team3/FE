@@ -1,5 +1,6 @@
 'use client';
 
+import FormField from '@/components/FormField';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -51,34 +52,23 @@ export default function CreateBookClub() {
       <h1 className="mb-8 text-2xl font-bold">모임 만들기</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10">
-        <div>
-          <label className="mb-2 block">모임 이름</label>
+        <FormField label="모임 이름" error={errors.title?.message}>
           <input
             {...register('title')}
             className="w-full rounded-xl border p-3"
             placeholder="지정책인 경우, 책 이름을 넣어주세요"
           />
-          {errors.title && (
-            <p className="mt-1 text-sm text-red-500">{errors.title.message}</p>
-          )}
-        </div>
+        </FormField>
 
-        <div>
-          <label className="mb-2 block">모임 상세 설명</label>
+        <FormField label="모임 상세 설명" error={errors.description?.message}>
           <textarea
             {...register('description')}
             className="h-32 w-full rounded-xl border p-3"
             placeholder="상세 설명을 입력해주세요"
           />
-          {errors.description && (
-            <p className="mt-1 text-sm text-red-500">
-              {errors.description.message}
-            </p>
-          )}
-        </div>
+        </FormField>
 
-        <div>
-          <label className="mb-2 block">이미지</label>
+        <FormField label="이미지" error={errors.image?.message}>
           <div className="flex w-full items-center gap-2">
             <input
               type="text"
@@ -111,13 +101,9 @@ export default function CreateBookClub() {
               </button>
             )}
           </div>
-          {errors.image && (
-            <p className="mt-1 text-sm text-red-500">{errors.image.message}</p>
-          )}
-        </div>
+        </FormField>
 
-        <div>
-          <label className="mb-2 block">자유책 / 지정책</label>
+        <FormField label="자유책 / 지정책">
           <div className="flex gap-4">
             <label className="flex w-full cursor-pointer items-center gap-2 rounded-xl bg-gray-light-01 p-4">
               <input
@@ -160,10 +146,9 @@ export default function CreateBookClub() {
               </div>
             </label>
           </div>
-        </div>
+        </FormField>
 
-        <div>
-          <label className="mb-2 block">온라인 / 오프라인</label>
+        <FormField label="온라인 / 오프라인">
           <div className="flex gap-4">
             <label className="flex w-full cursor-pointer items-center gap-2 rounded-xl bg-gray-light-01 p-4">
               <input
@@ -200,65 +185,38 @@ export default function CreateBookClub() {
               </div>
             </label>
           </div>
-        </div>
+        </FormField>
 
-        <div>
-          <label className="mb-2 block">언제 만나나요?</label>
-          <div className="flex w-full gap-4">
-            <div className="flex-1">
-              <input
-                type="datetime-local"
-                {...register('startDate')}
-                className="w-full rounded-xl border p-3"
-              />
-              {errors.startDate && (
-                <p className="mt-1 text-sm text-red-500">
-                  {errors.startDate.message}
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
+        <FormField label="언제 만나나요?" error={errors.startDate?.message}>
+          <input
+            type="datetime-local"
+            {...register('startDate')}
+            className="w-full rounded-xl border p-3"
+          />
+        </FormField>
 
-        <div>
-          <label className="mb-2 block">언제 모임을 마감할까요?</label>
-          <div className="flex w-full gap-4">
-            <div className="flex-1">
-              <input
-                type="datetime-local"
-                {...register('endDate')}
-                className="w-full rounded-xl border p-3"
-              />
-              {errors.endDate && (
-                <p className="mt-1 text-sm text-red-500">
-                  {errors.endDate.message}
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
+        <FormField
+          label="언제 모임을 마감할까요?"
+          error={errors.endDate?.message}
+        >
+          <input
+            type="datetime-local"
+            {...register('endDate')}
+            className="w-full rounded-xl border p-3"
+          />
+        </FormField>
 
-        <div>
-          <label className="mb-2 block">모임 정원</label>
-          <div className="flex w-full gap-4">
-            <div className="flex-1">
-              <input
-                type="number"
-                {...register('maxParticipants', { valueAsNumber: true })}
-                className="w-full rounded-xl border p-3"
-              />
-              {errors.maxParticipants && (
-                <p className="mt-1 text-sm text-red-500">
-                  {errors.maxParticipants.message}
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
+        <FormField label="모임 정원" error={errors.maxParticipants?.message}>
+          <input
+            type="number"
+            {...register('maxParticipants', { valueAsNumber: true })}
+            className="w-full rounded-xl border p-3"
+          />
+        </FormField>
 
         <button
           type="submit"
-          className="mt-4 rounded-xl bg-green-normal-01 px-6 py-3 text-white"
+          className="rounded-xl bg-green-normal-01 px-6 py-3 text-white"
         >
           확인
         </button>
