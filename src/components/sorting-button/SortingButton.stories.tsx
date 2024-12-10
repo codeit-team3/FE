@@ -15,11 +15,13 @@ type Story = StoryObj<typeof meta>;
 export const byDate: Story = {
   args: {
     variant: 'byDate',
+    onClickSorting: (e) => alert(e),
   },
 };
 
 export const byDeadline: Story = {
   args: {
     variant: 'byDeadline',
+    onClickSorting: (e) => alert(e),
   },
 };
