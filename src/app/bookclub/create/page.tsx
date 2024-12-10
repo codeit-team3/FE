@@ -4,9 +4,12 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useState } from 'react';
-import CreateClubFormField from '@/features/club-create/components/CreateClubFormField';
-import RadioButtonGroup from '@/features/club-create/components/RadioButtonGroup';
 import Button from '@/components/button/Button';
+import {
+  CreateClubFormField,
+  InputField,
+  RadioButtonGroup,
+} from '@/features/club-create/components';
 
 const bookClubSchema = z.object({
   title: z
@@ -63,9 +66,8 @@ export default function CreateBookClub() {
           currentLength={watch('title')?.length || 0}
           maxLength={30}
         >
-          <input
-            {...register('title')}
-            className="w-full rounded-xl bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02"
+          <InputField
+            register={register('title')}
             placeholder="지정책인 경우, 책 이름을 넣어주세요"
           />
         </CreateClubFormField>
@@ -76,9 +78,8 @@ export default function CreateBookClub() {
           currentLength={watch('description')?.length || 0}
           maxLength={30}
         >
-          <input
-            {...register('description')}
-            className="w-full rounded-xl bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02"
+          <InputField
+            register={register('description')}
             placeholder="상세 설명을 입력해주세요"
           />
         </CreateClubFormField>
