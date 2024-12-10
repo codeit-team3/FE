@@ -7,7 +7,7 @@ interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
   alt: string;
   size?: AvatarSize;
   isPast?: boolean;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 function Avatar({

@@ -14,8 +14,9 @@ export interface MeetingInfo {
   datetime: string;
 }
 
-export interface HostInfo {
+interface HostInfo {
   nickname: string;
+  onHostClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 // 참여 관련 타입들

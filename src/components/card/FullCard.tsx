@@ -11,51 +11,32 @@ function FullCard({ meeting, className, ...props }: FullCardProps) {
     meetingInfo,
     participationStatus,
     imageInfo,
+    hostInfo,
     isPast = false,
     isCanceled = false,
+    actions,
   } = meeting;
-  const { title, category, location, datetime } = meetingInfo;
-  const { currentParticipants, maxParticipants, isConfirmed, participants } =
-    participationStatus;
-  const { url: imageUrl, isLiked, onLikeClick } = imageInfo;
-  const { nickname: hostNickname } = meeting.hostInfo;
-  const { onJoinClick } = meeting.actions;
 
   return (
     <Card isCanceled={isCanceled} className={className} {...props}>
       <div className="flex flex-col gap-6 md:flex-row">
         <div className="w-[336px] lg:w-[486px]">
           <Card.Image
-            url={imageUrl}
-            alt={title}
-            isLiked={isLiked}
-            onLikeClick={onLikeClick}
+            {...imageInfo}
+            alt={meetingInfo.title}
             className="h-[230px] md:h-full"
           />
         </div>
         <div className="flex flex-1 flex-col gap-[14px]">
           <div className="flex flex-col gap-2">
-            <Card.Host nickname={hostNickname} />
+            <Card.Host {...hostInfo} />
             <Card.Box className="flex-1">
-              <Card.Info
-                title={title}
-                category={category}
-                location={location}
-                datetime={datetime}
-                isPast={isPast}
-              />
-              <Card.Status
-                currentParticipants={currentParticipants}
-                maxParticipants={maxParticipants}
-                isConfirmed={isConfirmed}
-                isPast={isPast}
-                participants={participants}
-              />
-              <Card.EndedOverlay />
+              <Card.Info {...meetingInfo} isPast={isPast} />
+              <Card.Status {...participationStatus} isPast={isPast} />
             </Card.Box>
           </div>
           <button
-            onClick={onJoinClick}
+            onClick={actions.onJoinClick}
             className="w-full rounded-xl bg-green-normal-01 px-4 py-2 text-white"
           >
             참여하기

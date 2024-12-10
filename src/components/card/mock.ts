@@ -34,18 +34,29 @@ export const mockFullMeeting: FullMeeting = {
   ...mockMeeting,
   hostInfo: {
     nickname: '호스트',
+    onHostClick: () => alert('호스트 프로필을 클릭했습니다!'),
   },
   actions: {
     onJoinClick: () => alert('참여하기를 클릭했습니다!'),
   },
 };
 
-export const mockCanceledMeeting: Meeting = {
+export const mockPastMeeting = {
+  ...mockMeeting,
+  isPast: true,
+};
+
+export const mockPastFullMeeting = {
+  ...mockFullMeeting,
+  isPast: true,
+};
+
+export const mockCanceledMeeting = {
   ...mockMeeting,
   isCanceled: true,
 };
 
-export const mockCanceledFullMeeting: FullMeeting = {
+export const mockCanceledFullMeeting = {
   ...mockFullMeeting,
   isCanceled: true,
 };
