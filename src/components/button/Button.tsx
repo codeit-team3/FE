@@ -50,12 +50,6 @@ const COLOR_GROUPS = {
   },
 } as const;
 
-const DEFAULT_COLOR = {
-  bg: 'bg-gray-normal-03',
-  text: 'text-gray-darker',
-  border: 'border-gray-normal-03',
-};
-
 export default function Button({
   text,
   size,
@@ -77,7 +71,7 @@ export default function Button({
       : themeColor;
 
   const variantClasses = (() => {
-    const color = COLOR_GROUPS[resolvedColor] || DEFAULT_COLOR;
+    const color = COLOR_GROUPS[resolvedColor];
 
     type TextClassType =
       | 'text-green-normal-01'
@@ -104,7 +98,7 @@ export default function Button({
       case 'lightOutline':
         return `${BASE_CLASSES.lightOutline} ${color.bg} ${textClass} ${color.border}`;
       default:
-        return `${DEFAULT_COLOR.bg} ${DEFAULT_COLOR.text}`;
+        throw new Error(`잘못된 fillType 값입니다: ${fillType}`);
     }
   })();
 
