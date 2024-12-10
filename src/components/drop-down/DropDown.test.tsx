@@ -37,12 +37,6 @@ describe('DropDown variant:navbar 일 때', () => {
     );
 
     const button = screen.getByRole('button');
-    // await user.click(button);
-
-    // //유저가 드롭다운 클릭 후엔 메뉴 아이템들이 나타남
-    // const menuItems = screen.getByRole('listbox');
-    // expect(menuItems).toBeInTheDocument();
-
     //유저가 드롭다운 클릭 전엔 메뉴 아이템들이 나타나지 않음
     const menuItems = screen.queryByRole('listbox');
     expect(menuItems).not.toBeInTheDocument();
