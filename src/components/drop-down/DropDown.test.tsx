@@ -14,13 +14,15 @@ describe('DropDown variant:navbar 일 때', () => {
         onChangeSelection={mockHandleSelectionChange}
       />,
     );
-
+    //드롭다운 버튼 렌더링 확인
     const button = screen.getByRole('button');
     expect(button).toBeInTheDocument();
 
+    //유저가 드롭다운 클릭 전엔 메뉴 아이템들이 나타나지 않음
     const menuItems = screen.queryByRole('listbox');
     expect(menuItems).not.toBeInTheDocument();
 
+    //유저가 드롭다운 클릭 후엔 메뉴 아이템들이 나타남
     userEvent.click(button);
     expect(menuItems).toBeInTheDocument;
   });
@@ -35,9 +37,13 @@ describe('DropDown variant:navbar 일 때', () => {
     );
 
     const button = screen.getByRole('button');
-    userEvent.click(button);
-    expect(button).toBeInTheDocument();
+    await user.click(button);
 
+    //유저가 드롭다운 클릭 후엔 메뉴 아이템들이 나타남
+    const menuItems = screen.getByRole('listbox');
+    expect(menuItems).toBeInTheDocument();
+
+    //유저가 메뉴 아이템의 label을 보고 클릭하면 메뉴 아이템의 value값과 handle 함수를 호출
     const menuItem = screen.getByText(MENU_ITEMS['navbar'][0].label);
     await user.click(menuItem);
 
