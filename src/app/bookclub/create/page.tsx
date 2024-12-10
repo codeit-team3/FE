@@ -7,8 +7,14 @@ import { useState } from 'react';
 import { CreateClubFormField } from '@/features/club-create/components';
 
 const bookClubSchema = z.object({
-  title: z.string().min(1, '모임 이름을 입력해주세요'),
-  description: z.string().min(1, '상세 설명을 입력해주세요'),
+  title: z
+    .string()
+    .min(1, '모임 이름을 입력해주세요')
+    .max(30, '모임 이름은 최대 30자까지 가능합니다'),
+  description: z
+    .string()
+    .min(1, '상세 설명을 입력해주세요')
+    .max(30, '상세 설명은 최대 30자까지 가능합니다'),
   image: z.string().optional(),
   bookType: z.enum(['자유책', '지정책']),
   location: z.enum(['온라인', '오프라인']),
@@ -18,7 +24,7 @@ const bookClubSchema = z.object({
   maxParticipants: z
     .number()
     .min(3, '최소 3명 이상 입력해주세요')
-    .max(30, '최대 30명까지 가능합니다'),
+    .max(20, '최대 20명까지 가능합니다'),
 });
 
 type BookClubForm = z.infer<typeof bookClubSchema>;
@@ -32,9 +38,6 @@ export default function CreateBookClub() {
     watch,
   } = useForm<BookClubForm>({
     resolver: zodResolver(bookClubSchema),
-    defaultValues: {
-      maxParticipants: 3,
-    },
   });
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,10 +55,15 @@ export default function CreateBookClub() {
       <h1 className="mb-8 text-2xl font-bold">모임 만들기</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10">
-        <CreateClubFormField label="모임 이름" error={errors.title?.message}>
+        <CreateClubFormField
+          label="모임 이름"
+          error={errors.title?.message}
+          currentLength={watch('title')?.length || 0}
+          maxLength={30}
+        >
           <input
             {...register('title')}
-            className="w-full rounded-xl border p-3"
+            className="w-full rounded-xl bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02"
             placeholder="지정책인 경우, 책 이름을 넣어주세요"
           />
         </CreateClubFormField>
@@ -63,10 +71,12 @@ export default function CreateBookClub() {
         <CreateClubFormField
           label="모임 상세 설명"
           error={errors.description?.message}
+          currentLength={watch('description')?.length || 0}
+          maxLength={30}
         >
           <textarea
             {...register('description')}
-            className="h-32 w-full rounded-xl border p-3"
+            className="h-32 w-full rounded-xl border bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02"
             placeholder="상세 설명을 입력해주세요"
           />
         </CreateClubFormField>
@@ -75,7 +85,7 @@ export default function CreateBookClub() {
           <div className="flex w-full items-center gap-2">
             <input
               type="text"
-              className="flex-1 rounded-xl border border-gray-normal-02 p-3"
+              className="flex-1 rounded-xl border border-gray-normal-02 bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02"
               placeholder="이미지를 첨부해주세요"
               value={selectedFileName}
               readOnly
@@ -197,7 +207,7 @@ export default function CreateBookClub() {
           <input
             type="datetime-local"
             {...register('startDate')}
-            className="w-full rounded-xl border p-3"
+            className="w-full rounded-xl border bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02"
           />
         </CreateClubFormField>
 
@@ -208,18 +218,21 @@ export default function CreateBookClub() {
           <input
             type="datetime-local"
             {...register('endDate')}
-            className="w-full rounded-xl border p-3"
+            className="w-full rounded-xl border bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02"
           />
         </CreateClubFormField>
 
         <CreateClubFormField
           label="모임 정원"
           error={errors.maxParticipants?.message}
+          currentLength={watch('maxParticipants') || 0}
+          maxLength={20}
         >
           <input
             type="number"
             {...register('maxParticipants', { valueAsNumber: true })}
-            className="w-full rounded-xl border p-3"
+            placeholder="최소 3인이상 입력해주세요."
+            className="w-full rounded-xl border bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02"
           />
         </CreateClubFormField>
 
