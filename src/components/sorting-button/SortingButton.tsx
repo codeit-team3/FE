@@ -11,6 +11,7 @@ function SortingButton({ variant, onClickSorting }: SortingButtonProps) {
 
   const onClick = (): void => {
     let param;
+    setIsActive(!isActive);
     switch (variant) {
       case 'byDeadline':
         param = isActive ? 'NEWEST' : 'DEADLINE';
@@ -21,10 +22,9 @@ function SortingButton({ variant, onClickSorting }: SortingButtonProps) {
         break;
     }
     onClickSorting(param);
-    setIsActive(!isActive);
   };
 
-  const renderLabel = (variant: string) => {
+  const renderLabel = () => {
     switch (variant) {
       case 'byDeadline':
         return '마감임박순';
@@ -33,6 +33,7 @@ function SortingButton({ variant, onClickSorting }: SortingButtonProps) {
         return isActive ? '오래된순' : '최신순';
     }
   };
+
   return (
     <button
       className={`flex h-[40px] items-center rounded-xl border px-[12px] py-[8px] text-sm font-medium ${
@@ -45,7 +46,7 @@ function SortingButton({ variant, onClickSorting }: SortingButtonProps) {
       <span className="pr-[4px]">
         <IcSorting isActive={isActive} color="stroke-green-normal-02" />
       </span>
-      {renderLabel(variant)}
+      {renderLabel()}
     </button>
   );
 }
