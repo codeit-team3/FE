@@ -3,10 +3,10 @@ import { IcCheck } from '../../../public/icons';
 
 interface FilterCheckboxProps extends React.ComponentPropsWithoutRef<'input'> {
   label: string;
+  checked: boolean;
 }
 
-function FilterCheckbox({ label, ...props }: FilterCheckboxProps) {
-  const checked = props.checked;
+function FilterCheckbox({ label, checked, ...props }: FilterCheckboxProps) {
   return (
     <label
       className={`inline-flex h-10 w-fit min-w-24 cursor-pointer items-center gap-x-2 rounded-xl border bg-white px-[14px] py-2 transition duration-200 ${
