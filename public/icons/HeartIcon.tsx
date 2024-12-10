@@ -23,6 +23,9 @@ function HeartIcon({
       xmlns="http://www.w3.org/2000/svg"
       onClick={onClick}
       className="cursor-pointer"
+      role="button"
+      aria-label={isLiked ? '좋아요 취소' : '좋아요'}
+      aria-pressed={isLiked}
       {...props}
     >
       <path
