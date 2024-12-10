@@ -8,6 +8,10 @@ export interface MeetingInfo {
 export interface HostInfo {
   nickname: string;
   onHostClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  avatar?: {
+    src?: string;
+    alt?: string;
+  };
 }
 
 export interface ParticipantInfo {

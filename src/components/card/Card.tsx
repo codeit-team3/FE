@@ -149,15 +149,24 @@ function CardEndedOverlay({ onDelete }: CardEndedOverlayProps) {
 }
 
 // Host 컴포넌트 (호스트 정보)
-function CardHost({ nickname, className, onClick, ...props }: CardHostProps) {
+function CardHost({
+  nickname,
+  avatar,
+  className,
+  onClick,
+  ...props
+}: CardHostProps) {
   return (
     <div className={`flex items-center gap-2 ${className || ''}`} {...props}>
       <div className="relative">
         <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-normal-01">
           <Avatar
             size="md"
-            src={`https://picsum.photos/200/200?random=${Math.floor(Math.random() * 1000)}`}
-            alt={`${nickname}님의 프로필`}
+            src={
+              avatar?.src ||
+              `https://picsum.photos/200/200?random=${Math.floor(Math.random() * 1000)}`
+            }
+            alt={avatar?.alt || `${nickname}님의 프로필`}
             onClick={onClick}
           />
         </div>
