@@ -35,6 +35,11 @@ export const mockFullMeeting: FullMeeting = {
   hostInfo: {
     nickname: '호스트',
     onHostClick: () => alert('호스트 프로필을 클릭했습니다!'),
+    // 프로필 이미지 정보
+    // avatar: {
+    //   src: 'https://picsum.photos/seed/host/200',
+    //   alt: '호스트 프로필 이미지',
+    // },
   },
   actions: {
     onJoinClick: () => alert('참여하기를 클릭했습니다!'),
