@@ -4,7 +4,7 @@ import { twMerge } from 'tailwind-merge';
 interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   text: string;
   size: 'large' | 'medium' | 'small' | 'modal';
-  fillType: 'solid' | 'outline' | 'lightSolid';
+  fillType: 'solid' | 'outline' | 'lightSolid' | 'lightOutline';
   themeColor:
     | 'green-normal-01'
     | 'green-light-03'
@@ -24,6 +24,7 @@ const BASE_CLASSES = {
   solid: 'text-white',
   outline: 'bg-white border',
   lightSolid: '',
+  lightOutline: 'border',
 } as const;
 
 const COLOR_GROUPS = {
@@ -35,12 +36,12 @@ const COLOR_GROUPS = {
   'green-light-03': {
     bg: 'bg-green-light-03',
     text: 'text-green-normal-01',
-    border: 'border-green-light-03',
+    border: 'border-green-normal-01',
   },
   'gray-normal-03': {
     bg: 'bg-gray-normal-03',
     text: 'text-gray-darker',
-    border: 'border-gray-normal-03',
+    border: 'border-gray-darker',
   },
   'gray-darker': {
     bg: 'bg-gray-darker',
@@ -87,7 +88,7 @@ export default function Button({
 
     // 배경색과 글자색이 동일한 경우 textClass를 흰색으로 덮어쓰기
     if (
-      fillType === 'lightSolid' &&
+      (fillType === 'lightSolid' || fillType === 'lightOutline') &&
       color.bg.includes(color.text.replace('text-', 'bg-'))
     ) {
       textClass = 'text-white';
@@ -100,6 +101,8 @@ export default function Button({
         return `${BASE_CLASSES.outline} ${color.text} ${color.border}`;
       case 'lightSolid':
         return `${color.bg} ${textClass}`;
+      case 'lightOutline':
+        return `${BASE_CLASSES.lightOutline} ${color.bg} ${textClass} ${color.border}`;
       default:
         return `${DEFAULT_COLOR.bg} ${DEFAULT_COLOR.text}`;
     }
