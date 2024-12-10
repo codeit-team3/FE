@@ -1,8 +1,5 @@
-'use client';
-
 import Image from 'next/image';
 import RatingDisplay from '../rating-display/RatingDisplay';
-import { useState, useEffect } from 'react';
 
 // 디자인 확정시, 기본 이미지 변경
 const defaultProfileImage = '/images/profile.png';
@@ -22,16 +19,6 @@ export default function WrittenReview({
   userName,
   createdAt,
 }: WrittenReviewProps) {
-  const [imgSrc, setImgSrc] = useState(profileImage || defaultProfileImage);
-
-  useEffect(() => {
-    setImgSrc(profileImage || defaultProfileImage);
-  }, [profileImage]);
-
-  const handleImageError = () => {
-    setImgSrc(defaultProfileImage);
-  };
-
   return (
     <article className="flex w-full max-w-[948px] flex-col items-start">
       <RatingDisplay ratingCount={ratingCount} />
@@ -42,10 +29,10 @@ export default function WrittenReview({
         <Image
           width={24}
           height={24}
-          src={imgSrc}
+          src={profileImage || defaultProfileImage}
           alt={`${userName}'s profile picture`}
           className="h-6 w-6 rounded-full object-cover"
-          onError={handleImageError}
+          onError={(e) => (e.currentTarget.src = defaultProfileImage)}
         />
         <p className="flex h-[1em] items-center text-xs font-semibold text-gray-darker">
           {userName}
