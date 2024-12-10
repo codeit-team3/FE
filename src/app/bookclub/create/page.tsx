@@ -99,7 +99,7 @@ export default function CreateBookClub() {
             />
             <label
               htmlFor="image-upload"
-              className="flex h-10 cursor-pointer items-center rounded-xl border border-gray-normal-02 border-green-normal-01 px-4 text-gray-dark-02 text-green-normal-01"
+              className="flex h-10 cursor-pointer items-center rounded-xl border border-green-normal-01 px-4 text-green-normal-01"
             >
               파일 찾기
             </label>
