@@ -64,18 +64,18 @@ export default function CreateBookClub() {
 
         <CreateClubFormField label="이미지" error={errors.image?.message}>
           <div className="flex w-full items-center gap-2">
-            <input
+            <InputField
               type="text"
-              className="w-full flex-1 rounded-xl bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02"
-              placeholder="이미지를 첨부해주세요"
               value={selectedFileName}
               readOnly
+              placeholder="이미지를 첨부해주세요"
+              className="flex-1"
             />
-            <input
+            <InputField
               type="file"
               accept="image/*"
-              {...register('image')}
-              className="hidden border"
+              register={register('image')}
+              className="hidden"
               id="image-upload"
               onChange={handleFileChange}
             />
@@ -132,22 +132,14 @@ export default function CreateBookClub() {
           label="언제 만나나요?"
           error={errors.startDate?.message}
         >
-          <input
-            type="datetime-local"
-            {...register('startDate')}
-            className="w-full rounded-xl border bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02"
-          />
+          <InputField type="datetime-local" register={register('startDate')} />
         </CreateClubFormField>
 
         <CreateClubFormField
           label="언제 모임을 마감할까요?"
           error={errors.endDate?.message}
         >
-          <input
-            type="datetime-local"
-            {...register('endDate')}
-            className="w-full rounded-xl border bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02"
-          />
+          <InputField type="datetime-local" register={register('endDate')} />
         </CreateClubFormField>
 
         <CreateClubFormField
@@ -156,11 +148,10 @@ export default function CreateBookClub() {
           currentLength={watch('maxParticipants') || 0}
           maxLength={20}
         >
-          <input
+          <InputField
             type="number"
-            {...register('maxParticipants', { valueAsNumber: true })}
+            register={register('maxParticipants', { valueAsNumber: true })}
             placeholder="최소 3인이상 입력해주세요."
-            className="w-full rounded-xl border bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02"
           />
         </CreateClubFormField>
 
