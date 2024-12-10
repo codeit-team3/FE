@@ -5,17 +5,18 @@ import { usePathname } from 'next/navigation';
 interface NavButtonProps {
   href: string;
   children: React.ReactNode;
+  isActive?: boolean;
 }
 
-function NavButton({ href, children }: NavButtonProps) {
+function NavButton({ href, children, isActive }: NavButtonProps) {
   const pathname = usePathname();
+
+  const active = isActive ?? pathname === href;
 
   return (
     <Link
       href={href}
-      className={`hover:scale-105 md:text-base ${
-        pathname === href ? 'font-bold text-black' : ''
-      }`}
+      className={`hover:scale-105 ${active ? 'font-bold' : 'text-green-light-01'}`}
     >
       {children}
     </Link>
