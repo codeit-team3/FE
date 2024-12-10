@@ -1,46 +1,28 @@
 import { ComponentPropsWithoutRef } from 'react';
 import Card from './Card';
+import { FullMeeting } from './types';
 
 interface FullCardProps extends ComponentPropsWithoutRef<'article'> {
-  title: string;
-  category: string;
-  location: string;
-  datetime: string;
-  currentParticipants: number;
-  maxParticipants: number;
-  isConfirmed?: boolean;
-  isPast?: boolean;
-  imageUrl: string;
-  isLiked?: boolean;
-  onLikeClick?: () => void;
-  hostNickname: string;
-  onJoinClick?: () => void;
-  participants: Array<{
-    src: string;
-    alt: string;
-  }>;
+  meeting: FullMeeting;
 }
 
-function FullCard({
-  title,
-  category,
-  location,
-  datetime,
-  currentParticipants,
-  maxParticipants,
-  isConfirmed = false,
-  isPast = false,
-  imageUrl,
-  isLiked = false,
-  onLikeClick,
-  hostNickname,
-  onJoinClick,
-  participants,
-  className,
-  ...props
-}: FullCardProps) {
+function FullCard({ meeting, className, ...props }: FullCardProps) {
+  const {
+    meetingInfo,
+    participationStatus,
+    imageInfo,
+    isPast = false,
+    isCanceled = false,
+  } = meeting;
+  const { title, category, location, datetime } = meetingInfo;
+  const { currentParticipants, maxParticipants, isConfirmed, participants } =
+    participationStatus;
+  const { url: imageUrl, isLiked, onLikeClick } = imageInfo;
+  const { nickname: hostNickname } = meeting.hostInfo;
+  const { onJoinClick } = meeting.actions;
+
   return (
-    <Card className={className} {...props}>
+    <Card isCanceled={isCanceled} className={className} {...props}>
       <div className="flex flex-col gap-6 md:flex-row">
         <div className="w-[336px] lg:w-[486px]">
           <Card.Image
@@ -69,6 +51,7 @@ function FullCard({
                 isPast={isPast}
                 participants={participants}
               />
+              <Card.EndedOverlay />
             </Card.Box>
           </div>
           <button

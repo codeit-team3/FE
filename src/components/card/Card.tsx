@@ -17,12 +17,17 @@ import {
   CardImageProps,
 } from './types';
 
-const CardContext = createContext<CardContextType>({});
+const CardContext = createContext<CardContextType>({ isCanceled: false });
 
 // 메인 Card 컴포넌트
-function Card({ children, isEnded = false, className, ...props }: CardProps) {
+function Card({
+  children,
+  isCanceled = false,
+  className,
+  ...props
+}: CardProps) {
   return (
-    <CardContext.Provider value={{ isEnded }}>
+    <CardContext.Provider value={{ isCanceled }}>
       <article
         className={`relative flex h-full w-full min-w-[336px] flex-col gap-4 ${className || ''}`}
         {...props}
@@ -34,10 +39,16 @@ function Card({ children, isEnded = false, className, ...props }: CardProps) {
 }
 
 // Box 컴포넌트
-function CardBox({ children, className = '', ...props }: CardBoxProps) {
+function CardBox({
+  children,
+  className = '',
+  onClick,
+  ...props
+}: CardBoxProps) {
   return (
     <div
-      className={`flex min-h-[180px] w-[336px] flex-col justify-between rounded-2xl border border-gray-200 p-6 md:w-full ${className}`}
+      className={`flex min-h-[180px] w-[336px] flex-col justify-between rounded-2xl border border-gray-normal-01 p-6 md:w-full ${className} ${onClick ? 'cursor-pointer' : ''}`}
+      onClick={onClick}
       {...props}
     >
       {children}
@@ -108,9 +119,19 @@ function CardStatus({
 }
 
 // Overlay 컴포넌트
-function CardEndedOverlay() {
-  const { isEnded } = useContext(CardContext);
-  if (!isEnded) return null;
+interface CardEndedOverlayProps {
+  onDelete?: () => void;
+}
+
+function CardEndedOverlay({ onDelete }: CardEndedOverlayProps) {
+  const { isCanceled } = useContext(CardContext);
+
+  if (!isCanceled) return null;
+
+  const handleDeleteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onDelete?.();
+  };
 
   return (
     <div className="absolute inset-0 z-10 rounded-2xl bg-black/80">
@@ -118,7 +139,12 @@ function CardEndedOverlay() {
         <p className="whitespace-pre-line text-center font-semibold text-white">
           {'호스트가 모임을 취소했어요.'}
         </p>
-        <button className="w-[120px] rounded-xl bg-white py-2">삭제하기</button>
+        <button
+          onClick={handleDeleteClick}
+          className="w-[120px] rounded-xl bg-white py-2"
+        >
+          삭제하기
+        </button>
       </div>
     </div>
   );
