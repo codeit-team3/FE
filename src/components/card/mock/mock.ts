@@ -11,6 +11,7 @@ export const mockMeeting: Meeting = {
     currentParticipants: 17,
     maxParticipants: 20,
     isConfirmed: true,
+    confirmedVariant: 'confirmed',
     participants: [
       { src: 'https://picsum.photos/seed/1/200', alt: '참가자1' },
       { src: 'https://picsum.photos/seed/2/200', alt: '참가자2' },

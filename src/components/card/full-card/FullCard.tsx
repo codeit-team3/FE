@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react';
-import Card from './Card';
-import { FullMeeting } from './types';
+import Card from '../Card';
+import { FullMeeting } from '../types';
 
 interface FullCardProps extends ComponentPropsWithoutRef<'article'> {
   meeting: FullMeeting;

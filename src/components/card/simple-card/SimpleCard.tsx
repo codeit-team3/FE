@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react';
-import Card from './Card';
+import Card from '../Card';
 import { Meeting } from '@/components/card/types';
 
 interface SimpleCardProps extends ComponentPropsWithoutRef<'article'> {
