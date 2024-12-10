@@ -2,7 +2,6 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { useState } from 'react';
 import Button from '@/components/button/Button';
 import {
@@ -10,29 +9,7 @@ import {
   InputField,
   RadioButtonGroup,
 } from '@/features/club-create/components';
-
-const bookClubSchema = z.object({
-  title: z
-    .string()
-    .min(1, '모임 이름을 입력해주세요')
-    .max(30, '모임 이름은 최대 30자까지 가능합니다'),
-  description: z
-    .string()
-    .min(1, '상세 설명을 입력해주세요')
-    .max(30, '상세 설명은 최대 30자까지 가능합니다'),
-  image: z.string().optional(),
-  bookType: z.enum(['자유책', '지정책']),
-  location: z.enum(['온라인', '오프라인']),
-  place: z.string().optional(),
-  startDate: z.string().min(1, '시작 날짜를 선택해주세요'),
-  endDate: z.string().min(1, '종료 날짜를 선택해주세요'),
-  maxParticipants: z
-    .number()
-    .min(3, '최소 3명 이상 입력해주세요')
-    .max(20, '최대 20명까지 가능합니다'),
-});
-
-type BookClubForm = z.infer<typeof bookClubSchema>;
+import { BookClubForm, bookClubSchema } from '@/features/club-create/types';
 
 export default function CreateBookClub() {
   const [selectedFileName, setSelectedFileName] = useState<string>('');
@@ -45,14 +22,15 @@ export default function CreateBookClub() {
     resolver: zodResolver(bookClubSchema),
   });
 
+  // TODO:: 컨테이너별로 비즈니스 로직 작업 후 훅 분리
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     setSelectedFileName(file ? file.name : '');
   };
 
+  // TODO: API 연동, 훅 분리
   const onSubmit = (data: BookClubForm) => {
     console.log(data);
-    // TODO: API 연동
   };
 
   return (
