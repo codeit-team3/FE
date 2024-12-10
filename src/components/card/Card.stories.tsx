@@ -8,7 +8,7 @@ import {
   mockCanceledMeeting,
   mockPastFullMeeting,
   mockCanceledFullMeeting,
-} from './mock';
+} from './mock/mock';
 
 // 메타 정보에서 argTypes 제거
 const meta = {

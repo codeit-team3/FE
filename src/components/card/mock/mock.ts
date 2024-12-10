@@ -1,4 +1,4 @@
-import { Meeting, FullMeeting } from './types';
+import { Meeting, FullMeeting } from '../types';
 
 export const mockMeeting: Meeting = {
   meetingInfo: {
