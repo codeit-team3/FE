@@ -3,17 +3,27 @@
 import React from 'react';
 import NavButton from './NavButton';
 import { NAV_ITEMS } from '@/constants/navigation';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
 import DropDown from '../drop-down/DropDown';
+import { logout } from '@/features/auth/api/auth';
 
 function HeaderBar() {
   const pathname = usePathname();
   const { isLoggedIn, user } = useAuthStore();
+  const router = useRouter();
 
-  const handleDropDownChange = (value: string | undefined) => {
-    // 드롭다운 메뉴 선택 처리
-    console.log(value);
+  const handleDropDownChange = async (value: string | undefined) => {
+    if (value === 'LOGOUT') {
+      try {
+        await logout();
+        router.replace('/exchange');
+      } catch (error) {
+        console.error('로그아웃 실패:', error);
+      }
+    } else if (value === 'MY_PAGE') {
+      router.push('/profile');
+    }
   };
 
   return (

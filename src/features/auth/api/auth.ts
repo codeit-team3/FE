@@ -1,7 +1,7 @@
 import apiClient from '@/lib/utils/apiClient';
 import { LoginFormData } from '../types/loginFormSchema';
 import { useAuthStore } from '@/store/authStore';
-import { setCookie } from '@/features/auth/utils/cookies';
+import { setCookie, deleteCookie } from '@/features/auth/utils/cookies';
 import { User } from '../types/user';
 
 export const login = async (data: LoginFormData) => {
@@ -33,6 +33,19 @@ export const getUserInfo = async () => {
     return response.data;
   } catch (error) {
     console.error('사용자 정보 조회 에러:', error);
+    throw error;
+  }
+};
+
+export const logout = async () => {
+  try {
+    await apiClient.post('/auths/signout');
+    const { setIsLoggedIn, setUser } = useAuthStore.getState();
+    setIsLoggedIn(false);
+    setUser(null);
+    deleteCookie('auth_token');
+  } catch (error) {
+    console.error('로그아웃 에러:', error);
     throw error;
   }
 };
