@@ -10,6 +10,7 @@ interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
     | 'green-normal-01'
     | 'green-light-03'
     | 'gray-normal-03'
+    | 'gray-normal-02'
     | 'gray-darker';
   isSubmitting?: boolean;
 }
@@ -40,7 +41,8 @@ export default function Button({
     type TextClassType =
       | 'text-green-normal-01'
       | 'text-gray-darker'
-      | 'text-white';
+      | 'text-white'
+      | 'text-gray-dark-02';
 
     let textClass: TextClassType = color.text;
 
