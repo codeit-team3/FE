@@ -12,9 +12,11 @@ import {
 import { BookClubForm, bookClubSchema } from '@/features/club-create/types';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useCreateBookClub } from '@/features/club-create/hooks/useCreateBookClub';
 
 export default function CreateBookClub() {
   const [selectedFileName, setSelectedFileName] = useState<string>('');
+  const { createBookClub } = useCreateBookClub();
   const {
     register,
     handleSubmit,
@@ -40,53 +42,8 @@ export default function CreateBookClub() {
 
   // TODO: API 연동, 훅 분리
   const onSubmit = (data: BookClubForm) => {
-    const formData = new FormData();
-
-    // 이미지 파일 추가 (Multipart)
-    const imageFile = data.image instanceof File ? data.image : null;
-    if (imageFile) {
-      formData.append('image', imageFile);
-    }
-
-    // 날짜 형식 변환 함수 (KST)
-    const formatDate = (date: Date) => {
-      const kstDate = new Date(
-        date.getTime() - date.getTimezoneOffset() * 60000,
-      );
-      return kstDate.toISOString().slice(0, 19); // yyyy-MM-dd'T'HH:mm:ss 형식
-    };
-
-    // 나머지 데이터는 JSON으로 묶기
-    const bookClubData = {
-      title: data.title,
-      description: data.description,
-      bookClubType: data.bookClubType,
-      meetingType: data.meetingType,
-      town: data.town,
-      targetDate: formatDate(data.targetDate),
-      endDate: formatDate(data.endDate),
-      memberLimit: data.memberLimit,
-    };
-
-    // JSON 데이터 추가
-    formData.append(
-      'bookClub',
-      new Blob([JSON.stringify(bookClubData)], {
-        type: 'application/json',
-      }),
-    );
-
-    // 확인용 로그
-    console.log('전송될 데이터:', {
-      이미지: imageFile
-        ? {
-            이름: imageFile.name,
-            타입: imageFile.type,
-            크기: `${(imageFile.size / 1024).toFixed(2)}KB`,
-          }
-        : null,
-      북클럽_데이터: bookClubData,
-    });
+    const formData = createBookClub(data);
+    console.log(formData);
   };
 
   return (
