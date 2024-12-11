@@ -6,13 +6,23 @@ interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
   src: string;
   alt: string;
   size?: AvatarSize;
-  onClick?: () => void;
+  isPast?: boolean;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-function Avatar({ src, alt, size = 'sm', onClick, ...props }: AvatarProps) {
+function Avatar({
+  src,
+  alt,
+  size = 'sm',
+  isPast = false,
+  onClick,
+  ...props
+}: AvatarProps) {
   return (
     <div
-      className={`relative cursor-pointer overflow-hidden rounded-full ${AVATAR_SIZE[size]} ${props.className || ''}`}
+      className={`relative cursor-pointer overflow-hidden rounded-full ${
+        AVATAR_SIZE[size]
+      } ${isPast ? 'opacity-60 grayscale' : ''} ${props.className || ''}`}
       onClick={onClick}
       {...props}
     >
