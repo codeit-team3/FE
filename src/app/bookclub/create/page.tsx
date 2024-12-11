@@ -48,6 +48,14 @@ export default function CreateBookClub() {
       formData.append('image', imageFile);
     }
 
+    // 날짜 형식 변환 함수 (KST)
+    const formatDate = (date: Date) => {
+      const kstDate = new Date(
+        date.getTime() - date.getTimezoneOffset() * 60000,
+      );
+      return kstDate.toISOString().slice(0, 19); // yyyy-MM-dd'T'HH:mm:ss 형식
+    };
+
     // 나머지 데이터는 JSON으로 묶기
     const bookClubData = {
       title: data.title,
@@ -55,8 +63,8 @@ export default function CreateBookClub() {
       bookClubType: data.bookClubType,
       meetingType: data.meetingType,
       town: data.town,
-      targetDate: data.targetDate,
-      endDate: data.endDate,
+      targetDate: formatDate(data.targetDate),
+      endDate: formatDate(data.endDate),
       memberLimit: data.memberLimit,
     };
 
