@@ -22,7 +22,7 @@ function HeaderBar() {
         console.error('로그아웃 실패:', error);
       }
     } else if (value === 'MY_PAGE') {
-      router.push('/mypage');
+      router.push('/profile');
     }
   };
 
