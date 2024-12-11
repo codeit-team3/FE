@@ -52,11 +52,12 @@ export default function CreateBookClub() {
     const bookClubData = {
       title: data.title,
       description: data.description,
-      bookType: data.bookType,
-      location: data.location,
-      startDate: data.startDate,
+      bookClubType: data.bookClubType,
+      meetingType: data.meetingType,
+      town: data.town,
+      targetDate: data.targetDate,
       endDate: data.endDate,
-      maxParticipants: data.maxParticipants,
+      memberLimit: data.memberLimit,
     };
 
     // JSON 데이터 추가
@@ -152,39 +153,39 @@ export default function CreateBookClub() {
             options={[
               {
                 label: '자유책',
-                value: '자유책',
+                value: 'FREE',
                 description:
                   '읽고 싶은 책을 자유롭게 선택하고 각자의 생각을 나눠요.',
               },
               {
                 label: '지정책',
-                value: '지정책',
+                value: 'FIXED',
                 description: '한 권의 책을 선정해 깊이 있는 토론을 진행해요.',
               },
             ]}
-            selectedValue={watch('bookType')}
-            register={register('bookType')}
+            selectedValue={watch('bookClubType')}
+            register={register('bookClubType')}
           />
         </CreateClubFormField>
 
         <CreateClubFormField label="온라인 / 오프라인">
           <RadioButtonGroup
             options={[
-              { label: '온라인', value: '온라인' },
-              { label: '오프라인', value: '오프라인' },
+              { label: '온라인', value: 'ONLINE' },
+              { label: '오프라인', value: 'OFFLINE' },
             ]}
-            selectedValue={watch('location')}
-            register={register('location')}
+            selectedValue={watch('meetingType')}
+            register={register('meetingType')}
           />
         </CreateClubFormField>
 
         <CreateClubFormField
           label="언제 만나나요?"
-          error={errors.startDate?.message}
+          error={errors.targetDate?.message}
         >
           <Controller
             control={control}
-            name="startDate"
+            name="targetDate"
             render={({ field }) => (
               <DatePicker
                 selected={field.value}
@@ -236,13 +237,13 @@ export default function CreateBookClub() {
 
         <CreateClubFormField
           label="모임 정원"
-          error={errors.maxParticipants?.message}
-          currentLength={watch('maxParticipants') || 0}
+          error={errors.memberLimit?.message}
+          currentLength={watch('memberLimit') || 0}
           maxLength={20}
         >
           <InputField
             type="number"
-            register={register('maxParticipants', { valueAsNumber: true })}
+            register={register('memberLimit', { valueAsNumber: true })}
             placeholder="최소 3인이상 입력해주세요."
           />
         </CreateClubFormField>
