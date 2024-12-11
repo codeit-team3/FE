@@ -29,7 +29,7 @@ export const RoundedLight: Story = {
 export const SquareOutlined: Story = {
   args: {
     text: '오프라인',
-    variant: 'square-light',
+    variant: 'square-outlined',
   },
 };
 
@@ -54,13 +54,13 @@ export const AllStates: Story = {
       <div className="flex gap-2">
         <Chip text="모집중" variant="rounded-filled" />
         <Chip text="1월 7일" variant="rounded-light" />
-        <Chip text="오프라인" variant="square-light" />
+        <Chip text="오프라인" variant="square-outlined" />
         <Chip text="마감" variant="square-filled" />
       </div>
       <div className="flex gap-2">
         <Chip text="자유책" variant="rounded-filled" isPast={true} />
         <Chip text="1월 7일" variant="rounded-light" isPast={true} />
-        <Chip text="오프라인" variant="square-light" isPast={true} />
+        <Chip text="오프라인" variant="square-outlined" isPast={true} />
         <Chip text="마감" variant="square-filled" isPast={true} />
       </div>
     </div>
