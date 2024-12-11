@@ -1,10 +1,15 @@
 import { SVGProps } from 'react';
 
-function SearchIcon({ ...props }: SVGProps<SVGSVGElement>) {
+interface SearchIconProps extends SVGProps<SVGSVGElement> {
+  width?: number;
+  height?: number;
+}
+
+function SearchIcon({ width = 12, height = 12, ...props }: SearchIconProps) {
   return (
     <svg
-      width={12}
-      height={12}
+      width={width}
+      height={height}
       viewBox="0 0 14 14"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
