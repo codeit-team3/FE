@@ -10,3 +10,4 @@ export { default as VisibilityOn } from './visibility_on';
 export { default as VisibilityOff } from './visibility_off';
 export { default as LocationIcon } from './LocationIcon';
 export { default as HostIcon } from './HostIcon';
+export { default as IcClose } from './IcClose';

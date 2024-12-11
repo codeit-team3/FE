@@ -19,8 +19,9 @@ export const LargeOneButton: Story = {
   args: {
     isOpen: true,
     isLarge: true,
-    isTwoButton: false,
     label: POPUP_LABEL.large,
+    handlePopUpClose: (e) => alert(e),
+    handlePopUpConfirm: (e) => alert(e),
   },
 };
 
@@ -30,24 +31,27 @@ export const LargeTwoButton: Story = {
     isLarge: true,
     isTwoButton: true,
     label: POPUP_LABEL.large,
+    handlePopUpClose: (e) => alert(e),
+    handlePopUpConfirm: (e) => alert(e),
   },
 };
 
 export const SmallOneButton: Story = {
   args: {
     isOpen: true,
-    isLarge: false,
-    isTwoButton: false,
     label: POPUP_LABEL.small,
+    handlePopUpClose: (e) => alert(e),
+    handlePopUpConfirm: (e) => alert(e),
   },
 };
 
 export const SmallTwoButton: Story = {
   args: {
     isOpen: true,
-    isLarge: false,
     isTwoButton: true,
     label: POPUP_LABEL.small,
+    handlePopUpClose: (e) => alert(e),
+    handlePopUpConfirm: (e) => alert(e),
   },
 };
 

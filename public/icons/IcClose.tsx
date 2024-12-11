@@ -3,13 +3,15 @@ import { SVGProps } from 'react';
 interface IcCloseProps extends SVGProps<SVGElement> {
   width?: number;
   height?: number;
-  strokeColor?: string;
+  isActive?: boolean;
+  color?: string;
 }
 
 function IcClose({
   width = 24,
   height = 24,
-  strokeColor = '#111827',
+  isActive = false,
+  color,
 }: IcCloseProps) {
   return (
     <svg
@@ -17,9 +19,10 @@ function IcClose({
       width={width}
       height={height}
       fill="none"
+      className={`${isActive ? color : 'stroke-gray-dark-02'}`}
     >
       <path
-        stroke={strokeColor}
+        stroke={isActive ? color : '#909192'}
         strokeLinecap="round"
         strokeWidth="1.8"
         d="m5 5 14.5 14.5M19.5 5 5 19.5"
