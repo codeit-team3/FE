@@ -10,18 +10,18 @@ function SortingButton({ variant, onClickSorting }: SortingButtonProps) {
   const [isActive, setIsActive] = useState(false);
 
   const onClick = (): void => {
-    let param;
+    let sortBy;
     setIsActive(!isActive);
     switch (variant) {
       case 'byDeadline':
-        param = isActive ? 'NEWEST' : 'DEADLINE';
+        sortBy = isActive ? 'NEWEST' : 'DEADLINE';
         break;
 
       case 'byDate':
-        param = isActive ? 'NEWEST' : 'OLDEST';
+        sortBy = isActive ? 'NEWEST' : 'OLDEST';
         break;
     }
-    onClickSorting(param);
+    onClickSorting(sortBy);
   };
 
   const renderLabel = () => {
@@ -37,14 +37,17 @@ function SortingButton({ variant, onClickSorting }: SortingButtonProps) {
   return (
     <button
       className={`flex h-[40px] items-center rounded-xl border px-[12px] py-[8px] text-sm font-medium ${
-        isActive
+        variant === 'byDeadline' && isActive
           ? 'border-green-normal-01 text-green-normal-01'
           : 'border-gray-normal-02 text-gray-dark-02'
       }`}
       onClick={onClick}
     >
       <span className="pr-[4px]">
-        <IcSorting isActive={isActive} color="stroke-green-normal-02" />
+        <IcSorting
+          isActive={variant === 'byDeadline' ? isActive : false}
+          color="stroke-green-normal-02"
+        />
       </span>
       {renderLabel()}
     </button>
