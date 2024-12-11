@@ -1,0 +1,91 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - '**'
+      - '!main'
+  push:
+    branches:
+      - develop
+
+jobs:
+  ci:
+    name: Lint, Test, and Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run Tests
+        run: npm test
+
+      - name: Build Next.js app
+        run: npm run build
+
+      - name: Build Storybook
+        run: npm run build-storybook
+
+  notify-discord:
+    needs: ci
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      - name: Send Discord Notification
+        env:
+          WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DATA: >
+            {
+              "embeds": [
+                {
+                  "title": "${{ 
+                    format('{0}', 
+                      (github.base_ref == 'develop' || github.ref_name == 'develop') 
+                      && '🚀 Develop 브랜치 CI 알림' 
+                      || '🎉 새 작업 CI 알림'
+                    )
+                  }}",
+                  "description": "${{ 
+                    format('{0}',
+                      github.event_name == 'pull_request' 
+                      && (github.base_ref == 'develop' 
+                        && format('Develop 브랜치로 새로운 PR이 등록되었습니다! ({0} → develop)', github.head_ref)
+                        || format('새로운 PR이 등록되었습니다! ({0} → {1})', github.head_ref, github.base_ref)
+                      )
+                      || 'Develop 브랜치에 Push가 완료되었습니다!'
+                    )
+                  }}",
+                  "url": "${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+                  "color": 5814783,
+                  "fields": [
+                    {
+                      "name": "Repository",
+                      "value": "${{ github.repository }}"
+                    },
+                    {
+                      "name": "Branch",
+                      "value": "${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        run: |
+          curl -X POST \
+            -H "Content-Type: application/json" \
+            -d "$DATA" \
+            $WEBHOOK_URL
