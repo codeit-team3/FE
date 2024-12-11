@@ -61,14 +61,18 @@ describe('HeaderBar 컴포넌트 테스트', () => {
 describe('로그인 상태에 따른 버튼 렌더링', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    useAuthStore.setState({ isLoggedIn: false, user: null });
+    useAuthStore.setState({
+      isLoggedIn: false,
+      user: null,
+      checkLoginStatus: jest.fn(),
+    });
   });
 
   it('로그인 상태일 때 드롭다운 버튼이 렌더링되어야 한다', () => {
     useAuthStore.setState({
       isLoggedIn: true,
       user: {
-        image: '/images/default-profile.png',
+        image: '/images/profile.png',
         teamId: 'team-id',
         id: 1,
         email: 'user@example.com',
@@ -77,6 +81,7 @@ describe('로그인 상태에 따른 버튼 렌더링', () => {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      checkLoginStatus: jest.fn(),
     });
 
     render(<HeaderBar />);
