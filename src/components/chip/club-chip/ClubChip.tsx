@@ -3,13 +3,19 @@ import { twMerge } from 'tailwind-merge';
 
 type ClubChipVariant = 'completed' | 'scheduled' | 'pending' | 'confirmed';
 
+const CLUB_CHIP_TEXT = {
+  completed: '참여완료',
+  scheduled: '참여예정',
+  pending: '개설대기',
+  confirmed: '개설확정',
+} as const;
+
 interface ClubChipProps {
-  text: string;
   variant: ClubChipVariant;
   className?: string;
 }
 
-function ClubChip({ text, variant, className }: ClubChipProps) {
+function ClubChip({ variant, className }: ClubChipProps) {
   const getChipVariant = () => {
     switch (variant) {
       case 'completed':
@@ -38,7 +44,7 @@ function ClubChip({ text, variant, className }: ClubChipProps) {
 
   return (
     <Chip
-      text={text}
+      text={CLUB_CHIP_TEXT[variant]}
       variant={getChipVariant()}
       className={twMerge(getCustomClassName(), className)}
     />
