@@ -1,6 +1,6 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import Button from '@/components/button/Button';
@@ -10,12 +10,16 @@ import {
   RadioButtonGroup,
 } from '@/features/club-create/components';
 import { BookClubForm, bookClubSchema } from '@/features/club-create/types';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default function CreateBookClub() {
   const [selectedFileName, setSelectedFileName] = useState<string>('');
   const {
     register,
     handleSubmit,
+    control,
+    setValue,
     formState: { errors },
     watch,
   } = useForm<BookClubForm>({
@@ -25,12 +29,55 @@ export default function CreateBookClub() {
   // TODO:: 컨테이너별로 비즈니스 로직 작업 후 훅 분리
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    setSelectedFileName(file ? file.name : '');
+    if (file) {
+      console.log('선택된 파일:', file);
+      setSelectedFileName(file.name);
+      setValue('image', file); // 이 줄 추가
+    } else {
+      setSelectedFileName('');
+    }
   };
 
   // TODO: API 연동, 훅 분리
   const onSubmit = (data: BookClubForm) => {
+    const formData = new FormData();
+
     console.log(data);
+    // 이미지 파일 추가
+    const imageFile = data.image instanceof File ? data.image : null; // File 타입 체크로 변경
+    if (imageFile) {
+      formData.append('image', imageFile);
+    }
+
+    // 일반 데이터 추가
+    formData.append('title', data.title);
+    formData.append('description', data.description);
+    formData.append('bookType', data.bookType);
+    formData.append('location', data.location);
+    formData.append('startDate', data.startDate.toISOString());
+    formData.append('endDate', data.endDate.toISOString());
+    formData.append('maxParticipants', String(data.maxParticipants));
+
+    // 객체 형태로 데이터 확인
+    const formDataObject = {
+      image: imageFile
+        ? {
+            name: imageFile.name,
+            type: imageFile.type,
+            size: `${(imageFile.size / 1024).toFixed(2)}KB`,
+            lastModified: new Date(imageFile.lastModified).toLocaleString(),
+          }
+        : null,
+      title: data.title,
+      description: data.description,
+      booktype: data.bookType,
+      location: data.location,
+      startDate: data.startDate,
+      endDate: data.endDate,
+      maxParticipants: data.maxParticipants,
+    };
+
+    console.log('폼 데이터:', formDataObject);
   };
 
   return (
@@ -62,7 +109,10 @@ export default function CreateBookClub() {
           />
         </CreateClubFormField>
 
-        <CreateClubFormField label="이미지" error={errors.image?.message}>
+        <CreateClubFormField
+          label="이미지"
+          error={errors.image?.message?.toString()}
+        >
           <div className="flex w-full items-center gap-2">
             <InputField
               type="text"
@@ -132,14 +182,56 @@ export default function CreateBookClub() {
           label="언제 만나나요?"
           error={errors.startDate?.message}
         >
-          <InputField type="datetime-local" register={register('startDate')} />
+          <Controller
+            control={control}
+            name="startDate"
+            render={({ field }) => (
+              <DatePicker
+                selected={field.value}
+                onChange={field.onChange}
+                showTimeSelect
+                timeIntervals={10}
+                dateFormat="yyyy/MM/dd h:mm aa"
+                timeFormat="HH:mm"
+                showTimeSelectOnly={false}
+                timeCaption="Time"
+                timeClassName={(time) => {
+                  const hours = time.getHours();
+                  return hours > 12 ? 'text-success' : 'text-error';
+                }}
+                placeholderText="만나는 날짜를 선택해주세요!"
+                customInput={<InputField />}
+              />
+            )}
+          />
         </CreateClubFormField>
 
         <CreateClubFormField
           label="언제 모임을 마감할까요?"
           error={errors.endDate?.message}
         >
-          <InputField type="datetime-local" register={register('endDate')} />
+          <Controller
+            control={control}
+            name="endDate"
+            render={({ field }) => (
+              <DatePicker
+                selected={field.value}
+                onChange={field.onChange}
+                showTimeSelect
+                timeIntervals={10}
+                dateFormat="yyyy/MM/dd h:mm aa"
+                timeFormat="HH:mm"
+                showTimeSelectOnly={false}
+                timeCaption="Time"
+                timeClassName={(time) => {
+                  const hours = time.getHours();
+                  return hours > 12 ? 'text-success' : 'text-error';
+                }}
+                placeholderText="모임의 모집 마감 날짜를 선택해주세요!"
+                customInput={<InputField />}
+              />
+            )}
+          />
         </CreateClubFormField>
 
         <CreateClubFormField
@@ -166,3 +258,5 @@ export default function CreateBookClub() {
     </main>
   );
 }
+
+//<InputField type="datetime-local" register={register('endDate')} />
