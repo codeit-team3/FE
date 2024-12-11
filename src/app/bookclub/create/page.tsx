@@ -42,42 +42,42 @@ export default function CreateBookClub() {
   const onSubmit = (data: BookClubForm) => {
     const formData = new FormData();
 
-    console.log(data);
-    // 이미지 파일 추가
-    const imageFile = data.image instanceof File ? data.image : null; // File 타입 체크로 변경
+    // 이미지 파일 추가 (Multipart)
+    const imageFile = data.image instanceof File ? data.image : null;
     if (imageFile) {
       formData.append('image', imageFile);
     }
 
-    // 일반 데이터 추가
-    formData.append('title', data.title);
-    formData.append('description', data.description);
-    formData.append('bookType', data.bookType);
-    formData.append('location', data.location);
-    formData.append('startDate', data.startDate.toISOString());
-    formData.append('endDate', data.endDate.toISOString());
-    formData.append('maxParticipants', String(data.maxParticipants));
-
-    // 객체 형태로 데이터 확인
-    const formDataObject = {
-      image: imageFile
-        ? {
-            name: imageFile.name,
-            type: imageFile.type,
-            size: `${(imageFile.size / 1024).toFixed(2)}KB`,
-            lastModified: new Date(imageFile.lastModified).toLocaleString(),
-          }
-        : null,
+    // 나머지 데이터는 JSON으로 묶기
+    const bookClubData = {
       title: data.title,
       description: data.description,
-      booktype: data.bookType,
+      bookType: data.bookType,
       location: data.location,
       startDate: data.startDate,
       endDate: data.endDate,
       maxParticipants: data.maxParticipants,
     };
 
-    console.log('폼 데이터:', formDataObject);
+    // JSON 데이터 추가
+    formData.append(
+      'bookClub',
+      new Blob([JSON.stringify(bookClubData)], {
+        type: 'application/json',
+      }),
+    );
+
+    // 확인용 로그
+    console.log('전송될 데이터:', {
+      이미지: imageFile
+        ? {
+            이름: imageFile.name,
+            타입: imageFile.type,
+            크기: `${(imageFile.size / 1024).toFixed(2)}KB`,
+          }
+        : null,
+      북클럽_데이터: bookClubData,
+    });
   };
 
   return (
