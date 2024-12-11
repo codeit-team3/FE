@@ -1,19 +1,18 @@
 'use client';
 
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import Button from '@/components/button/Button';
 import {
   CreateClubFormField,
+  DatePickerContainer,
   InputField,
   RadioButtonGroup,
 } from '@/features/club-create/components';
 import { BookClubForm, bookClubSchema } from '@/features/club-create/types';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useCreateBookClub } from '@/features/club-create/hooks/useCreateBookClub';
-import { ko } from 'date-fns/locale';
 
 export default function CreateBookClub() {
   const [selectedFileName, setSelectedFileName] = useState<string>('');
@@ -145,55 +144,21 @@ export default function CreateBookClub() {
           />
         </CreateClubFormField>
 
-        <CreateClubFormField
+        <DatePickerContainer
+          control={control}
+          name="targetDate"
           label="언제 만나나요?"
           error={errors.targetDate?.message}
-        >
-          <Controller
-            control={control}
-            name="targetDate"
-            render={({ field }) => (
-              <DatePicker
-                selected={field.value}
-                onChange={field.onChange}
-                showTimeSelect
-                timeIntervals={10}
-                dateFormat="yyyy-MM-dd a HH:mm"
-                timeFormat="HH:mm"
-                locale={ko}
-                showTimeSelectOnly={false}
-                timeCaption="시간"
-                placeholderText="만나는 날짜를 선택해주세요!"
-                customInput={<InputField />}
-              />
-            )}
-          />
-        </CreateClubFormField>
+          placeholder="만나는 날짜를 선택해주세요!"
+        />
 
-        <CreateClubFormField
+        <DatePickerContainer
+          control={control}
+          name="endDate"
           label="언제 모임을 마감할까요?"
           error={errors.endDate?.message}
-        >
-          <Controller
-            control={control}
-            name="endDate"
-            render={({ field }) => (
-              <DatePicker
-                selected={field.value}
-                onChange={field.onChange}
-                showTimeSelect
-                timeIntervals={10}
-                dateFormat="yyyy-MM-dd a HH:mm"
-                timeFormat="HH:mm"
-                locale={ko}
-                showTimeSelectOnly={false}
-                timeCaption="시간"
-                placeholderText="모임의 모집 마감 날짜를 선택해주세요!"
-                customInput={<InputField />}
-              />
-            )}
-          />
-        </CreateClubFormField>
+          placeholder="모임의 모집 마감 날짜를 선택해주세요!"
+        />
 
         <CreateClubFormField
           label="모임 정원"
@@ -219,5 +184,3 @@ export default function CreateBookClub() {
     </main>
   );
 }
-
-//<InputField type="datetime-local" register={register('endDate')} />
