@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import ClubChip from './ClubChip';
 
 const meta = {
-  title: 'Components/ClubChip',
+  title: 'Components/Chip/ClubChip',
   component: ClubChip,
   parameters: {
     layout: 'centered',
