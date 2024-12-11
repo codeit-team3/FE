@@ -13,6 +13,7 @@ import { BookClubForm, bookClubSchema } from '@/features/club-create/types';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useCreateBookClub } from '@/features/club-create/hooks/useCreateBookClub';
+import { ko } from 'date-fns/locale';
 
 export default function CreateBookClub() {
   const [selectedFileName, setSelectedFileName] = useState<string>('');
@@ -34,7 +35,7 @@ export default function CreateBookClub() {
     if (file) {
       console.log('선택된 파일:', file);
       setSelectedFileName(file.name);
-      setValue('image', file); // 이 줄 추가
+      setValue('image', file);
     } else {
       setSelectedFileName('');
     }
@@ -157,14 +158,11 @@ export default function CreateBookClub() {
                 onChange={field.onChange}
                 showTimeSelect
                 timeIntervals={10}
-                dateFormat="yyyy/MM/dd h:mm aa"
+                dateFormat="yyyy-MM-dd a HH:mm"
                 timeFormat="HH:mm"
+                locale={ko}
                 showTimeSelectOnly={false}
-                timeCaption="Time"
-                timeClassName={(time) => {
-                  const hours = time.getHours();
-                  return hours > 12 ? 'text-success' : 'text-error';
-                }}
+                timeCaption="시간"
                 placeholderText="만나는 날짜를 선택해주세요!"
                 customInput={<InputField />}
               />
@@ -185,14 +183,11 @@ export default function CreateBookClub() {
                 onChange={field.onChange}
                 showTimeSelect
                 timeIntervals={10}
-                dateFormat="yyyy/MM/dd h:mm aa"
+                dateFormat="yyyy-MM-dd a HH:mm"
                 timeFormat="HH:mm"
+                locale={ko}
                 showTimeSelectOnly={false}
-                timeCaption="Time"
-                timeClassName={(time) => {
-                  const hours = time.getHours();
-                  return hours > 12 ? 'text-success' : 'text-error';
-                }}
+                timeCaption="시간"
                 placeholderText="모임의 모집 마감 날짜를 선택해주세요!"
                 customInput={<InputField />}
               />
