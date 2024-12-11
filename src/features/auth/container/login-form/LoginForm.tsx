@@ -2,7 +2,7 @@
 
 import React from 'react';
 import FormField from '../../components/form-field/FormField';
-import SubmitButton from '../../components/submit-button/SubmitButton';
+import Button from '@/components/button/Button';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginFormSchema, LoginFormData } from '../../types/loginFormSchema';
@@ -47,9 +47,14 @@ export default function LoginForm() {
             register={register('password')}
             error={errors.password?.message}
           />
-          <SubmitButton isSubmitting={isSubmitting} disabled={!isValid}>
-            로그인
-          </SubmitButton>
+          <Button
+            text="로그인"
+            size="large"
+            fillType="solid"
+            themeColor="green-normal-01"
+            isSubmitting={isSubmitting}
+            disabled={!isValid}
+          />
         </form>
       </div>
     </div>
