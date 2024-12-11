@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom';
 import PopUp from './PopUp';
 
 const POPUP_LABEL = {
@@ -7,17 +7,17 @@ const POPUP_LABEL = {
   small: `가입이 완료되었습니다!`,
 };
 
-// const mockFn = jest.fn();
-// const user = userEvent.setup();
+const mockHandlePopUpClose = jest.fn();
+const mockHandlePopUpConfirm = jest.fn();
 
 describe('PopUp 렌더링 테스트', () => {
   it('small, single button 렌더링 테스트', () => {
     render(
       <PopUp
         isOpen={true}
-        isLarge={false}
-        isTwoButton={false}
         label={POPUP_LABEL.small}
+        handlePopUpClose={mockHandlePopUpClose}
+        handlePopUpConfirm={mockHandlePopUpConfirm}
       />,
     );
     const popUp = screen.getByRole('pop-up');
@@ -31,9 +31,10 @@ describe('PopUp 렌더링 테스트', () => {
     render(
       <PopUp
         isOpen={true}
-        isLarge={false}
         isTwoButton={true}
         label={POPUP_LABEL.small}
+        handlePopUpClose={mockHandlePopUpClose}
+        handlePopUpConfirm={mockHandlePopUpConfirm}
       />,
     );
     const popUp = screen.getByRole('pop-up');
@@ -48,8 +49,9 @@ describe('PopUp 렌더링 테스트', () => {
       <PopUp
         isOpen={true}
         isLarge={true}
-        isTwoButton={false}
         label={POPUP_LABEL.large}
+        handlePopUpClose={mockHandlePopUpClose}
+        handlePopUpConfirm={mockHandlePopUpConfirm}
       />,
     );
     const popUp = screen.getByRole('pop-up');
@@ -66,6 +68,8 @@ describe('PopUp 렌더링 테스트', () => {
         isLarge={false}
         isTwoButton={true}
         label={POPUP_LABEL.large}
+        handlePopUpClose={mockHandlePopUpClose}
+        handlePopUpConfirm={mockHandlePopUpConfirm}
       />,
     );
     const popUp = screen.getByRole('pop-up');
@@ -76,20 +80,3 @@ describe('PopUp 렌더링 테스트', () => {
     expect(cancel).toBeInTheDocument();
   });
 });
-
-// describe('PopUp 버튼클릭 이벤트 핸들러 테스트', () => {
-//   it('닫기 아이콘 클릭 시 팝업창 닫기 이벤트 핸들러 호출', async () => {
-//     render(
-//       <PopUp
-//         isOpen={true}
-//         isLarge={false}
-//         isTwoButton={true}
-//         label={POPUP_LABEL.small}
-//       />,
-//     );
-//   });
-
-//   it('확인 버튼 클릭 시 버튼 클릭 이벤트 호출', async () => {});
-
-//   it('취소 버튼 클릭 시 버튼 늘릭 이벤트 핸들러 호출', async () => {});
-// });
