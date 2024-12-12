@@ -3,7 +3,7 @@ import SimpleCard from './SimpleCard';
 import { mockMeeting } from '../mock/mock';
 
 const meta = {
-  title: 'Components/Card/SimpleCard',
+  title: 'Components/TMPCard/SimpleCard',
   component: SimpleCard,
   parameters: {
     layout: 'centered',

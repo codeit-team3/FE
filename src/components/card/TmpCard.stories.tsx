@@ -3,7 +3,7 @@ import Card from './Card';
 import { mockMeeting } from './mock/mock';
 
 const meta = {
-  title: 'Components/TMP/Card/Base',
+  title: 'Components/TMPCard/Base',
   component: Card,
   parameters: {
     layout: 'centered',

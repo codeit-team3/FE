@@ -3,7 +3,7 @@ import FullCard from './FullCard';
 import { mockFullMeeting } from '../mock/mock';
 
 const meta = {
-  title: 'Components/Card/FullCard',
+  title: 'Components/TMPCard/FullCard',
   component: FullCard,
   parameters: {
     layout: 'centered',

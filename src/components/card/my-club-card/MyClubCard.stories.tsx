@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import MyClubCard from './MyClubCard';
 
 const meta = {
-  title: 'Components/Card/MyClubCard',
+  title: 'Components/TMPCard/MyClubCard',
   component: MyClubCard,
   parameters: {
     layout: 'centered',
