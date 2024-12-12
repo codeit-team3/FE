@@ -10,15 +10,112 @@ import Image from 'next/image';
 import {
   CardContextType,
   CardProps,
-  CardBoxProps,
   CardInfoProps,
   CardStatusProps,
   CardHostProps,
   CardImageProps,
   CardEndedOverlayProps,
 } from './types';
+import { twMerge } from 'tailwind-merge';
+import {
+  CardBoxProps,
+  CardTitleProps,
+  CardLocationProps,
+  CardDateTimeProps,
+} from './types/interface';
 
 const CardContext = createContext<CardContextType>({ isCanceled: false });
+
+// Box 컴포넌트
+function CardBox({ children, className = '', ...props }: CardBoxProps) {
+  return (
+    <div
+      className={twMerge(
+        'flex min-h-[180px] w-[336px] flex-col rounded-[20px] border-2 border-gray-normal-01 p-6 md:w-full',
+        props.onClick && 'cursor-pointer',
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+}
+
+function CardTitle({ children, className, ...props }: CardTitleProps) {
+  return (
+    <h3
+      className={twMerge('text-xl font-semibold text-gray-black', className)}
+      {...props}
+    >
+      {children}
+    </h3>
+  );
+}
+
+function CardLocation({
+  children,
+  className,
+  textClassName,
+  ...props
+}: CardLocationProps) {
+  return (
+    <div className={twMerge('flex items-center', className)} {...props}>
+      <LocationIcon />
+      <span
+        className={twMerge(
+          'text-sm font-semibold text-gray-dark-03',
+          textClassName,
+        )}
+      >
+        {children}
+      </span>
+    </div>
+  );
+}
+
+function CardDateTime({ children, className, ...props }: CardDateTimeProps) {
+  return (
+    <span
+      className={twMerge('text-sm font-medium text-gray-dark-03', className)}
+      {...props}
+    >
+      {children}
+    </span>
+  );
+}
+
+// Image 컴포넌트 (모임 이미지)
+function CardImage({
+  url,
+  alt = '모임 이미지',
+  isLiked = false,
+  onLikeClick,
+  className,
+  ...props
+}: CardImageProps) {
+  return (
+    <div
+      className={`relative min-h-[180px] w-full overflow-hidden rounded-[20px] ${className || ''}`}
+      {...props}
+    >
+      <Image src={url} alt={alt} fill className="object-cover" />
+      <div className="absolute right-5 top-[15px] z-10">
+        <HeartIcon isLiked={isLiked} onClick={onLikeClick} />
+      </div>
+    </div>
+  );
+}
+
+Card.Box = CardBox;
+Card.Info = CardInfo;
+Card.Status = CardStatus;
+Card.EndedOverlay = CardEndedOverlay;
+Card.Host = CardHost;
+Card.Image = CardImage;
+Card.Title = CardTitle;
+Card.Location = CardLocation;
+Card.DateTime = CardDateTime;
 
 // 메인 Card
 function Card({
@@ -36,24 +133,6 @@ function Card({
         {children}
       </article>
     </CardContext.Provider>
-  );
-}
-
-// Box 컴포넌트 (CardInfo + CardStatus)
-function CardBox({
-  children,
-  className = '',
-  onClick,
-  ...props
-}: CardBoxProps) {
-  return (
-    <div
-      className={`flex min-h-[180px] w-[336px] flex-col justify-between rounded-2xl border border-gray-normal-01 p-6 md:w-full ${className} ${onClick ? 'cursor-pointer' : ''}`}
-      onClick={onClick}
-      {...props}
-    >
-      {children}
-    </div>
   );
 }
 
@@ -122,6 +201,8 @@ function CardStatus({
   );
 }
 
+export default Card;
+
 // Overlay (모임 취소시 표시되는 오버레이)
 function CardEndedOverlay({ onDelete }: CardEndedOverlayProps) {
   const { isCanceled } = useContext(CardContext);
@@ -184,34 +265,3 @@ function CardHost({
     </div>
   );
 }
-
-// Image 컴포넌트 (모임 이미지)
-function CardImage({
-  url,
-  alt = '모임 이미지',
-  isLiked = false,
-  onLikeClick,
-  className,
-  ...props
-}: CardImageProps) {
-  return (
-    <div
-      className={`relative min-h-[180px] w-full overflow-hidden rounded-[20px] ${className || ''}`}
-      {...props}
-    >
-      <Image src={url} alt={alt} fill className="object-cover" />
-      <div className="absolute right-5 top-[15px] z-10">
-        <HeartIcon isLiked={isLiked} onClick={onLikeClick} />
-      </div>
-    </div>
-  );
-}
-
-Card.Box = CardBox;
-Card.Info = CardInfo;
-Card.Status = CardStatus;
-Card.EndedOverlay = CardEndedOverlay;
-Card.Host = CardHost;
-Card.Image = CardImage;
-
-export default Card;
