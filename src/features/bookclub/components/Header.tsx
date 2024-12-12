@@ -30,9 +30,9 @@ function Header({
 }: HeaderProps) {
   return (
     <header>
-      <div className="flex h-[120px] w-full min-w-[336px] items-center justify-between bg-green-light-01 px-[20px] md:px-[24px] lg:px-[102px]">
+      <div className="flex h-[120px] w-full min-w-[336px] items-end bg-green-light-01 px-[20px] py-[30px] sm:justify-between md:px-[24px] lg:px-[102px]">
         <h1
-          className="text-2xl font-bold text-black"
+          className="flex-nowrap text-[20px] font-bold leading-[30px] tracking-tighter text-black md:text-2xl"
           aria-labelledby="header-title"
         >
           반가워요, <span className="text-green-normal-01">북코</span>님!
@@ -46,14 +46,16 @@ function Header({
         />
       </div>
       <section className="flex w-full flex-col gap-y-[10px] px-[20px] pt-[20px] md:px-[24px] lg:px-[102px]">
-        <Tab
-          items={['전체', '자유책', '지정책']}
-          activeTab={selectedTab}
-          onTabChange={(item) => {
-            setSelectedTab(item);
-          }}
-          tabType="SUB_TAB"
-        />
+        <div className="w-full border-b border-gray-normal-01">
+          <Tab
+            items={['전체', '자유책', '지정책']}
+            activeTab={selectedTab}
+            onTabChange={(item) => {
+              setSelectedTab(item);
+            }}
+            tabType="MAIN_TAB"
+          />
+        </div>
         <div className="bg-white">
           <SearchBox
             value={searchValue}
@@ -62,7 +64,7 @@ function Header({
           />
         </div>
 
-        {/* <div className="flex justify-between">
+        {/* <div className="flex w-full gap-x-2 overflow-x-auto whitespace-nowrap md:justify-between [&::-webkit-scrollbar]:hidden">
           <div className="flex items-center gap-x-2">
             <DropDown
               variant="onOff"
