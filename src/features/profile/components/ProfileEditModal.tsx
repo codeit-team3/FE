@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import Avatar from '@/components/avatar/Avatar';
-import EditIcon from '../../../public/icons/EditIcon';
-import Modal from './Modal';
+import EditIcon from '../../../../public/icons/EditIcon';
+import Modal from '@/components/modal/Modal';
 
 interface ProfileEditModalProps {
   isOpen: boolean;
