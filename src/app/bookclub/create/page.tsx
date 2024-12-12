@@ -6,16 +6,22 @@ import { useState } from 'react';
 import Button from '@/components/button/Button';
 import {
   CreateClubFormField,
+  DatePickerContainer,
   InputField,
   RadioButtonGroup,
 } from '@/features/club-create/components';
 import { BookClubForm, bookClubSchema } from '@/features/club-create/types';
+import 'react-datepicker/dist/react-datepicker.css';
+import { useCreateBookClub } from '@/features/club-create/hooks/useCreateBookClub';
 
 export default function CreateBookClub() {
   const [selectedFileName, setSelectedFileName] = useState<string>('');
+  const { createBookClub } = useCreateBookClub();
   const {
     register,
     handleSubmit,
+    control,
+    setValue,
     formState: { errors },
     watch,
   } = useForm<BookClubForm>({
@@ -25,12 +31,19 @@ export default function CreateBookClub() {
   // TODO:: 컨테이너별로 비즈니스 로직 작업 후 훅 분리
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    setSelectedFileName(file ? file.name : '');
+    if (file) {
+      console.log('선택된 파일:', file);
+      setSelectedFileName(file.name);
+      setValue('image', file);
+    } else {
+      setSelectedFileName('');
+    }
   };
 
   // TODO: API 연동, 훅 분리
   const onSubmit = (data: BookClubForm) => {
-    console.log(data);
+    const formData = createBookClub(data);
+    console.log(formData);
   };
 
   return (
@@ -62,7 +75,10 @@ export default function CreateBookClub() {
           />
         </CreateClubFormField>
 
-        <CreateClubFormField label="이미지" error={errors.image?.message}>
+        <CreateClubFormField
+          label="이미지"
+          error={errors.image?.message?.toString()}
+        >
           <div className="flex w-full items-center gap-2">
             <InputField
               type="text"
@@ -102,55 +118,57 @@ export default function CreateBookClub() {
             options={[
               {
                 label: '자유책',
-                value: '자유책',
+                value: 'FREE',
                 description:
                   '읽고 싶은 책을 자유롭게 선택하고 각자의 생각을 나눠요.',
               },
               {
                 label: '지정책',
-                value: '지정책',
+                value: 'FIXED',
                 description: '한 권의 책을 선정해 깊이 있는 토론을 진행해요.',
               },
             ]}
-            selectedValue={watch('bookType')}
-            register={register('bookType')}
+            selectedValue={watch('bookClubType')}
+            register={register('bookClubType')}
           />
         </CreateClubFormField>
 
         <CreateClubFormField label="온라인 / 오프라인">
           <RadioButtonGroup
             options={[
-              { label: '온라인', value: '온라인' },
-              { label: '오프라인', value: '오프라인' },
+              { label: '온라인', value: 'ONLINE' },
+              { label: '오프라인', value: 'OFFLINE' },
             ]}
-            selectedValue={watch('location')}
-            register={register('location')}
+            selectedValue={watch('meetingType')}
+            register={register('meetingType')}
           />
         </CreateClubFormField>
 
-        <CreateClubFormField
+        <DatePickerContainer
+          control={control}
+          name="targetDate"
           label="언제 만나나요?"
-          error={errors.startDate?.message}
-        >
-          <InputField type="datetime-local" register={register('startDate')} />
-        </CreateClubFormField>
+          error={errors.targetDate?.message}
+          placeholder="만나는 날짜를 선택해주세요!"
+        />
 
-        <CreateClubFormField
+        <DatePickerContainer
+          control={control}
+          name="endDate"
           label="언제 모임을 마감할까요?"
           error={errors.endDate?.message}
-        >
-          <InputField type="datetime-local" register={register('endDate')} />
-        </CreateClubFormField>
+          placeholder="모임의 모집 마감 날짜를 선택해주세요!"
+        />
 
         <CreateClubFormField
           label="모임 정원"
-          error={errors.maxParticipants?.message}
-          currentLength={watch('maxParticipants') || 0}
+          error={errors.memberLimit?.message}
+          currentLength={watch('memberLimit') || 0}
           maxLength={20}
         >
           <InputField
             type="number"
-            register={register('maxParticipants', { valueAsNumber: true })}
+            register={register('memberLimit', { valueAsNumber: true })}
             placeholder="최소 3인이상 입력해주세요."
           />
         </CreateClubFormField>
