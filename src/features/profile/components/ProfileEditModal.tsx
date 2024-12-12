@@ -92,11 +92,13 @@ function ProfileEditModal({
       cancelText="취소하기"
       confirmText="수정하기"
       cancelButtonProps={{
-        themeColor: 'gray-normal-03',
+        themeColor: 'gray-dark-01',
+        lightColor: 'gray-normal-01',
         fillType: 'lightSolid',
       }}
       confirmButtonProps={{
-        themeColor: 'green-light-03',
+        themeColor: 'green-normal-01',
+        lightColor: 'green-light-03',
         fillType: 'lightSolid',
       }}
     >
