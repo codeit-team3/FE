@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useContext } from 'react';
 import Chip from '@/components/chip/Chip';
 import ParticipantCounter from '../participant-counter/ParticipantCounter';
