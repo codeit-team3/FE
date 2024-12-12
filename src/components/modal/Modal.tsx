@@ -30,7 +30,7 @@ function Modal({
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="fixed inset-0 bg-black bg-opacity-50" onClick={onClose} />
 
-      <div className="relative z-50 max-h-[80vh] min-h-[200px] w-full min-w-[336px] max-w-[520px] overflow-y-auto rounded-lg bg-white p-6">
+      <div className="relative z-50 mx-4 max-h-[80vh] min-h-[200px] w-full min-w-[336px] max-w-[520px] overflow-y-auto rounded-lg bg-white p-6">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-semibold">{title}</h2>
           <button onClick={onClose} className="text-gray-500">
