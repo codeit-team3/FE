@@ -10,7 +10,7 @@ interface ClubCard {
   meetingType: 'FREE' | 'FIXED';
 
   // 개설 현황
-  status: 'pending' | 'confirmed' | 'closed';
+  status: 'completed' | 'scheduled' | 'pending' | 'confirmed' | 'closed';
 
   // 액션
   onClick: () => void;

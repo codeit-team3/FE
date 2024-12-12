@@ -20,7 +20,7 @@ export const DefaultCard: Story = {
     variant: 'default',
     imageUrl: 'https://picsum.photos/400/300',
     imageAlt: '모임 이미지',
-    title: '을지로에서 만나는 독서 모임',
+    title: '을지로 독서 모임',
     location: '을지로 3가',
     datetime: '12/14(토) 오전 10:00',
     meetingType: 'FREE',

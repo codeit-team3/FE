@@ -23,6 +23,7 @@ import {
   CardImageProps,
   CardProps,
 } from './types/interface';
+import ClubChip from '@/components/chip/club-chip/ClubChip';
 
 const CardContext = createContext<CardContextType>({ isCanceled: false });
 
@@ -31,7 +32,7 @@ function CardBox({ children, className = '', ...props }: CardBoxProps) {
   return (
     <div
       className={twMerge(
-        'relative flex min-h-[180px] w-[336px] flex-1 flex-col rounded-[20px] border-2 border-gray-normal-01 p-6 md:w-full',
+        'mib-w-[336px] relative flex min-h-[180px] flex-1 flex-col rounded-[20px] border-2 border-gray-normal-01 p-6 md:w-full',
         props.onClick && 'cursor-pointer',
         className,
       )}
@@ -157,6 +158,7 @@ function Card(props: CardProps) {
           max,
           isPast,
           isCanceled,
+          meetingType,
           onClick,
           onDelete,
           status,
@@ -175,7 +177,7 @@ function Card(props: CardProps) {
               <div className="flex flex-col gap-0.5">
                 <div className="flex justify-between">
                   <Card.Title>{title}</Card.Title>
-                  <Chip text={status} isPast={isPast} />
+                  <ClubChip variant={meetingType} />
                 </div>
                 <div className="flex items-center gap-1.5">
                   <Card.Location>{location}</Card.Location>
@@ -190,7 +192,7 @@ function Card(props: CardProps) {
                     max={max}
                     isPast={isPast}
                   />
-                  <Chip text={status} isPast={isPast} />
+                  <ClubChip variant={status} />
                 </div>
                 <ProgressBar
                   percentage={(current / max) * 100}

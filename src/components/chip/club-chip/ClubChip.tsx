@@ -6,7 +6,9 @@ type ClubChipVariant =
   | 'scheduled'
   | 'pending'
   | 'confirmed'
-  | 'closed';
+  | 'closed'
+  | 'FREE'
+  | 'FIXED';
 
 const CLUB_CHIP_TEXT = {
   completed: '참여완료',
@@ -14,6 +16,8 @@ const CLUB_CHIP_TEXT = {
   pending: '개설대기',
   confirmed: '개설확정',
   closed: '모집마감',
+  FREE: '자유책',
+  FIXED: '지정책',
 } as const;
 
 const CLUB_CHIP_VARIANT = {
@@ -22,6 +26,8 @@ const CLUB_CHIP_VARIANT = {
   pending: 'square-outlined',
   confirmed: 'square-filled',
   closed: 'square-filled',
+  FREE: 'rounded-filled',
+  FIXED: 'rounded-light',
 } as const;
 
 const CLUB_CHIP_STYLE = {
@@ -30,6 +36,8 @@ const CLUB_CHIP_STYLE = {
   pending: 'border-blue-light-active text-blue-light-active',
   confirmed: 'bg-blue-light text-blue-light-active',
   closed: 'bg-blue-normal text-gray-white',
+  FREE: '',
+  FIXED: '',
 } as const;
 
 interface ClubChipProps {

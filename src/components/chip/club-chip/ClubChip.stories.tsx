@@ -36,6 +36,18 @@ export const Confirmed: Story = {
   },
 };
 
+export const FreeBook: Story = {
+  args: {
+    variant: 'FREE',
+  },
+};
+
+export const FixedBook: Story = {
+  args: {
+    variant: 'FIXED',
+  },
+};
+
 export const AllStates: Story = {
   render: () => (
     <div className="flex gap-2">
@@ -44,6 +56,8 @@ export const AllStates: Story = {
       <ClubChip variant="pending" />
       <ClubChip variant="confirmed" />
       <ClubChip variant="closed" />
+      <ClubChip variant="FREE" />
+      <ClubChip variant="FIXED" />
     </div>
   ),
 };
