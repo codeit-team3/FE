@@ -1,0 +1,40 @@
+interface ClubCard {
+  // 이미지 정보
+  imageUrl: string;
+  imageAlt?: string;
+
+  // 모임 정보
+  title: string;
+  location: string;
+  datetime: string;
+  meetingType: 'FREE' | 'FIXED';
+
+  // 개설 현황
+  status: 'pending' | 'confirmed' | 'closed';
+
+  // 액션
+  onClick: () => void;
+}
+
+interface DefaultClubCard extends ClubCard {
+  // 찜 정보
+  isLiked: boolean;
+  onLikeClick: () => void;
+
+  // 참가자 현황
+  current: number;
+  max: number;
+  participants: Array<{
+    src: string;
+    alt: string;
+  }>;
+
+  // 상태 정보
+  isPast: boolean;
+  isCanceled: boolean;
+
+  // 블러에서 취소 액션
+  onDelete: () => void;
+}
+
+export type { ClubCard, DefaultClubCard };

@@ -9,7 +9,6 @@ import { LocationIcon, HostIcon, HeartIcon } from '../../../public/icons';
 import Image from 'next/image';
 import {
   CardContextType,
-  CardProps,
   CardInfoProps,
   CardStatusProps,
   CardHostProps,
@@ -22,6 +21,7 @@ import {
   CardDateTimeProps,
   CardOverlayProps,
   CardImageProps,
+  CardProps,
 } from './types/interface';
 
 const CardContext = createContext<CardContextType>({ isCanceled: false });
@@ -140,6 +140,99 @@ function CardOverlay({ onDelete }: CardOverlayProps) {
   );
 }
 
+function Card(props: CardProps) {
+  const renderCardContent = () => {
+    switch (props.variant) {
+      case 'default':
+      default: {
+        const {
+          imageUrl,
+          imageAlt,
+          title,
+          location,
+          datetime,
+          isLiked,
+          onLikeClick,
+          current,
+          max,
+          participants,
+          isPast,
+          isCanceled,
+          onClick,
+          onDelete,
+          status,
+        } = props;
+
+        return (
+          <div className="flex flex-col gap-6 md:flex-row">
+            <div className="w-[336px] lg:w-[384px]">
+              <Card.Image
+                url={imageUrl}
+                alt={imageAlt}
+                isLiked={isLiked}
+                onLikeClick={onLikeClick}
+              />
+            </div>
+            <Card.Box className="relative flex-1" onClick={onClick}>
+              <div className="flex flex-col gap-2">
+                <Card.Title>{title}</Card.Title>
+                <div className="flex items-center gap-2">
+                  <Card.Location>{location}</Card.Location>
+                  <Card.DateTime>{datetime}</Card.DateTime>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <ParticipantCounter
+                      current={current}
+                      max={max}
+                      isPast={isPast}
+                    />
+                    <AvatarGroup isPast={isPast}>
+                      {participants.map((participant, index) => (
+                        <Avatar
+                          key={index}
+                          src={participant.src}
+                          alt={participant.alt}
+                        />
+                      ))}
+                    </AvatarGroup>
+                  </div>
+                  {status === 'confirmed' && (
+                    <ConfirmedLabel variant="confirmed" isPast={isPast} />
+                  )}
+                </div>
+                <ProgressBar
+                  percentage={(current / max) * 100}
+                  isPast={isPast}
+                />
+              </div>
+              {isCanceled && <Card.Overlay onDelete={onDelete} />}
+            </Card.Box>
+          </div>
+        );
+      }
+
+      case 'participated':
+      case 'hosted':
+        return null; // 추후 구현
+    }
+  };
+
+  return (
+    <CardContext.Provider value={{ isCanceled: props.isCanceled }}>
+      <article
+        className={twMerge(
+          'relative flex h-full w-full min-w-[336px] flex-col',
+        )}
+      >
+        {renderCardContent()}
+      </article>
+    </CardContext.Provider>
+  );
+}
+
 Card.Box = CardBox;
 Card.Image = CardImage;
 Card.Title = CardTitle;
@@ -147,28 +240,11 @@ Card.Location = CardLocation;
 Card.DateTime = CardDateTime;
 Card.Overlay = CardOverlay;
 
+/////////////////////////////////////////////////////////////////////// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
 Card.Info = CardInfo;
 Card.Status = CardStatus;
 Card.Host = CardHost;
-
-// 메인 Card
-function Card({
-  children,
-  isCanceled = false,
-  className,
-  ...props
-}: CardProps) {
-  return (
-    <CardContext.Provider value={{ isCanceled }}>
-      <article
-        className={`relative flex h-full w-full min-w-[336px] flex-col gap-4 ${className || ''}`}
-        {...props}
-      >
-        {children}
-      </article>
-    </CardContext.Provider>
-  );
-}
 
 // Info 컴포넌트 (모임에 관한 정보 - 제목, 위치, 날짜 등)
 function CardInfo({
