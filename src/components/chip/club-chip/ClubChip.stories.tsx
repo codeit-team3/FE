@@ -43,6 +43,7 @@ export const AllStates: Story = {
       <ClubChip variant="scheduled" />
       <ClubChip variant="pending" />
       <ClubChip variant="confirmed" />
+      <ClubChip variant="closed" />
     </div>
   ),
 };
