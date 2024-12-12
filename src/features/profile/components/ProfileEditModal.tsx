@@ -4,6 +4,12 @@ import Avatar from '@/components/avatar/Avatar';
 import EditIcon from '../../../../public/icons/EditIcon';
 import Modal from '@/components/modal/Modal';
 
+interface ProfileData {
+  name: string;
+  companyName: string;
+  image?: string | null;
+}
+
 interface ProfileEditModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -11,35 +17,14 @@ interface ProfileEditModalProps {
   profileData: ProfileData;
 }
 
-interface ProfileData {
-  name: string;
-  companyName: string;
-  image?: string | null;
-}
-
-function ProfileEditModal({
-  isOpen,
-  onClose,
-  onConfirm,
-  profileData,
-}: ProfileEditModalProps) {
-  const { user } = useAuthStore();
-  const [formData, setFormData] = useState<ProfileData>({
-    name: profileData.name || user?.name || '',
-    companyName: profileData.companyName || user?.companyName || '',
-    image: profileData.image || user?.image || '/images/profile.png',
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleConfirm = () => {
-    onConfirm(formData);
-  };
-
-  const ProfileEditContent = () => (
+function ProfileEditContent({
+  formData,
+  handleChange,
+}: {
+  formData: ProfileData;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
+  return (
     <div className="w-full">
       <div className="flex flex-col items-center gap-4">
         <div className="relative">
@@ -82,6 +67,29 @@ function ProfileEditModal({
       </div>
     </div>
   );
+}
+
+function ProfileEditModal({
+  isOpen,
+  onClose,
+  onConfirm,
+  profileData,
+}: ProfileEditModalProps) {
+  const { user } = useAuthStore();
+  const [formData, setFormData] = useState<ProfileData>({
+    name: profileData.name || user?.name || '',
+    companyName: profileData.companyName || user?.companyName || '',
+    image: profileData.image || user?.image || '/images/profile.png',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleConfirm = () => {
+    onConfirm(formData);
+  };
 
   return (
     <Modal
@@ -102,7 +110,7 @@ function ProfileEditModal({
         fillType: 'lightSolid',
       }}
     >
-      <ProfileEditContent />
+      <ProfileEditContent formData={formData} handleChange={handleChange} />
     </Modal>
   );
 }
