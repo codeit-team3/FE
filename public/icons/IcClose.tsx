@@ -1,41 +1,34 @@
 import { SVGProps } from 'react';
 
-interface IcSortingProps extends SVGProps<SVGSVGElement> {
+interface IcCloseProps extends SVGProps<SVGElement> {
   width?: number;
   height?: number;
   isActive?: boolean;
   color?: string;
 }
 
-function IcSorting({
+function IcClose({
   width = 24,
   height = 24,
   isActive = false,
   color,
-}: IcSortingProps) {
+}: IcCloseProps) {
   return (
     <svg
+      xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      viewBox="0 0 24 24"
       fill="none"
-      xmlns="http://www.w3.org/2000/svg"
       className={`${isActive ? color : 'stroke-gray-dark-02'}`}
     >
       <path
-        d="M3 11L7 7M7 7L11 11M7 7V17"
         stroke={isActive ? color : '#909192'}
         strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M21 13L17 17M17 17L13 13M17 17V7"
-        stroke={isActive ? color : '#909192'}
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        strokeWidth="1.8"
+        d="m5 5 14.5 14.5M19.5 5 5 19.5"
       />
     </svg>
   );
 }
 
-export default IcSorting;
+export default IcClose;

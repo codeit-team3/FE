@@ -27,7 +27,7 @@ export const useLoginSubmit = (
       console.log('로그인 성공:', response);
       reset();
 
-      const returnUrl = searchParams.get('returnUrl') || '/';
+      const returnUrl = searchParams.get('returnUrl') || '/exchange';
       router.replace(returnUrl);
     } catch (error) {
       const { code } = (error as LoginError).response.data;

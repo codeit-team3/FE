@@ -28,6 +28,11 @@ export const COLOR_GROUPS = {
     text: 'text-gray-darker',
     border: 'border-gray-darker',
   },
+  'gray-normal-02': {
+    bg: 'bg-gray-normal-02',
+    text: 'text-gray-dark-02',
+    border: 'border-gray-normal-02',
+  },
   'gray-darker': {
     bg: 'bg-gray-darker',
     text: 'text-gray-darker',
