@@ -2,7 +2,7 @@ import React from 'react';
 import { twMerge } from 'tailwind-merge';
 import { BASE_CLASSES, COLOR_GROUPS, SIZE } from '@/constants';
 
-interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
+export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   text: string;
   size: 'large' | 'medium' | 'small' | 'modal';
   fillType: 'solid' | 'outline' | 'lightSolid' | 'lightOutline';
@@ -13,6 +13,7 @@ interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
     | 'gray-normal-02'
     | 'gray-darker';
   isSubmitting?: boolean;
+  className?: string;
 }
 
 export default function Button({
@@ -21,6 +22,7 @@ export default function Button({
   fillType = 'solid',
   themeColor = 'green-normal-01',
   isSubmitting,
+  className,
   ...buttonProps
 }: ButtonProps) {
   const { disabled } = buttonProps;
@@ -75,6 +77,7 @@ export default function Button({
     baseClasses,
     variantClasses,
     isButtonDisabled && 'cursor-not-allowed',
+    className,
   );
 
   return (
