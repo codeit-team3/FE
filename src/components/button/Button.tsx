@@ -1,17 +1,13 @@
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
-import { BASE_CLASSES, COLOR_GROUPS, SIZE } from '@/constants';
+import { COLOR_SCHEMES, SIZE } from '@/constants';
 
 export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   text: string;
   size: 'large' | 'medium' | 'small' | 'modal';
-  fillType: 'solid' | 'outline' | 'lightSolid' | 'lightOutline';
-  themeColor:
-    | 'green-normal-01'
-    | 'green-light-03'
-    | 'gray-normal-03'
-    | 'gray-normal-02'
-    | 'gray-darker';
+  fillType: 'solid' | 'outline' | 'lightSolid';
+  themeColor: keyof typeof COLOR_SCHEMES;
+  lightColor?: keyof typeof COLOR_SCHEMES;
   isSubmitting?: boolean;
   className?: string;
 }
@@ -21,6 +17,7 @@ export default function Button({
   size,
   fillType = 'solid',
   themeColor = 'green-normal-01',
+  lightColor,
   isSubmitting,
   className,
   ...buttonProps
@@ -38,35 +35,17 @@ export default function Button({
       : themeColor;
 
   const variantClasses = (() => {
-    const color = COLOR_GROUPS[resolvedColor];
-
-    type TextClassType =
-      | 'text-green-normal-01'
-      | 'text-gray-darker'
-      | 'text-white'
-      | 'text-gray-dark-02';
-
-    let textClass: TextClassType = color.text;
-
-    // 배경색과 글자색이 동일한 경우 textClass를 흰색으로 덮어쓰기
-    if (
-      (fillType === 'lightSolid' || fillType === 'lightOutline') &&
-      color.bg.includes(color.text.replace('text-', 'bg-'))
-    ) {
-      textClass = 'text-white';
-    }
-
     switch (fillType) {
       case 'solid':
-        return `${color.bg} ${BASE_CLASSES.solid}`;
+        return `text-gray-white ${COLOR_SCHEMES[resolvedColor]['bg']}`;
       case 'outline':
-        return `${BASE_CLASSES.outline} ${color.text} ${color.border}`;
+        return `bg-gray-white border ${COLOR_SCHEMES[resolvedColor]['text']} ${COLOR_SCHEMES[resolvedColor]['border']}`;
       case 'lightSolid':
-        return `${color.bg} ${textClass}`;
-      case 'lightOutline':
-        return `${BASE_CLASSES.lightOutline} ${color.bg} ${textClass} ${color.border}`;
-      default:
-        throw new Error(`잘못된 fillType 값입니다: ${fillType}`);
+        if (lightColor) {
+          return `${COLOR_SCHEMES[resolvedColor]['text']} ${COLOR_SCHEMES[lightColor]['bg']}`;
+        } else {
+          return `${COLOR_SCHEMES[resolvedColor]['text']} bg-gray-white`;
+        }
     }
   })();
 
