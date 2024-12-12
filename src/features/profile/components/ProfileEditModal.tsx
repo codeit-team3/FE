@@ -54,7 +54,7 @@ function ProfileEditContent({
             />
           </div>
           <div className="flex flex-col gap-2">
-            <span className="font-bold">회사명</span>
+            <span className="font-bold">한 줄 소개</span>
             <input
               type="text"
               name="companyName"
