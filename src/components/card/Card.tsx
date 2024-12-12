@@ -13,8 +13,6 @@ import {
   CardInfoProps,
   CardStatusProps,
   CardHostProps,
-  CardImageProps,
-  CardEndedOverlayProps,
 } from './types';
 import { twMerge } from 'tailwind-merge';
 import {
@@ -22,6 +20,8 @@ import {
   CardTitleProps,
   CardLocationProps,
   CardDateTimeProps,
+  CardOverlayProps,
+  CardImageProps,
 } from './types/interface';
 
 const CardContext = createContext<CardContextType>({ isCanceled: false });
@@ -85,7 +85,6 @@ function CardDateTime({ children, className, ...props }: CardDateTimeProps) {
   );
 }
 
-// Image 컴포넌트 (모임 이미지)
 function CardImage({
   url,
   alt = '모임 이미지',
@@ -96,7 +95,10 @@ function CardImage({
 }: CardImageProps) {
   return (
     <div
-      className={`relative min-h-[180px] w-full overflow-hidden rounded-[20px] ${className || ''}`}
+      className={twMerge(
+        'relative min-h-[180px] min-w-[336px] overflow-hidden rounded-[20px] md:w-full',
+        className,
+      )}
       {...props}
     >
       <Image src={url} alt={alt} fill className="object-cover" />
@@ -107,15 +109,47 @@ function CardImage({
   );
 }
 
+// Overlay (모임 취소시 표시되는 오버레이)
+function CardOverlay({ onDelete }: CardOverlayProps) {
+  const { isCanceled } = useContext(CardContext);
+
+  if (!isCanceled) return null;
+
+  const handleDeleteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onDelete?.();
+  };
+
+  return (
+    <div className="absolute inset-0 z-10 rounded-2xl bg-black/80">
+      <div className="flex h-full w-full flex-col items-center justify-center gap-3">
+        <p className="whitespace-pre-line text-center text-sm text-white">
+          {'호스트가 모임을 취소했어요.'}
+          <br />
+          {'새로운 모임을 찾아볼까요?'}
+        </p>
+        {/* TODO:: 삭제 버튼 공통 컴포넌트 변경 필요 */}
+        <button
+          onClick={handleDeleteClick}
+          className="w-[120px] rounded-xl bg-white py-2"
+        >
+          삭제하기
+        </button>
+      </div>
+    </div>
+  );
+}
+
 Card.Box = CardBox;
-Card.Info = CardInfo;
-Card.Status = CardStatus;
-Card.EndedOverlay = CardEndedOverlay;
-Card.Host = CardHost;
 Card.Image = CardImage;
 Card.Title = CardTitle;
 Card.Location = CardLocation;
 Card.DateTime = CardDateTime;
+Card.Overlay = CardOverlay;
+
+Card.Info = CardInfo;
+Card.Status = CardStatus;
+Card.Host = CardHost;
 
 // 메인 Card
 function Card({
@@ -202,35 +236,6 @@ function CardStatus({
 }
 
 export default Card;
-
-// Overlay (모임 취소시 표시되는 오버레이)
-function CardEndedOverlay({ onDelete }: CardEndedOverlayProps) {
-  const { isCanceled } = useContext(CardContext);
-
-  if (!isCanceled) return null;
-
-  const handleDeleteClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    onDelete?.();
-  };
-
-  return (
-    <div className="absolute inset-0 z-10 rounded-2xl bg-black/80">
-      <div className="flex h-full w-full flex-col items-center justify-center gap-[10px]">
-        <p className="whitespace-pre-line text-center font-semibold text-white">
-          {'호스트가 모임을 취소했어요.'}
-        </p>
-        {/* TODO:: 삭제 버튼 공통 컴포넌트 변경 필요 */}
-        <button
-          onClick={handleDeleteClick}
-          className="w-[120px] rounded-xl bg-white py-2"
-        >
-          삭제하기
-        </button>
-      </div>
-    </div>
-  );
-}
 
 // Host 컴포넌트 (호스트 정보)
 function CardHost({

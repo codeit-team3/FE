@@ -21,9 +21,22 @@ interface CardDateTimeProps extends ComponentPropsWithoutRef<'span'> {
   className?: string;
 }
 
+interface CardImageProps extends ComponentPropsWithoutRef<'div'> {
+  url: string;
+  alt?: string;
+  isLiked?: boolean;
+  onLikeClick?: () => void;
+}
+
+interface CardOverlayProps extends ComponentPropsWithoutRef<'div'> {
+  onDelete?: () => void;
+}
+
 export type {
   CardBoxProps,
   CardTitleProps,
   CardLocationProps,
   CardDateTimeProps,
+  CardImageProps,
+  CardOverlayProps,
 };
