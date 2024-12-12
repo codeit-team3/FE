@@ -1,5 +1,6 @@
 'use client';
-import { Header, Main } from '@/features/bookclub/components';
+
+import { Header, FilterBar, Main } from '@/features/bookclub/components';
 import { useState } from 'react';
 
 function BookClubMainPage() {
@@ -18,7 +19,8 @@ function BookClubMainPage() {
 
   return (
     <>
-      <Header
+      <Header />
+      <FilterBar
         searchValue={searchValue}
         setSearchValue={setSearchValue}
         selectedTab={selectedTab}
@@ -33,4 +35,5 @@ function BookClubMainPage() {
     </>
   );
 }
+
 export default BookClubMainPage;
