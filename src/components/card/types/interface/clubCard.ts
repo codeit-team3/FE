@@ -24,10 +24,6 @@ interface DefaultClubCard extends ClubCard {
   // 참가자 현황
   current: number;
   max: number;
-  participants: Array<{
-    src: string;
-    alt: string;
-  }>;
 
   // 상태 정보
   isPast: boolean;

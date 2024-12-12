@@ -31,13 +31,37 @@ function CardBox({ children, className = '', ...props }: CardBoxProps) {
   return (
     <div
       className={twMerge(
-        'flex min-h-[180px] w-[336px] flex-col rounded-[20px] border-2 border-gray-normal-01 p-6 md:w-full',
+        'relative flex min-h-[180px] w-[336px] flex-1 flex-col rounded-[20px] border-2 border-gray-normal-01 p-6 md:w-full',
         props.onClick && 'cursor-pointer',
         className,
       )}
       {...props}
     >
       {children}
+    </div>
+  );
+}
+
+function CardImage({
+  url,
+  alt = '모임 이미지',
+  isLiked = false,
+  onLikeClick,
+  className,
+  ...props
+}: CardImageProps) {
+  return (
+    <div
+      className={twMerge(
+        'relative min-h-[180px] w-[336px] overflow-hidden rounded-[20px] lg:w-[384px]',
+        className,
+      )}
+      {...props}
+    >
+      <Image src={url} alt={alt} fill className="object-cover" />
+      <div className="absolute right-5 top-[15px] z-10">
+        <HeartIcon isLiked={isLiked} onClick={onLikeClick} />
+      </div>
     </div>
   );
 }
@@ -82,30 +106,6 @@ function CardDateTime({ children, className, ...props }: CardDateTimeProps) {
     >
       {children}
     </span>
-  );
-}
-
-function CardImage({
-  url,
-  alt = '모임 이미지',
-  isLiked = false,
-  onLikeClick,
-  className,
-  ...props
-}: CardImageProps) {
-  return (
-    <div
-      className={twMerge(
-        'relative min-h-[180px] min-w-[336px] overflow-hidden rounded-[20px] md:w-full',
-        className,
-      )}
-      {...props}
-    >
-      <Image src={url} alt={alt} fill className="object-cover" />
-      <div className="absolute right-5 top-[15px] z-10">
-        <HeartIcon isLiked={isLiked} onClick={onLikeClick} />
-      </div>
-    </div>
   );
 }
 
@@ -155,7 +155,6 @@ function Card(props: CardProps) {
           onLikeClick,
           current,
           max,
-          participants,
           isPast,
           isCanceled,
           onClick,
@@ -165,51 +164,41 @@ function Card(props: CardProps) {
 
         return (
           <div className="flex flex-col gap-6 md:flex-row">
-            <div className="w-[336px] lg:w-[384px]">
-              <Card.Image
-                url={imageUrl}
-                alt={imageAlt}
-                isLiked={isLiked}
-                onLikeClick={onLikeClick}
-              />
-            </div>
-            <Card.Box className="relative flex-1" onClick={onClick}>
-              <div className="flex flex-col gap-2">
-                <Card.Title>{title}</Card.Title>
-                <div className="flex items-center gap-2">
+            <Card.Image
+              url={imageUrl}
+              alt={imageAlt}
+              isLiked={isLiked}
+              onLikeClick={onLikeClick}
+            />
+
+            <Card.Box onClick={onClick} className="justify-between">
+              <div className="flex flex-col gap-0.5">
+                <div className="flex justify-between">
+                  <Card.Title>{title}</Card.Title>
+                  <Chip text={status} isPast={isPast} />
+                </div>
+                <div className="flex items-center gap-1.5">
                   <Card.Location>{location}</Card.Location>
                   <Card.DateTime>{datetime}</Card.DateTime>
                 </div>
               </div>
+
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    <ParticipantCounter
-                      current={current}
-                      max={max}
-                      isPast={isPast}
-                    />
-                    <AvatarGroup isPast={isPast}>
-                      {participants.map((participant, index) => (
-                        <Avatar
-                          key={index}
-                          src={participant.src}
-                          alt={participant.alt}
-                        />
-                      ))}
-                    </AvatarGroup>
-                  </div>
-                  {status === 'confirmed' && (
-                    <ConfirmedLabel variant="confirmed" isPast={isPast} />
-                  )}
+                  <ParticipantCounter
+                    current={current}
+                    max={max}
+                    isPast={isPast}
+                  />
+                  <Chip text={status} isPast={isPast} />
                 </div>
                 <ProgressBar
                   percentage={(current / max) * 100}
                   isPast={isPast}
                 />
               </div>
-              {isCanceled && <Card.Overlay onDelete={onDelete} />}
             </Card.Box>
+            {isCanceled && <Card.Overlay onDelete={onDelete} />}
           </div>
         );
       }
