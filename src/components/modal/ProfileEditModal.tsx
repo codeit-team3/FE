@@ -90,7 +90,7 @@ function ProfileEditModal({
       title="프로필 수정하기"
       onConfirm={handleConfirm}
       cancelText="취소하기"
-      confirmText="수정하"
+      confirmText="수정하기"
       cancelButtonProps={{
         themeColor: 'gray-normal-03',
         fillType: 'lightSolid',
