@@ -18,3 +18,15 @@ export interface FullMeeting extends Omit<Meeting, 'actions'> {
   hostInfo: HostInfo;
   actions: FullActions;
 }
+
+export interface ClubStatus {
+  isCompleted: boolean;
+  isConfirmed: boolean;
+}
+
+export interface ClubMeeting extends BaseProps {
+  meetingInfo: MeetingInfo;
+  imageInfo: ImageInfo;
+  clubStatus: ClubStatus;
+  actions: SimpleActions;
+}

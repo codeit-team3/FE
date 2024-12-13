@@ -37,6 +37,9 @@ const config: Config = {
           'dark-03': '#004c41',
           darker: '#003b33',
         },
+        blue: {
+          'normal-01': '#007AFF',
+        },
       },
     },
   },
