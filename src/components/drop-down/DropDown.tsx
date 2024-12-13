@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useRef, useState } from 'react';
 import { IcDropDown } from '../../../public/icons';
 import Avatar from '../avatar/Avatar';
@@ -52,6 +54,16 @@ function DropDown({ variant, imgSrc, onChangeSelection }: DropDownProps) {
               alt="nav_profile"
               size="md"
             />
+          </button>
+        );
+      case 'sortingReview':
+        return (
+          <button
+            className={`flex h-[40px] items-center justify-start py-[8px] pl-[14px] pr-[6px] text-sm font-medium ${colorClass}`}
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {selectedLabel}
+            <IcDropDown isActive={isActive} color="stroke-green-normal-01" />
           </button>
         );
       default:
