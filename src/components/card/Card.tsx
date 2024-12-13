@@ -396,7 +396,7 @@ function Card(props: CardProps) {
               alt={imageAlt}
               isLiked={isLiked}
               onLikeClick={onLikeClick}
-              className="h-[230px] md:h-full"
+              className="md:h-100%"
             />
 
             <div className="flex flex-1 flex-col gap-[14px]">
