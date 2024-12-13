@@ -8,6 +8,16 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
+  argTypes: {
+    meetingType: {
+      control: 'select',
+      options: ['FREE', 'FIXED'],
+    },
+    status: {
+      control: 'select',
+      options: ['completed', 'scheduled', 'pending', 'confirmed', 'closed'],
+    },
+  },
   tags: ['autodocs'],
 } satisfies Meta<typeof Card>;
 
@@ -21,9 +31,9 @@ const baseArgs = {
   title: '을지로 독서 모임',
   location: '을지로 3가',
   datetime: '12/14(토) 오전 10:00',
-  meetingType: 'FREE',
+  meetingType: 'FREE' as const,
   isPast: false,
-  status: 'confirmed',
+  status: 'confirmed' as const,
   onClick: () => alert('카드 클릭!'),
 } as const;
 
