@@ -1,5 +1,6 @@
 import {
   DefaultClubCard,
+  DetailedClubCard,
   HostedClubCard,
   ParticipatedClubCard,
 } from '@/components/card/types/interface/clubCard';
@@ -37,11 +38,14 @@ interface CardOverlayProps extends ComponentPropsWithoutRef<'div'> {
   onDelete?: () => void;
 }
 
-type CardProps = DefaultClubCard &
-  HostedClubCard &
-  ParticipatedClubCard & {
-    variant?: 'defaultClub' | 'participatedClub' | 'hostedClub';
-  };
+type CardProps = {
+  variant?: 'defaultClub' | 'participatedClub' | 'hostedClub' | 'detailedClub';
+} & (
+  | (DefaultClubCard & { variant?: 'defaultClub' })
+  | (HostedClubCard & { variant?: 'hostedClub' })
+  | (ParticipatedClubCard & { variant?: 'participatedClub' })
+  | (DetailedClubCard & { variant?: 'detailedClub' })
+);
 
 export type {
   CardBoxProps,

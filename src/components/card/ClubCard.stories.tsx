@@ -56,6 +56,41 @@ const participatedArgs = {
   onCancel: () => alert('참여 취소하기 클릭!'),
 } as const;
 
+const detailedArgs = {
+  ...baseArgs,
+  variant: 'detailedClub',
+  isLiked: false,
+  onLikeClick: () => alert('좋아요 클릭!'),
+  current: 5,
+  max: 10,
+  participants: [
+    {
+      id: '1',
+      name: '참여자1',
+      profileImage: 'https://picsum.photos/200/200?random=1',
+      profileImageAlt: '참여자1 프로필 이미지',
+    },
+    {
+      id: '2',
+      name: '참여자2',
+      profileImage: 'https://picsum.photos/200/200?random=2',
+      profileImageAlt: '참여자2 프로필 이미지',
+    },
+    {
+      id: '3',
+      name: '참여자3',
+      profileImage: 'https://picsum.photos/200/200?random=3',
+      profileImageAlt: '참여자3 프로필 이미지',
+    },
+  ],
+  host: {
+    id: 'host1',
+    name: '호스트',
+    profileImage: 'https://picsum.photos/200/200?random=host',
+  },
+  isHost: false,
+} as const;
+
 // Default Club Card Stories
 export const DefaultMobile: Story = {
   parameters: {
@@ -201,4 +236,53 @@ export const ParticipatedDesktop: Story = {
     ),
   ],
   args: participatedArgs,
+};
+
+// Detailed Club Card Stories
+export const DetailedMobile: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'mobile',
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div className="w-[400px]">
+        <Story />
+      </div>
+    ),
+  ],
+  args: detailedArgs,
+};
+
+export const DetailedTablet: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'tablet',
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div className="w-[700px]">
+        <Story />
+      </div>
+    ),
+  ],
+  args: detailedArgs,
+};
+
+export const DetailedDesktop: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'desktop',
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div className="w-[1000px]">
+        <Story />
+      </div>
+    ),
+  ],
+  args: detailedArgs,
 };

@@ -51,4 +51,36 @@ interface HostedClubCard extends ClubCard {
   reviewScore?: number;
 }
 
-export type { ClubCard, DefaultClubCard, HostedClubCard, ParticipatedClubCard };
+interface DetailedClubCard extends ClubCard {
+  // 찜 정보
+  isLiked: boolean;
+  onLikeClick: () => void;
+
+  // 참가자 정보
+  current: number;
+  max: number;
+  participants: ReadonlyArray<{
+    readonly id?: string;
+    readonly name: string;
+    readonly profileImage?: string;
+    readonly profileImageAlt?: string;
+  }>;
+
+  // 호스트 정보
+  host: {
+    id?: string;
+    name: string;
+    profileImage?: string;
+  };
+
+  // 호스트 여부
+  isHost: boolean;
+}
+
+export type {
+  ClubCard,
+  DefaultClubCard,
+  HostedClubCard,
+  ParticipatedClubCard,
+  DetailedClubCard,
+};

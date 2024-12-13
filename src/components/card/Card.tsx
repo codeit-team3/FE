@@ -27,6 +27,10 @@ import {
   CardOverlayProps,
   CardImageProps,
   CardProps,
+  DefaultClubCard,
+  HostedClubCard,
+  ParticipatedClubCard,
+  DetailedClubCard,
 } from './types/interface';
 import ClubChip from '@/components/chip/club-chip/ClubChip';
 import Button from '@/components/button/Button';
@@ -171,7 +175,7 @@ function Card(props: CardProps) {
           onClick,
           onDelete,
           status,
-        } = props;
+        } = props as DefaultClubCard & { variant: 'defaultClub' };
 
         return (
           <div className="flex flex-col gap-6 md:flex-row">
@@ -231,7 +235,7 @@ function Card(props: CardProps) {
           isPast,
           onWriteReview,
           onCancel,
-        } = props;
+        } = props as ParticipatedClubCard & { variant: 'participatedClub' };
 
         return (
           <div className="flex flex-col gap-6 md:flex-row">
@@ -305,7 +309,7 @@ function Card(props: CardProps) {
           datetime,
           onCancel,
           reviewScore,
-        } = props;
+        } = props as HostedClubCard & { variant: 'hostedClub' };
 
         return (
           <div className="flex flex-col gap-6 md:flex-row">
@@ -365,11 +369,108 @@ function Card(props: CardProps) {
           </div>
         );
       }
+
+      case 'detailedClub': {
+        const {
+          imageUrl,
+          imageAlt,
+          title,
+          location,
+          datetime,
+          isLiked,
+          onLikeClick,
+          meetingType,
+          current,
+          max,
+          isPast,
+          host,
+          status,
+          participants,
+          onClick,
+        } = props as DetailedClubCard & { variant: 'detailedClub' };
+
+        return (
+          <div className="flex flex-col gap-6 md:flex-row">
+            <Card.Image
+              url={imageUrl}
+              alt={imageAlt}
+              isLiked={isLiked}
+              onLikeClick={onLikeClick}
+              className="h-[230px] md:h-full"
+            />
+
+            <div className="flex flex-1 flex-col gap-[14px]">
+              <div className="flex flex-col gap-2">
+                <Card.Host
+                  nickname={host.name}
+                  avatar={{
+                    src: host.profileImage,
+                    alt: `${host.name}님의 프로필`,
+                  }}
+                />
+
+                <Card.Box onClick={onClick} className="justify-between">
+                  <div className="flex flex-col gap-0.5">
+                    <div className="flex justify-between">
+                      <Card.Title>{title}</Card.Title>
+                      <ClubChip variant={meetingType} isPast={isPast} />
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <Card.Location>{location}</Card.Location>
+                      <Card.DateTime>{datetime}</Card.DateTime>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex gap-2.5">
+                        <ParticipantCounter
+                          current={current}
+                          max={max}
+                          isPast={isPast}
+                        />
+                        <AvatarGroup isPast={isPast}>
+                          {participants.map((participant, index) => (
+                            <Avatar
+                              key={index}
+                              src={participant.profileImage || ''}
+                              alt={participant.profileImageAlt || ''}
+                            />
+                          ))}
+                        </AvatarGroup>
+                      </div>
+                      <ClubChip variant={status} isPast={isPast} />
+                    </div>
+                    <ProgressBar
+                      percentage={(current / max) * 100}
+                      isPast={isPast}
+                    />
+                  </div>
+                </Card.Box>
+              </div>
+              {onClick && (
+                <div className="w-[336px] md:w-full">
+                  <Button
+                    text="참여하기"
+                    size="modal"
+                    fillType="solid"
+                    themeColor="green-normal-01"
+                    onClick={onClick}
+                    className="w-full"
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      }
     }
   };
 
   return (
-    <CardContext.Provider value={{ isCanceled: props.isCanceled }}>
+    <CardContext.Provider
+      value={{ isCanceled: 'isCanceled' in props ? props.isCanceled : false }}
+    >
       <article
         className={twMerge(
           'relative flex h-full w-full min-w-[336px] flex-col',
