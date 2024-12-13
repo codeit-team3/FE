@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface RadioButtonGroupProps {
   options: { label: string; value: string; description?: string }[];
@@ -11,6 +11,38 @@ function RadioButtonGroup({
   selectedValue,
   register,
 }: RadioButtonGroupProps) {
+  const [isDaumLoaded, setIsDaumLoaded] = useState(false);
+
+  useEffect(() => {
+    const checkDaumLoaded = setInterval(() => {
+      if (window.daum && window.daum.Postcode) {
+        setIsDaumLoaded(true);
+        clearInterval(checkDaumLoaded);
+      }
+    }, 100);
+
+    return () => clearInterval(checkDaumLoaded);
+  }, []);
+
+  const handleRadioChange = (value: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    if (value === 'FIXED' && isDaumLoaded) {
+      new window.daum.Postcode({
+        oncomplete: function (data: any) {
+          const dongName = data.bname;
+          console.log('선택된 동:', dongName);
+        },
+        autoMapping: false,
+        filter: function (suggestion: any) {
+          const addr = suggestion.address;
+          const types = suggestion.types;
+
+          return types.includes('B') && addr.includes('동');
+        },
+      }).open();
+    }
+  };
+
   return (
     <div className="flex gap-4 md:gap-6">
       {options.map((option) => (
@@ -21,6 +53,7 @@ function RadioButtonGroup({
               ? 'border-2 border-green-normal-01'
               : ''
           } bg-gray-light-02`}
+          onClick={(e) => handleRadioChange(option.value, e)}
         >
           <input
             type="radio"
