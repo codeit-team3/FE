@@ -1,5 +1,9 @@
-// import BookClubMainPage from '@/features/bookclub/components/BookClubMainPage';
+import { BookClubMainPage } from '@/features/bookclub/components';
 
 export default function Home() {
-  return <div className="-mx-4 md:-mx-6 lg:-mx-10"></div>;
+  return (
+    <>
+      <BookClubMainPage />
+    </>
+  );
 }
