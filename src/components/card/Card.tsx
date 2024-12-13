@@ -32,7 +32,7 @@ function CardBox({ children, className = '', ...props }: CardBoxProps) {
   return (
     <div
       className={twMerge(
-        'mib-w-[336px] relative flex min-h-[180px] flex-1 flex-col rounded-[20px] border-2 border-gray-normal-01 p-6 md:w-full',
+        'relative flex min-h-[180px] w-[336px] flex-1 flex-col rounded-[20px] border-2 border-gray-normal-01 p-6 md:w-full',
         props.onClick && 'cursor-pointer',
         className,
       )}

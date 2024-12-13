@@ -14,48 +14,69 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof Card>;
 
-// 기본 모임 카드 스토리
-export const DefaultCard: Story = {
-  args: {
-    variant: 'default',
-    imageUrl: 'https://picsum.photos/400/300',
-    imageAlt: '모임 이미지',
-    title: '을지로 독서 모임',
-    location: '을지로 3가',
-    datetime: '12/14(토) 오전 10:00',
-    meetingType: 'FREE',
-    status: 'confirmed',
-    isLiked: false,
-    onLikeClick: () => alert('좋아요 클릭!'),
-    current: 5,
-    max: 10,
-    isPast: false,
-    isCanceled: false,
-    onClick: () => alert('카드 클릭!'),
-    onDelete: () => alert('삭제 버튼 클릭!'),
+const defaultArgs = {
+  variant: 'default',
+  imageUrl: 'https://picsum.photos/400/300',
+  imageAlt: '모임 이미지',
+  title: '을지로 독서 모임',
+  location: '을지로 3가',
+  datetime: '12/14(토) 오전 10:00',
+  meetingType: 'FREE',
+  status: 'confirmed',
+  isLiked: false,
+  onLikeClick: () => alert('좋아요 클릭!'),
+  current: 5,
+  max: 10,
+  isPast: false,
+  isCanceled: false,
+  onClick: () => alert('카드 클릭!'),
+  onDelete: () => alert('삭제 버튼 클릭!'),
+} as const;
+
+export const Mobile: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'mobile',
+    },
   },
+  decorators: [
+    (Story) => (
+      <div className="w-[400px]">
+        <Story />
+      </div>
+    ),
+  ],
+  args: defaultArgs,
 };
 
-// 취소된 모임 카드 스토리
-export const CanceledCard: Story = {
-  args: {
-    ...DefaultCard.args,
-    isCanceled: true,
+export const Tablet: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'tablet',
+    },
   },
+  decorators: [
+    (Story) => (
+      <div className="w-[700px]">
+        <Story />
+      </div>
+    ),
+  ],
+  args: defaultArgs,
 };
 
-// 지난 모임 카드 스토리
-export const PastCard: Story = {
-  args: {
-    ...DefaultCard.args,
-    isPast: true,
+export const Desktop: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'desktop',
+    },
   },
-};
-
-// 확정된 모임 카드 스토리
-export const ConfirmedCard: Story = {
-  args: {
-    ...DefaultCard.args,
-    status: 'confirmed',
-  },
+  decorators: [
+    (Story) => (
+      <div className="w-[1000px]">
+        <Story />
+      </div>
+    ),
+  ],
+  args: defaultArgs,
 };
