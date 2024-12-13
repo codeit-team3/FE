@@ -1,11 +1,6 @@
 import { ComponentPropsWithoutRef, ReactNode } from 'react';
 import { BaseProps } from './base';
-import {
-  MeetingInfo,
-  HostInfo,
-  ParticipationStatus,
-  ImageInfo,
-} from './meeting';
+import { MeetingInfo, ParticipationStatus, ImageInfo } from './meeting';
 
 export interface CardProps
   extends ComponentPropsWithoutRef<'article'>,
@@ -27,10 +22,6 @@ export interface CardStatusProps
   extends ComponentPropsWithoutRef<'div'>,
     ParticipationStatus,
     BaseProps {}
-
-export interface CardHostProps
-  extends ComponentPropsWithoutRef<'div'>,
-    HostInfo {}
 
 export interface CardImageProps
   extends ComponentPropsWithoutRef<'div'>,

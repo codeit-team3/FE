@@ -31,11 +31,22 @@ interface CardImageProps extends ComponentPropsWithoutRef<'div'> {
   url: string;
   alt?: string;
   isLiked?: boolean;
+  isPast?: boolean;
   onLikeClick?: () => void;
 }
 
 interface CardOverlayProps extends ComponentPropsWithoutRef<'div'> {
   onDelete?: () => void;
+}
+
+interface CardHostInfo extends ComponentPropsWithoutRef<'div'> {
+  nickname: string;
+  onHostClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  isHost: boolean;
+  avatar?: {
+    src?: string;
+    alt?: string;
+  };
 }
 
 type CardProps = {
@@ -54,5 +65,6 @@ export type {
   CardDateTimeProps,
   CardImageProps,
   CardOverlayProps,
+  CardHostInfo,
   CardProps,
 };

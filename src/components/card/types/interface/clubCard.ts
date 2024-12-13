@@ -75,6 +75,18 @@ interface DetailedClubCard extends ClubCard {
 
   // 호스트 여부
   isHost: boolean;
+
+  // 해당 모임의 참여자인지 여부
+  isParticipant: boolean;
+
+  // 리뷰 작성 여부
+  hasWrittenReview?: boolean;
+
+  // 액션 핸들러
+  onCancel?: () => void;
+  onParticipate?: () => void;
+  onCancelParticipation?: () => void;
+  onWriteReview?: () => void;
 }
 
 export type {

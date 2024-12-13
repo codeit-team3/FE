@@ -33,6 +33,10 @@ export default function Button({
       : themeColor;
 
   const variantClasses = (() => {
+    if (disabled) {
+      return `text-gray-dark-02 bg-gray-normal-02`;
+    }
+
     switch (fillType) {
       case 'solid':
         return `text-gray-white ${COLOR_SCHEMES[resolvedColor]['bg']}`;

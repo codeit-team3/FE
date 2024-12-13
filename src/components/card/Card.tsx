@@ -12,12 +12,7 @@ import {
   RatingIcon,
 } from '../../../public/icons';
 import Image from 'next/image';
-import {
-  CardContextType,
-  CardInfoProps,
-  CardStatusProps,
-  CardHostProps,
-} from './types';
+import { CardContextType, CardInfoProps, CardStatusProps } from './types';
 import { twMerge } from 'tailwind-merge';
 import {
   CardBoxProps,
@@ -31,6 +26,7 @@ import {
   HostedClubCard,
   ParticipatedClubCard,
   DetailedClubCard,
+  CardHostInfo,
 } from './types/interface';
 import ClubChip from '@/components/chip/club-chip/ClubChip';
 import Button from '@/components/button/Button';
@@ -59,17 +55,24 @@ function CardImage({
   isLiked,
   onLikeClick,
   className,
+  isPast,
   ...props
 }: CardImageProps) {
   return (
     <div
       className={twMerge(
         'relative min-h-[180px] w-[336px] overflow-hidden rounded-[20px] lg:w-[384px]',
+
         className,
       )}
       {...props}
     >
-      <Image src={url} alt={alt} fill className="object-cover" />
+      <Image
+        src={url}
+        alt={alt}
+        fill
+        className={twMerge('object-cover', isPast && 'grayscale')}
+      />
       {isLiked !== undefined && (
         <div className="absolute right-5 top-[15px] z-10">
           <HeartIcon isLiked={isLiked} onClick={onLikeClick} />
@@ -154,6 +157,43 @@ function CardOverlay({ onDelete }: CardOverlayProps) {
   );
 }
 
+// Host 컴포넌트 (호스트 정보)
+function CardHost({
+  nickname,
+  avatar,
+  className,
+  isHost,
+  onClick,
+  ...props
+}: CardHostInfo) {
+  return (
+    <div className={`flex items-center gap-2 ${className || ''}`} {...props}>
+      <div className="relative">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-normal-01">
+          <Avatar
+            size="md"
+            src={
+              avatar?.src ||
+              `https://picsum.photos/200/200?random=${Math.floor(Math.random() * 1000)}`
+            }
+            alt={avatar?.alt || `${nickname}님의 프로필`}
+            onClick={onClick}
+          />
+        </div>
+        <div className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-gray-normal-01 bg-green-normal-01">
+          <HostIcon />
+        </div>
+      </div>
+      <span className="text-xl font-semibold">
+        <span className="text-green-normal-01">
+          {isHost ? '나' : `${nickname}님`}
+        </span>
+        <span className="text-gray-darker">의 모임</span>
+      </span>
+    </div>
+  );
+}
+
 function Card(props: CardProps) {
   const renderCardContent = () => {
     switch (props.variant) {
@@ -183,6 +223,7 @@ function Card(props: CardProps) {
               url={imageUrl}
               alt={imageAlt}
               isLiked={isLiked}
+              isPast={isPast}
               onLikeClick={onLikeClick}
             />
 
@@ -387,7 +428,96 @@ function Card(props: CardProps) {
           status,
           participants,
           onClick,
+          isHost,
+          isParticipant,
+          hasWrittenReview,
+          onCancel,
+          onParticipate,
+          onCancelParticipation,
+          onWriteReview,
         } = props as DetailedClubCard & { variant: 'detailedClub' };
+
+        const renderButton = () => {
+          if (isHost) {
+            return (
+              <Button
+                text="취소하기"
+                size="modal"
+                fillType="lightSolid"
+                themeColor="gray-dark-01"
+                lightColor="gray-normal-01"
+                disabled={isPast}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onCancel?.();
+                }}
+                className="w-full"
+              />
+            );
+          }
+
+          if (isPast) {
+            if (!isParticipant) {
+              return (
+                <Button
+                  text="이미 지난 모임입니다"
+                  size="modal"
+                  fillType="lightSolid"
+                  themeColor="gray-dark-01"
+                  lightColor="gray-normal-01"
+                  disabled={true}
+                  className="w-full"
+                />
+              );
+            }
+
+            return (
+              <Button
+                text="리뷰 작성하기"
+                size="modal"
+                fillType="solid"
+                themeColor="green-normal-01"
+                disabled={hasWrittenReview}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onWriteReview?.();
+                }}
+                className="w-full"
+              />
+            );
+          }
+
+          if (isParticipant) {
+            return (
+              <Button
+                text="참여 취소하기"
+                size="modal"
+                fillType="lightSolid"
+                themeColor="gray-dark-01"
+                lightColor="gray-normal-01"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onCancelParticipation?.();
+                }}
+                className="w-full"
+              />
+            );
+          }
+
+          return (
+            <Button
+              text="참여하기"
+              size="modal"
+              fillType="solid"
+              themeColor="green-normal-01"
+              onClick={(e) => {
+                e.stopPropagation();
+                onParticipate?.();
+              }}
+              className="w-full"
+            />
+          );
+        };
 
         return (
           <div className="flex flex-col gap-6 md:flex-row">
@@ -396,6 +526,7 @@ function Card(props: CardProps) {
               alt={imageAlt}
               isLiked={isLiked}
               onLikeClick={onLikeClick}
+              isPast={isPast}
               className="md:h-100%"
             />
 
@@ -407,6 +538,7 @@ function Card(props: CardProps) {
                     src: host.profileImage,
                     alt: `${host.name}님의 프로필`,
                   }}
+                  isHost={isHost}
                 />
 
                 <Card.Box onClick={onClick} className="justify-between">
@@ -448,18 +580,8 @@ function Card(props: CardProps) {
                   </div>
                 </Card.Box>
               </div>
-              {onClick && (
-                <div className="w-[336px] md:w-full">
-                  <Button
-                    text="참여하기"
-                    size="modal"
-                    fillType="solid"
-                    themeColor="green-normal-01"
-                    onClick={onClick}
-                    className="w-full"
-                  />
-                </div>
-              )}
+
+              <div className="w-[336px] md:w-full">{renderButton()}</div>
             </div>
           </div>
         );
@@ -488,12 +610,12 @@ Card.Title = CardTitle;
 Card.Location = CardLocation;
 Card.DateTime = CardDateTime;
 Card.Overlay = CardOverlay;
+Card.Host = CardHost;
 
 /////////////////////////////////////////////////////////////////////// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 Card.Info = CardInfo;
 Card.Status = CardStatus;
-Card.Host = CardHost;
 
 // Info 컴포넌트 (모임에 관한 정보 - 제목, 위치, 날짜 등)
 function CardInfo({
@@ -561,37 +683,3 @@ function CardStatus({
 }
 
 export default Card;
-
-// Host 컴포넌트 (호스트 정보)
-function CardHost({
-  nickname,
-  avatar,
-  className,
-  onClick,
-  ...props
-}: CardHostProps) {
-  return (
-    <div className={`flex items-center gap-2 ${className || ''}`} {...props}>
-      <div className="relative">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-normal-01">
-          <Avatar
-            size="md"
-            src={
-              avatar?.src ||
-              `https://picsum.photos/200/200?random=${Math.floor(Math.random() * 1000)}`
-            }
-            alt={avatar?.alt || `${nickname}님의 프로필`}
-            onClick={onClick}
-          />
-        </div>
-        <div className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-gray-normal-01 bg-green-normal-01">
-          <HostIcon />
-        </div>
-      </div>
-      <span className="text-xl font-semibold">
-        <span className="text-green-normal-01">{nickname}님</span>
-        <span className="text-gray-darker">의 모임</span>
-      </span>
-    </div>
-  );
-}

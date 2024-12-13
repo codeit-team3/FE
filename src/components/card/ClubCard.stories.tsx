@@ -82,6 +82,18 @@ const detailedArgs = {
       profileImage: 'https://picsum.photos/200/200?random=3',
       profileImageAlt: '참여자3 프로필 이미지',
     },
+    {
+      id: '4',
+      name: '참여자4',
+      profileImage: 'https://picsum.photos/200/200?random=4',
+      profileImageAlt: '참여자4 프로필 이미지',
+    },
+    {
+      id: '5',
+      name: '참여자5',
+      profileImage: 'https://picsum.photos/200/200?random=5',
+      profileImageAlt: '참여자5 프로필 이미지',
+    },
   ],
   host: {
     id: 'host1',
@@ -89,6 +101,12 @@ const detailedArgs = {
     profileImage: 'https://picsum.photos/200/200?random=host',
   },
   isHost: false,
+  isParticipant: true,
+  hasWrittenReview: false,
+  onCancel: () => alert('모임 취소하기 클릭!'),
+  onParticipate: () => alert('모임 참여하기 클릭!'),
+  onCancelParticipation: () => alert('참여 취소하기 클릭!'),
+  onWriteReview: () => alert('리뷰 작성하기 클릭!'),
 } as const;
 
 // Default Club Card Stories
