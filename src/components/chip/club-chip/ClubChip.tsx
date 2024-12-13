@@ -40,17 +40,27 @@ const CLUB_CHIP_STYLE = {
   FIXED: '',
 } as const;
 
+const PAST_STATUS_STYLE = 'bg-gray-dark-02 text-gray-white';
+const PAST_BOOK_TYPE_STYLE = 'bg-gray-normal-01 text-gray-dark-02';
+
 interface ClubChipProps {
   variant: ClubChipVariant;
   className?: string;
+  isPast?: boolean;
 }
 
-function ClubChip({ variant, className }: ClubChipProps) {
+function ClubChip({ variant, className, isPast = false }: ClubChipProps) {
+  const style = isPast
+    ? ['FREE', 'FIXED'].includes(variant)
+      ? PAST_BOOK_TYPE_STYLE
+      : PAST_STATUS_STYLE
+    : CLUB_CHIP_STYLE[variant];
+
   return (
     <Chip
       text={CLUB_CHIP_TEXT[variant]}
       variant={CLUB_CHIP_VARIANT[variant]}
-      className={twMerge(CLUB_CHIP_STYLE[variant], className)}
+      className={twMerge(style, className)}
     />
   );
 }

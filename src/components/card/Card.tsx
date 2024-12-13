@@ -144,7 +144,7 @@ function CardOverlay({ onDelete }: CardOverlayProps) {
 function Card(props: CardProps) {
   const renderCardContent = () => {
     switch (props.variant) {
-      case 'default':
+      case 'defaultClub':
       default: {
         const {
           imageUrl,
@@ -177,7 +177,7 @@ function Card(props: CardProps) {
               <div className="flex flex-col gap-0.5">
                 <div className="flex justify-between">
                   <Card.Title>{title}</Card.Title>
-                  <ClubChip variant={meetingType} />
+                  <ClubChip variant={meetingType} isPast={isPast} />
                 </div>
                 <div className="flex items-center gap-1.5">
                   <Card.Location>{location}</Card.Location>
@@ -192,7 +192,7 @@ function Card(props: CardProps) {
                     max={max}
                     isPast={isPast}
                   />
-                  <ClubChip variant={status} />
+                  <ClubChip variant={status} isPast={isPast} />
                 </div>
                 <ProgressBar
                   percentage={(current / max) * 100}
@@ -205,8 +205,8 @@ function Card(props: CardProps) {
         );
       }
 
-      case 'participated':
-      case 'hosted':
+      case 'participatedClub':
+      case 'hostedClub':
         return null; // 추후 구현
     }
   };

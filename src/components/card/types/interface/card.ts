@@ -34,7 +34,7 @@ interface CardOverlayProps extends ComponentPropsWithoutRef<'div'> {
 }
 
 type CardProps = DefaultClubCard & {
-  variant?: 'default' | 'participated' | 'hosted';
+  variant?: 'defaultClub' | 'participatedClub' | 'hostedClub';
 };
 
 export type {

@@ -15,7 +15,7 @@ export default meta;
 type Story = StoryObj<typeof Card>;
 
 const defaultArgs = {
-  variant: 'default',
+  variant: 'defaultClub',
   imageUrl: 'https://picsum.photos/400/300',
   imageAlt: '모임 이미지',
   title: '을지로 독서 모임',
