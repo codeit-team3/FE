@@ -31,9 +31,17 @@ const defaultArgs = {
   isCanceled: false,
   onClick: () => alert('카드 클릭!'),
   onDelete: () => alert('삭제 버튼 클릭!'),
+  reviewScore: 4.5,
 } as const;
 
-export const Mobile: Story = {
+const participatedArgs = {
+  ...defaultArgs,
+  variant: 'participatedClub',
+  onCancel: () => alert('모임 취소하기 클릭!'),
+} as const;
+
+// Default Club Card Stories
+export const DefaultMobile: Story = {
   parameters: {
     viewport: {
       defaultViewport: 'mobile',
@@ -49,7 +57,7 @@ export const Mobile: Story = {
   args: defaultArgs,
 };
 
-export const Tablet: Story = {
+export const DefaultTablet: Story = {
   parameters: {
     viewport: {
       defaultViewport: 'tablet',
@@ -65,7 +73,7 @@ export const Tablet: Story = {
   args: defaultArgs,
 };
 
-export const Desktop: Story = {
+export const DefaultDesktop: Story = {
   parameters: {
     viewport: {
       defaultViewport: 'desktop',
@@ -79,4 +87,111 @@ export const Desktop: Story = {
     ),
   ],
   args: defaultArgs,
+};
+
+// Participated Club Card Stories
+export const ParticipatedMobile: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'mobile',
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div className="w-[400px]">
+        <Story />
+      </div>
+    ),
+  ],
+  args: participatedArgs,
+};
+
+export const ParticipatedTablet: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'tablet',
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div className="w-[700px]">
+        <Story />
+      </div>
+    ),
+  ],
+  args: participatedArgs,
+};
+
+export const ParticipatedDesktop: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'desktop',
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div className="w-[1000px]">
+        <Story />
+      </div>
+    ),
+  ],
+  args: participatedArgs,
+};
+
+// Completed Participated Club Card Stories
+export const CompletedParticipatedMobile: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'mobile',
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div className="w-[400px]">
+        <Story />
+      </div>
+    ),
+  ],
+  args: {
+    ...participatedArgs,
+    isPast: true,
+  },
+};
+
+export const CompletedParticipatedTablet: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'tablet',
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div className="w-[700px]">
+        <Story />
+      </div>
+    ),
+  ],
+  args: {
+    ...participatedArgs,
+    isPast: true,
+  },
+};
+
+export const CompletedParticipatedDesktop: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'desktop',
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div className="w-[1000px]">
+        <Story />
+      </div>
+    ),
+  ],
+  args: {
+    ...participatedArgs,
+    isPast: true,
+  },
 };

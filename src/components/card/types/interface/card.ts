@@ -1,4 +1,7 @@
-import { DefaultClubCard } from '@/components/card/types/interface/clubCard';
+import {
+  DefaultClubCard,
+  ParticipatedClubCard,
+} from '@/components/card/types/interface/clubCard';
 import { ComponentPropsWithoutRef } from 'react';
 
 interface CardBoxProps extends ComponentPropsWithoutRef<'div'> {
@@ -33,9 +36,10 @@ interface CardOverlayProps extends ComponentPropsWithoutRef<'div'> {
   onDelete?: () => void;
 }
 
-type CardProps = DefaultClubCard & {
-  variant?: 'defaultClub' | 'participatedClub' | 'hostedClub';
-};
+type CardProps = DefaultClubCard &
+  ParticipatedClubCard & {
+    variant?: 'defaultClub' | 'participatedClub' | 'hostedClub';
+  };
 
 export type {
   CardBoxProps,

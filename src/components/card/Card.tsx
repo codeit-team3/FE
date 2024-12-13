@@ -5,7 +5,12 @@ import AvatarGroup from '../avatar-group/AvatarGroup';
 import ConfirmedLabel from '../confirmed-label/ConfirmedLabel';
 import ProgressBar from '../progress-bar/ProgressBar';
 import Avatar from '../avatar/Avatar';
-import { LocationIcon, HostIcon, HeartIcon } from '../../../public/icons';
+import {
+  LocationIcon,
+  HostIcon,
+  HeartIcon,
+  RatingIcon,
+} from '../../../public/icons';
 import Image from 'next/image';
 import {
   CardContextType,
@@ -123,7 +128,7 @@ function CardOverlay({ onDelete }: CardOverlayProps) {
   };
 
   return (
-    <div className="absolute inset-0 z-10 rounded-2xl bg-black/80">
+    <div className="absolute inset-0 z-10 w-[336px] rounded-2xl bg-black/80 md:w-full">
       <div className="flex h-full w-full flex-col items-center justify-center gap-3">
         <p className="whitespace-pre-line text-center text-sm text-white">
           {'호스트가 모임을 취소했어요.'}
@@ -207,7 +212,90 @@ function Card(props: CardProps) {
         );
       }
 
-      case 'participatedClub':
+      case 'participatedClub': {
+        const {
+          imageUrl,
+          imageAlt,
+          isLiked,
+          onLikeClick,
+          isCanceled,
+          onClick,
+          onDelete,
+          status,
+          meetingType,
+          isPast,
+          title,
+          location,
+          datetime,
+          onCancel,
+          reviewScore,
+        } = props;
+
+        return (
+          <div className="flex flex-col gap-6 md:flex-row">
+            <Card.Image
+              url={imageUrl}
+              alt={imageAlt}
+              isLiked={isLiked}
+              onLikeClick={onLikeClick}
+            />
+            <Card.Box onClick={onClick} className="justify-between">
+              <div className="flex flex-col gap-2.5">
+                <div className="flex justify-between">
+                  <ClubChip variant={isPast ? 'completed' : status} />
+                  <ClubChip variant={meetingType} />
+                </div>
+                <div className="flex flex-col">
+                  <Card.Title>{title}</Card.Title>
+                  <div className="flex items-center gap-1.5">
+                    <Card.Location>{location}</Card.Location>
+                    <Card.DateTime>{datetime}</Card.DateTime>
+                  </div>
+                </div>
+                <div className="w-full">
+                  {!isPast ? (
+                    <Button
+                      text="모임 취소하기"
+                      size="modal"
+                      fillType="lightSolid"
+                      themeColor="gray-dark-01"
+                      lightColor="gray-normal-01"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onCancel();
+                      }}
+                      className="w-full"
+                    />
+                  ) : (
+                    <div className="pt-3 font-semibold">
+                      {reviewScore ? (
+                        <div className="flex items-center gap-1">
+                          <span className="text-gray-darker">
+                            북코들의 평점
+                          </span>
+                          <div className="flex items-center gap-1">
+                            <RatingIcon checked={true} />
+                            <span className="text-gray-darker">
+                              {reviewScore}
+                            </span>
+                            <span className="text-gray-dark-01">/ 5</span>
+                          </div>
+                        </div>
+                      ) : (
+                        <span className="text-gray-dark-01">
+                          아직 리뷰가 달리지 않았습니다
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </Card.Box>
+            {isCanceled && <Card.Overlay onDelete={onDelete} />}
+          </div>
+        );
+      }
+
       case 'hostedClub':
         return null; // 추후 구현
     }
@@ -239,7 +327,7 @@ Card.Info = CardInfo;
 Card.Status = CardStatus;
 Card.Host = CardHost;
 
-// Info 컴포넌트 (모임에 관한 정보 - 제목, 위치, 날짜 등)
+// Info 컴포넌트 (��임에 관한 정보 - 제목, 위치, 날짜 등)
 function CardInfo({
   title,
   category,

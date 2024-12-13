@@ -20,7 +20,7 @@ export default function Button({
   isSubmitting,
   ...buttonProps
 }: ButtonProps) {
-  const { disabled } = buttonProps;
+  const { disabled, className } = buttonProps;
 
   const sizeClasses = SIZE[size];
   const baseClasses = 'rounded-[12px] font-semibold cursor-pointer';
@@ -54,6 +54,7 @@ export default function Button({
     baseClasses,
     variantClasses,
     isButtonDisabled && 'cursor-not-allowed',
+    className,
   );
 
   return (

@@ -33,4 +33,23 @@ interface DefaultClubCard extends ClubCard {
   onDelete: () => void;
 }
 
-export type { ClubCard, DefaultClubCard };
+interface ParticipatedClubCard extends ClubCard {
+  // 찜 정보
+  isLiked: boolean;
+  onLikeClick: () => void;
+
+  // 상태 정보
+  isPast: boolean;
+  isCanceled: boolean;
+
+  // 블러에서 취소 액션
+  onDelete: () => void;
+
+  // 모임 취소 액션
+  onCancel: () => void;
+
+  // 리뷰 정보
+  reviewScore?: number;
+}
+
+export type { ClubCard, DefaultClubCard, ParticipatedClubCard };
