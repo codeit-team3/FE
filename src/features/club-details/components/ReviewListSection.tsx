@@ -33,14 +33,42 @@
 //     profileImage: '/images/profile.png',
 //   },
 // ];
+// 'use client';
+
+// import DropDown from '@/components/drop-down/DropDown';
+import WrittenReview from '@/components/written-review/WrittenReview';
+// import { useState } from 'react';
 
 function ReviewListSection() {
+  // 상위로 올려함
+  // 레이아웃을 위한 임시 배치
+  // const [selectedMemberCount, setSelectedMemberCount] = useState<
+  //   string | undefined
+  // >(undefined);
   return (
-    <section className="flex w-full flex-col gap-2.5 border-t-2 border-gray-200 bg-white p-6">
-      <h2 className="text-base font-semibold text-gray-900 md:text-lg">
-        이용자들은 이 프로그램을 이렇게 느꼈어요!
-      </h2>
-      <div className="flex flex-col gap-6">{/* 리뷰 컴포넌트트 */}</div>
+    <section>
+      <div className="mb-[10px] flex h-full items-center justify-between">
+        <h2 className="text-[20px] font-semibold text-gray-black">
+          다른 북코들은 이 모임을 이렇게 느꼈어요!
+        </h2>
+        {/* <DropDown
+          variant={'sortingReview'}
+          onChangeSelection={setSelectedMemberCount}
+        /> */}
+      </div>
+      <div className="flex flex-col gap-4 rounded-xl border-2 border-gray-normal-01 p-6">
+        <WrittenReview>
+          <div className="flex flex-col gap-y-2">
+            <WrittenReview.Rating ratingCount={4} />
+            <WrittenReview.Comment text="아침부터 자기발전을 위한 시간을 가져서 좋았어요. 각자의 길 위에서 달려가는 생생한 순간을 공유해주셔서 감사합니다!" />
+            <WrittenReview.UserProfile
+              profileImage="/images/profile.png"
+              userName="다람쥐"
+              createdAt="2024.01.25"
+            />
+          </div>
+        </WrittenReview>
+      </div>
     </section>
   );
 }
