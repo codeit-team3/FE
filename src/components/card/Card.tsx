@@ -24,6 +24,7 @@ import {
   CardProps,
 } from './types/interface';
 import ClubChip from '@/components/chip/club-chip/ClubChip';
+import Button from '@/components/button/Button';
 
 const CardContext = createContext<CardContextType>({ isCanceled: false });
 
@@ -129,13 +130,14 @@ function CardOverlay({ onDelete }: CardOverlayProps) {
           <br />
           {'새로운 모임을 찾아볼까요?'}
         </p>
-        {/* TODO:: 삭제 버튼 공통 컴포넌트 변경 필요 */}
-        <button
+        <Button
+          text="삭제하기"
+          size="small"
+          fillType="lightSolid"
+          themeColor="gray-darker"
+          lightColor="gray-white"
           onClick={handleDeleteClick}
-          className="w-[120px] rounded-xl bg-white py-2"
-        >
-          삭제하기
-        </button>
+        />
       </div>
     </div>
   );
