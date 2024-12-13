@@ -1,5 +1,6 @@
 import React from 'react';
 import Button, { ButtonProps } from '../button/Button';
+import { IcClose } from '../../../public/icons';
 
 interface ModalProps {
   isOpen: boolean;
@@ -33,8 +34,8 @@ function Modal({
       <div className="relative z-50 mx-4 max-h-[80vh] min-h-[200px] w-full min-w-[336px] max-w-[520px] overflow-y-auto rounded-lg bg-white p-6">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-xl font-semibold">{title}</h2>
-          <button onClick={onClose} className="text-gray-500">
-            ✕
+          <button onClick={onClose} className="cursor-pointer hover:opacity-70">
+            <IcClose />
           </button>
         </div>
 
