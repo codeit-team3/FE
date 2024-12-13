@@ -35,7 +35,8 @@ describe('Modal 컴포넌트', () => {
   it('닫기 버튼 클릭 시 onClose가 호출되어야 함', () => {
     render(<Modal {...defaultProps} />);
 
-    fireEvent.click(screen.getByText('✕'));
+    const closeButton = screen.getByLabelText('닫기');
+    fireEvent.click(closeButton);
     expect(defaultProps.onClose).toHaveBeenCalledTimes(1);
   });
 
