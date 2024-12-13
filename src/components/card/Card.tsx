@@ -1,8 +1,6 @@
 import { createContext, useContext } from 'react';
-import Chip from '@/components/chip/Chip';
 import ParticipantCounter from '../participant-counter/ParticipantCounter';
 import AvatarGroup from '../avatar-group/AvatarGroup';
-import ConfirmedLabel from '../confirmed-label/ConfirmedLabel';
 import ProgressBar from '../progress-bar/ProgressBar';
 import Avatar from '../avatar/Avatar';
 import {
@@ -12,7 +10,6 @@ import {
   RatingIcon,
 } from '../../../public/icons';
 import Image from 'next/image';
-import { CardContextType, CardInfoProps, CardStatusProps } from './types';
 import { twMerge } from 'tailwind-merge';
 import {
   CardBoxProps,
@@ -27,7 +24,8 @@ import {
   ParticipatedClubCard,
   DetailedClubCard,
   CardHostInfo,
-} from './types/interface';
+  CardContextType,
+} from './types';
 import ClubChip from '@/components/chip/club-chip/ClubChip';
 import Button from '@/components/button/Button';
 
@@ -611,75 +609,5 @@ Card.Location = CardLocation;
 Card.DateTime = CardDateTime;
 Card.Overlay = CardOverlay;
 Card.Host = CardHost;
-
-/////////////////////////////////////////////////////////////////////// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
-Card.Info = CardInfo;
-Card.Status = CardStatus;
-
-// Info 컴포넌트 (모임에 관한 정보 - 제목, 위치, 날짜 등)
-function CardInfo({
-  title,
-  category,
-  location,
-  datetime,
-  isPast = false,
-  className,
-  ...props
-}: CardInfoProps) {
-  return (
-    <div className={`flex flex-col ${className || ''}`} {...props}>
-      <div className="flex items-center justify-between">
-        <h3 className="text-xl font-semibold text-gray-black">{title}</h3>
-        <Chip text={category} isPast={isPast} />
-      </div>
-      <div className="flex items-center gap-1.5 text-sm text-gray-dark-03">
-        <div className="flex items-center">
-          <LocationIcon />
-          <span className="font-semibold">{location}</span>
-        </div>
-        <span className="font-medium">{datetime}</span>
-      </div>
-    </div>
-  );
-}
-
-// Status 컴포넌트 (참가지 및 개설 여부 현황)
-function CardStatus({
-  currentParticipants,
-  maxParticipants,
-  isConfirmed = false,
-  confirmedVariant = 'confirmed',
-  isPast = false,
-  participants,
-  className,
-  ...props
-}: CardStatusProps) {
-  return (
-    <div className={`flex flex-col gap-2 ${className || ''}`} {...props}>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <ParticipantCounter
-            current={currentParticipants}
-            max={maxParticipants}
-            isPast={isPast}
-          />
-          <AvatarGroup isPast={isPast}>
-            {participants.map((participant, index) => (
-              <Avatar key={index} src={participant.src} alt={participant.alt} />
-            ))}
-          </AvatarGroup>
-        </div>
-        {isConfirmed && (
-          <ConfirmedLabel variant={confirmedVariant} isPast={isPast} />
-        )}
-      </div>
-      <ProgressBar
-        percentage={(currentParticipants / maxParticipants) * 100}
-        isPast={isPast}
-      />
-    </div>
-  );
-}
 
 export default Card;

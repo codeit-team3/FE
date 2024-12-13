@@ -119,7 +119,7 @@ const detailedArgs = {
   onWriteReview: () => alert('리뷰 작성하기 클릭!'),
 } as const;
 
-// Default Club Card Stories
+// 책모임, 찜
 export const DefaultMobile: Story = {
   parameters: {
     viewport: {
@@ -168,7 +168,7 @@ export const DefaultDesktop: Story = {
   args: defaultArgs,
 };
 
-// Hosted Club Card Stories
+// 내가 만든 모임
 export const HostedMobile: Story = {
   parameters: {
     viewport: {
@@ -217,7 +217,7 @@ export const HostedDesktop: Story = {
   args: hostedArgs,
 };
 
-// Participated Club Card Stories
+// 나의 모임 (내가 참여한 모임)
 export const ParticipatedMobile: Story = {
   parameters: {
     viewport: {
@@ -266,7 +266,7 @@ export const ParticipatedDesktop: Story = {
   args: participatedArgs,
 };
 
-// Detailed Club Card Stories
+// 상세 모임
 export const DetailedMobile: Story = {
   parameters: {
     viewport: {

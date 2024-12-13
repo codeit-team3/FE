@@ -3,7 +3,7 @@ import {
   DetailedClubCard,
   HostedClubCard,
   ParticipatedClubCard,
-} from '@/components/card/types/interface/clubCard';
+} from '@/components/card/types/clubCard';
 import { ComponentPropsWithoutRef } from 'react';
 
 interface CardBoxProps extends ComponentPropsWithoutRef<'div'> {
@@ -49,6 +49,10 @@ interface CardHostInfo extends ComponentPropsWithoutRef<'div'> {
   };
 }
 
+interface CardContextType {
+  isCanceled: boolean;
+}
+
 type CardProps = {
   variant?: 'defaultClub' | 'participatedClub' | 'hostedClub' | 'detailedClub';
 } & (
@@ -66,5 +70,6 @@ export type {
   CardImageProps,
   CardOverlayProps,
   CardHostInfo,
+  CardContextType,
   CardProps,
 };
