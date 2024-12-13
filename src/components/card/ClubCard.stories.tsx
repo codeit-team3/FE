@@ -14,36 +14,44 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof Card>;
 
-const defaultArgs = {
-  variant: 'defaultClub',
+const baseArgs = {
+  // ClubCard 기본 인터페이스의 속성들
   imageUrl: 'https://picsum.photos/400/300',
   imageAlt: '모임 이미지',
   title: '을지로 독서 모임',
   location: '을지로 3가',
   datetime: '12/14(토) 오전 10:00',
   meetingType: 'FREE',
+  isPast: false,
   status: 'confirmed',
+  onClick: () => alert('카드 클릭!'),
+} as const;
+
+const defaultArgs = {
+  ...baseArgs,
+  variant: 'defaultClub',
   isLiked: false,
   onLikeClick: () => alert('좋아요 클릭!'),
+  isCanceled: false,
+  onDelete: () => alert('삭제 버튼 클릭!'),
   current: 5,
   max: 10,
-  isPast: false,
-  isCanceled: false,
-  onClick: () => alert('카드 클릭!'),
-  onDelete: () => alert('삭제 버튼 클릭!'),
-  reviewScore: 4.5,
 } as const;
 
 const hostedArgs = {
-  ...defaultArgs,
+  ...baseArgs,
   variant: 'hostedClub',
   onCancel: () => alert('모임 취소하기 클릭!'),
+  reviewScore: 4.5,
 } as const;
 
 const participatedArgs = {
-  ...defaultArgs,
+  ...baseArgs,
   variant: 'participatedClub',
-  isJoined: false,
+  isLiked: false,
+  onLikeClick: () => alert('좋아요 클릭!'),
+  isCanceled: false,
+  onDelete: () => alert('삭제 버튼 클릭!'),
   onWriteReview: () => alert('리뷰 작성하기 클릭!'),
   onCancel: () => alert('참여 취소하기 클릭!'),
 } as const;
