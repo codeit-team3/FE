@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useContext } from 'react';
 import ParticipantCounter from '../participant-counter/ParticipantCounter';
 import AvatarGroup from '../avatar-group/AvatarGroup';

@@ -2,13 +2,14 @@ import React from 'react';
 import { twMerge } from 'tailwind-merge';
 import { COLOR_SCHEMES, SIZE } from '@/constants';
 
-interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
+export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   text: string;
   size: 'large' | 'medium' | 'small' | 'modal';
   fillType: 'solid' | 'outline' | 'lightSolid';
   themeColor: keyof typeof COLOR_SCHEMES;
   lightColor?: keyof typeof COLOR_SCHEMES;
   isSubmitting?: boolean;
+  className?: string;
 }
 
 export default function Button({
@@ -18,6 +19,7 @@ export default function Button({
   themeColor = 'green-normal-01',
   lightColor,
   isSubmitting,
+  className,
   ...buttonProps
 }: ButtonProps) {
   const { disabled, className } = buttonProps;
