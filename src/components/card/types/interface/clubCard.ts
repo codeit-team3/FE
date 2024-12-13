@@ -39,6 +39,23 @@ interface ParticipatedClubCard extends ClubCard {
   onLikeClick: () => void;
 
   // 상태 정보
+  isJoined: boolean;
+  isCanceled: boolean;
+
+  // 블러에서 취소 액션
+  onDelete: () => void;
+
+  // 버튼 액션
+  onWriteReview: () => void;
+  onCancel: () => void;
+}
+
+interface HostedClubCard extends ClubCard {
+  // 블러에서 취소 액션
+  isLiked: boolean;
+  onLikeClick: () => void;
+
+  // 상태 정보
   isPast: boolean;
   isCanceled: boolean;
 
@@ -52,4 +69,4 @@ interface ParticipatedClubCard extends ClubCard {
   reviewScore?: number;
 }
 
-export type { ClubCard, DefaultClubCard, ParticipatedClubCard };
+export type { ClubCard, DefaultClubCard, HostedClubCard, ParticipatedClubCard };

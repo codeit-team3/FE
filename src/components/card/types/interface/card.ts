@@ -1,5 +1,6 @@
 import {
   DefaultClubCard,
+  HostedClubCard,
   ParticipatedClubCard,
 } from '@/components/card/types/interface/clubCard';
 import { ComponentPropsWithoutRef } from 'react';
@@ -37,6 +38,7 @@ interface CardOverlayProps extends ComponentPropsWithoutRef<'div'> {
 }
 
 type CardProps = DefaultClubCard &
+  HostedClubCard &
   ParticipatedClubCard & {
     variant?: 'defaultClub' | 'participatedClub' | 'hostedClub';
   };

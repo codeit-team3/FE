@@ -223,6 +223,84 @@ function Card(props: CardProps) {
           onDelete,
           status,
           meetingType,
+          title,
+          location,
+          datetime,
+          isJoined,
+          onWriteReview,
+          onCancel,
+        } = props;
+
+        return (
+          <div className="flex flex-col gap-6 md:flex-row">
+            <Card.Image
+              url={imageUrl}
+              alt={imageAlt}
+              isLiked={isLiked}
+              onLikeClick={onLikeClick}
+            />
+            <Card.Box onClick={onClick} className="justify-between">
+              <div className="flex flex-col gap-2.5">
+                <div className="flex justify-between">
+                  <div className="flex gap-2">
+                    <ClubChip variant={isJoined ? 'completed' : 'scheduled'} />
+                    <ClubChip variant={status} />
+                  </div>
+                  <ClubChip variant={meetingType} />
+                </div>
+                <div className="flex flex-col">
+                  <Card.Title>{title}</Card.Title>
+                  <div className="flex items-center gap-1.5">
+                    <Card.Location>{location}</Card.Location>
+                    <Card.DateTime>{datetime}</Card.DateTime>
+                  </div>
+                </div>
+                <div className="w-full">
+                  {isJoined ? (
+                    <Button
+                      text="리뷰 작성하기"
+                      size="modal"
+                      fillType="solid"
+                      themeColor="green-normal-01"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onWriteReview();
+                      }}
+                      className="w-full"
+                    />
+                  ) : (
+                    <Button
+                      text="참여 취소하기"
+                      size="modal"
+                      fillType="lightSolid"
+                      themeColor="gray-dark-01"
+                      lightColor="gray-normal-01"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onCancel();
+                      }}
+                      className="w-full"
+                    />
+                  )}
+                </div>
+              </div>
+            </Card.Box>
+            {isCanceled && <Card.Overlay onDelete={onDelete} />}
+          </div>
+        );
+      }
+
+      case 'hostedClub': {
+        const {
+          imageUrl,
+          imageAlt,
+          isLiked,
+          onLikeClick,
+          isCanceled,
+          onClick,
+          onDelete,
+          status,
+          meetingType,
           isPast,
           title,
           location,
@@ -295,9 +373,6 @@ function Card(props: CardProps) {
           </div>
         );
       }
-
-      case 'hostedClub':
-        return null; // 추후 구현
     }
   };
 
@@ -327,7 +402,7 @@ Card.Info = CardInfo;
 Card.Status = CardStatus;
 Card.Host = CardHost;
 
-// Info 컴포넌트 (��임에 관한 정보 - 제목, 위치, 날짜 등)
+// Info 컴포넌트 (모임에 관한 정보 - 제목, 위치, 날짜 등)
 function CardInfo({
   title,
   category,
