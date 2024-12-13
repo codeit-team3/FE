@@ -19,7 +19,6 @@ export default function Button({
   themeColor = 'green-normal-01',
   lightColor,
   isSubmitting,
-  className,
   ...buttonProps
 }: ButtonProps) {
   const { disabled, className } = buttonProps;
