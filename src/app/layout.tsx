@@ -16,10 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="min-h-screen bg-gray-100">
+      <body className="flex h-full min-h-screen flex-col bg-white">
         <ReactQueryProviders>
           <HeaderBar />
-          <main className="mx-auto min-h-screen max-w-[1200px] bg-gray-50 px-4 pt-[56px] md:px-6 lg:px-10">
+          <main className="mx-auto flex w-full max-w-[1200px] flex-1 flex-col bg-white">
             {children}
           </main>
         </ReactQueryProviders>
