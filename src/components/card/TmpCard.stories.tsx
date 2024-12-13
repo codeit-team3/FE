@@ -13,10 +13,6 @@ const meta = {
       control: 'boolean',
       description: '모임 취소 여부',
     },
-    className: {
-      control: 'text',
-      description: '추가 스타일링을 위한 className',
-    },
   },
 } satisfies Meta<typeof Card>;
 
