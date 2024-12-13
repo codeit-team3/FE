@@ -8,11 +8,10 @@ interface ClubCard {
   location: string;
   datetime: string;
   meetingType: 'FREE' | 'FIXED';
+  isPast: boolean; // 지난 모임인지 아닌지
+  status: 'completed' | 'scheduled' | 'pending' | 'confirmed' | 'closed'; // 개설 현황
 
-  // 개설 현황
-  status: 'completed' | 'scheduled' | 'pending' | 'confirmed' | 'closed';
-
-  // 액션
+  // 액션 (카드 클릭시 라우터 처리 등)
   onClick: () => void;
 }
 
@@ -21,16 +20,13 @@ interface DefaultClubCard extends ClubCard {
   isLiked: boolean;
   onLikeClick: () => void;
 
+  // 취소 정보 (블러)
+  isCanceled: boolean;
+  onDelete: () => void;
+
   // 참가자 현황
   current: number;
   max: number;
-
-  // 상태 정보
-  isPast: boolean;
-  isCanceled: boolean;
-
-  // 블러에서 취소 액션
-  onDelete: () => void;
 }
 
 interface ParticipatedClubCard extends ClubCard {
@@ -38,22 +34,16 @@ interface ParticipatedClubCard extends ClubCard {
   isLiked: boolean;
   onLikeClick: () => void;
 
-  // 상태 정보
-  isJoined: boolean;
+  // 취소 정보 (블러)
   isCanceled: boolean;
-
-  // 블러에서 취소 액션
   onDelete: () => void;
 
   // 버튼 액션
-  onWriteReview: () => void;
-  onCancel: () => void;
+  onWriteReview: () => void; // 리뷰 작성
+  onCancel: () => void; // 모임 취소
 }
 
 interface HostedClubCard extends ClubCard {
-  // 상태 정보
-  isPast: boolean;
-
   // 모임 취소 액션
   onCancel: () => void;
 

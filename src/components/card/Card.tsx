@@ -228,7 +228,7 @@ function Card(props: CardProps) {
           title,
           location,
           datetime,
-          isJoined,
+          isPast,
           onWriteReview,
           onCancel,
         } = props;
@@ -245,7 +245,7 @@ function Card(props: CardProps) {
               <div className="flex flex-col gap-2.5">
                 <div className="flex justify-between">
                   <div className="flex gap-2">
-                    <ClubChip variant={isJoined ? 'completed' : 'scheduled'} />
+                    <ClubChip variant={isPast ? 'completed' : 'scheduled'} />
                     <ClubChip variant={status} />
                   </div>
                   <ClubChip variant={meetingType} />
@@ -258,7 +258,7 @@ function Card(props: CardProps) {
                   </div>
                 </div>
                 <div className="w-full">
-                  {isJoined ? (
+                  {isPast ? (
                     <Button
                       text="리뷰 작성하기"
                       size="modal"
