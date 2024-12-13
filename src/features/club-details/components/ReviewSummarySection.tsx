@@ -3,51 +3,31 @@ import RatingDisplay from '@/components/rating-display/RatingDisplay';
 
 function ReviewSummarySection() {
   return (
-    <section className="flex w-full flex-col gap-2.5 border-y-2 border-gray-200 bg-white p-6">
-      <div className="flex items-center justify-center gap-5 md:gap-[120px] lg:gap-[180px]">
+    <section>
+      <h2 className="mb-[10px] text-[20px] font-semibold text-gray-black">
+        리뷰 평점 평균
+      </h2>
+      <div className="flex items-center justify-center gap-6 rounded-xl border-2 border-gray-normal-01 p-[30px] md:gap-[120px] lg:gap-[180px]">
         <div className="flex flex-col items-center justify-center gap-2">
-          <div className="text-xl font-semibold">
-            <span className="text-gray-900">4.0</span>
-            <span className="text-gray-400"> /5</span>
+          <div className="text-2xl font-semibold">
+            <span className="text-gray-black">4.0</span>
+            <span className="text-gray-dark-01"> / 5</span>
           </div>
           <RatingDisplay ratingCount={4} />
         </div>
         <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-3 text-sm font-medium">
-            <span className="text-gray-700">5점</span>
-            <div className="min-w-20 md:min-w-[240px]">
-              <ProgressBar percentage={5} />
+          {Array.from({ length: 5 }).map((_, index) => (
+            <div
+              className="flex items-center gap-3 text-sm font-medium"
+              key={`rate-${5 - index}`}
+            >
+              <span className="text-gray-dark-03">{5 - index}점</span>
+              <div className="min-w-20 md:min-w-[240px]">
+                <ProgressBar percentage={5} color="bg-gray-dark-02" />
+              </div>
+              <span className="ml-auto text-gray-dark-01">2</span>
             </div>
-            <span className="text-gray-400">27</span>
-          </div>
-          <div className="flex items-center gap-3 text-sm font-medium">
-            <span className="text-gray-700">4점</span>
-            <div className="min-w-20 md:min-w-[240px]">
-              <ProgressBar percentage={5} />
-            </div>
-            <span className="text-gray-400">19</span>
-          </div>
-          <div className="flex items-center gap-3 text-sm font-medium">
-            <span className="text-gray-700">3점</span>
-            <div className="min-w-20 md:min-w-[240px]">
-              <ProgressBar percentage={5} />
-            </div>
-            <span className="text-gray-400">2</span>
-          </div>
-          <div className="flex items-center gap-3 text-sm font-medium">
-            <span className="text-gray-700">2점</span>
-            <div className="min-w-20 md:min-w-[240px]">
-              <ProgressBar percentage={5} />
-            </div>
-            <span className="text-gray-400">0</span>
-          </div>
-          <div className="flex items-center gap-3 text-sm font-medium">
-            <span className="text-gray-700">1점</span>
-            <div className="min-w-20 md:min-w-[240px]">
-              <ProgressBar percentage={5} />
-            </div>
-            <span className="text-gray-400">0</span>
-          </div>
+          ))}
         </div>
       </div>
     </section>
