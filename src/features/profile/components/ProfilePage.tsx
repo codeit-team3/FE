@@ -3,7 +3,7 @@ import MainContent from './MainContent';
 
 function ProfilePage() {
   return (
-    <div className="flex w-full min-w-[375px] flex-col">
+    <div className="flex w-full min-w-[375px] flex-1 flex-col">
       <Header />
       <MainContent />
     </div>
