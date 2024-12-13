@@ -52,7 +52,7 @@ function CardBox({ children, className = '', ...props }: CardBoxProps) {
 function CardImage({
   url,
   alt = '모임 이미지',
-  isLiked = false,
+  isLiked,
   onLikeClick,
   className,
   ...props
@@ -66,9 +66,11 @@ function CardImage({
       {...props}
     >
       <Image src={url} alt={alt} fill className="object-cover" />
-      <div className="absolute right-5 top-[15px] z-10">
-        <HeartIcon isLiked={isLiked} onClick={onLikeClick} />
-      </div>
+      {isLiked !== undefined && (
+        <div className="absolute right-5 top-[15px] z-10">
+          <HeartIcon isLiked={isLiked} onClick={onLikeClick} />
+        </div>
+      )}
     </div>
   );
 }
@@ -294,11 +296,7 @@ function Card(props: CardProps) {
         const {
           imageUrl,
           imageAlt,
-          isLiked,
-          onLikeClick,
-          isCanceled,
           onClick,
-          onDelete,
           status,
           meetingType,
           isPast,
@@ -311,12 +309,7 @@ function Card(props: CardProps) {
 
         return (
           <div className="flex flex-col gap-6 md:flex-row">
-            <Card.Image
-              url={imageUrl}
-              alt={imageAlt}
-              isLiked={isLiked}
-              onLikeClick={onLikeClick}
-            />
+            <Card.Image url={imageUrl} alt={imageAlt} />
             <Card.Box onClick={onClick} className="justify-between">
               <div className="flex flex-col gap-2.5">
                 <div className="flex justify-between">
@@ -369,7 +362,6 @@ function Card(props: CardProps) {
                 </div>
               </div>
             </Card.Box>
-            {isCanceled && <Card.Overlay onDelete={onDelete} />}
           </div>
         );
       }

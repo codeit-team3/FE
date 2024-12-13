@@ -51,16 +51,8 @@ interface ParticipatedClubCard extends ClubCard {
 }
 
 interface HostedClubCard extends ClubCard {
-  // 블러에서 취소 액션
-  isLiked: boolean;
-  onLikeClick: () => void;
-
   // 상태 정보
   isPast: boolean;
-  isCanceled: boolean;
-
-  // 블러에서 취소 액션
-  onDelete: () => void;
 
   // 모임 취소 액션
   onCancel: () => void;
