@@ -83,10 +83,10 @@ interface DetailedClubCard extends ClubCard {
   hasWrittenReview?: boolean;
 
   // 액션 핸들러
-  onCancel?: () => void;
-  onParticipate?: () => void;
-  onCancelParticipation?: () => void;
-  onWriteReview?: () => void;
+  onCancel?: () => void; // 모임 취소
+  onParticipate?: () => void; // 참여
+  onCancelParticipation?: () => void; // 참여 취소
+  onWriteReview?: () => void; // 리뷰 작성
 }
 
 export type {
