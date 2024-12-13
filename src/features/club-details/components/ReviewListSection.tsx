@@ -33,7 +33,7 @@
 //     profileImage: '/images/profile.png',
 //   },
 // ];
-// 'use client';
+'use client';
 
 // import DropDown from '@/components/drop-down/DropDown';
 import WrittenReview from '@/components/written-review/WrittenReview';
