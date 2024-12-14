@@ -1,36 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import { BookClubForm } from '@/features/club-create/types';
+import React from 'react';
+import { UseFormSetValue } from 'react-hook-form';
 
 interface RadioButtonGroupProps {
   options: { label: string; value: string; description?: string }[];
   selectedValue: string;
   register: any;
+  setValue?: UseFormSetValue<BookClubForm>;
+  name: keyof BookClubForm;
 }
 
 function RadioButtonGroup({
   options,
   selectedValue,
   register,
+  setValue,
+  name,
 }: RadioButtonGroupProps) {
-  const [isDaumLoaded, setIsDaumLoaded] = useState(false);
-
-  useEffect(() => {
-    const checkDaumLoaded = setInterval(() => {
-      if (window.daum && window.daum.Postcode) {
-        setIsDaumLoaded(true);
-        clearInterval(checkDaumLoaded);
-      }
-    }, 100);
-
-    return () => clearInterval(checkDaumLoaded);
-  }, []);
-
   const handleRadioChange = (value: string, e: React.MouseEvent) => {
     e.preventDefault();
-    if (value === 'FIXED' && isDaumLoaded) {
+
+    if (setValue) {
+      setValue(name, value);
+    }
+
+    if (value === 'OFFLINE') {
       new window.daum.Postcode({
         oncomplete: function (data: any) {
-          const dongName = data.bname;
-          console.log('선택된 동:', dongName);
+          if (setValue) {
+            setValue('city', data.sigungu);
+            setValue('town', data.bname);
+          }
+          console.log('시군구:', data.sigungu);
+          console.log('법정동:', data.bname);
         },
         autoMapping: false,
         filter: function (suggestion: any) {

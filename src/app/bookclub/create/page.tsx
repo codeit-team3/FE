@@ -130,6 +130,8 @@ export default function CreateBookClub() {
             ]}
             selectedValue={watch('bookClubType')}
             register={register('bookClubType')}
+            setValue={setValue}
+            name="bookClubType"
           />
         </CreateClubFormField>
 
@@ -141,6 +143,8 @@ export default function CreateBookClub() {
             ]}
             selectedValue={watch('meetingType')}
             register={register('meetingType')}
+            setValue={setValue}
+            name="meetingType"
           />
         </CreateClubFormField>
 

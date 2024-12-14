@@ -15,10 +15,11 @@ export const useCreateBookClub = () => {
       description: data.description,
       bookClubType: data.bookClubType,
       meetingType: data.meetingType,
-      town: data.town,
       targetDate: toKoreanTime(data.targetDate),
       endDate: toKoreanTime(data.endDate),
       memberLimit: data.memberLimit,
+      city: data.city,
+      town: data.town,
     };
 
     formData.append(
