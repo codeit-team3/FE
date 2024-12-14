@@ -1,4 +1,3 @@
-// hooks/useSelectAddress.ts
 import { BookClubForm } from '@/features/club-create/types';
 import { UseFormSetValue } from 'react-hook-form';
 

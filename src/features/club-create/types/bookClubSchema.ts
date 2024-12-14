@@ -2,12 +2,7 @@ import { z } from 'zod';
 
 export const bookClubSchema = z
   .object({
-    // 선택값
     image: z.any().optional(),
-    city: z.string().optional(),
-    town: z.string().optional(),
-
-    // 필수값
     title: z
       .string()
       .min(1, '모임 이름을 입력해주세요')
@@ -39,15 +34,16 @@ export const bookClubSchema = z
       })
       .min(3, '최소 3명 이상 입력해주세요')
       .max(20, '최대 20명까지 가능합니다'),
+    city: z.string().optional(),
+    town: z.string().optional(),
   })
   .superRefine((data, ctx) => {
-    // 오프라인 모임일 경우 city와 town 체크
     if (data.meetingType === 'OFFLINE') {
       if (!data.city?.trim() || !data.town?.trim()) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message: '모임 장소를 정해주세요!',
-          path: ['meetingType'], // meetingType 필드에 에러 메시지 표시
+          path: ['meetingType'],
         });
       }
     }
