@@ -3,8 +3,8 @@ export default interface User {
   id: number;
   email: string;
   name: string;
-  companyName: string | null;
-  image: string | null;
+  companyName?: string | null;
+  image?: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
