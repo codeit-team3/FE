@@ -28,7 +28,7 @@ export default function WrittenReview({
   return (
     <article className="flex w-full max-w-[948px] flex-col items-start sm:justify-center">
       {children}
-      <hr className="border-t-1 mt-4 w-full border-gray-normal-01" />
+      <hr className="mt-4 w-full border-t-1 border-gray-normal-01" />
     </article>
   );
 }
