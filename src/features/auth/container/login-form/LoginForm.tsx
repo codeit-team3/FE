@@ -1,12 +1,17 @@
 'use client';
 
 import React from 'react';
-import FormField from '../../components/form-field/FormField';
-import Button from '@/components/button/Button';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginFormSchema, LoginFormData } from '../../types/loginFormSchema';
-import { useLoginSubmit } from '../../hooks/useLoginSubmit';
+import Link from 'next/link';
+
+import Button from '@/components/button/Button';
+import FormField from '@/features/auth/components/form-field/FormField';
+import { useLoginSubmit } from '@/features/auth/hooks/useLoginSubmit';
+import {
+  loginFormSchema,
+  type LoginFormData,
+} from '@/features/auth/types/loginFormSchema';
 
 export default function LoginForm() {
   const {
@@ -23,7 +28,7 @@ export default function LoginForm() {
   const onSubmit = useLoginSubmit(setError, reset);
 
   return (
-    <div className="flex h-auto w-full flex-col items-center justify-center rounded-3xl bg-white px-4 py-8 sm:h-[422px] sm:w-[510px] sm:px-14">
+    <div className="flex h-auto w-full flex-col items-center justify-center rounded-3xl bg-gray-light-02 px-4 py-8 sm:h-[422px] sm:w-[510px] sm:px-14">
       <div className="flex w-full flex-col items-center justify-center gap-6">
         <h3 className="text-2xl font-semibold">로그인</h3>
         <form
@@ -56,6 +61,12 @@ export default function LoginForm() {
             disabled={!isValid}
           />
         </form>
+        <div className="flex w-full items-center justify-center gap-2 text-gray-normal-03">
+          <span>북코가 처음이신가요?</span>
+          <Link href="/sign-up" className="text-green-dark-01 underline">
+            회원가입
+          </Link>
+        </div>
       </div>
     </div>
   );
