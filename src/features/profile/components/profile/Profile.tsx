@@ -1,5 +1,9 @@
+'use client';
+
+import { useState } from 'react';
 import Avatar from '@/components/avatar/Avatar';
 import { IcEdit } from '../../../../../public/icons/index';
+import ProfileEditModal from '../ProfileEditModal';
 
 function Profile() {
   const user = {
@@ -9,8 +13,26 @@ function Profile() {
       '안녕하세요! 매일 책을 통해 내 삶을 조금 더 풍요롭게\n만들어가요.안녕하세요! 매일 책을 통해 내 삶을 조금 더 풍요롭게 만들어가요.안녕하세요! 매일 책을 통해 내 삶을 조금 더 풍요롭게 만들어가요.',
   };
 
+  const ProfileData = {
+    name: user.nickname,
+    companyName: user.description,
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const onSubmitEditProfile = () => {
+    alert('수정완료');
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="mt-5 w-full min-w-[336px] flex-col">
+      <ProfileEditModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={onSubmitEditProfile}
+        profileData={ProfileData}
+      />
       {/* 프로필 제목 */}
       <div
         className="flex h-[60px] w-full justify-between rounded-t-3xl border-l-2 border-r-2 border-t-2 border-green-light-02 bg-green-light-01 px-6 py-3.5"
@@ -22,6 +44,7 @@ function Profile() {
         <button
           className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-white"
           aria-label="프로필 수정"
+          onClick={() => setIsModalOpen(true)}
         >
           <IcEdit />
         </button>
