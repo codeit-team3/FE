@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Providers } from './providers';
 import ReactQueryProviders from '@/lib/utils/reactQueryProvider';
 import HeaderBar from '@/components/header/HeaderBar';
 
@@ -17,12 +18,14 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="min-h-screen bg-white">
-        <ReactQueryProviders>
-          <HeaderBar />
-          <main className="mx-auto min-h-screen max-w-[1200px] bg-white pt-[56px]">
-            {children}
-          </main>
-        </ReactQueryProviders>
+        <Providers>
+          <ReactQueryProviders>
+            <HeaderBar />
+            <main className="mx-auto min-h-screen max-w-[1200px] bg-white pt-[56px]">
+              {children}
+            </main>
+          </ReactQueryProviders>
+        </Providers>
       </body>
     </html>
   );
