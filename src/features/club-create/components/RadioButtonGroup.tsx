@@ -1,3 +1,4 @@
+import { useSelectAddress } from '@/features/club-create/hooks';
 import { BookClubForm } from '@/features/club-create/types';
 import React from 'react';
 import { UseFormSetValue } from 'react-hook-form';
@@ -8,6 +9,7 @@ interface RadioButtonGroupProps {
   register: any;
   setValue?: UseFormSetValue<BookClubForm>;
   name: keyof BookClubForm;
+  town?: string;
 }
 
 function RadioButtonGroup({
@@ -16,34 +18,9 @@ function RadioButtonGroup({
   register,
   setValue,
   name,
+  town,
 }: RadioButtonGroupProps) {
-  const handleRadioChange = (value: string, e: React.MouseEvent) => {
-    e.preventDefault();
-
-    if (setValue) {
-      setValue(name, value);
-    }
-
-    if (value === 'OFFLINE') {
-      new window.daum.Postcode({
-        oncomplete: function (data: any) {
-          if (setValue) {
-            setValue('city', data.sigungu);
-            setValue('town', data.bname);
-          }
-          console.log('시군구:', data.sigungu);
-          console.log('법정동:', data.bname);
-        },
-        autoMapping: false,
-        filter: function (suggestion: any) {
-          const addr = suggestion.address;
-          const types = suggestion.types;
-
-          return types.includes('B') && addr.includes('동');
-        },
-      }).open();
-    }
-  };
+  const { handleRadioChange } = useSelectAddress({ setValue, name });
 
   return (
     <div className="flex gap-4 md:gap-6">
@@ -89,12 +66,18 @@ function RadioButtonGroup({
           </div>
           <div className="flex flex-col gap-0.5">
             <p className="font-semibold">{option.label}</p>
+
             {option.description && (
               <p className="text-xs font-medium text-gray-dark-02">
                 {option.description}
               </p>
             )}
           </div>
+          {option.value === 'OFFLINE' && town && (
+            <div className="ml-auto flex items-center">
+              <span className="text-sm text-gray-dark-02">{town}</span>
+            </div>
+          )}
         </label>
       ))}
     </div>

@@ -22,7 +22,7 @@ export default function CreateBookClub() {
     handleSubmit,
     control,
     setValue,
-    formState: { errors },
+    formState: { errors, isValid },
     watch,
   } = useForm<BookClubForm>({
     resolver: zodResolver(bookClubSchema),
@@ -113,7 +113,10 @@ export default function CreateBookClub() {
           </div>
         </CreateClubFormField>
 
-        <CreateClubFormField label="자유책 / 지정책">
+        <CreateClubFormField
+          label="자유책 / 지정책"
+          error={errors.bookClubType?.message}
+        >
           <RadioButtonGroup
             options={[
               {
@@ -135,7 +138,10 @@ export default function CreateBookClub() {
           />
         </CreateClubFormField>
 
-        <CreateClubFormField label="온라인 / 오프라인">
+        <CreateClubFormField
+          label="온라인 / 오프라인"
+          error={errors.meetingType?.message}
+        >
           <RadioButtonGroup
             options={[
               { label: '온라인', value: 'ONLINE' },
@@ -145,6 +151,7 @@ export default function CreateBookClub() {
             register={register('meetingType')}
             setValue={setValue}
             name="meetingType"
+            town={watch('town')}
           />
         </CreateClubFormField>
 
@@ -183,6 +190,7 @@ export default function CreateBookClub() {
           size="medium"
           fillType="solid"
           themeColor="green-normal-01"
+          disabled={!isValid}
         />
       </form>
     </main>
