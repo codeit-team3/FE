@@ -44,8 +44,7 @@ const exampleReview = {
   comment:
     '아침부터 자기발전을 위한 시간을 가져서 좋았어요. 각자의 길 위에서 달려가는 생생한 순간을 공유해주셔서 감사합니다!',
   userProfile: {
-    profileImage:
-      'https://cdn.pixabay.com/photo/2024/02/17/00/18/cat-8578562_1280.jpg',
+    profileImage: '/images/profile.png',
     userName: '다람쥐',
     createdAt: '2024.01.25',
   },
@@ -69,11 +68,14 @@ function ReviewListSection() {
         /> */}
       </div>
       <div className="flex flex-col gap-4 rounded-xl border-2 border-gray-normal-01 p-6">
-        <ClubReview
-          ratingCount={exampleReview.ratingCount}
-          comment={exampleReview.comment}
-          userProfile={exampleReview.userProfile}
-        />
+        {Array.from({ length: 10 }).map((_, index) => (
+          <ClubReview
+            key={`review-${index}`}
+            ratingCount={exampleReview.ratingCount}
+            comment={exampleReview.comment}
+            userProfile={exampleReview.userProfile}
+          />
+        ))}
       </div>
     </section>
   );
