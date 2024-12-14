@@ -1,13 +1,17 @@
 'use client';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { IcSorting } from '../../../public/icons/index';
 
-interface SortingButtonProps {
+interface SortingButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   variant: 'byDeadline' | 'byDate';
   onClickSorting: (sortBy: string) => void;
 }
 
-function SortingButton({ variant, onClickSorting }: SortingButtonProps) {
+function SortingButton({
+  variant,
+  onClickSorting,
+  ...buttonProps
+}: SortingButtonProps) {
   const [isActive, setIsActive] = useState(false);
 
   const onClick = (): void => {
@@ -37,6 +41,7 @@ function SortingButton({ variant, onClickSorting }: SortingButtonProps) {
 
   return (
     <button
+      {...buttonProps}
       className={`flex h-[40px] items-center rounded-xl border px-[12px] py-[8px] text-sm font-medium ${
         variant === 'byDeadline' && isActive
           ? 'border-green-normal-01 text-green-normal-01'
