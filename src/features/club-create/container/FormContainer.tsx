@@ -12,8 +12,9 @@ import {
 } from '@/features/club-create/components';
 import { BookClubForm, bookClubSchema } from '@/features/club-create/types';
 import { useCreateBookClub } from '@/features/club-create/hooks/useCreateBookClub';
+import 'react-datepicker/dist/react-datepicker.css';
 
-export function FormContainer() {
+function FormContainer() {
   const [selectedFileName, setSelectedFileName] = useState<string>('');
   const { onSubmit, isLoading } = useCreateBookClub();
   const {
@@ -187,3 +188,5 @@ export function FormContainer() {
     </form>
   );
 }
+
+export default FormContainer;
