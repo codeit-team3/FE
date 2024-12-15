@@ -211,6 +211,7 @@ function Card(props: CardProps) {
           max,
           isPast,
           isCanceled,
+          // meetingType,
           bookClubType,
           onClick,
           onDelete,
@@ -269,6 +270,7 @@ function Card(props: CardProps) {
           onClick,
           onDelete,
           status,
+          // meetingType,
           bookClubType,
           title,
           location,
@@ -343,6 +345,7 @@ function Card(props: CardProps) {
           imageAlt,
           onClick,
           status,
+          // meetingType,
           bookClubType,
           isPast,
           title,
@@ -420,6 +423,7 @@ function Card(props: CardProps) {
           datetime,
           isLiked,
           onLikeClick,
+          // meetingType,
           bookClubType,
           current,
           max,
@@ -541,10 +545,7 @@ function Card(props: CardProps) {
                   isHost={isHost}
                 />
 
-                <Card.Box
-                  onClick={onClick}
-                  className="cursor-default justify-between"
-                >
+                <Card.Box onClick={onClick} className="justify-between">
                   <div className="flex flex-col gap-0.5">
                     <div className="flex justify-between">
                       <Card.Title>{title}</Card.Title>

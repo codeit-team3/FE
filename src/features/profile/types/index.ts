@@ -35,5 +35,5 @@ export interface BookClub {
   isCanceled: boolean;
   imageUrl: string;
   isPast: boolean;
-  status: 'completed' | 'scheduled' | 'pending' | 'confirmed' | 'closed';
+  clubStatus: 'pending' | 'confirmed' | 'closed';
 }

@@ -22,13 +22,13 @@ const mockJoinedBookClubList: BookClub[] = [
     isCanceled: false,
     imageUrl: '/images/profile.png',
     isPast: false,
-    status: 'scheduled',
+    clubStatus: 'confirmed',
   },
   {
     id: 2,
     title: '과학 탐험',
     description:
-      '최신 과학 서적을 읽고 실험을 통해 내용을 공유하는 모임입니다.',
+      '최신 과학 서적을 읽고 실험을 통해 배운 내용을 공유하는 모임입니다.',
     meetingType: 'ONLINE',
     bookClubType: 'FREE',
     targetDate: '2024-02-15',
@@ -37,10 +37,10 @@ const mockJoinedBookClubList: BookClub[] = [
     town: '부산',
     memberCount: 25,
     isLiked: false,
-    isCanceled: true,
+    isCanceled: false,
     imageUrl: '/images/profile.png',
-    isPast: true,
-    status: 'closed',
+    isPast: false,
+    clubStatus: 'pending',
   },
   {
     id: 3,
@@ -57,7 +57,7 @@ const mockJoinedBookClubList: BookClub[] = [
     isCanceled: false,
     imageUrl: '/images/profile.png',
     isPast: false,
-    status: 'confirmed',
+    clubStatus: 'confirmed',
   },
   {
     id: 4,
@@ -71,16 +71,16 @@ const mockJoinedBookClubList: BookClub[] = [
     town: '인천',
     memberCount: 20,
     isLiked: false,
-    isCanceled: false,
+    isCanceled: true,
     imageUrl: '/images/profile.png',
-    isPast: true,
-    status: 'completed',
+    isPast: false,
+    clubStatus: 'closed',
   },
   {
     id: 5,
     title: '비즈니스 책 모임',
     description:
-      '성공적인 비즈니스 전략과 아이디어를 다룬 책을 읽고 토론합니다.',
+      '비즈니스 전략과 아이디어를 다룬 책을 읽고 토론하는 모임입니다.',
     meetingType: 'OFFLINE',
     bookClubType: 'FIXED',
     targetDate: '2024-05-30',
@@ -91,8 +91,8 @@ const mockJoinedBookClubList: BookClub[] = [
     isLiked: true,
     isCanceled: false,
     imageUrl: '/images/profile.png',
-    isPast: false,
-    status: 'scheduled',
+    isPast: true,
+    clubStatus: 'closed',
   },
   {
     id: 6,
@@ -109,7 +109,7 @@ const mockJoinedBookClubList: BookClub[] = [
     isCanceled: false,
     imageUrl: '/images/profile.png',
     isPast: false,
-    status: 'scheduled',
+    clubStatus: 'confirmed',
   },
   {
     id: 7,
@@ -123,16 +123,15 @@ const mockJoinedBookClubList: BookClub[] = [
     town: '대구',
     memberCount: 17,
     isLiked: false,
-    isCanceled: true,
+    isCanceled: false,
     imageUrl: '/images/profile.png',
-    isPast: true,
-    status: 'closed',
+    isPast: false,
+    clubStatus: 'pending',
   },
   {
     id: 8,
     title: '스타트업 독서 모임',
-    description:
-      '스타트업과 관련된 책을 읽고 창업 아이디어를 나누는 모임입니다.',
+    description: '스타트업 관련 책을 읽고 창업 아이디어를 나누는 모임입니다.',
     meetingType: 'ONLINE',
     bookClubType: 'FREE',
     targetDate: '2024-08-10',
@@ -144,12 +143,12 @@ const mockJoinedBookClubList: BookClub[] = [
     isCanceled: false,
     imageUrl: '/images/profile.png',
     isPast: false,
-    status: 'confirmed',
+    clubStatus: 'confirmed',
   },
   {
     id: 9,
     title: '디지털 혁명',
-    description: '디지털 시대를 맞이한 혁신적 책들을 읽고 토론하는 모임입니다.',
+    description: '디지털 시대 혁신적인 책을 읽고 토론하는 모임입니다.',
     meetingType: 'OFFLINE',
     bookClubType: 'FIXED',
     targetDate: '2024-09-05',
@@ -158,15 +157,15 @@ const mockJoinedBookClubList: BookClub[] = [
     town: '부산',
     memberCount: 22,
     isLiked: false,
-    isCanceled: true,
+    isCanceled: false,
     imageUrl: '/images/profile.png',
-    isPast: true,
-    status: 'closed',
+    isPast: false,
+    clubStatus: 'confirmed',
   },
   {
     id: 10,
     title: '인문학 읽기',
-    description: '인문학적 사유를 통해 삶에 대한 통찰을 얻는 독서 모임입니다.',
+    description: '인문학적 사유를 통해 통찰을 얻는 독서 모임입니다.',
     meetingType: 'ONLINE',
     bookClubType: 'FREE',
     targetDate: '2024-10-12',
@@ -178,32 +177,32 @@ const mockJoinedBookClubList: BookClub[] = [
     isCanceled: false,
     imageUrl: '/images/profile.png',
     isPast: false,
-    status: 'scheduled',
+    clubStatus: 'confirmed',
   },
 ];
 
 export default function JoinedClubList({ user, sortBy }: JoinedClubListProps) {
   // const bookClubList: BookClub[] = [];
-  const bookClubList = mockJoinedBookClubList;
-  console.log(user, sortBy);
 
+  console.log(user, sortBy);
+  const bookClubList = mockJoinedBookClubList;
+
+  const NO_LIST_MESSAGE =
+    '아직 신청한 모임이 없어요.\n지금 바로 책 모임을 신청해 보세요';
   return (
-    <div className="flex flex-col gap-y-[26px]">
+    <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
       {bookClubList.length === 0 ? (
-        <div className="text-gray-normal-03">
-          아직 신청한 모임이 없어요.\n 지금 바로 책 모임을 신청해 보세요
+        <div className="flex h-full text-center text-gray-normal-03">
+          <span className="whitespace-pre-wrap">{NO_LIST_MESSAGE}</span>
         </div>
       ) : (
         bookClubList.map((bookClub, index) => (
-          <div key={index}>
+          <div key={index} className="w-full">
             {/* TODO: isCanceled, imageUrl. isPast, status 수정 */}
             <Card
               variant="participatedClub"
               isLiked={bookClub.isLiked}
               isCanceled={bookClub.isCanceled}
-              onLikeClick={() => alert('찜 버튼 클릭')}
-              onDelete={() => alert('취소된 모임 삭제하기 버튼 클릭')}
-              onWriteReview={() => alert('리뷰 작성하기 버튼 클릭')}
               imageUrl={bookClub.imageUrl}
               title={bookClub.title}
               location={bookClub.town}
@@ -211,9 +210,12 @@ export default function JoinedClubList({ user, sortBy }: JoinedClubListProps) {
               meetingType={bookClub.meetingType}
               bookClubType={bookClub.bookClubType}
               isPast={bookClub.isPast}
-              status={bookClub.status}
+              status={bookClub.clubStatus}
               onClick={() => alert('카드 컴포넌트 클릭')}
-              onCancel={() => alert('onCancel?')}
+              onLikeClick={() => alert('찜 버튼 클릭')}
+              onDelete={() => alert('취소된 모임 삭제하기 버튼 클릭')}
+              onWriteReview={() => alert('리뷰 작성하기 버튼 클릭')}
+              onCancel={() => alert('취소하기 버튼 클릭')}
             />
           </div>
         ))

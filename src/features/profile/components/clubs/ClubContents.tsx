@@ -16,9 +16,9 @@ export default function ClubContents({ user }: ProfilePageProps) {
       case CLUB_TABS[0]:
         return <JoinedClubList user={user} sortBy={sortBy} />;
       case CLUB_TABS[1]:
-        return <HostedClubList />;
+        return <HostedClubList user={user} sortBy={sortBy} />;
       case CLUB_TABS[2]:
-        return <MyReviewList />;
+        return <MyReviewList user={user} sortBy={sortBy} />;
     }
   };
 
