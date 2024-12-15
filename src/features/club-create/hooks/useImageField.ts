@@ -10,7 +10,6 @@ export const useImageField = (setValue: UseFormSetValue<BookClubForm>) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      console.log('선택된 파일:', file);
       setSelectedFileName(file.name);
       setValue('image', file);
     } else {

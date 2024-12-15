@@ -35,7 +35,7 @@ function FormContainer() {
       >
         <InputField
           register={register('title')}
-          placeholder="지정책인 경우, 책 이름을 넣어주세요"
+          placeholder="지정책 모임인 경우, 책 이름을 넣어주세요"
         />
       </CreateClubFormField>
 
@@ -47,7 +47,7 @@ function FormContainer() {
       >
         <InputField
           register={register('description')}
-          placeholder="상세 설명을 입력해주세요"
+          placeholder="모임에 대한 설명을 입력해 주세요 (오프라인 모임시 만나는 장소도 같이 입력해 주세요!)"
         />
       </CreateClubFormField>
 
@@ -104,7 +104,7 @@ function FormContainer() {
         name="targetDate"
         label="언제 만나나요?"
         error={errors.targetDate?.message}
-        placeholder="만나는 날짜를 선택해주세요!"
+        placeholder="만나는 날짜를 선택해 주세요!"
       />
 
       <DatePickerContainer
@@ -112,7 +112,7 @@ function FormContainer() {
         name="endDate"
         label="언제 모임을 마감할까요?"
         error={errors.endDate?.message}
-        placeholder="모임의 모집 마감 날짜를 선택해주세요!"
+        placeholder="모임의 모집 마감 날짜를 선택해 주세요!"
       />
 
       <CreateClubFormField
@@ -124,7 +124,7 @@ function FormContainer() {
         <InputField
           type="number"
           register={register('memberLimit', { valueAsNumber: true })}
-          placeholder="최소 3인이상 입력해주세요."
+          placeholder="최소 3인이상 입력해 주세요"
         />
       </CreateClubFormField>
 
@@ -135,6 +135,7 @@ function FormContainer() {
         fillType="solid"
         themeColor="green-normal-01"
         disabled={!isValid || isLoading}
+        className="h-14"
       />
     </form>
   );
