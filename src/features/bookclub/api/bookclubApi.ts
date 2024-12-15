@@ -1,6 +1,7 @@
 import apiClient from '@/lib/utils/apiClient';
+import { BookClubParams } from '../types';
 
-export const getBookClubList = async () => {
-  const response = await apiClient.get('/book-clubs');
+export const getBookClubs = async (params?: BookClubParams) => {
+  const response = await apiClient.get('/book-clubs', { params });
   return response.data.bookClubs;
 };
