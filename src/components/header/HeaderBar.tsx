@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import NavButton from './NavButton';
 import { NAV_ITEMS } from '@/constants/navigation';
 import { usePathname, useRouter } from 'next/navigation';
@@ -10,8 +10,12 @@ import { logout } from '@/features/auth/api/auth';
 
 function HeaderBar() {
   const pathname = usePathname();
-  const { isLoggedIn, user } = useAuthStore();
+  const { isLoggedIn, user, checkLoginStatus } = useAuthStore();
   const router = useRouter();
+
+  useEffect(() => {
+    checkLoginStatus();
+  }, [checkLoginStatus]);
 
   const handleDropDownChange = async (value: string | undefined) => {
     if (value === 'LOGOUT') {

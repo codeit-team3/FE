@@ -12,7 +12,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Solid: Story = {
   args: {
     text: '확인',
     size: 'medium',
@@ -20,13 +20,12 @@ export const Default: Story = {
     themeColor: 'green-normal-01',
   },
 };
-
-export const Small: Story = {
+export const Outline: Story = {
   args: {
     text: '확인',
-    size: 'small',
+    size: 'medium',
     fillType: 'outline',
-    themeColor: 'green-light-03',
+    themeColor: 'green-normal-01',
   },
 };
 
@@ -35,7 +34,16 @@ export const LightSolid: Story = {
     text: '확인',
     size: 'modal',
     fillType: 'lightSolid',
-    themeColor: 'gray-normal-03',
+    themeColor: 'green-normal-01',
+    lightColor: 'green-light-03',
+  },
+};
+export const Small: Story = {
+  args: {
+    text: '확인',
+    size: 'small',
+    fillType: 'outline',
+    themeColor: 'green-light-03',
   },
 };
 
@@ -58,10 +66,11 @@ export const Submitting: Story = {
 
 export const Disabled: Story = {
   args: {
-    text: '확인',
+    text: '생성하기',
     size: 'large',
-    fillType: 'solid',
-    themeColor: 'gray-darker',
+    fillType: 'lightSolid',
+    themeColor: 'gray-dark-01',
+    lightColor: 'gray-normal-01',
     disabled: true,
   },
   parameters: {

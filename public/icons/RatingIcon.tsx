@@ -12,7 +12,7 @@ function RatingIcon({
   checked = false,
   ...props
 }: RatingIconProps) {
-  const heartColor = checked ? '#EA580C' : '#D1D5DB';
+  const heartColor = checked ? '#00a991' : '#d8d9db';
   return (
     <svg
       width={width}
