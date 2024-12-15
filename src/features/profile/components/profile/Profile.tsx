@@ -10,7 +10,7 @@ function Profile({ user }: ProfilePageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onSubmitEditProfile = (formData: ProfileEditData) => {
-    alert(`name:${formData.name}, companyName:${formData.companyName}`);
+    alert(`name:${formData.name}, companyName:${formData.description}`);
     setIsModalOpen(false);
   };
 
@@ -23,7 +23,7 @@ function Profile({ user }: ProfilePageProps) {
           onConfirm={(formData) => onSubmitEditProfile(formData)}
           profileData={{
             name: user?.name || '',
-            companyName: user?.companyName || '',
+            description: user?.description || '',
             image: user?.image,
           }}
         />
@@ -77,7 +77,7 @@ function Profile({ user }: ProfilePageProps) {
                 한 줄 소개
               </span>
               <p className="whitespace-pre-wrap text-base font-medium text-gray-darker">
-                {user?.companyName}
+                {user?.description}
               </p>
             </div>
           </div>

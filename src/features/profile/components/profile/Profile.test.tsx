@@ -1,15 +1,15 @@
 import '@testing-library/jest-dom';
 import Profile from './Profile';
 import { render, screen } from '@testing-library/react';
-import User from '../../types/user';
 import userEvent from '@testing-library/user-event';
+import { User } from '../../types';
 
 const mockUser: User = {
   teamId: '1',
   id: 123,
   email: 'john.doe@example.com',
   name: 'John Doe',
-  companyName: 'Example Company',
+  description: 'Example Company',
   image: 'https://example.com/profile.jpg',
   createdAt: new Date('2024-01-01T00:00:00Z'),
   updatedAt: new Date('2024-01-10T00:00:00Z'),
@@ -67,9 +67,11 @@ describe('Profile 테스트', () => {
     await userEvent.type(nameInput, 'Edited Name');
 
     //한 줄 소개 수정
-    const companyInput = screen.getByRole('textbox', { name: 'companyName' });
-    await userEvent.clear(companyInput);
-    await userEvent.type(companyInput, 'Edited Description');
+    const descriptionInput = screen.getByRole('textbox', {
+      name: 'description',
+    });
+    await userEvent.clear(descriptionInput);
+    await userEvent.type(descriptionInput, 'Edited Description');
 
     //수정하기 버튼 클릭
     const confirmButton = screen.getByText('수정하기');
@@ -80,7 +82,7 @@ describe('Profile 테스트', () => {
     // expect(mockSubmit).toHaveBeenCalledTimes(1);
     // expect(mockSubmit).toHaveBeenCalledWith({
     //   name: 'Edited Name',
-    //   companyName: 'Edited Description',
+    //   description: 'Edited Description',
     // });
   });
 });

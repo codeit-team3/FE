@@ -3,7 +3,7 @@ export interface User {
   id: number;
   email: string;
   name: string;
-  companyName?: string | null;
+  description?: string | null;
   image?: string | null;
   createdAt: Date;
   updatedAt: Date;
@@ -15,7 +15,7 @@ export interface ProfilePageProps {
 
 export interface ProfileEditData {
   name: string;
-  companyName?: string;
+  description?: string;
   image?: string | null;
 }
 

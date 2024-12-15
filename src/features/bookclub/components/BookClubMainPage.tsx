@@ -1,37 +1,21 @@
 'use client';
 
-import { Header, FilterBar, Main } from '@/features/bookclub/components';
-import { useState } from 'react';
+import {
+  HeaderSection,
+  FilterSection,
+  ClubListSection,
+} from '@/features/bookclub/components';
+import CategoryTabs from './CategoryTabs';
 
 function BookClubMainPage() {
-  const [searchValue, setSearchValue] = useState('');
-  const [selectedTab, setSelectedTab] = useState('전체');
-  // const [selectedOnOff, setSelectedOnOff] = useState<string | undefined>(
-  //   undefined,
-  // );
-  // const [selectedMemberCount, setSelectedMemberCount] = useState<
-  //   string | undefined
-  // >(undefined);
-  // const [selectedChecking, setSelectedChecking] = useState(false);
-  // const [selectedSorting, setSelectedSorting] = useState<string | undefined>(
-  //   undefined,
-  // );
-
   return (
     <>
-      <Header />
-      <FilterBar
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
-        selectedTab={selectedTab}
-        setSelectedTab={setSelectedTab}
-        // setSelectedOnOff={setSelectedOnOff}
-        // setSelectedMemberCount={setSelectedMemberCount}
-        // selectedChecking={selectedChecking}
-        // setSelectedChecking={setSelectedChecking}
-        // setSelectedSorting={setSelectedSorting}
-      />
-      <Main />
+      <HeaderSection />
+      <section className="flex w-full flex-col gap-y-3 px-[20px] pt-[20px] md:px-[24px] lg:px-[102px]">
+        <CategoryTabs />
+        <FilterSection />
+      </section>
+      <ClubListSection />
     </>
   );
 }

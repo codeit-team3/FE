@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Profile from './Profile';
-import User from '../../types/user';
+import { User } from '../../types';
 
 const mockUser: User = {
   teamId: '1',
   id: 123,
   email: 'john.doe@example.com',
   name: 'John Doe',
-  companyName: 'Example Company',
+  description: 'Example Company',
   createdAt: new Date('2024-01-01T00:00:00Z'),
   updatedAt: new Date('2024-01-10T00:00:00Z'),
 };

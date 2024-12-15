@@ -6,7 +6,7 @@ import Modal from '@/components/modal/Modal';
 
 interface ProfileData {
   name: string;
-  companyName: string;
+  description: string;
   image?: string | null;
 }
 
@@ -58,9 +58,9 @@ function ProfileEditContent({
             <span className="font-bold">한 줄 소개</span>
             <input
               type="text"
-              name="companyName"
-              aria-label="companyName"
-              value={formData.companyName}
+              name="description"
+              aria-label="description"
+              value={formData.description}
               onChange={handleChange}
               className="w-full rounded-lg bg-gray-light-02 p-2 font-medium"
             />
@@ -80,7 +80,7 @@ function ProfileEditModal({
   const { user } = useAuthStore();
   const [formData, setFormData] = useState<ProfileData>({
     name: profileData.name || user?.name || '',
-    companyName: profileData.companyName || user?.companyName || '',
+    description: profileData.description || user?.description || '',
     image: profileData.image || user?.image || '/images/profile.png',
   });
 
