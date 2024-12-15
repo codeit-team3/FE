@@ -46,18 +46,21 @@ import { CardProps } from '@/components/card/types';
 // };
 
 const defaultCardProps: CardProps = {
+  variant: 'defaultClub',
+  isLiked: false,
+  isCanceled: false,
+  current: 3,
+  max: 8,
   imageUrl: '/images/profile.png',
   imageAlt: '모임 이미지',
+  clubId: 45,
   title: '독서 모임',
   location: '서울 강남구',
   datetime: '2024-01-20 14:00',
-  isLiked: false,
-  current: 3,
-  max: 8,
+  meetingType: 'OFFLINE',
+  bookClubType: 'FIXED',
   isPast: false,
-  isCanceled: false,
-  meetingType: 'FIXED',
-  status: 'pending',
+  clubStatus: 'pending',
   onLikeClick: () => {
     console.log('좋아요 클릭');
   },
