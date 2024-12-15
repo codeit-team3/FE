@@ -203,17 +203,17 @@ export default function JoinedClubList({ user, sortBy }: JoinedClubListProps) {
 
   const handleCancelClick = (clubId: number) => {
     alert(`${clubId}취소하기`);
-    //TODO: API작업 필요
+    //TODO: 취소 확인 팝업 표시, API작업 필요
   };
 
   const handleDeleteClick = (clubId: number) => {
     alert(`${clubId}삭제하기`);
-    //TODO:API 작업 필요
+    //TODO: 삭제 확인 팝업 표시, API 작업 필요
   };
 
   const onSubmitReview = (rating: number, review: string) => {
     alert(`점수:${rating} 리뷰:${review}`);
-    //TODO:API 작업 필요
+    //TODO: API 작업 필요
     setIsModalOpen(false);
   };
 
@@ -235,7 +235,6 @@ export default function JoinedClubList({ user, sortBy }: JoinedClubListProps) {
             <Card
               variant="participatedClub"
               clubId={bookClub.clubId}
-              // isLiked={bookClub.isLiked}
               isCanceled={bookClub.isCanceled}
               imageUrl={bookClub.imageUrl}
               title={bookClub.title}
@@ -246,7 +245,6 @@ export default function JoinedClubList({ user, sortBy }: JoinedClubListProps) {
               isPast={bookClub.isPast}
               clubStatus={bookClub.clubStatus}
               onClick={(clubId) => handleCardClick(clubId)}
-              // onLikeClick={() => alert('찜 버튼 클릭')}
               onCancel={(clubId) => handleCancelClick(clubId)}
               onWriteReview={() => setIsModalOpen(true)}
               onDelete={(clubId) => handleDeleteClick(clubId)}
