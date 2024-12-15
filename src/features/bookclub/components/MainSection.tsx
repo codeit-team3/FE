@@ -43,7 +43,7 @@
 //   },
 // };
 
-function Main() {
+function MainSection() {
   return (
     <main className="flex w-full min-w-[336px] flex-col items-center gap-y-[26px] bg-gray-light-01 px-[20px] pt-[18px] sm:justify-between md:px-[24px] lg:px-[102px]">
       {/* <SimpleCard meeting={mockMeeting} />
@@ -53,4 +53,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default MainSection;

@@ -1,4 +1,4 @@
 export { default as BookClubMainPage } from './BookClubMainPage';
-export { default as Header } from './Header';
-export { default as Main } from './Main';
-export { default as FilterBar } from './FilterBar';
+export { default as HeaderSection } from './HeaderSection';
+export { default as MainSection } from './MainSection';
+export { default as FilterSection } from './FilterSection';

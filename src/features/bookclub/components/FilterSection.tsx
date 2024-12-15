@@ -4,7 +4,7 @@ import SearchBox from '@/components/search-box/SearchBox';
 // import SortingButton from '@/components/sorting-button/SortingButton';
 import Tab from '@/components/tab/Tab';
 
-interface FilterBarProps {
+interface FilterSectionProps {
   searchValue: string;
   setSearchValue: (value: string) => void;
   selectedTab: string;
@@ -16,7 +16,7 @@ interface FilterBarProps {
   // setSelectedSorting: (value: string | undefined) => void;
 }
 
-function FilterBar({
+function FilterSection({
   searchValue,
   setSearchValue,
   selectedTab,
@@ -26,7 +26,7 @@ function FilterBar({
   // selectedChecking,
   // setSelectedChecking,
   // setSelectedSorting,
-}: FilterBarProps) {
+}: FilterSectionProps) {
   return (
     <section className="flex w-full flex-col gap-y-[10px] px-[20px] pt-[20px] md:px-[24px] lg:px-[102px]">
       <div>
@@ -74,4 +74,4 @@ function FilterBar({
   );
 }
 
-export default FilterBar;
+export default FilterSection;

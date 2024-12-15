@@ -1,6 +1,6 @@
 import Button from '@/components/button/Button';
 
-function Header() {
+function HeaderSection() {
   return (
     <header className="flex h-[120px] w-full min-w-[336px] items-end bg-green-light-01 px-[20px] py-[30px] sm:justify-between md:px-[24px] lg:px-[102px]">
       <h1
@@ -20,4 +20,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default HeaderSection;
