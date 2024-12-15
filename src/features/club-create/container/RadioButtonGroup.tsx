@@ -1,3 +1,4 @@
+import Card from '@/components/card/Card';
 import { useSelectAddress } from '@/features/club-create/hooks';
 import { BookClubForm } from '@/features/club-create/types';
 import { UseFormSetValue } from 'react-hook-form';
@@ -26,7 +27,7 @@ function RadioButtonGroup({
       {options.map((option) => (
         <label
           key={option.value}
-          className={`flex w-full cursor-pointer items-start gap-2 rounded-xl p-4 ${
+          className={`flex w-full cursor-pointer items-start gap-2 rounded-xl px-4 py-5 ${
             selectedValue === option.value
               ? 'border-2 border-green-normal-01'
               : ''
@@ -74,7 +75,7 @@ function RadioButtonGroup({
           </div>
           {option.value === 'OFFLINE' && town && (
             <div className="ml-auto flex items-center">
-              <span className="text-sm text-gray-dark-02">{town}</span>
+              <Card.Location>{town}</Card.Location>
             </div>
           )}
         </label>

@@ -15,7 +15,7 @@ function InputField({
     <input
       type={type}
       {...(register ? register : {})}
-      className={`w-full rounded-xl bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-02 ${className}`}
+      className={`w-full rounded-xl bg-gray-light-02 px-4 py-[10px] font-medium placeholder-gray-dark-01 ${className}`}
       placeholder={placeholder}
       {...props}
     />

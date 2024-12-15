@@ -22,7 +22,7 @@ function ImageField({ register, setValue, error }: ImageUploadContainerProps) {
           type="text"
           value={selectedFileName}
           readOnly
-          placeholder="이미지를 첨부해주세요"
+          placeholder="이미지를 첨부해 주세요"
           className="flex-1"
         />
         <InputField
