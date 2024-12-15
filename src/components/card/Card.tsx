@@ -541,7 +541,10 @@ function Card(props: CardProps) {
                   isHost={isHost}
                 />
 
-                <Card.Box onClick={onClick} className="justify-between">
+                <Card.Box
+                  onClick={onClick}
+                  className="cursor-default justify-between"
+                >
                   <div className="flex flex-col gap-0.5">
                     <div className="flex justify-between">
                       <Card.Title>{title}</Card.Title>
