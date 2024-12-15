@@ -3,9 +3,10 @@
 import { VisibilityOn, VisibilityOff } from '../../../../../public/icons';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { usePasswordVisibility } from '../../hooks/usePasswordVisibility';
+import React from 'react';
 
 interface FormFieldProps {
-  label: string;
+  label: string | React.ReactNode;
   type: string;
   placeholder: string;
   id: string;
@@ -35,7 +36,7 @@ function FormField({
           id={id}
           type={type === 'password' ? passwordType : type}
           placeholder={placeholder}
-          className={`w-full rounded-lg bg-gray-50 p-2 sm:p-3 ${
+          className={`w-full rounded-lg bg-white p-2 sm:p-3 ${
             error ? 'border-2 border-red-500' : ''
           }`}
         />

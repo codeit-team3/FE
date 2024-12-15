@@ -55,6 +55,16 @@ function DropDown({ variant, imgSrc, onChangeSelection }: DropDownProps) {
             />
           </button>
         );
+      case 'sortingReview':
+        return (
+          <button
+            className={`flex h-[40px] items-center justify-start py-[8px] pl-[14px] pr-[6px] text-sm font-medium ${colorClass}`}
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {selectedLabel}
+            <IcDropDown isActive={isActive} color="stroke-green-normal-01" />
+          </button>
+        );
       default:
         return (
           <button
