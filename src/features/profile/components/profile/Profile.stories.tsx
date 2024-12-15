@@ -7,7 +7,7 @@ const mockUser: User = {
   id: 123,
   email: 'john.doe@example.com',
   name: 'John Doe',
-  companyName: 'Example Company',
+  description: 'Example Company',
   createdAt: new Date('2024-01-01T00:00:00Z'),
   updatedAt: new Date('2024-01-10T00:00:00Z'),
 };
