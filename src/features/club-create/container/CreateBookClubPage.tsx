@@ -1,5 +1,3 @@
-'use client';
-
 import { FormContainer } from '@/features/club-create/container';
 
 function CreateBookClubPage() {

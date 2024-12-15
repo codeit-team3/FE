@@ -2,7 +2,6 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
 import Button from '@/components/button/Button';
 import {
   CreateClubFormField,
@@ -13,9 +12,9 @@ import {
 import { BookClubForm, bookClubSchema } from '@/features/club-create/types';
 import { useCreateBookClub } from '@/features/club-create/hooks/useCreateBookClub';
 import 'react-datepicker/dist/react-datepicker.css';
+import ImageField from '@/features/club-create/container/ImageField';
 
 function FormContainer() {
-  const [selectedFileName, setSelectedFileName] = useState<string>('');
   const { onSubmit, isLoading } = useCreateBookClub();
   const {
     register,
@@ -27,17 +26,6 @@ function FormContainer() {
   } = useForm<BookClubForm>({
     resolver: zodResolver(bookClubSchema),
   });
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      console.log('선택된 파일:', file);
-      setSelectedFileName(file.name);
-      setValue('image', file);
-    } else {
-      setSelectedFileName('');
-    }
-  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10">
@@ -65,46 +53,11 @@ function FormContainer() {
         />
       </CreateClubFormField>
 
-      <CreateClubFormField
-        label="이미지"
+      <ImageField
+        register={register}
+        setValue={setValue}
         error={errors.image?.message?.toString()}
-      >
-        <div className="flex w-full items-center gap-2">
-          <InputField
-            type="text"
-            value={selectedFileName}
-            readOnly
-            placeholder="이미지를 첨부해주세요"
-            className="flex-1"
-          />
-          <InputField
-            type="file"
-            accept="image/*"
-            register={register('image')}
-            className="hidden"
-            id="image-upload"
-            onChange={handleFileChange}
-          />
-          <label
-            htmlFor="image-upload"
-            className="flex h-10 cursor-pointer items-center rounded-xl border border-green-normal-01 px-4 text-green-normal-01"
-          >
-            파일 찾기
-          </label>
-          {selectedFileName && (
-            <button
-              type="button"
-              onClick={() => {
-                setSelectedFileName('');
-                setValue('image', undefined);
-              }}
-              className="ml-2 text-gray-dark-02"
-            >
-              ✕
-            </button>
-          )}
-        </div>
-      </CreateClubFormField>
+      />
 
       <CreateClubFormField
         label="자유책 / 지정책"
