@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="min-h-screen bg-white">
+      <body className="flex h-full min-h-screen flex-col bg-white">
         <ReactQueryProviders>
           <HeaderBar />
           <main className="mx-auto flex w-full max-w-[1200px] flex-1 flex-col bg-white">

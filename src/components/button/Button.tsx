@@ -19,10 +19,9 @@ export default function Button({
   themeColor = 'green-normal-01',
   lightColor,
   isSubmitting,
-  className,
   ...buttonProps
 }: ButtonProps) {
-  const { disabled } = buttonProps;
+  const { disabled, className } = buttonProps;
 
   const sizeClasses = SIZE[size];
   const baseClasses = 'rounded-[12px] font-semibold cursor-pointer';
@@ -35,6 +34,10 @@ export default function Button({
       : themeColor;
 
   const variantClasses = (() => {
+    if (disabled) {
+      return `text-gray-dark-02 bg-gray-normal-02`;
+    }
+
     switch (fillType) {
       case 'solid':
         return `text-gray-white ${COLOR_SCHEMES[resolvedColor]['bg']}`;
