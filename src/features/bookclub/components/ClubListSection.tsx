@@ -1,5 +1,7 @@
-// import SimpleCard from '@/components/card/simple-card/SimpleCard';
 // import { Meeting } from '@/components/card/types';
+
+import Card from '@/components/card/Card';
+import { CardProps } from '@/components/card/types';
 
 // const mockImgSrc = '/images/profile.png';
 
@@ -43,14 +45,39 @@
 //   },
 // };
 
-function Main() {
+const defaultCardProps: CardProps = {
+  imageUrl: '/images/profile.png',
+  imageAlt: '모임 이미지',
+  title: '독서 모임',
+  location: '서울 강남구',
+  datetime: '2024-01-20 14:00',
+  isLiked: false,
+  current: 3,
+  max: 8,
+  isPast: false,
+  isCanceled: false,
+  meetingType: 'FIXED',
+  status: 'pending',
+  onLikeClick: () => {
+    console.log('좋아요 클릭');
+  },
+  onClick: () => {
+    console.log('카드 클릭');
+  },
+  onDelete: () => {
+    console.log('삭제 클릭');
+  },
+};
+
+function ClubListSection() {
   return (
     <main className="flex w-full min-w-[336px] flex-col items-center gap-y-[26px] bg-gray-light-01 px-[20px] pt-[18px] sm:justify-between md:px-[24px] lg:px-[102px]">
-      {/* <SimpleCard meeting={mockMeeting} />
-      <SimpleCard meeting={mockMeeting} /> */}
-      <div>hi</div>
+      <Card {...defaultCardProps} />
+      <Card {...defaultCardProps} />
+      <Card {...defaultCardProps} />
+      <Card {...defaultCardProps} />
     </main>
   );
 }
 
-export default Main;
+export default ClubListSection;

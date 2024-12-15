@@ -1,4 +1,3 @@
-'use client';
 import React, { useRef, useState } from 'react';
 import { IcDropDown } from '../../../public/icons';
 import Avatar from '../avatar/Avatar';
@@ -81,7 +80,7 @@ function DropDown({ variant, imgSrc, onChangeSelection }: DropDownProps) {
   return (
     <div
       ref={dropDownRef}
-      className={`relative flex w-max min-w-max ${(variant === 'navbar' || variant == 'sortingReview') && 'justify-end'}`}
+      className={`relative z-50 flex w-max min-w-max ${(variant === 'navbar' || variant == 'sortingReview') && 'justify-end'}`}
     >
       {renderButton(variant, isActive)}
 
