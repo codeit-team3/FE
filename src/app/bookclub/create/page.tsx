@@ -16,7 +16,7 @@ import { useCreateBookClub } from '@/features/club-create/hooks/useCreateBookClu
 
 export default function CreateBookClub() {
   const [selectedFileName, setSelectedFileName] = useState<string>('');
-  const { createBookClub } = useCreateBookClub();
+  const { onSubmit, isLoading } = useCreateBookClub();
   const {
     register,
     handleSubmit,
@@ -37,18 +37,6 @@ export default function CreateBookClub() {
       setValue('image', file);
     } else {
       setSelectedFileName('');
-    }
-  };
-
-  // TODO: API 연동, 훅 분리
-  const onSubmit = async (data: BookClubForm) => {
-    try {
-      const response = await createBookClub(data);
-      console.log('북클럽이 성공적으로 생성되었습니다:', response);
-      // 성공 시 처리 (예: 알림 표시, 페이지 이동 등)
-    } catch (error) {
-      console.error('북클럽 생성 실패:', error);
-      // 에러 처리 (예: 에러 메시지 표시)
     }
   };
 
@@ -110,7 +98,10 @@ export default function CreateBookClub() {
             {selectedFileName && (
               <button
                 type="button"
-                onClick={() => setSelectedFileName('')}
+                onClick={() => {
+                  setSelectedFileName('');
+                  setValue('image', undefined);
+                }}
                 className="ml-2 text-gray-dark-02"
               >
                 ✕
@@ -192,11 +183,11 @@ export default function CreateBookClub() {
 
         <Button
           type="submit"
-          text="확인"
+          text={isLoading ? '생성 중...' : '확인'}
           size="medium"
           fillType="solid"
           themeColor="green-normal-01"
-          disabled={!isValid}
+          disabled={!isValid || isLoading}
         />
       </form>
     </main>

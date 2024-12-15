@@ -1,9 +1,16 @@
+import { useState } from 'react';
 import { toKoreanTime } from '@/lib/utils/dateUtils';
 import { BookClubForm } from '../types';
 import apiClient from '@/lib/utils/apiClient';
 
 export const useCreateBookClub = () => {
-  const createBookClub = async (data: BookClubForm) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const onSubmit = async (data: BookClubForm) => {
+    setIsLoading(true);
+    setError(null);
+
     try {
       const formData = new FormData();
 
@@ -35,16 +42,19 @@ export const useCreateBookClub = () => {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization:
-            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiQUNDRVNTIiwic3ViIjoiY2xvdWQwNDA2QG5hdmVyLmNvbSIsImlhdCI6MTczNDI0MzUyMywiZXhwIjoxNzM0MjQ0NDIzfQ.6eKKfHJfAa-kqezFY7vy1wwKIeJdABJ_XllqnGZQ2jI',
+            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiQUNDRVNTIiwic3ViIjoiY2xvdWQwNDA2QG5hdmVyLmNvbSIsImlhdCI6MTczNDI0NTA0MiwiZXhwIjoxNzM0MjQ1OTQyfQ.Ji3DL3e6-UVsePnyNO9PouGHlBi0FKScjTINnkyB8jY',
         },
       });
 
+      // TODO:: 성공 시 처리
       return response.data;
     } catch (error) {
-      console.error('북클럽 생성 중 오류 발생:', error);
+      setError('북클럽 생성에 실패했습니다.');
       throw error;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { createBookClub };
+  return { onSubmit, isLoading, error };
 };
