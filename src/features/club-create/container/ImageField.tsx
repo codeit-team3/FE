@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
 import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { BookClubForm } from '../types';
 import { CreateClubFormField, InputField } from '../components';
+import { useImageField } from '@/features/club-create/hooks';
 
 interface ImageUploadContainerProps {
   register: UseFormRegister<BookClubForm>;
@@ -12,18 +12,8 @@ interface ImageUploadContainerProps {
 }
 
 function ImageField({ register, setValue, error }: ImageUploadContainerProps) {
-  const [selectedFileName, setSelectedFileName] = useState<string>('');
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      console.log('선택된 파일:', file);
-      setSelectedFileName(file.name);
-      setValue('image', file);
-    } else {
-      setSelectedFileName('');
-    }
-  };
+  const { selectedFileName, handleFileChange, clearFile } =
+    useImageField(setValue);
 
   return (
     <CreateClubFormField label="이미지" error={error}>
@@ -52,10 +42,7 @@ function ImageField({ register, setValue, error }: ImageUploadContainerProps) {
         {selectedFileName && (
           <button
             type="button"
-            onClick={() => {
-              setSelectedFileName('');
-              setValue('image', undefined);
-            }}
+            onClick={clearFile}
             className="ml-2 text-gray-dark-02"
           >
             ✕

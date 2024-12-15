@@ -1,6 +1,5 @@
 import { useSelectAddress } from '@/features/club-create/hooks';
 import { BookClubForm } from '@/features/club-create/types';
-import React from 'react';
 import { UseFormSetValue } from 'react-hook-form';
 
 interface RadioButtonGroupProps {

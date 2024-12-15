@@ -1,9 +1,13 @@
-import { Control, Controller } from 'react-hook-form';
+'use client';
+
 import DatePicker from 'react-datepicker';
+import { Control, Controller } from 'react-hook-form';
 import { ko } from 'date-fns/locale';
 import { BookClubForm } from '../types';
-import CreateClubFormField from '@/features/club-create/components/CreateClubFormField';
-import InputField from '@/features/club-create/components/InputField';
+import {
+  CreateClubFormField,
+  InputField,
+} from '@/features/club-create/components';
 
 interface DatePickerContainerProps {
   control: Control<BookClubForm>;
@@ -13,13 +17,13 @@ interface DatePickerContainerProps {
   placeholder: string;
 }
 
-export const DatePickerContainer = ({
+function DatePickerContainer({
   control,
   name,
   label,
   error,
   placeholder,
-}: DatePickerContainerProps) => {
+}: DatePickerContainerProps) {
   return (
     <CreateClubFormField label={label} error={error}>
       <Controller
@@ -43,4 +47,6 @@ export const DatePickerContainer = ({
       />
     </CreateClubFormField>
   );
-};
+}
+
+export default DatePickerContainer;

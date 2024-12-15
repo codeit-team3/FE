@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { toKoreanTime } from '@/lib/utils/dateUtils';
 import { BookClubForm } from '../types';
