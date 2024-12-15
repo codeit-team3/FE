@@ -41,9 +41,15 @@ export default function CreateBookClub() {
   };
 
   // TODO: API 연동, 훅 분리
-  const onSubmit = (data: BookClubForm) => {
-    const formData = createBookClub(data);
-    console.log(formData);
+  const onSubmit = async (data: BookClubForm) => {
+    try {
+      const response = await createBookClub(data);
+      console.log('북클럽이 성공적으로 생성되었습니다:', response);
+      // 성공 시 처리 (예: 알림 표시, 페이지 이동 등)
+    } catch (error) {
+      console.error('북클럽 생성 실패:', error);
+      // 에러 처리 (예: 에러 메시지 표시)
+    }
   };
 
   return (
