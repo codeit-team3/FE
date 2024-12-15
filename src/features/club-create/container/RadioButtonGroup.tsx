@@ -1,16 +1,26 @@
-import React from 'react';
+import { useSelectAddress } from '@/features/club-create/hooks';
+import { BookClubForm } from '@/features/club-create/types';
+import { UseFormSetValue } from 'react-hook-form';
 
 interface RadioButtonGroupProps {
   options: { label: string; value: string; description?: string }[];
   selectedValue: string;
   register: any;
+  setValue?: UseFormSetValue<BookClubForm>;
+  name: keyof BookClubForm;
+  town?: string;
 }
 
 function RadioButtonGroup({
   options,
   selectedValue,
   register,
+  setValue,
+  name,
+  town,
 }: RadioButtonGroupProps) {
+  const { handleRadioChange } = useSelectAddress({ setValue, name });
+
   return (
     <div className="flex gap-4 md:gap-6">
       {options.map((option) => (
@@ -21,6 +31,7 @@ function RadioButtonGroup({
               ? 'border-2 border-green-normal-01'
               : ''
           } bg-gray-light-02`}
+          onClick={(e) => handleRadioChange(option.value, e)}
         >
           <input
             type="radio"
@@ -54,12 +65,18 @@ function RadioButtonGroup({
           </div>
           <div className="flex flex-col gap-0.5">
             <p className="font-semibold">{option.label}</p>
+
             {option.description && (
               <p className="text-xs font-medium text-gray-dark-02">
                 {option.description}
               </p>
             )}
           </div>
+          {option.value === 'OFFLINE' && town && (
+            <div className="ml-auto flex items-center">
+              <span className="text-sm text-gray-dark-02">{town}</span>
+            </div>
+          )}
         </label>
       ))}
     </div>
