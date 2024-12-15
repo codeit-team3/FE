@@ -13,9 +13,9 @@ const meta = {
       control: 'select',
       options: ['FREE', 'FIXED'],
     },
-    status: {
+    clubStatus: {
       control: 'select',
-      options: ['completed', 'scheduled', 'pending', 'confirmed', 'closed'],
+      options: ['pending', 'confirmed', 'closed'],
     },
   },
   tags: ['autodocs'],
@@ -28,12 +28,14 @@ const baseArgs = {
   // ClubCard 기본 인터페이스의 속성들
   imageUrl: 'https://picsum.photos/400/300',
   imageAlt: '모임 이미지',
+  clubId: 45,
   title: '을지로 독서 모임',
   location: '을지로 3가',
   datetime: '12/14(토) 오전 10:00',
-  meetingType: 'FREE' as const,
+  meetingType: 'OFFLINE' as const,
+  bookClubType: 'FREE' as const,
   isPast: false,
-  status: 'confirmed' as const,
+  clubStatus: 'confirmed' as const,
   onClick: () => alert('카드 클릭!'),
 } as const;
 
