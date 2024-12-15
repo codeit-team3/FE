@@ -7,7 +7,9 @@ interface ClubCard {
   title: string;
   location: string;
   datetime: string;
-  meetingType: 'FREE' | 'FIXED';
+  meetingType: 'ONLINE' | 'OFFLINE';
+  bookClubType: 'FREE' | 'FIXED';
+  // meetingType: 'FREE' | 'FIXED';
   isPast: boolean; // 지난 모임인지 아닌지
   status: 'completed' | 'scheduled' | 'pending' | 'confirmed' | 'closed'; // 개설 현황
 

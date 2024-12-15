@@ -5,15 +5,16 @@ import JoinedClubList from './JoinedClubList';
 import MyReviewList from './MyReviewList';
 import HostedClubList from './HostedClubsList';
 import Tab from '@/components/tab/Tab';
+import { ProfilePageProps } from '../../types';
 
-export default function ClubContents() {
+export default function ClubContents({ user }: ProfilePageProps) {
   const [sortBy, setSortBy] = useState<string | undefined>('NEWEST');
   const [selectedList, setSelectedList] = useState<ClubTab>(CLUB_TABS[0]);
 
   const renderList = (selectedList: ClubTab) => {
     switch (selectedList) {
       case CLUB_TABS[0]:
-        return <JoinedClubList />;
+        return <JoinedClubList user={user} sortBy={sortBy} />;
       case CLUB_TABS[1]:
         return <HostedClubList />;
       case CLUB_TABS[2]:

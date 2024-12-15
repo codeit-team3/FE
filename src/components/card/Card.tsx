@@ -211,7 +211,7 @@ function Card(props: CardProps) {
           max,
           isPast,
           isCanceled,
-          meetingType,
+          bookClubType,
           onClick,
           onDelete,
           status,
@@ -231,7 +231,7 @@ function Card(props: CardProps) {
               <div className="flex flex-col gap-0.5">
                 <div className="flex justify-between">
                   <Card.Title>{title}</Card.Title>
-                  <ClubChip variant={meetingType} isPast={isPast} />
+                  <ClubChip variant={bookClubType} isPast={isPast} />
                 </div>
                 <div className="flex items-center gap-1.5">
                   <Card.Location>{location}</Card.Location>
@@ -269,7 +269,7 @@ function Card(props: CardProps) {
           onClick,
           onDelete,
           status,
-          meetingType,
+          bookClubType,
           title,
           location,
           datetime,
@@ -293,7 +293,7 @@ function Card(props: CardProps) {
                     <ClubChip variant={isPast ? 'completed' : 'scheduled'} />
                     <ClubChip variant={status} />
                   </div>
-                  <ClubChip variant={meetingType} />
+                  <ClubChip variant={bookClubType} />
                 </div>
                 <div className="flex flex-col">
                   <Card.Title>{title}</Card.Title>
@@ -343,7 +343,7 @@ function Card(props: CardProps) {
           imageAlt,
           onClick,
           status,
-          meetingType,
+          bookClubType,
           isPast,
           title,
           location,
@@ -359,7 +359,7 @@ function Card(props: CardProps) {
               <div className="flex flex-col gap-2.5">
                 <div className="flex justify-between">
                   <ClubChip variant={isPast ? 'completed' : status} />
-                  <ClubChip variant={meetingType} />
+                  <ClubChip variant={bookClubType} />
                 </div>
                 <div className="flex flex-col">
                   <Card.Title>{title}</Card.Title>
@@ -420,7 +420,7 @@ function Card(props: CardProps) {
           datetime,
           isLiked,
           onLikeClick,
-          meetingType,
+          bookClubType,
           current,
           max,
           isPast,
@@ -545,7 +545,7 @@ function Card(props: CardProps) {
                   <div className="flex flex-col gap-0.5">
                     <div className="flex justify-between">
                       <Card.Title>{title}</Card.Title>
-                      <ClubChip variant={meetingType} isPast={isPast} />
+                      <ClubChip variant={bookClubType} isPast={isPast} />
                     </div>
                     <div className="flex items-center gap-1.5">
                       <Card.Location>{location}</Card.Location>
