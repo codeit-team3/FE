@@ -2,8 +2,8 @@
 import Tab from '@/components/tab/Tab';
 import { CONTENT_TABS, ContentTab } from '@/constants';
 import { useState } from 'react';
-import ClubContents from './clubs/ClubContents';
-import ExchangeContents from './exchange/ExchangeContents';
+import { ClubContents } from '../container';
+import ExchangeContents from '../components/exchange/ExchangeContents';
 import { ProfilePageProps } from '../types';
 
 function MainContent({ user }: ProfilePageProps) {

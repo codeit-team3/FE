@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import Avatar from '@/components/avatar/Avatar';
 import { IcEdit } from '../../../../../public/icons/index';
-import ProfileEditModal from '../ProfileEditModal';
 import { ProfileEditData, ProfilePageProps } from '../../types';
+import ProfileEditModal from './ProfileEditModal';
 
 function Profile({ user }: ProfilePageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);

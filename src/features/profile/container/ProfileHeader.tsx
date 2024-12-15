@@ -1,5 +1,5 @@
 import { ProfilePageProps } from '../types';
-import Profile from './profile/Profile';
+import { Profile } from '../components/profile';
 
 export default function ProfileHeader({ user }: ProfilePageProps) {
   return (

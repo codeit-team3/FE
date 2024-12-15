@@ -1,8 +1,7 @@
 'use client';
 
-import MainContent from './MainContent';
-import ProfileHeader from './ProfileHeader';
 import { useAuthStore } from '@/store/authStore';
+import { MainContent, ProfileHeader } from '../container';
 
 function ProfilePage() {
   const { user } = useAuthStore();

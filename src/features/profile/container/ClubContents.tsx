@@ -1,11 +1,13 @@
 import SortingButton from '@/components/sorting-button/SortingButton';
 import { CLUB_TABS, ClubTab } from '@/constants';
 import { useState } from 'react';
-import JoinedClubList from './JoinedClubList';
-import MyReviewList from './MyReviewList';
-import HostedClubList from './HostedClubsList';
 import Tab from '@/components/tab/Tab';
-import { ProfilePageProps } from '../../types';
+import { ProfilePageProps } from '../types';
+import {
+  HostedClubList,
+  JoinedClubList,
+  MyReviewList,
+} from '../components/clubs';
 
 export default function ClubContents({ user }: ProfilePageProps) {
   const [sortBy, setSortBy] = useState<string | undefined>('NEWEST');

@@ -2,7 +2,7 @@ import Card from '@/components/card/Card';
 import { BookClub, User } from '../../types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import WriteReviewModal from '../WriteReviewModal';
+import { WriteReviewModal } from '../clubs';
 
 interface JoinedClubListProps {
   user: User | null;
