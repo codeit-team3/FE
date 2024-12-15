@@ -2,7 +2,16 @@ import { z } from 'zod';
 
 export const bookClubSchema = z
   .object({
-    image: z.any().optional(),
+    image: z
+      .custom<File | undefined>((file) => {
+        if (!file || !(file instanceof File)) return true;
+
+        const isValidType = ['image/jpg', 'image/jpeg'].includes(file.type);
+        const isValidSize = file.size <= 10 * 1024 * 1024;
+
+        return isValidType && isValidSize;
+      }, '파일은 JPG/JPEG 형식이며 10MB 이하이어야 합니다')
+      .optional(),
     title: z
       .string()
       .min(1, '모임 이름을 입력해주세요')
