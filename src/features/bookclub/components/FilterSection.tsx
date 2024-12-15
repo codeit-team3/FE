@@ -4,9 +4,16 @@ import DropDown from '@/components/drop-down/DropDown';
 import FilterCheckbox from '@/components/filter-checkbox/FilterCheckbox';
 import { useState } from 'react';
 import SortingButton from '@/components/sorting-button/SortingButton';
+import { Filters } from '../types';
 
-function FilterSection() {
+interface CategoryTabsProps {
+  filters: Filters;
+  onFilterChange: (newFilters: Partial<Filters>) => void;
+}
+
+function FilterSection({ filters, onFilterChange }: CategoryTabsProps) {
   const [showAvailableOnly, setShowAvailableOnly] = useState(false); // 신청가능
+  console.log(filters, onFilterChange);
 
   return (
     <div className="flex w-full gap-x-2 overflow-x-auto whitespace-nowrap sm:justify-between [&::-webkit-scrollbar]:hidden">

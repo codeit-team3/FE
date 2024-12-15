@@ -1,49 +1,6 @@
-// import { Meeting } from '@/components/card/types';
-
 import Card from '@/components/card/Card';
 import { CardProps } from '@/components/card/types';
-
-// const mockImgSrc = '/images/profile.png';
-
-// const mockMeeting: Meeting = {
-//   meetingInfo: {
-//     title: '을지로에서 만나는 독서 모임',
-//     category: '자유책',
-//     location: '을지로 3가',
-//     datetime: '12/14(토) 오전 10:00',
-//   },
-//   participationStatus: {
-//     currentParticipants: 17,
-//     maxParticipants: 20,
-//     isConfirmed: true,
-//     confirmedVariant: 'confirmed',
-//     participants: [
-//       {
-//         src: mockImgSrc,
-//         alt: '참가자1',
-//       },
-//       {
-//         src: mockImgSrc,
-//         alt: '참가자2',
-//       },
-//       {
-//         src: mockImgSrc,
-//         alt: '참가자3',
-//       },
-//     ],
-//   },
-//   imageInfo: {
-//     url: mockImgSrc,
-//     isLiked: true,
-//     onLikeClick: () => alert('좋아요를 눌렀습니다!'),
-//   },
-//   isPast: false,
-//   isCanceled: false,
-//   actions: {
-//     onClick: () => alert('카드를 클릭했습니다!'),
-//     onDelete: () => alert('모임을 삭제했습니다!'),
-//   },
-// };
+import { BookClub } from '../types';
 
 const defaultCardProps: CardProps = {
   imageUrl: '/images/profile.png',
@@ -68,10 +25,35 @@ const defaultCardProps: CardProps = {
     console.log('삭제 클릭');
   },
 };
+interface ClubListSectionProps {
+  bookClubs: BookClub[]; // bookClubs 데이터 타입 정의
+}
 
-function ClubListSection() {
+function ClubListSection({ bookClubs }: ClubListSectionProps) {
   return (
     <main className="flex w-full min-w-[336px] flex-col items-center gap-y-[26px] bg-gray-light-01 px-[20px] pt-[18px] sm:justify-between md:px-[24px] lg:px-[102px]">
+      {bookClubs.map((club) => (
+        <Card
+          key={club.id}
+          imageUrl={club.imageUrl || '/images/profile.png'}
+          imageAlt={club.title}
+          title={club.title}
+          location={club.town || '위치 정보 없음'}
+          datetime={club.targetDate}
+          isLiked={club.isLiked}
+          current={club.memberCount}
+          max={club.memberLimit}
+          isPast={new Date(club.targetDate) < new Date()} // 지난 모임 여부
+          isCanceled={false} // 모임 취소 여부 (API 값에 따라 변경 가능)
+          // meetingType={club.bookClubType} // 타입 통일 필요
+          meetingType={'FIXED'}
+          status="pending" // 기본 상태 (필요에 따라 변경)
+          onLikeClick={() => console.log(`${club.title} 좋아요 클릭`)}
+          onClick={() => console.log(`${club.title} 카드 클릭`)}
+          onDelete={() => console.log(`${club.title} 삭제 클릭`)}
+        />
+      ))}
+
       <Card {...defaultCardProps} />
       <Card {...defaultCardProps} />
       <Card {...defaultCardProps} />
