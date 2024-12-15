@@ -1,5 +1,6 @@
 import Card from '@/components/card/Card';
 import { BookClub, User } from '../../types';
+import { useRouter } from 'next/navigation';
 
 interface JoinedClubListProps {
   user: User | null;
@@ -8,7 +9,7 @@ interface JoinedClubListProps {
 
 const mockJoinedBookClubList: BookClub[] = [
   {
-    id: 1,
+    clubId: 1,
     title: '문학의 밤',
     description: '다양한 문학 작품을 함께 읽고 토론하는 모임입니다.',
     meetingType: 'OFFLINE',
@@ -25,7 +26,7 @@ const mockJoinedBookClubList: BookClub[] = [
     clubStatus: 'confirmed',
   },
   {
-    id: 2,
+    clubId: 2,
     title: '과학 탐험',
     description:
       '최신 과학 서적을 읽고 실험을 통해 배운 내용을 공유하는 모임입니다.',
@@ -43,7 +44,7 @@ const mockJoinedBookClubList: BookClub[] = [
     clubStatus: 'pending',
   },
   {
-    id: 3,
+    clubId: 3,
     title: '추리 소설 독서회',
     description: '추리 소설을 읽고 결말을 예측하며 토론하는 모임입니다.',
     meetingType: 'OFFLINE',
@@ -60,7 +61,7 @@ const mockJoinedBookClubList: BookClub[] = [
     clubStatus: 'confirmed',
   },
   {
-    id: 4,
+    clubId: 4,
     title: '로맨스 북클럽',
     description: '사랑과 감정을 주제로 한 로맨스 소설을 읽는 모임입니다.',
     meetingType: 'ONLINE',
@@ -77,7 +78,7 @@ const mockJoinedBookClubList: BookClub[] = [
     clubStatus: 'closed',
   },
   {
-    id: 5,
+    clubId: 5,
     title: '비즈니스 책 모임',
     description:
       '비즈니스 전략과 아이디어를 다룬 책을 읽고 토론하는 모임입니다.',
@@ -95,7 +96,7 @@ const mockJoinedBookClubList: BookClub[] = [
     clubStatus: 'closed',
   },
   {
-    id: 6,
+    clubId: 6,
     title: '고전 문학',
     description: '고전 문학 작품을 읽고 그 의미를 되새기는 모임입니다.',
     meetingType: 'ONLINE',
@@ -112,7 +113,7 @@ const mockJoinedBookClubList: BookClub[] = [
     clubStatus: 'confirmed',
   },
   {
-    id: 7,
+    clubId: 7,
     title: '환경 보호 독서회',
     description: '환경과 관련된 주제의 책을 읽고 토론하는 모임입니다.',
     meetingType: 'OFFLINE',
@@ -129,7 +130,7 @@ const mockJoinedBookClubList: BookClub[] = [
     clubStatus: 'pending',
   },
   {
-    id: 8,
+    clubId: 8,
     title: '스타트업 독서 모임',
     description: '스타트업 관련 책을 읽고 창업 아이디어를 나누는 모임입니다.',
     meetingType: 'ONLINE',
@@ -146,7 +147,7 @@ const mockJoinedBookClubList: BookClub[] = [
     clubStatus: 'confirmed',
   },
   {
-    id: 9,
+    clubId: 9,
     title: '디지털 혁명',
     description: '디지털 시대 혁신적인 책을 읽고 토론하는 모임입니다.',
     meetingType: 'OFFLINE',
@@ -163,7 +164,7 @@ const mockJoinedBookClubList: BookClub[] = [
     clubStatus: 'confirmed',
   },
   {
-    id: 10,
+    clubId: 10,
     title: '인문학 읽기',
     description: '인문학적 사유를 통해 통찰을 얻는 독서 모임입니다.',
     meetingType: 'ONLINE',
@@ -183,12 +184,19 @@ const mockJoinedBookClubList: BookClub[] = [
 
 export default function JoinedClubList({ user, sortBy }: JoinedClubListProps) {
   // const bookClubList: BookClub[] = [];
-
+  const router = useRouter();
   console.log(user, sortBy);
   const bookClubList = mockJoinedBookClubList;
 
   const NO_LIST_MESSAGE =
     '아직 신청한 모임이 없어요.\n지금 바로 책 모임을 신청해 보세요';
+
+  //카드 컴포넌트 클릭 시 해당 모임 상세페이지로 라우팅
+  const onClickCard = (clubId: number) => {
+    alert(`${clubId}로 페이지 이동`);
+    router.push(`/bookclub/${clubId}`);
+  };
+
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
       {bookClubList.length === 0 ? (
@@ -201,7 +209,8 @@ export default function JoinedClubList({ user, sortBy }: JoinedClubListProps) {
             {/* TODO: isCanceled, imageUrl. isPast, status 수정 */}
             <Card
               variant="participatedClub"
-              isLiked={bookClub.isLiked}
+              clubId={bookClub.clubId}
+              // isLiked={bookClub.isLiked}
               isCanceled={bookClub.isCanceled}
               imageUrl={bookClub.imageUrl}
               title={bookClub.title}
@@ -211,8 +220,8 @@ export default function JoinedClubList({ user, sortBy }: JoinedClubListProps) {
               bookClubType={bookClub.bookClubType}
               isPast={bookClub.isPast}
               status={bookClub.clubStatus}
-              onClick={() => alert('카드 컴포넌트 클릭')}
-              onLikeClick={() => alert('찜 버튼 클릭')}
+              onClick={(clubId) => onClickCard(clubId)}
+              // onLikeClick={() => alert('찜 버튼 클릭')}
               onDelete={() => alert('취소된 모임 삭제하기 버튼 클릭')}
               onWriteReview={() => alert('리뷰 작성하기 버튼 클릭')}
               onCancel={() => alert('취소하기 버튼 클릭')}

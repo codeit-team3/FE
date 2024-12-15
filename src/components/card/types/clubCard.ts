@@ -4,16 +4,17 @@ interface ClubCard {
   imageAlt?: string;
 
   // 모임 정보
+  clubId: number;
   title: string;
   location: string;
   datetime: string;
   meetingType: 'ONLINE' | 'OFFLINE';
   bookClubType: 'FREE' | 'FIXED';
   isPast: boolean; // 지난 모임인지 아닌지
-  status: 'completed' | 'scheduled' | 'pending' | 'confirmed' | 'closed'; // 개설 현황
+  status: 'pending' | 'confirmed' | 'closed'; // 개설 현황
 
   // 액션 (카드 클릭시 라우터 처리 등)
-  onClick: () => void;
+  onClick: (clubId: number) => void;
 }
 
 interface DefaultClubCard extends ClubCard {
@@ -32,8 +33,8 @@ interface DefaultClubCard extends ClubCard {
 
 interface ParticipatedClubCard extends ClubCard {
   // 찜 정보
-  isLiked: boolean;
-  onLikeClick: () => void;
+  // isLiked: boolean;
+  // onLikeClick: () => void;
 
   // 취소 정보 (블러)
   isCanceled: boolean;

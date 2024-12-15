@@ -200,6 +200,7 @@ function Card(props: CardProps) {
       case 'defaultClub':
       default: {
         const {
+          clubId,
           imageUrl,
           imageAlt,
           title,
@@ -228,7 +229,10 @@ function Card(props: CardProps) {
               onLikeClick={onLikeClick}
             />
 
-            <Card.Box onClick={onClick} className="justify-between">
+            <Card.Box
+              onClick={() => onClick(clubId)}
+              className="justify-between"
+            >
               <div className="flex flex-col gap-0.5">
                 <div className="flex justify-between">
                   <Card.Title>{title}</Card.Title>
@@ -255,17 +259,18 @@ function Card(props: CardProps) {
                 />
               </div>
             </Card.Box>
-            {isCanceled && <Card.Overlay onDelete={onDelete} />}
+            {isCanceled && <Card.Overlay onDelete={() => onDelete()} />}
           </div>
         );
       }
 
       case 'participatedClub': {
         const {
+          clubId,
           imageUrl,
           imageAlt,
-          isLiked,
-          onLikeClick,
+          // isLiked,
+          // onLikeClick,
           isCanceled,
           onClick,
           onDelete,
@@ -285,10 +290,13 @@ function Card(props: CardProps) {
             <Card.Image
               url={imageUrl}
               alt={imageAlt}
-              isLiked={isLiked}
-              onLikeClick={onLikeClick}
+              // isLiked={isLiked}
+              // onLikeClick={onLikeClick}
             />
-            <Card.Box onClick={onClick} className="justify-between">
+            <Card.Box
+              onClick={() => onClick(clubId)}
+              className="justify-between"
+            >
               <div className="flex flex-col gap-2.5">
                 <div className="flex justify-between">
                   <div className="flex gap-2">
@@ -334,13 +342,14 @@ function Card(props: CardProps) {
                 </div>
               </div>
             </Card.Box>
-            {isCanceled && <Card.Overlay onDelete={onDelete} />}
+            {isCanceled && <Card.Overlay onDelete={() => onDelete} />}
           </div>
         );
       }
 
       case 'hostedClub': {
         const {
+          clubId,
           imageUrl,
           imageAlt,
           onClick,
@@ -358,7 +367,10 @@ function Card(props: CardProps) {
         return (
           <div className="flex flex-col gap-6 md:flex-row">
             <Card.Image url={imageUrl} alt={imageAlt} />
-            <Card.Box onClick={onClick} className="justify-between">
+            <Card.Box
+              onClick={() => onClick(clubId)}
+              className="justify-between"
+            >
               <div className="flex flex-col gap-2.5">
                 <div className="flex justify-between">
                   <ClubChip variant={isPast ? 'completed' : status} />
@@ -416,6 +428,7 @@ function Card(props: CardProps) {
 
       case 'detailedClub': {
         const {
+          clubId,
           imageUrl,
           imageAlt,
           title,
@@ -545,7 +558,10 @@ function Card(props: CardProps) {
                   isHost={isHost}
                 />
 
-                <Card.Box onClick={onClick} className="justify-between">
+                <Card.Box
+                  onClick={() => onClick(clubId)}
+                  className="justify-between"
+                >
                   <div className="flex flex-col gap-0.5">
                     <div className="flex justify-between">
                       <Card.Title>{title}</Card.Title>

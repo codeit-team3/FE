@@ -21,7 +21,7 @@ export interface ProfileEditData {
 
 //TODO: isCanceled, imageUrl. isPast, status 수정
 export interface BookClub {
-  id: number;
+  clubId: number;
   title: string;
   description: string;
   meetingType: 'ONLINE' | 'OFFLINE';
