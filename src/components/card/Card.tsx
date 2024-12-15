@@ -216,7 +216,7 @@ function Card(props: CardProps) {
           bookClubType,
           onClick,
           onDelete,
-          status,
+          clubStatus,
         } = props as DefaultClubCard & { variant: 'defaultClub' };
 
         return (
@@ -251,7 +251,7 @@ function Card(props: CardProps) {
                     max={max}
                     isPast={isPast}
                   />
-                  <ClubChip variant={status} isPast={isPast} />
+                  <ClubChip variant={clubStatus} isPast={isPast} />
                 </div>
                 <ProgressBar
                   percentage={(current / max) * 100}
@@ -274,7 +274,7 @@ function Card(props: CardProps) {
           isCanceled,
           onClick,
           onDelete,
-          status,
+          clubStatus,
           // meetingType,
           bookClubType,
           title,
@@ -301,7 +301,7 @@ function Card(props: CardProps) {
                 <div className="flex justify-between">
                   <div className="flex gap-2">
                     <ClubChip variant={isPast ? 'completed' : 'scheduled'} />
-                    <ClubChip variant={status} />
+                    <ClubChip variant={clubStatus} />
                   </div>
                   <ClubChip variant={bookClubType} />
                 </div>
@@ -334,7 +334,7 @@ function Card(props: CardProps) {
                       lightColor="gray-normal-01"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onCancel();
+                        onCancel(clubId);
                       }}
                       className="w-full"
                     />
@@ -342,7 +342,7 @@ function Card(props: CardProps) {
                 </div>
               </div>
             </Card.Box>
-            {isCanceled && <Card.Overlay onDelete={() => onDelete} />}
+            {isCanceled && <Card.Overlay onDelete={() => onDelete(clubId)} />}
           </div>
         );
       }
@@ -353,7 +353,7 @@ function Card(props: CardProps) {
           imageUrl,
           imageAlt,
           onClick,
-          status,
+          clubStatus,
           // meetingType,
           bookClubType,
           isPast,
@@ -373,7 +373,7 @@ function Card(props: CardProps) {
             >
               <div className="flex flex-col gap-2.5">
                 <div className="flex justify-between">
-                  <ClubChip variant={isPast ? 'completed' : status} />
+                  <ClubChip variant={isPast ? 'completed' : clubStatus} />
                   <ClubChip variant={bookClubType} />
                 </div>
                 <div className="flex flex-col">
@@ -442,7 +442,7 @@ function Card(props: CardProps) {
           max,
           isPast,
           host,
-          status,
+          clubStatus,
           participants,
           onClick,
           isHost,
@@ -591,7 +591,7 @@ function Card(props: CardProps) {
                           ))}
                         </AvatarGroup>
                       </div>
-                      <ClubChip variant={status} isPast={isPast} />
+                      <ClubChip variant={clubStatus} isPast={isPast} />
                     </div>
                     <ProgressBar
                       percentage={(current / max) * 100}

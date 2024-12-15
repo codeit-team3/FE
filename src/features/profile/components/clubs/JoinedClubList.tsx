@@ -1,6 +1,8 @@
 import Card from '@/components/card/Card';
 import { BookClub, User } from '../../types';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import WriteReviewModal from '../WriteReviewModal';
 
 interface JoinedClubListProps {
   user: User | null;
@@ -183,24 +185,47 @@ const mockJoinedBookClubList: BookClub[] = [
 ];
 
 export default function JoinedClubList({ user, sortBy }: JoinedClubListProps) {
-  // const bookClubList: BookClub[] = [];
-  const router = useRouter();
   console.log(user, sortBy);
-  const bookClubList = mockJoinedBookClubList;
 
+  const router = useRouter();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // const bookClubList: BookClub[] = [];
+  const bookClubList = mockJoinedBookClubList;
   const NO_LIST_MESSAGE =
     '아직 신청한 모임이 없어요.\n지금 바로 책 모임을 신청해 보세요';
 
   //카드 컴포넌트 클릭 시 해당 모임 상세페이지로 라우팅
-  const onClickCard = (clubId: number) => {
-    alert(`${clubId}로 페이지 이동`);
+  const handleCardClick = (clubId: number) => {
     router.push(`/bookclub/${clubId}`);
+  };
+
+  const handleCancelClick = (clubId: number) => {
+    alert(`${clubId}취소하기`);
+    //TODO: API작업 필요
+  };
+
+  const handleDeleteClick = (clubId: number) => {
+    alert(`${clubId}삭제하기`);
+    //TODO:API 작업 필요
+  };
+
+  const onSubmitReview = (rating: number, review: string) => {
+    alert(`점수:${rating} 리뷰:${review}`);
+    //TODO:API 작업 필요
+    setIsModalOpen(false);
   };
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
+      <WriteReviewModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={(rating, review) => onSubmitReview(rating, review)}
+      />
       {bookClubList.length === 0 ? (
-        <div className="flex h-full text-center text-gray-normal-03">
+        <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
           <span className="whitespace-pre-wrap">{NO_LIST_MESSAGE}</span>
         </div>
       ) : (
@@ -219,12 +244,12 @@ export default function JoinedClubList({ user, sortBy }: JoinedClubListProps) {
               meetingType={bookClub.meetingType}
               bookClubType={bookClub.bookClubType}
               isPast={bookClub.isPast}
-              status={bookClub.clubStatus}
-              onClick={(clubId) => onClickCard(clubId)}
+              clubStatus={bookClub.clubStatus}
+              onClick={(clubId) => handleCardClick(clubId)}
               // onLikeClick={() => alert('찜 버튼 클릭')}
-              onDelete={() => alert('취소된 모임 삭제하기 버튼 클릭')}
-              onWriteReview={() => alert('리뷰 작성하기 버튼 클릭')}
-              onCancel={() => alert('취소하기 버튼 클릭')}
+              onCancel={(clubId) => handleCancelClick(clubId)}
+              onWriteReview={() => setIsModalOpen(true)}
+              onDelete={(clubId) => handleDeleteClick(clubId)}
             />
           </div>
         ))

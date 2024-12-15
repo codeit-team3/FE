@@ -11,7 +11,7 @@ interface ClubCard {
   meetingType: 'ONLINE' | 'OFFLINE';
   bookClubType: 'FREE' | 'FIXED';
   isPast: boolean; // 지난 모임인지 아닌지
-  status: 'pending' | 'confirmed' | 'closed'; // 개설 현황
+  clubStatus: 'pending' | 'confirmed' | 'closed'; // 개설 현황
 
   // 액션 (카드 클릭시 라우터 처리 등)
   onClick: (clubId: number) => void;
@@ -38,11 +38,11 @@ interface ParticipatedClubCard extends ClubCard {
 
   // 취소 정보 (블러)
   isCanceled: boolean;
-  onDelete: () => void;
+  onDelete: (clubId: number) => void;
 
   // 버튼 액션
   onWriteReview: () => void; // 리뷰 작성
-  onCancel: () => void; // 모임 취소
+  onCancel: (clubId: number) => void; // 모임 취소
 }
 
 interface HostedClubCard extends ClubCard {
