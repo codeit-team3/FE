@@ -77,7 +77,7 @@ describe('로그인 상태에 따른 버튼 렌더링', () => {
         id: 1,
         email: 'user@example.com',
         name: 'User Name',
-        companyName: 'Company Name',
+        description: 'description',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
