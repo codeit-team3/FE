@@ -3,39 +3,19 @@
 import {
   HeaderSection,
   FilterSection,
-  MainSection,
+  ClubListSection,
 } from '@/features/bookclub/components';
-import { useState } from 'react';
+import CategoryTabs from './CategoryTabs';
 
 function BookClubMainPage() {
-  const [searchValue, setSearchValue] = useState('');
-  const [selectedTab, setSelectedTab] = useState('전체');
-  // const [selectedOnOff, setSelectedOnOff] = useState<string | undefined>(
-  //   undefined,
-  // );
-  // const [selectedMemberCount, setSelectedMemberCount] = useState<
-  //   string | undefined
-  // >(undefined);
-  // const [selectedChecking, setSelectedChecking] = useState(false);
-  // const [selectedSorting, setSelectedSorting] = useState<string | undefined>(
-  //   undefined,
-  // );
-
   return (
     <>
       <HeaderSection />
-      <FilterSection
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
-        selectedTab={selectedTab}
-        setSelectedTab={setSelectedTab}
-        // setSelectedOnOff={setSelectedOnOff}
-        // setSelectedMemberCount={setSelectedMemberCount}
-        // selectedChecking={selectedChecking}
-        // setSelectedChecking={setSelectedChecking}
-        // setSelectedSorting={setSelectedSorting}
-      />
-      <MainSection />
+      <section className="flex w-full flex-col gap-y-3 px-[20px] pt-[20px] md:px-[24px] lg:px-[102px]">
+        <CategoryTabs />
+        <FilterSection />
+      </section>
+      <ClubListSection />
     </>
   );
 }
