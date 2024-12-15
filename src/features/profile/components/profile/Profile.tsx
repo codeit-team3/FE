@@ -24,6 +24,7 @@ function Profile({ user }: ProfilePageProps) {
           profileData={{
             name: user?.name || '',
             companyName: user?.companyName || '',
+            image: user?.image,
           }}
         />
       )}
