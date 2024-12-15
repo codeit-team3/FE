@@ -48,6 +48,7 @@ function ProfileEditContent({
             <input
               type="text"
               name="name"
+              aria-label="name"
               value={formData.name}
               onChange={handleChange}
               className="w-full rounded-lg bg-gray-light-02 p-2 font-medium"
@@ -58,6 +59,7 @@ function ProfileEditContent({
             <input
               type="text"
               name="description"
+              aria-label="description"
               value={formData.description}
               onChange={handleChange}
               className="w-full rounded-lg bg-gray-light-02 p-2 font-medium"
