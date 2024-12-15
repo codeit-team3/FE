@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Tab from './Tab';
-import { BOOK_TABS, CONTENT_TABS, MY_PAGE_TABS } from '@/constants/tabs';
+import {
+  BOOK_TABS,
+  CONTENT_TABS,
+  CLUB_TABS,
+  EXCHANGE_TABS,
+} from '@/constants/tabs';
 
 const meta = {
   title: 'Components/Tab',
@@ -17,17 +22,17 @@ const meta = {
     },
     items: {
       control: 'select',
-      options: [BOOK_TABS, CONTENT_TABS, MY_PAGE_TABS],
+      options: [BOOK_TABS, CONTENT_TABS, CLUB_TABS, EXCHANGE_TABS],
       mapping: {
         BOOK_TABS: BOOK_TABS,
         CONTENT_TABS: CONTENT_TABS,
-        MY_PAGE_TABS: MY_PAGE_TABS,
+        CLUB_TABS: CLUB_TABS,
       },
       description: '탭 아이템 목록',
     },
     activeTab: {
       control: 'select',
-      options: [...BOOK_TABS, ...CONTENT_TABS, ...MY_PAGE_TABS],
+      options: [...BOOK_TABS, ...CONTENT_TABS, ...CLUB_TABS, ...EXCHANGE_TABS],
       description: '현재 선택된 탭',
     },
   },

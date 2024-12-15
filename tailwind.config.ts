@@ -37,6 +37,15 @@ const config: Config = {
           'dark-03': '#004c41',
           darker: '#003b33',
         },
+        blue: {
+          light: '#d9ebff',
+          'light-active': '#009cf4',
+          normal: '#007aff',
+        },
+        red: {
+          pink: '#ff337e',
+          normal: '#dc2626',
+        },
       },
     },
   },
