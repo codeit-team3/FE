@@ -1,59 +1,39 @@
-// 'use client';
+import React from 'react';
+import useBookClubList from '../hooks/useFetchBookClubList';
+import { BookClubMainPage } from '../components';
 
-// import React, { useState } from 'react';
-// import { useFetchBookClubList } from '../hooks/useFetchBookClubList';
-// import CategoryTabs from '../components/CategoryTabs';
-// import { FilterSection } from '../components';
+const BookClubContainer = () => {
+  // 커스텀 훅에서 상태와 핸들러 가져오기
+  const { bookClubs, loading, filters, updateFilters } = useBookClubList();
 
-// function BookClubMainPage() {
-//   const { bookClubList, isLoading } = useFetchBookClubList();
+  // 필터 변경 핸들러
+  // Partial: 속성을 필수에서 선택으로 변환
+  // 예시)
+  // type PartialFilters = {
+  //   searchKeyword?: string;
+  //   bookClubType?: string;
+  //   meetingType?: string;
+  //   order?: string;
+  // };
+  const handleFilterChange = (newFilter: Partial<typeof filters>) => {
+    updateFilters(newFilter);
+  };
 
-//   // const [selectedOnOff, setSelectedOnOff] = useState<string | undefined>(
-//   //   undefined,
-//   // );
+  // 페이지네이션 핸들러
+  // const handlePageChange = (page: number) => {
+  //   goToPage(page);
+  // };
 
-//   const [selectedSorting, setSelectedSorting] = useState<string | undefined>(
-//     undefined,
-//   );
-//   const [selectedTab, setSelectedTab] = useState('전체'); // 탭
-//   const [searchValue, setSearchValue] = useState(''); // 검색
-//   const [selectedMeetingType, setSelectedMeetingType] = useState('ALL'); // 온/오프라인인
-//   const [selectedMemberCount, setSelectedMemberCount] = useState<
-//     string | undefined
-//   >(undefined);
-//   const [showAvailableOnly, setShowAvailableOnly] = useState(false); // 신청가능
+  return (
+    <BookClubMainPage
+      bookClubs={bookClubs} // 필터링된 책 모임 데이터
+      loading={loading} // 로딩 상태
+      // error={error}               // 에러 상태
+      filters={filters} // 현재 필터 상태
+      onFilterChange={handleFilterChange} // 필터 변경 이벤트
+      // onPageChange={handlePageChange}     // 페이지네이션 이벤트
+    />
+  );
+};
 
-//   // 필요한 데이터 가공
-//   const categoryData = Array.from(
-//     new Set(bookClubList.map((club) => club.meetingType)) // 중복 제거
-//   );
-
-//   const filteredData = bookClubList.filter((club) => {
-//     const matchesTab = selectedTab === '전체' || club.meetingType === selectedTab;
-//     const matchesSearch = club.title.includes(searchValue);
-//     return matchesTab && matchesSearch;
-//   });
-
-//   if (isLoading) {
-//     return <div>Loading...</div>;
-//   }
-
-//   return (
-//     <div>
-//       <CategoryTabs
-//         selectedTab={selectedTab}
-//         setSelectedTab={setSelectedTab}
-//         categoryData={categoryData} // 카테고리 데이터 전달
-//       />
-//       <FilterSection
-//         searchValue={searchValue}
-//         setSearchValue={setSearchValue}
-//         selectedMeetingType={selectedMeetingType}
-//         setSelectedMeetingType={setSelectedMeetingType}
-//         // filterData={filteredData} // 필터링된 데이터 전달
-//       />
-//     </div>
-//   );
-// }
-
-// export default BookClubMainPage;
+export default BookClubContainer;
