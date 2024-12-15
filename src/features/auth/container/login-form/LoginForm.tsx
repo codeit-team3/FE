@@ -28,7 +28,7 @@ export default function LoginForm() {
   const onSubmit = useLoginSubmit(setError, reset);
 
   return (
-    <div className="flex h-auto w-full flex-col items-center justify-center rounded-3xl bg-gray-light-02 px-4 py-8 sm:h-[422px] sm:w-[510px] sm:px-14">
+    <div className="flex w-full max-w-[400px] flex-col items-center justify-center rounded-3xl bg-gray-light-02 px-4 py-8 sm:h-[422px] sm:w-[336px] sm:px-14">
       <div className="flex w-full flex-col items-center justify-center gap-6">
         <h3 className="text-2xl font-semibold">로그인</h3>
         <form
@@ -54,9 +54,10 @@ export default function LoginForm() {
           />
           <Button
             text="로그인"
-            size="large"
+            size="modal"
             fillType="solid"
             themeColor="green-normal-01"
+            className="w-full"
             isSubmitting={isSubmitting}
             disabled={!isValid}
           />
