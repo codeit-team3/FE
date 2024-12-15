@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
@@ -8,12 +8,14 @@ import Link from 'next/link';
 import Button from '@/components/button/Button';
 import FormField from '@/features/auth/components/form-field/FormField';
 import { useLoginSubmit } from '@/features/auth/hooks/useLoginSubmit';
+import { useAuthStore } from '@/store/authStore';
 import {
   loginFormSchema,
   type LoginFormData,
 } from '@/features/auth/types/loginFormSchema';
 
 export default function LoginForm() {
+  const { checkLoginStatus } = useAuthStore();
   const {
     register,
     handleSubmit,
@@ -24,6 +26,10 @@ export default function LoginForm() {
     resolver: zodResolver(loginFormSchema),
     mode: 'onChange',
   });
+
+  useEffect(() => {
+    checkLoginStatus();
+  }, [checkLoginStatus]);
 
   const onSubmit = useLoginSubmit(setError, reset);
 
