@@ -42,7 +42,7 @@ export const useCreateBookClub = () => {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization:
-            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiQUNDRVNTIiwic3ViIjoiY2xvdWQwNDA2QG5hdmVyLmNvbSIsImlhdCI6MTczNDI0NjUyOSwiZXhwIjoxNzM0MjQ3NDI5fQ.RtxUsFzr_TMeEzXz1uCyL0ae2yyZ3Vp8W3plGvJDXtg',
+            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiQUNDRVNTIiwic3ViIjoiY2xvdWQwNDA2QG5hdmVyLmNvbSIsImlhdCI6MTczNDI0NzY3OSwiZXhwIjoxNzM0MzM0MDc5fQ.LPfdAD6zrsU3tOKys-WSCt6fi1QhtpVJd2VTXKYrNQc',
         },
       });
 

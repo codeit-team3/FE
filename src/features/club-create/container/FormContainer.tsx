@@ -1,7 +1,5 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import Button from '@/components/button/Button';
 import {
   CreateClubFormField,
@@ -9,26 +7,24 @@ import {
   InputField,
   RadioButtonGroup,
 } from '@/features/club-create/components';
-import { BookClubForm, bookClubSchema } from '@/features/club-create/types';
-import { useCreateBookClub } from '@/features/club-create/hooks/useCreateBookClub';
 import 'react-datepicker/dist/react-datepicker.css';
 import ImageField from '@/features/club-create/container/ImageField';
+import { useBookClubForm } from '@/features/club-create/hooks';
 
 function FormContainer() {
-  const { onSubmit, isLoading } = useCreateBookClub();
   const {
     register,
-    handleSubmit,
     control,
     setValue,
-    formState: { errors, isValid },
+    errors,
+    isValid,
     watch,
-  } = useForm<BookClubForm>({
-    resolver: zodResolver(bookClubSchema),
-  });
+    onSubmit,
+    isLoading,
+  } = useBookClubForm();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10">
+    <form onSubmit={onSubmit} className="flex flex-col gap-10">
       <CreateClubFormField
         label="모임 이름"
         error={errors.title?.message}
