@@ -14,7 +14,6 @@ export const useCreateBookClub = () => {
 
     try {
       const response = await createBookClub(data);
-      alert('북클럽이 성공적으로 생성되었습니다!');
       return response;
     } catch (error) {
       setError('북클럽 생성에 실패했습니다.');
