@@ -106,7 +106,7 @@ function HeaderSection() {
   };
 
   return (
-    <header className="py-6">
+    <header className="flex justify-center py-6">
       <Card {...defaultCardProps} />
       <PopUp
         isOpen={isOpen}

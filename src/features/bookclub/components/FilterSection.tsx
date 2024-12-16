@@ -19,7 +19,7 @@ function FilterSection() {
           aria-label="책 검색"
         />
       </div>
-      <div className="flex w-full gap-x-2 overflow-x-auto whitespace-nowrap sm:justify-between [&::-webkit-scrollbar]:hidden">
+      <div className="flex w-full gap-x-2 whitespace-nowrap sm:justify-between [&::-webkit-scrollbar]:hidden">
         <div className="flex items-center gap-x-2">
           <DropDown
             variant="onOff"
