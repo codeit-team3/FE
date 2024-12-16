@@ -1,1 +1,4 @@
-export {};
+export { default as ClubContents } from './ClubContents';
+export { default as MainContent } from './MainContent';
+export { default as ProfileHeader } from './ProfileHeader';
+export { default as Profile } from './ProfilePage';

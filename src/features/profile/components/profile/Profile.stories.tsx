@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Profile from './Profile';
-import User from '../../types/user';
+import { User } from '../../types';
 
 const mockUser: User = {
   teamId: '1',
