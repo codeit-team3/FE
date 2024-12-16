@@ -6,7 +6,7 @@ const config: Config = {
     screens: {
       sm: '375px',
       md: '744px',
-      lg: '1920px',
+      lg: '1024px',
     },
     extend: {
       colors: {
@@ -38,7 +38,13 @@ const config: Config = {
           darker: '#003b33',
         },
         blue: {
-          'normal-01': '#007AFF',
+          light: '#d9ebff',
+          'light-active': '#009cf4',
+          normal: '#007aff',
+        },
+        red: {
+          pink: '#ff337e',
+          normal: '#dc2626',
         },
       },
     },

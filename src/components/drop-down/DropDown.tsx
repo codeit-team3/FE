@@ -1,4 +1,3 @@
-'use client';
 import React, { useRef, useState } from 'react';
 import { IcDropDown } from '../../../public/icons';
 import Avatar from '../avatar/Avatar';
@@ -55,6 +54,16 @@ function DropDown({ variant, imgSrc, onChangeSelection }: DropDownProps) {
             />
           </button>
         );
+      case 'sortingReview':
+        return (
+          <button
+            className={`flex h-[40px] items-center justify-start py-[8px] pl-[14px] pr-[6px] text-sm font-medium ${colorClass}`}
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {selectedLabel}
+            <IcDropDown isActive={isActive} color="stroke-green-normal-01" />
+          </button>
+        );
       default:
         return (
           <button
@@ -71,7 +80,7 @@ function DropDown({ variant, imgSrc, onChangeSelection }: DropDownProps) {
   return (
     <div
       ref={dropDownRef}
-      className={`relative flex w-max min-w-max ${(variant === 'navbar' || variant == 'sortingReview') && 'justify-end'}`}
+      className={`relative z-50 flex w-max min-w-max ${(variant === 'navbar' || variant == 'sortingReview') && 'justify-end'}`}
     >
       {renderButton(variant, isActive)}
 
