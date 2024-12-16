@@ -230,7 +230,7 @@ export default function JoinedClubList({ user, sortBy }: JoinedClubListProps) {
         </div>
       ) : (
         bookClubList.map((bookClub, index) => (
-          <div key={index} className="w-full">
+          <div key={index} className="md:w-full">
             {/* TODO: isCanceled, imageUrl. isPast, status 수정 */}
             <Card
               variant="participatedClub"

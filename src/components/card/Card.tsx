@@ -615,7 +615,7 @@ function Card(props: CardProps) {
     >
       <article
         className={twMerge(
-          'relative flex h-full w-full min-w-[336px] flex-col',
+          'relative flex h-full min-w-[336px] flex-col md:w-full',
         )}
       >
         {renderCardContent()}
