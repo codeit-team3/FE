@@ -17,7 +17,7 @@ function HeaderBar() {
     if (value === 'LOGOUT') {
       try {
         await logout();
-        router.replace('/exchange');
+        router.replace('/bookclub');
       } catch (error) {
         console.error('로그아웃 실패:', error);
       }
