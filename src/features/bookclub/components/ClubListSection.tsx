@@ -1,81 +1,88 @@
-// import { Meeting } from '@/components/card/types';
+'use client';
 
 import Card from '@/components/card/Card';
-import { CardProps } from '@/components/card/types';
-
-// const mockImgSrc = '/images/profile.png';
-
-// const mockMeeting: Meeting = {
-//   meetingInfo: {
-//     title: '을지로에서 만나는 독서 모임',
-//     category: '자유책',
-//     location: '을지로 3가',
-//     datetime: '12/14(토) 오전 10:00',
-//   },
-//   participationStatus: {
-//     currentParticipants: 17,
-//     maxParticipants: 20,
-//     isConfirmed: true,
-//     confirmedVariant: 'confirmed',
-//     participants: [
-//       {
-//         src: mockImgSrc,
-//         alt: '참가자1',
-//       },
-//       {
-//         src: mockImgSrc,
-//         alt: '참가자2',
-//       },
-//       {
-//         src: mockImgSrc,
-//         alt: '참가자3',
-//       },
-//     ],
-//   },
-//   imageInfo: {
-//     url: mockImgSrc,
-//     isLiked: true,
-//     onLikeClick: () => alert('좋아요를 눌렀습니다!'),
-//   },
-//   isPast: false,
-//   isCanceled: false,
-//   actions: {
-//     onClick: () => alert('카드를 클릭했습니다!'),
-//     onDelete: () => alert('모임을 삭제했습니다!'),
-//   },
-// };
-
-const defaultCardProps: CardProps = {
-  imageUrl: '/images/profile.png',
-  imageAlt: '모임 이미지',
-  title: '독서 모임',
-  location: '서울 강남구',
-  datetime: '2024-01-20 14:00',
-  isLiked: false,
-  current: 3,
-  max: 8,
-  isPast: false,
-  isCanceled: false,
-  meetingType: 'FIXED',
-  status: 'pending',
-  onLikeClick: () => {
-    console.log('좋아요 클릭');
-  },
-  onClick: () => {
-    console.log('카드 클릭');
-  },
-  onDelete: () => {
-    console.log('삭제 클릭');
-  },
-};
+import { useRouter } from 'next/navigation';
 
 function ClubListSection() {
+  const router = useRouter();
+
+  const cardData = [
+    {
+      id: 1,
+      imageUrl: '/images/profile.png',
+      imageAlt: '모임 이미지',
+      title: '독서 모임 1',
+      location: '서울 강남구',
+      datetime: '2024-01-20 14:00',
+      isLiked: false,
+      current: 3,
+      max: 8,
+      isPast: false,
+      isCanceled: false,
+      // meetingType: 'FIXED', // 정확한 리터럴 값 설정
+      // status: 'pending',
+    },
+    {
+      id: 2,
+      imageUrl: '/images/profile.png',
+      imageAlt: '모임 이미지',
+      title: '독서 모임 1',
+      location: '서울 강남구',
+      datetime: '2024-01-20 14:00',
+      isLiked: false,
+      current: 3,
+      max: 8,
+      isPast: false,
+      isCanceled: false,
+      // meetingType: 'FIXED', // 정확한 리터럴 값 설정
+      // status: 'pending',
+    },
+    {
+      id: 3,
+      imageUrl: '/images/profile.png',
+      imageAlt: '모임 이미지',
+      title: '독서 모임 1',
+      location: '서울 강남구',
+      datetime: '2024-01-20 14:00',
+      isLiked: false,
+      current: 3,
+      max: 8,
+      isPast: false,
+      isCanceled: false,
+      // meetingType: 'FIXED', // 정확한 리터럴 값 설정
+      // status: 'pending',
+    },
+    {
+      id: 4,
+      imageUrl: '/images/profile.png',
+      imageAlt: '모임 이미지',
+      title: '독서 모임 1',
+      location: '서울 강남구',
+      datetime: '2024-01-20 14:00',
+      isLiked: false,
+      current: 3,
+      max: 8,
+      isPast: false,
+      isCanceled: false,
+      // meetingType: 'FIXED', // 정확한 리터럴 값 설정
+      // status: 'pending',
+    },
+  ];
+
   return (
     <main className="flex w-full min-w-[336px] flex-col items-center gap-y-[26px] bg-gray-light-01 px-[20px] pt-[18px] sm:justify-between md:px-[24px] lg:px-[102px]">
-      <Card {...defaultCardProps} />
-      <Card {...defaultCardProps} />
-      <Card {...defaultCardProps} />
-      <Card {...defaultCardProps} />
+      {cardData.map((card, index) => (
+        <div className="md:w-full" key={index}>
+          <Card
+            meetingType={'FIXED' as 'FIXED'}
+            status="pending"
+            {...card}
+            onClick={() => router.push(`/bookclub/${card.id}`)}
+            onLikeClick={() => console.log('좋아요 클릭')}
+            onDelete={() => console.log('삭제 클릭')}
+          />
+        </div>
+      ))}
     </main>
   );
 }
