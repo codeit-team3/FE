@@ -10,7 +10,7 @@ function MainContent({ user }: ProfilePageProps) {
   const [selectedTab, setSelectedTab] = useState<ContentTab>(CONTENT_TABS[0]);
 
   return (
-    <div className="min-h-full w-full">
+    <div className="flex w-full flex-1 flex-col">
       <div className="w-full border-b-2 sm:px-5 md:px-6 lg:px-[102px]">
         <Tab
           items={CONTENT_TABS}
