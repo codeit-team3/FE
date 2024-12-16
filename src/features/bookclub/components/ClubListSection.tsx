@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 const cardData = [
   {
     clubId: 1,
-    imageUrl: '/images/profile.png',
+    imageUrl: '/images/defaultBookClub.jpg',
     imageAlt: '모임 이미지',
     title: '독서 모임 1',
     location: '서울 강남구',
@@ -25,7 +25,7 @@ const cardData = [
   },
   {
     clubId: 2,
-    imageUrl: '/images/profile.png',
+    imageUrl: '/images/defaultBookClub.jpg',
     imageAlt: '모임 이미지',
     title: '독서 모임 1',
     location: '서울 강남구',
@@ -44,7 +44,7 @@ const cardData = [
   },
   {
     clubId: 3,
-    imageUrl: '/images/profile.png',
+    imageUrl: '/images/defaultBookClub.jpg',
     imageAlt: '모임 이미지',
     title: '독서 모임 1',
     location: '서울 강남구',
@@ -63,7 +63,7 @@ const cardData = [
   },
   {
     clubId: 4,
-    imageUrl: '/images/profile.png',
+    imageUrl: '/images/defaultBookClub.jpg',
     imageAlt: '모임 이미지',
     title: '독서 모임 1',
     location: '서울 강남구',
