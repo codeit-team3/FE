@@ -1,4 +1,4 @@
-// import { Meeting } from '@/components/card/types';
+'use client';
 
 import Card from '@/components/card/Card';
 import { CardProps } from '@/components/card/types';
@@ -75,10 +75,18 @@ const defaultCardProps: CardProps = {
 function ClubListSection() {
   return (
     <main className="flex w-full min-w-[336px] flex-col items-center gap-y-[26px] bg-gray-light-01 px-[20px] pt-[18px] sm:justify-between md:px-[24px] lg:px-[102px]">
-      <Card {...defaultCardProps} />
-      <Card {...defaultCardProps} />
-      <Card {...defaultCardProps} />
-      <Card {...defaultCardProps} />
+      {cardData.map((card, index) => (
+        <div className="md:w-full" key={index}>
+          <Card
+            meetingType={'FIXED' as 'FIXED'}
+            status="pending"
+            {...card}
+            onClick={() => router.push(`/bookclub/${card.id}`)}
+            onLikeClick={() => console.log('좋아요 클릭')}
+            onDelete={() => console.log('삭제 클릭')}
+          />
+        </div>
+      ))}
     </main>
   );
 }
