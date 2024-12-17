@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import ReactQueryProviders from '@/lib/utils/reactQueryProvider';
+import HeaderBar from '@/components/header/HeaderBar';
+import Script from 'next/script';
 
 import '@/styles/globals.css';
 
@@ -14,9 +16,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <ReactQueryProviders>{children}</ReactQueryProviders>
+    <html lang="ko">
+      <body className="flex h-full min-h-screen flex-col bg-white">
+        <Script
+          src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+          strategy="beforeInteractive"
+        />
+        <ReactQueryProviders>
+          <HeaderBar />
+          <main className="mx-auto flex w-full max-w-[1200px] flex-1 flex-col bg-white">
+            {children}
+          </main>
+        </ReactQueryProviders>
       </body>
     </html>
   );

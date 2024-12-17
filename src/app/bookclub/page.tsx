@@ -1,9 +1,9 @@
-import Button from '@/components/button/Button';
+import { BookClubMainPage } from '@/features/bookclub/components';
 
 export default function Home() {
   return (
-    <div>
-      <Button />
-    </div>
+    <>
+      <BookClubMainPage />
+    </>
   );
 }

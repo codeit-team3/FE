@@ -1,7 +1,74 @@
 import React from 'react';
+import { twMerge } from 'tailwind-merge';
+import { COLOR_SCHEMES, SIZE } from '@/constants';
 
-const Button = () => {
-  return <div>Button</div>;
-};
+export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
+  text: string;
+  size: 'large' | 'medium' | 'small' | 'modal';
+  fillType: 'solid' | 'outline' | 'lightSolid';
+  themeColor: keyof typeof COLOR_SCHEMES;
+  lightColor?: keyof typeof COLOR_SCHEMES;
+  isSubmitting?: boolean;
+  className?: string;
+}
 
-export default Button;
+export default function Button({
+  text,
+  size,
+  fillType = 'solid',
+  themeColor = 'green-normal-01',
+  lightColor,
+  isSubmitting,
+  ...buttonProps
+}: ButtonProps) {
+  const { disabled, className } = buttonProps;
+
+  const sizeClasses = SIZE[size];
+  const baseClasses = 'rounded-[12px] font-semibold cursor-pointer';
+
+  const resolvedColor =
+    isSubmitting !== undefined
+      ? isSubmitting
+        ? 'gray-normal-03'
+        : 'green-normal-01'
+      : themeColor;
+
+  const variantClasses = (() => {
+    if (disabled) {
+      return `text-gray-dark-02 bg-gray-normal-02`;
+    }
+
+    switch (fillType) {
+      case 'solid':
+        return `text-gray-white ${COLOR_SCHEMES[resolvedColor]['bg']}`;
+      case 'outline':
+        return `bg-gray-white border ${COLOR_SCHEMES[resolvedColor]['text']} ${COLOR_SCHEMES[resolvedColor]['border']}`;
+      case 'lightSolid':
+        if (lightColor) {
+          return `${COLOR_SCHEMES[resolvedColor]['text']} ${COLOR_SCHEMES[lightColor]['bg']}`;
+        } else {
+          return `${COLOR_SCHEMES[resolvedColor]['text']} bg-gray-white`;
+        }
+    }
+  })();
+
+  const isButtonDisabled = isSubmitting || disabled;
+
+  const buttonClassName = twMerge(
+    sizeClasses,
+    baseClasses,
+    variantClasses,
+    isButtonDisabled && 'cursor-not-allowed',
+    className,
+  );
+
+  return (
+    <button
+      {...buttonProps}
+      className={buttonClassName}
+      disabled={isButtonDisabled}
+    >
+      {text}
+    </button>
+  );
+}
