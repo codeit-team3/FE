@@ -3,7 +3,6 @@ import { UseFormReset, UseFormSetError } from 'react-hook-form';
 import { login } from '../api/auth';
 import { LoginFormData } from '../types/loginFormSchema';
 import { handleAuthError } from '../utils/handleAuthError';
-import { setCookie } from '../utils/cookies';
 
 export const useLoginSubmit = (
   setError: UseFormSetError<LoginFormData>,
@@ -15,13 +14,16 @@ export const useLoginSubmit = (
   const handleSubmit = async (data: LoginFormData) => {
     try {
       const response = await login(data);
-      console.log('로그인 성공:', response);
-      reset();
-      setCookie('auth_token', response.accessToken);
+      setTimeout(() => {
+        console.log('로그인 성공:', response);
+        reset();
 
-      const returnUrl = searchParams.get('returnUrl') || '/bookclub';
-      console.log('returnUrl:', returnUrl);
-      router.replace(returnUrl);
+        const returnUrl = searchParams.get('returnUrl') || '/bookclub';
+        console.log('returnUrl:', returnUrl);
+        router.replace(returnUrl);
+      }, 2000);
+
+      // router.refresh();
     } catch (error) {
       handleAuthError(error, setError);
     }
