@@ -14,16 +14,10 @@ export const useLoginSubmit = (
   const handleSubmit = async (data: LoginFormData) => {
     try {
       const response = await login(data);
-      setTimeout(() => {
-        console.log('로그인 성공:', response);
-        reset();
-
-        const returnUrl = searchParams.get('returnUrl') || '/bookclub';
-        console.log('returnUrl:', returnUrl);
-        router.replace(returnUrl);
-      }, 2000);
-
-      // router.refresh();
+      console.log('로그인 성공:', response);
+      reset();
+      const returnUrl = searchParams.get('returnUrl') || '/bookclub';
+      router.replace(returnUrl);
     } catch (error) {
       handleAuthError(error, setError);
     }
