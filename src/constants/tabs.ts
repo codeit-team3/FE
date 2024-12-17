@@ -1,4 +1,4 @@
-export const BOOK_TABS = ['전체', '자유책', '지정책'] as const;
+export const BOOK_TABS = ['ALL', 'FREE', 'FIXED'] as const;
 
 export const CONTENT_TABS = ['모임', '교환'] as const;
 
