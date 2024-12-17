@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom';
 import Profile from './Profile';
 import { render, screen } from '@testing-library/react';
-import User from '../../types/user';
 import userEvent from '@testing-library/user-event';
+import { User } from '../../types';
 
 const mockUser: User = {
   teamId: '1',

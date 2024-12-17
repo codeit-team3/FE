@@ -39,6 +39,7 @@ function HeaderSection() {
   const EXAMPLE_IMAGE = '/images/profile.png';
 
   const defaultCardProps: CardProps = {
+    clubId: 45,
     variant: 'detailedClub',
     imageUrl: EXAMPLE_IMAGE,
     imageAlt: '모임 이미지',
@@ -49,8 +50,9 @@ function HeaderSection() {
     current: 3,
     max: 8,
     isPast: false,
-    meetingType: 'FIXED',
-    status: 'pending',
+    meetingType: 'OFFLINE',
+    bookClubType: 'FIXED',
+    clubStatus: 'pending',
     onClick: () => {},
     onLikeClick: () => {
       setIsLiked(!isLiked);
@@ -104,7 +106,7 @@ function HeaderSection() {
   };
 
   return (
-    <header className="py-6">
+    <header className="flex justify-center py-6">
       <Card {...defaultCardProps} />
       <PopUp
         isOpen={isOpen}

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Modal from '@/components/modal/Modal';
-import RatingIcon from '../../../../public/icons/RatingIcon';
+import RatingIcon from '../../../../../public/icons/RatingIcon';
 
 const INITIAL_RATING = 5;
 const RATING_RANGE = [1, 2, 3, 4, 5] as const;

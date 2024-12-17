@@ -1,12 +1,10 @@
 import SortingButton from '@/components/sorting-button/SortingButton';
 import { EXCHANGE_TABS, ExchangeTab } from '@/constants';
 import { useState } from 'react';
-import TradeRecords from './TradeRecords';
-import MyRegisteredBooks from './MyRegisteredBooks';
-import TradeReviews from './TradeReviews';
+import { MyRegisteredBooks, TradeRecords, TradeReviews } from '../exchange';
 import Tab from '@/components/tab/Tab';
 
-export default function ClubContents() {
+export default function ExchangeContents() {
   const [sortBy, setSortBy] = useState<string | undefined>('NEWEST');
   const [selectedList, setSelectedList] = useState<ExchangeTab>(
     EXCHANGE_TABS[0],

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import NavButton from './NavButton';
 import { NAV_ITEMS } from '@/constants/navigation';
 import { usePathname, useRouter } from 'next/navigation';
@@ -10,18 +10,14 @@ import { logout } from '@/features/auth/api/auth';
 
 function HeaderBar() {
   const pathname = usePathname();
-  const { isLoggedIn, user, checkLoginStatus } = useAuthStore();
+  const { isLoggedIn, user } = useAuthStore();
   const router = useRouter();
-
-  useEffect(() => {
-    checkLoginStatus();
-  }, [checkLoginStatus]);
 
   const handleDropDownChange = async (value: string | undefined) => {
     if (value === 'LOGOUT') {
       try {
         await logout();
-        router.replace('/exchange');
+        router.replace('/bookclub');
       } catch (error) {
         console.error('로그아웃 실패:', error);
       }

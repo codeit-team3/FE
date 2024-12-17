@@ -3,14 +3,14 @@
 import { useState } from 'react';
 import Avatar from '@/components/avatar/Avatar';
 import { IcEdit } from '../../../../../public/icons/index';
-import ProfileEditModal from '../ProfileEditModal';
 import { ProfileEditData, ProfilePageProps } from '../../types';
+import ProfileEditModal from './ProfileEditModal';
 
 function Profile({ user }: ProfilePageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onSubmitEditProfile = (formData: ProfileEditData) => {
-    alert(`name:${formData.name}, companyName:${formData.companyName}`);
+    alert(`name:${formData.name}, companyName:${formData.description}`);
     setIsModalOpen(false);
   };
 
@@ -53,7 +53,7 @@ function Profile({ user }: ProfilePageProps) {
         {/* 프로필 이미지 */}
         <div className="mr-6 h-[80px] w-[80px] rounded-full border-[3px] border-gray-normal-01">
           <Avatar
-            src={user?.image ?? '/images/profile.png'}
+            src={user?.image || '/images/profile.png'}
             alt="profile_page_profile_image"
             size="max"
           />
