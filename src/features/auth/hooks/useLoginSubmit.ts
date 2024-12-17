@@ -3,6 +3,7 @@ import { UseFormReset, UseFormSetError } from 'react-hook-form';
 import { login } from '../api/auth';
 import { LoginFormData } from '../types/loginFormSchema';
 import { handleAuthError } from '../utils/handleAuthError';
+import { setCookie } from '../utils/cookies';
 
 export const useLoginSubmit = (
   setError: UseFormSetError<LoginFormData>,
@@ -16,6 +17,7 @@ export const useLoginSubmit = (
       const response = await login(data);
       console.log('로그인 성공:', response);
       reset();
+      setCookie('auth_token', response.accessToken);
 
       const returnUrl = searchParams.get('returnUrl') || '/bookclub';
       console.log('returnUrl:', returnUrl);
