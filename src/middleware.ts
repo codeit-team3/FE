@@ -6,7 +6,7 @@ const AUTH_REQUIRED_PATHS = ['/wish', '/profile', '/bookclub/create'];
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get('auth_token');
-
+  console.log('token:', token);
   if (AUTH_REQUIRED_PATHS.includes(pathname)) {
     if (!token) {
       const loginUrl = new URL('/login', request.url);

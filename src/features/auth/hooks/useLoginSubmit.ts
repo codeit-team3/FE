@@ -18,6 +18,7 @@ export const useLoginSubmit = (
       reset();
 
       const returnUrl = searchParams.get('returnUrl') || '/bookclub';
+      console.log('returnUrl:', returnUrl);
       router.replace(returnUrl);
     } catch (error) {
       handleAuthError(error, setError);
