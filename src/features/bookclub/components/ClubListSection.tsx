@@ -13,7 +13,7 @@ const defaultCardProps: CardProps = {
   max: 8,
   isPast: false,
   isCanceled: false,
-  meetingType: 'FIXED',
+  bookClubType: 'FIXED',
   status: 'pending',
   onLikeClick: () => {
     console.log('좋아요 클릭');
@@ -45,8 +45,7 @@ function ClubListSection({ bookClubs }: ClubListSectionProps) {
           max={club.memberLimit}
           isPast={new Date(club.targetDate) < new Date()} // 지난 모임 여부
           isCanceled={false} // 모임 취소 여부 (API 값에 따라 변경 가능)
-          // meetingType={club.bookClubType} // 타입 통일 필요
-          meetingType={'FIXED'}
+          bookClubType={club.bookClubType} // 타입 통일 필요
           status="pending" // 기본 상태 (필요에 따라 변경)
           onLikeClick={() => console.log(`${club.title} 좋아요 클릭`)}
           onClick={() => console.log(`${club.title} 카드 클릭`)}

@@ -9,7 +9,7 @@ const meta = {
     layout: 'centered',
   },
   argTypes: {
-    meetingType: {
+    bookClubType: {
       control: 'select',
       options: ['FREE', 'FIXED'],
     },
@@ -31,7 +31,7 @@ const baseArgs = {
   title: '을지로 독서 모임',
   location: '을지로 3가',
   datetime: '12/14(토) 오전 10:00',
-  meetingType: 'FREE' as const,
+  bookClubType: 'FREE' as const,
   isPast: false,
   status: 'confirmed' as const,
   onClick: () => alert('카드 클릭!'),

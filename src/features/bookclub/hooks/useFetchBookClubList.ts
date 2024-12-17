@@ -8,7 +8,7 @@ const useBookClubList = () => {
   const [loading, setLoading] = useState(false); // 로딩 상태
   const [error, setError] = useState<Error | null>(null); // 에러 상태
   const [filters, setFilters] = useState<BookClubParams>({
-    bookClubType: '전체',
+    bookClubType: 'ALL',
     meetingType: 'ALL',
     order: 'DESC',
     page: 1,

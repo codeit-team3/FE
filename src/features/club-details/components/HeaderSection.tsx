@@ -49,7 +49,7 @@ function HeaderSection() {
     current: 3,
     max: 8,
     isPast: false,
-    meetingType: 'FIXED',
+    bookClubType: 'FIXED',
     status: 'pending',
     onClick: () => {},
     onLikeClick: () => {

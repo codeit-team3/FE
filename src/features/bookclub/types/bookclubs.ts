@@ -1,7 +1,5 @@
-import { BookTab } from '@/constants';
-
 export interface BookClubParams {
-  bookClubType?: BookTab;
+  bookClubType?: 'ALL' | 'FREE' | 'FIXED';
   meetingType?: 'ALL' | 'ONLINE' | 'OFFLINE';
   order?: 'DESC' | 'END';
   memberLimit?: number;
@@ -14,7 +12,7 @@ export interface BookClubParams {
 
 export interface Filters {
   searchKeyword?: string;
-  bookClubType?: BookTab; // 필터 타입
+  bookClubType?: 'ALL' | 'FREE' | 'FIXED';
   meetingType?: 'ALL' | 'ONLINE' | 'OFFLINE';
   order?: 'DESC' | 'END';
   page?: number;
@@ -26,7 +24,7 @@ export interface BookClub {
   title: string;
   description: string;
   meetingType: 'ONLINE' | 'OFFLINE';
-  bookClubType: BookTab;
+  bookClubType: 'FREE' | 'FIXED';
   targetDate: string;
   endDate: string;
   memberLimit: number;
