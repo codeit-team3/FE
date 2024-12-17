@@ -1,6 +1,6 @@
 import Card from '@/components/card/Card';
 import { CardProps } from '@/components/card/types';
-import { BookClub } from '../types';
+import { BookClub } from '../types/bookclubs';
 
 const defaultCardProps: CardProps = {
   imageUrl: '/images/profile.png',

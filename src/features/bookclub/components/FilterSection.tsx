@@ -4,7 +4,7 @@ import DropDown from '@/components/drop-down/DropDown';
 import FilterCheckbox from '@/components/filter-checkbox/FilterCheckbox';
 import { useState } from 'react';
 import SortingButton from '@/components/sorting-button/SortingButton';
-import { Filters } from '../types';
+import { Filters } from '../types/bookclubs';
 
 interface CategoryTabsProps {
   filters: Filters;

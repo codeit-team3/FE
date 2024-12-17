@@ -7,7 +7,7 @@ import {
   SearchSection,
 } from '@/features/bookclub/components';
 import CategoryTabs from './CategoryTabs';
-import { BookClub, Filters } from '../types';
+import { BookClub, Filters } from '../types/bookclubs';
 
 interface BookClubMainPageProps {
   bookClubs: BookClub[];

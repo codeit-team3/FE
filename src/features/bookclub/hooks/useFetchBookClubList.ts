@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getBookClubs } from '../api/bookclubApi';
-import { BookClubParams } from '../types';
+import { BookClubParams } from '../types/bookclubs';
 
 const useBookClubList = () => {
   // 상태 관리
