@@ -393,7 +393,7 @@ function Card(props: CardProps) {
                       lightColor="gray-normal-01"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onCancel();
+                        onCancel(clubId);
                       }}
                       className="w-full"
                     />

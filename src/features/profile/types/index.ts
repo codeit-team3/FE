@@ -33,7 +33,8 @@ export interface BookClub {
   memberCount: number;
   isLiked: boolean;
   isCanceled: boolean;
-  imageUrl: string;
+  imageUrl: string | undefined;
   isPast: boolean;
   clubStatus: 'pending' | 'confirmed' | 'closed';
+  reviewScore?: number | undefined;
 }
