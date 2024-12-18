@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getBookClubs } from '../api/bookclubApi';
 import { BookClub, BookClubParams } from '../types/bookclubs';
 
@@ -15,7 +15,7 @@ const useBookClubList = () => {
     searchKeyword: '',
   });
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -27,11 +27,11 @@ const useBookClubList = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters]);
 
   useEffect(() => {
     fetchData();
-  }, [filters]);
+  }, [fetchData]);
 
   const updateFilters = (newFilters: Partial<BookClubParams>) => {
     setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }));
