@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
@@ -8,12 +8,14 @@ import Link from 'next/link';
 import Button from '@/components/button/Button';
 import FormField from '@/features/auth/components/form-field/FormField';
 import { useLoginSubmit } from '@/features/auth/hooks/useLoginSubmit';
+import { useAuthStore } from '@/store/authStore';
 import {
   loginFormSchema,
   type LoginFormData,
 } from '@/features/auth/types/loginFormSchema';
 
 export default function LoginForm() {
+  const { checkLoginStatus } = useAuthStore();
   const {
     register,
     handleSubmit,
@@ -25,10 +27,14 @@ export default function LoginForm() {
     mode: 'onChange',
   });
 
+  useEffect(() => {
+    checkLoginStatus();
+  }, [checkLoginStatus]);
+
   const onSubmit = useLoginSubmit(setError, reset);
 
   return (
-    <div className="flex h-auto w-full flex-col items-center justify-center rounded-3xl bg-gray-light-02 px-4 py-8 sm:h-[422px] sm:w-[510px] sm:px-14">
+    <div className="flex w-full max-w-[400px] flex-col items-center justify-center rounded-3xl bg-gray-light-02 px-4 py-8 sm:h-[422px] sm:px-14 md:max-w-[588px] lg:max-w-[510px]">
       <div className="flex w-full flex-col items-center justify-center gap-6">
         <h3 className="text-2xl font-semibold">로그인</h3>
         <form
@@ -54,9 +60,10 @@ export default function LoginForm() {
           />
           <Button
             text="로그인"
-            size="large"
+            size="modal"
             fillType="solid"
             themeColor="green-normal-01"
+            className="w-full"
             isSubmitting={isSubmitting}
             disabled={!isValid}
           />

@@ -17,7 +17,7 @@ export const useLoginSubmit = (
       console.log('로그인 성공:', response);
       reset();
 
-      const returnUrl = searchParams.get('returnUrl') || '/exchange';
+      const returnUrl = searchParams.get('returnUrl') || '/bookclub';
       router.replace(returnUrl);
     } catch (error) {
       handleAuthError(error, setError);
