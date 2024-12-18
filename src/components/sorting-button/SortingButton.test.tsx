@@ -19,10 +19,10 @@ describe('SortingButton', () => {
 
     //유저가 최초 클릭 시 최신순->마감임박 순으로 전환. 'DEADLINE'으로 onClickSorting 함수 호출
     await userEvent.click(button);
-    expect(mockOnClickSorting).toHaveBeenCalledWith('DEADLINE');
+    expect(mockOnClickSorting).toHaveBeenCalledWith('END');
     //유저가 두번째 클릭 시 마감임박->최신순 순으로 전환. 'NEWEST'으로 onClickSorting 함수 호출
     await userEvent.click(button);
-    expect(mockOnClickSorting).toHaveBeenCalledWith('NEWEST');
+    expect(mockOnClickSorting).toHaveBeenCalledWith('DESC');
   });
 
   it('날짜순 SortingButton 렌더링 확인', async () => {
