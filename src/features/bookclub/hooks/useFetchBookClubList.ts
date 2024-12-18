@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { getBookClubs } from '../api/bookclubApi';
-import { BookClubParams } from '../types/bookclubs';
+import { BookClub, BookClubParams } from '../types/bookclubs';
 
 const useBookClubList = () => {
   // 상태 관리
-  const [bookClubs, setBookClubs] = useState([]); // 책 모임 목록 데이터
+  const [bookClubs, setBookClubs] = useState<BookClub[]>([]); // 책 모임 목록 데이터
   const [loading, setLoading] = useState(false); // 로딩 상태
   const [error, setError] = useState<Error | null>(null); // 에러 상태
   const [filters, setFilters] = useState<BookClubParams>({
@@ -47,6 +47,7 @@ const useBookClubList = () => {
 
   return {
     bookClubs,
+    setBookClubs,
     loading,
     error,
     filters,
