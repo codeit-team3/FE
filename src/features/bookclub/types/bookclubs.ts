@@ -10,10 +10,8 @@ export interface BookClubParams {
   searchKeyword?: string;
 }
 
-// API 타입
 export type ApiBookClubType = 'ALL' | 'FREE' | 'FIXED';
 
-// UI 타입
 export type UiBookClubType = '전체' | '자유책' | '지정책';
 
 export interface Filters {

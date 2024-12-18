@@ -3,10 +3,9 @@ import { getBookClubs } from '../api/bookclubApi';
 import { BookClub, BookClubParams } from '../types/bookclubs';
 
 const useBookClubList = () => {
-  // 상태 관리
-  const [bookClubs, setBookClubs] = useState<BookClub[]>([]); // 책 모임 목록 데이터
-  const [loading, setLoading] = useState(false); // 로딩 상태
-  const [error, setError] = useState<Error | null>(null); // 에러 상태
+  const [bookClubs, setBookClubs] = useState<BookClub[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
   const [filters, setFilters] = useState<BookClubParams>({
     bookClubType: 'ALL',
     meetingType: 'ALL',
@@ -16,7 +15,6 @@ const useBookClubList = () => {
     searchKeyword: '',
   });
 
-  // 데이터 가져오는 함수
   const fetchData = async () => {
     setLoading(true);
     setError(null);
@@ -31,17 +29,14 @@ const useBookClubList = () => {
     }
   };
 
-  // 필터나 검색어가 변경될 때마다 데이터 요청
   useEffect(() => {
     fetchData();
   }, [filters]);
 
-  // 필터 상태 업데이트 함수
   const updateFilters = (newFilters: Partial<BookClubParams>) => {
     setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }));
   };
 
-  // 페이지네이션 함수
   const goToPage = (pageNumber: number) => {
     setFilters((prevFilters) => ({ ...prevFilters, page: pageNumber }));
   };

@@ -9,15 +9,6 @@ const BookClubContainer = () => {
   const { bookClubs, setBookClubs, loading, filters, updateFilters } =
     useBookClubList();
 
-  // 필터 변경 핸들러
-  // Partial: 속성을 필수에서 선택으로 변환
-  // 예시)
-  // type PartialFilters = {
-  //   searchKeyword?: string;
-  //   bookClubType?: string;
-  //   meetingType?: string;
-  //   order?: string;
-  // };
   const handleFilterChange = (newFilter: Partial<typeof filters>) => {
     updateFilters(newFilter);
   };
@@ -29,10 +20,10 @@ const BookClubContainer = () => {
 
   return (
     <BookClubMainPage
-      bookClubs={bookClubs} // 필터링된 책 모임 데이터
+      bookClubs={bookClubs}
       setBookClubs={setBookClubs}
-      loading={loading} // 로딩 상태
-      // error={error}               // 에러 상태
+      loading={loading}
+      // error={error}
       filters={filters} // 현재 필터 상태
       onFilterChange={handleFilterChange} // 필터 변경 이벤트
       // onPageChange={handlePageChange}     // 페이지네이션 이벤트
