@@ -2,7 +2,7 @@
 
 import Card from '@/components/card/Card';
 import { BookClub } from '../types/bookclubs';
-import { formatDate } from '@/lib/utils/formatDate';
+import { formatDateForUI } from '@/lib/utils/formatDateForUI';
 import { useRouter } from 'next/navigation';
 
 interface ClubListSectionProps {
@@ -30,7 +30,7 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
             imageAlt={club.title}
             title={club.title}
             location={club.town || ''}
-            datetime={formatDate(club.targetDate)}
+            datetime={formatDateForUI(club.targetDate, 'KOREAN')}
             isLiked={club.isLiked}
             current={club.memberCount}
             max={club.memberLimit}
