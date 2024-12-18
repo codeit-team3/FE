@@ -25,6 +25,7 @@ const useBookClubList = () => {
       setBookClubs(data);
     } catch (err) {
       setError(err as Error);
+      console.log(err);
     } finally {
       setLoading(false);
     }

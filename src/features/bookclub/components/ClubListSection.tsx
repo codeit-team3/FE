@@ -1,3 +1,5 @@
+'use client';
+
 import Card from '@/components/card/Card';
 import { BookClub } from '../types/bookclubs';
 import { formatDate } from '@/lib/utils/formatDate';
@@ -23,6 +25,7 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
         bookClubs.map((club) => (
           <Card
             key={club.id}
+            clubId={club.id}
             imageUrl={club.imageUrl || '/images/profile.png'}
             imageAlt={club.title}
             title={club.title}
@@ -34,7 +37,8 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
             isPast={new Date(club.endDate) < new Date()} // 지난 모임 여부
             isCanceled={false} // 모임 취소 여부 (API 값에 따라 변경 가능)
             bookClubType={club.bookClubType}
-            status={clubStatus(club.memberCount, club.endDate)}
+            meetingType={club.meetingType}
+            clubStatus={clubStatus(club.memberCount, club.endDate)}
             onLikeClick={() => console.log(`${club.title} 좋아요 클릭`)}
             onClick={() => router.push(`/bookclub/${club.id}`)}
             onDelete={() => console.log(`${club.title} 삭제 클릭`)}
