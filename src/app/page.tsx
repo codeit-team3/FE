@@ -1,9 +1,11 @@
-import { BookClubMainPage } from '@/features/bookclub/components';
+// import { BookClubMainPage } from '@/features/bookclub/components';
+import BookClubContainer from '@/features/bookclub/container/BookClubContainer';
 
 export default function Home() {
   return (
     <div>
-      <BookClubMainPage />
+      {/* <BookClubMainPage /> */}
+      <BookClubContainer />
     </div>
   );
 }
