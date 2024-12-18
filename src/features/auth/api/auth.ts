@@ -27,7 +27,7 @@ export const logout = async () => {
     const accessToken = getCookie('auth_token');
     const refreshToken = getCookie('refresh_token');
 
-    if (!accessToken || !refreshToken) {
+    if (!accessToken && !refreshToken) {
       const { setIsLoggedIn, setUser } = useAuthStore.getState();
       setIsLoggedIn(false);
       setUser(null);

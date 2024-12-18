@@ -28,23 +28,30 @@ export async function loginServer(data: LoginFormData) {
   }
 }
 
-export async function logoutServer(accessToken: string, refreshToken: string) {
+export async function logoutServer(
+  accessToken: string | null,
+  refreshToken: string | null,
+) {
+  const cookieStore = await cookies();
+  cookieStore.delete('auth_token');
+  cookieStore.delete('refresh_token');
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/auths/signout`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+    if (accessToken && refreshToken) {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auths/signout`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ accessToken, refreshToken }),
         },
-        body: JSON.stringify({ accessToken, refreshToken }),
-      },
-    );
-    const cookieStore = await cookies();
-    cookieStore.delete('auth_token');
-    cookieStore.delete('refresh_token');
-    const json = await response.json();
-    return json;
+      );
+      const json = await response.json();
+      return json;
+    } else {
+      return { success: true };
+    }
   } catch (error) {
     console.error(error);
     return null;
