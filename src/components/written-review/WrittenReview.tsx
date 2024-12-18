@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import RatingDisplay from '../rating-display/RatingDisplay';
-import { LocationIcon } from '../../../public/icons';
 import {
   ClubImageProps,
   ClubInfoProps,
@@ -8,6 +7,7 @@ import {
   RatingProps,
   UserProfileProps,
 } from './types/writtenReview';
+import ClubChip from '../chip/club-chip/ClubChip';
 
 // 기본 이미지 (변경될 수 있음)
 const defaultProfileImage = '/images/profile.png';
@@ -74,7 +74,7 @@ function UserProfile({
 function ClubImage({ src, alt }: ClubImageProps) {
   return (
     <Image
-      src={src}
+      src={src || defaultClubImage}
       alt={alt || 'Club image'}
       width={0} // 너비를 Tailwind로 관리하므로 설정하지 않음
       height={0} // 비율을 유지하며 높이는 자동으로 설정됨
@@ -85,16 +85,11 @@ function ClubImage({ src, alt }: ClubImageProps) {
   );
 }
 
-function ClubInfo({ clubName, location }: ClubInfoProps) {
+function ClubInfo({ clubName, bookClubType }: ClubInfoProps) {
   return (
     <div className="flex items-center gap-x-2">
       <p className="text-sm font-bold">{clubName}</p>
-      <div className="flex items-center">
-        <LocationIcon />
-        <span className="text-sm font-semibold text-gray-dark-03">
-          {location}
-        </span>
-      </div>
+      <ClubChip variant={bookClubType} />
     </div>
   );
 }
