@@ -2,42 +2,100 @@
 
 import DropDown from '@/components/drop-down/DropDown';
 import FilterCheckbox from '@/components/filter-checkbox/FilterCheckbox';
-import { useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import SortingButton from '@/components/sorting-button/SortingButton';
-import { Filters } from '../types/bookclubs';
+import { BookClub, Filters } from '../types/bookclubs';
 
 interface CategoryTabsProps {
-  filters: Filters;
+  bookClubs: BookClub[];
+  setBookClubs: Dispatch<SetStateAction<BookClub[]>>;
   onFilterChange: (newFilters: Partial<Filters>) => void;
 }
 
-function FilterSection({ filters, onFilterChange }: CategoryTabsProps) {
+function FilterSection({
+  bookClubs,
+  setBookClubs,
+  onFilterChange,
+}: CategoryTabsProps) {
   const [showAvailableOnly, setShowAvailableOnly] = useState(false); // 신청가능
-  console.log(filters, onFilterChange);
+
+  const filterCheckboxHandelr = (e: ChangeEvent<HTMLInputElement>) => {
+    const isChecked = e.target.checked;
+    setShowAvailableOnly(isChecked);
+    // onFilterChange(showAvailableOnly); // 백엔드에서 처리하는 로직 필요?
+    // memberCount < memberLimit 인 것만 표시 (필터)
+    if (isChecked) {
+      const filteredBookClubs = bookClubs.filter(
+        (club) => club.memberCount < club.memberLimit,
+      );
+      setBookClubs(filteredBookClubs);
+    }
+  };
+
+  const handleMemberLimitChange = (selectedValue: string | undefined) => {
+    let memberLimit = undefined;
+
+    switch (selectedValue) {
+      case 'TWO_FOUR':
+        memberLimit = 4;
+        break;
+      case 'FIVE_SEVEN':
+        memberLimit = 7;
+        break;
+      case 'EIGHT_TEN':
+        memberLimit = 10;
+        break;
+      case 'OVER_ELEVEN':
+        memberLimit = 11;
+        break;
+      default:
+        memberLimit = undefined;
+    }
+
+    onFilterChange({ memberLimit: memberLimit });
+  };
+
+  const onChangeOnOffSelection = (selectedLabel: string | undefined) => {
+    const validValues: Filters['meetingType'][] = ['ALL', 'ONLINE', 'OFFLINE'];
+
+    if (
+      selectedLabel &&
+      validValues.includes(selectedLabel as Filters['meetingType'])
+    ) {
+      onFilterChange({ meetingType: selectedLabel as Filters['meetingType'] });
+    } else {
+      onFilterChange({ meetingType: undefined });
+    }
+  };
+
+  const onChangeOrderSelection = (order: string) => {
+    onFilterChange({ order: order as Filters['order'] });
+  };
 
   return (
-    <div className="flex w-full gap-x-2 overflow-x-auto whitespace-nowrap sm:justify-between [&::-webkit-scrollbar]:hidden">
+    // <div className="flex w-full gap-x-2 overflow-x-auto whitespace-nowrap sm:justify-between [&::-webkit-scrollbar]:hidden">
+    <div className="flex w-full gap-x-2 whitespace-nowrap sm:justify-between [&::-webkit-scrollbar]:hidden">
       <div className="flex items-center gap-x-2">
         <DropDown
           variant="onOff"
-          onChangeSelection={() => {}}
+          onChangeSelection={onChangeOnOffSelection}
           aria-label="온라인/오프라인 선택"
         />
         <DropDown
           variant="memberCount"
-          onChangeSelection={() => {}}
+          onChangeSelection={handleMemberLimitChange}
           aria-label="인원 수 선택"
         />
         <FilterCheckbox
           label="신청가능"
           checked={showAvailableOnly}
-          onChange={(e) => setShowAvailableOnly(e.target.checked)}
+          onChange={filterCheckboxHandelr}
           aria-label="신청가능 필터"
         />
       </div>
       <SortingButton
         variant="byDeadline"
-        onClickSorting={() => {}}
+        onClickSorting={onChangeOrderSelection}
         aria-label="마감임박 정렬"
       />
     </div>
