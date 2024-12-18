@@ -234,7 +234,7 @@ function Card(props: CardProps) {
                   <ClubChip variant={bookClubType} isPast={isPast} />
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <Card.Location>{location}</Card.Location>
+                  {location && <Card.Location>{location}</Card.Location>}
                   <Card.DateTime>{datetime}</Card.DateTime>
                 </div>
               </div>
