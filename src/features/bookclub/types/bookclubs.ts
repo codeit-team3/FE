@@ -1,5 +1,9 @@
+export type ApiBookClubType = 'ALL' | 'FREE' | 'FIXED';
+
+export type UiBookClubType = '전체' | '자유책' | '지정책';
+
 export interface BookClubParams {
-  bookClubType?: 'ALL' | 'FREE' | 'FIXED';
+  bookClubType?: ApiBookClubType;
   meetingType?: 'ALL' | 'ONLINE' | 'OFFLINE';
   order?: 'DESC' | 'END';
   memberLimit?: number;
@@ -9,10 +13,6 @@ export interface BookClubParams {
   size?: number;
   searchKeyword?: string;
 }
-
-export type ApiBookClubType = 'ALL' | 'FREE' | 'FIXED';
-
-export type UiBookClubType = '전체' | '자유책' | '지정책';
 
 export interface Filters {
   searchKeyword?: string;
