@@ -43,11 +43,13 @@ export interface Review {
   reviewId: number;
   userId: number;
   bookClubId: number;
-  rating: number;
-  content: string;
-  clubImgUrl: string | undefined;
-  clubImgAlt: string | undefined;
   clubName: string;
-  bookClubType: 'FREE' | 'FIXED';
+  rating: number;
+  comment: string;
+  clubImgUrl?: string | undefined;
+  clubImgAlt?: string | undefined;
+  profileImg?: string;
+  userName?: string;
   createdAt: string;
+  bookClubType: 'FREE' | 'FIXED';
 }
