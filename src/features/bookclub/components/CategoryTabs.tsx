@@ -1,25 +1,26 @@
 import Tab from '@/components/tab/Tab';
 import { Filters } from '../types/bookclubs';
-import { mapToApiBookClubType, mapToUiBookClubType } from '../utils/filters';
 
 interface CategoryTabsProps {
   filters: Filters;
   onFilterChange: (newFilters: Partial<Filters>) => void;
 }
 
+const TAB_LABELS = {
+  ALL: '전체',
+  FREE: '자유책',
+  FIXED: '지정책',
+} as const;
+
 function CategoryTabs({ filters, onFilterChange }: CategoryTabsProps) {
-  const uiBookClubType = filters?.bookClubType
-    ? mapToUiBookClubType(filters.bookClubType)
-    : '전체';
+  const activeTab = filters?.bookClubType || 'ALL';
 
   return (
     <div>
       <Tab
-        items={['전체', '자유책', '지정책'] as const}
-        activeTab={uiBookClubType}
-        onTabChange={(item) =>
-          onFilterChange({ bookClubType: mapToApiBookClubType(item) })
-        }
+        items={Object.keys(TAB_LABELS) as (keyof typeof TAB_LABELS)[]}
+        activeTab={activeTab}
+        onTabChange={(item) => onFilterChange({ bookClubType: item })}
         tabType="MAIN_TAB"
       />
       <hr className="-mx-[20px] border-t border-gray-normal-01 md:-mx-[24px] lg:-mx-[102px]" />
