@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { getCookie, deleteCookie } from '@/features/auth/utils/cookies';
 import { useAuthStore } from '@/store/authStore';
+import { refreshAccessToken } from '@/features/auth/api/auth';
 
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -36,14 +37,8 @@ apiClient.interceptors.response.use(
       try {
         const refreshToken = getCookie('refresh_token');
         if (refreshToken) {
-          const response = await axios.post(
-            `${process.env.NEXT_PUBLIC_API_URL}/auths/refresh`,
-            {
-              refreshToken,
-            },
-          );
-
-          const newAccessToken = response.data.accessToken;
+          const response = await refreshAccessToken(refreshToken);
+          const newAccessToken = response.accessToken;
 
           document.cookie = `auth_token=${newAccessToken}; max-age=3600; path=/`;
 
