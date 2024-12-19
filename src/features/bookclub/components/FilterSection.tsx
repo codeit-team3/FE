@@ -23,7 +23,6 @@ function FilterSection({
     const isChecked = e.target.checked;
     setShowAvailableOnly(isChecked);
     // onFilterChange(showAvailableOnly); // 백엔드에서 처리하는 로직 필요?
-    // memberCount < memberLimit 인 것만 표시 (필터)
     if (isChecked) {
       const filteredBookClubs = bookClubs.filter(
         (club) => club.memberCount < club.memberLimit,
