@@ -1,105 +1,63 @@
 'use client';
 
 import Card from '@/components/card/Card';
+import { BookClub } from '../types/bookclubs';
+import { formatDateForUI } from '@/lib/utils/formatDateForUI';
 import { useRouter } from 'next/navigation';
 
-const cardData = [
-  {
-    clubId: 1,
-    imageUrl: '/images/defaultBookClub.jpg',
-    imageAlt: '모임 이미지',
-    title: '독서 모임 1',
-    location: '서울 강남구',
-    datetime: '2024-01-20 14:00',
-    isLiked: false,
-    current: 3,
-    max: 8,
-    isPast: false,
-    isCanceled: false,
-    clubStatus: 'pending' as const,
-    meetingType: 'OFFLINE' as const,
-    bookClubType: 'FIXED' as const,
+interface ClubListSectionProps {
+  bookClubs: BookClub[];
+}
 
-    // meetingType: 'FIXED', // 정확한 리터럴 값 설정
-    // status: 'pending',
-  },
-  {
-    clubId: 2,
-    imageUrl: '/images/defaultBookClub.jpg',
-    imageAlt: '모임 이미지',
-    title: '독서 모임 1',
-    location: '서울 강남구',
-    datetime: '2024-01-20 14:00',
-    isLiked: false,
-    current: 3,
-    max: 8,
-    isPast: false,
-    isCanceled: false,
-    clubStatus: 'pending' as const,
-    meetingType: 'OFFLINE' as const,
-    bookClubType: 'FIXED' as const,
-
-    // meetingType: 'FIXED', // 정확한 리터럴 값 설정
-    // status: 'pending',
-  },
-  {
-    clubId: 3,
-    imageUrl: '/images/defaultBookClub.jpg',
-    imageAlt: '모임 이미지',
-    title: '독서 모임 1',
-    location: '서울 강남구',
-    datetime: '2024-01-20 14:00',
-    isLiked: false,
-    current: 3,
-    max: 8,
-    isPast: false,
-    isCanceled: false,
-    clubStatus: 'pending' as const,
-    meetingType: 'OFFLINE' as const,
-    bookClubType: 'FIXED' as const,
-
-    // meetingType: 'FIXED', // 정확한 리터럴 값 설정
-    // status: 'pending',
-  },
-  {
-    clubId: 4,
-    imageUrl: '/images/defaultBookClub.jpg',
-    imageAlt: '모임 이미지',
-    title: '독서 모임 1',
-    location: '서울 강남구',
-    datetime: '2024-01-20 14:00',
-    isLiked: false,
-    current: 3,
-    max: 8,
-    isPast: false,
-    isCanceled: false,
-    clubStatus: 'pending' as const,
-    meetingType: 'OFFLINE' as const,
-    bookClubType: 'FIXED' as const,
-
-    // meetingType: 'FIXED', // 정확한 리터럴 값 설정
-    // status: 'pending',
-  },
-];
-
-function ClubListSection() {
+function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
   const router = useRouter();
+
+  const clubStatus = (
+    memberCount: number,
+    memberLimit: number,
+    endDate: string,
+  ) => {
+    if (new Date(endDate) < new Date() || memberCount === memberLimit) {
+      return 'closed';
+    }
+    return 3 < memberCount ? 'confirmed' : 'pending';
+  };
+
   return (
     <main className="flex w-full min-w-[336px] flex-col items-center gap-y-[26px] bg-gray-light-01 px-[20px] pt-[18px] sm:justify-between md:px-[24px] lg:px-[102px]">
-      {cardData.map((card, index) => (
-        <div className="md:w-full" key={index}>
+      {bookClubs?.length > 0 ? (
+        bookClubs.map((club) => (
           <Card
-            {...card}
-            // // meetingType={'FIXED' as 'FIXED'}
-            // // status="pending"
-            // {...card}
-            variant="defaultClub"
-            onClick={() => router.push(`/bookclub/${card.clubId}`)}
-            onLikeClick={() => console.log('좋아요 클릭')}
-            onDelete={() => console.log('삭제 클릭')}
+            key={club.id}
+            clubId={club.id}
+            imageUrl={club.imageUrl || '/images/profile.png'}
+            imageAlt={club.title}
+            title={club.title}
+            location={club.town || ''}
+            datetime={formatDateForUI(club.targetDate, 'KOREAN')}
+            isLiked={club.isLiked}
+            current={club.memberCount}
+            max={club.memberLimit}
+            isPast={new Date(club.endDate) < new Date()} // 지난 모임 여부
+            isCanceled={false} // 모임 취소 여부 (API 값에 따라 변경 가능)
+            bookClubType={club.bookClubType}
+            meetingType={club.meetingType}
+            clubStatus={clubStatus(
+              club.memberCount,
+              club.memberLimit,
+              club.endDate,
+            )}
+            onLikeClick={() => console.log(`${club.title} 좋아요 클릭`)}
+            onClick={() => router.push(`/bookclub/${club.id}`)}
+            onDelete={() => console.log(`${club.title} 삭제 클릭`)}
           />
+        ))
+      ) : (
+        <div className="mt-12 flex flex-col items-center justify-center font-medium text-gray-normal-03 md:mt-[207px] lg:mt-[180px]">
+          <p>아직 책 모임이 없어요.</p>
+          <p>지금 바로 책 모임을 만들어보세요.</p>
         </div>
-      ))}
+      )}
     </main>
   );
 }

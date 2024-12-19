@@ -19,7 +19,7 @@ function SortingButton({
     setIsActive(!isActive);
     switch (variant) {
       case 'byDeadline':
-        sortBy = isActive ? 'NEWEST' : 'DEADLINE';
+        sortBy = isActive ? 'DESC' : 'END';
         break;
 
       case 'byDate':
@@ -32,7 +32,7 @@ function SortingButton({
   const renderLabel = () => {
     switch (variant) {
       case 'byDeadline':
-        return '마감임박순';
+        return '마감임박';
 
       case 'byDate':
         return isActive ? '오래된순' : '최신순';
