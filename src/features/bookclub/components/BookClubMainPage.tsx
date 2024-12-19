@@ -7,15 +7,15 @@ import {
   SearchSection,
 } from '@/features/bookclub/components';
 import CategoryTabs from './CategoryTabs';
-import { BookClub, Filters } from '../types/bookclubs';
+import { BookClub, BookClubParams } from '../types/bookclubs';
 import { Dispatch, SetStateAction } from 'react';
 
 interface BookClubMainPageProps {
   bookClubs: BookClub[];
   setBookClubs: Dispatch<SetStateAction<BookClub[]>>;
   loading: boolean;
-  filters: Filters;
-  onFilterChange: (newFilters: Partial<Filters>) => void;
+  filters: BookClubParams;
+  onFilterChange: (newFilters: Partial<BookClubParams>) => void;
 }
 
 function BookClubMainPage({

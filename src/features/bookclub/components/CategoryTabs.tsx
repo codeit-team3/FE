@@ -1,9 +1,9 @@
 import Tab from '@/components/tab/Tab';
-import { Filters } from '../types/bookclubs';
+import { BookClubParams } from '../types/bookclubs';
 
 interface CategoryTabsProps {
-  filters: Filters;
-  onFilterChange: (newFilters: Partial<Filters>) => void;
+  filters: BookClubParams;
+  onFilterChange: (newFilters: Partial<BookClubParams>) => void;
 }
 
 const TAB_LABELS = {

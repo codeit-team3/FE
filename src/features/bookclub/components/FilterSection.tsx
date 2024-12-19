@@ -4,12 +4,12 @@ import DropDown from '@/components/drop-down/DropDown';
 import FilterCheckbox from '@/components/filter-checkbox/FilterCheckbox';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import SortingButton from '@/components/sorting-button/SortingButton';
-import { BookClub, Filters } from '../types/bookclubs';
+import { BookClub, BookClubParams } from '../types/bookclubs';
 
 interface CategoryTabsProps {
   bookClubs: BookClub[];
   setBookClubs: Dispatch<SetStateAction<BookClub[]>>;
-  onFilterChange: (newFilters: Partial<Filters>) => void;
+  onFilterChange: (newFilters: Partial<BookClubParams>) => void;
 }
 
 function FilterSection({
@@ -56,20 +56,26 @@ function FilterSection({
   };
 
   const onChangeOnOffSelection = (selectedLabel: string | undefined) => {
-    const validValues: Filters['meetingType'][] = ['ALL', 'ONLINE', 'OFFLINE'];
+    const validValues: BookClubParams['meetingType'][] = [
+      'ALL',
+      'ONLINE',
+      'OFFLINE',
+    ];
 
     if (
       selectedLabel &&
-      validValues.includes(selectedLabel as Filters['meetingType'])
+      validValues.includes(selectedLabel as BookClubParams['meetingType'])
     ) {
-      onFilterChange({ meetingType: selectedLabel as Filters['meetingType'] });
+      onFilterChange({
+        meetingType: selectedLabel as BookClubParams['meetingType'],
+      });
     } else {
       onFilterChange({ meetingType: undefined });
     }
   };
 
   const onChangeOrderSelection = (order: string) => {
-    onFilterChange({ order: order as Filters['order'] });
+    onFilterChange({ order: order as BookClubParams['order'] });
   };
 
   return (
