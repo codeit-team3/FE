@@ -15,6 +15,8 @@ export default function ReactQueryProviders({
           retry: 0, // API 요청 실패시 재시도 X
           refetchOnReconnect: false, // 네트워크가 재연결될 때 데이터를 refetch X
           retryOnMount: false, // 컴포넌트가 마운트될 때 실패한 쿼리를 재시도 X
+          staleTime: 1000 * 60 * 5,
+          gcTime: 1000 * 60 * 10,
         },
       },
     }),
