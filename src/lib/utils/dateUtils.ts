@@ -21,3 +21,18 @@ export function formatDateWithTime(inputDateString: string) {
   const formattedDate = `${year}/${month}/${day}(${dayOfWeek}) ${hours}:${minutes}`;
   return formattedDate;
 }
+
+export function formatDateSimple(inputDateString: string) {
+  const isUTC = /Z|[+-]\d{2}:\d{2}$/.test(inputDateString);
+
+  const inputDate = new Date(inputDateString);
+  const kstDate = isUTC
+    ? new Date(inputDate.getTime() - inputDate.getTimezoneOffset() * 60000)
+    : inputDate;
+
+  const year = kstDate.getFullYear();
+  const month = String(kstDate.getMonth() + 1).padStart(2, '0');
+  const day = String(kstDate.getDate()).padStart(2, '0');
+
+  return `${year}.${month}.${day}`;
+}

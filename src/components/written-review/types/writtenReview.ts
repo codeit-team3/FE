@@ -1,3 +1,8 @@
+export interface WrittenReviewProps {
+  children: React.ReactNode;
+  onClickReview?: () => void;
+}
+
 export interface UserProfileProps {
   profileImage?: string;
   userName?: string;
@@ -6,13 +11,13 @@ export interface UserProfileProps {
 }
 
 export interface ClubImageProps {
-  src: string;
+  src: string | undefined;
   alt?: string;
 }
 
 export interface ClubInfoProps {
   clubName: string;
-  location: string;
+  bookClubType: 'FREE' | 'FIXED';
 }
 
 export interface CommentProps {
