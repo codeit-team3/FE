@@ -1,5 +1,6 @@
 import WrittenReview from '@/components/written-review/WrittenReview';
 import { Review, User } from '../../types';
+import { formatDateSimple } from '@/lib/utils/dateUtils';
 // import { useRouter } from 'next/navigation';
 
 interface MyReviewListProps {
@@ -12,7 +13,7 @@ const mockReviews: Review[] = [
     reviewId: 1,
     userId: 101,
     bookClubId: 201,
-    rating: 4.5,
+    rating: 4,
     content: '정말 유익한 시간이었어요!',
     clubImgUrl: '/images/defaultBookClub.jpg',
     clubImgAlt: '문학의 밤 독서 모임',
@@ -24,8 +25,9 @@ const mockReviews: Review[] = [
     reviewId: 2,
     userId: 102,
     bookClubId: 202,
-    rating: 3.8,
-    content: '다소 아쉬운 부분도 있었지만 재미있었어요.',
+    rating: 3,
+    content:
+      '다소 아쉬운 부분도 있었지만 재미있었어요.다소 아쉬운 부분도 있었지만 재미있었어요.다소 아쉬운 부분도 있었지만 재미있었어요.다소 아쉬운 부분도 있었지만 재미있었어요.다소 아쉬운 부분도 있었지만 재미있었어요.다소 아쉬운 부분도 있었지만 재미있었어요.다소 아쉬운 부분도 있었지만 재미있었어요.다소 아쉬운 부분도 있었지만 재미있었어요.',
     clubImgUrl: undefined,
     clubImgAlt: '철학과 삶 독서 모임',
     clubName: '철학과 삶',
@@ -36,7 +38,7 @@ const mockReviews: Review[] = [
     reviewId: 3,
     userId: 103,
     bookClubId: 203,
-    rating: 5.0,
+    rating: 5,
     content: '추리 소설 애호가로서 정말 만족스러웠습니다.',
     clubImgUrl: '/images/defaultBookClub.jpg',
     clubImgAlt: '추리소설 탐독 독서 모임',
@@ -48,7 +50,7 @@ const mockReviews: Review[] = [
     reviewId: 4,
     userId: 104,
     bookClubId: 204,
-    rating: 4.2,
+    rating: 4,
     content: '과학 소설에 대한 흥미가 더 커졌어요.',
     clubImgUrl: undefined,
     clubImgAlt: 'SF소설의 미래 독서 모임',
@@ -60,7 +62,7 @@ const mockReviews: Review[] = [
     reviewId: 5,
     userId: 105,
     bookClubId: 205,
-    rating: 3.0,
+    rating: 3,
     content: '조금 더 다양한 주제가 다뤄졌으면 좋겠어요.',
     clubImgUrl: '/images/defaultBookClub.jpg',
     clubImgAlt: '시의 세계 독서 모임',
@@ -72,7 +74,7 @@ const mockReviews: Review[] = [
     reviewId: 6,
     userId: 106,
     bookClubId: 206,
-    rating: 4.7,
+    rating: 4,
     content: '경제적 주제를 다뤄서 흥미로웠습니다.',
     clubImgUrl: undefined,
     clubImgAlt: '경제와 사회 독서 모임',
@@ -84,7 +86,7 @@ const mockReviews: Review[] = [
     reviewId: 7,
     userId: 107,
     bookClubId: 207,
-    rating: 4.8,
+    rating: 5,
     content: '청소년 문학에 대한 새로운 시각을 얻었어요.',
     clubImgUrl: '/images/defaultBookClub.jpg',
     clubImgAlt: '청소년 문학 클럽',
@@ -96,7 +98,7 @@ const mockReviews: Review[] = [
     reviewId: 8,
     userId: 108,
     bookClubId: 208,
-    rating: 4.3,
+    rating: 4,
     content: '문학과 미술의 접점을 새롭게 느꼈어요.',
     clubImgUrl: undefined,
     clubImgAlt: '현대 미술과 문학 독서 모임',
@@ -108,7 +110,7 @@ const mockReviews: Review[] = [
     reviewId: 9,
     userId: 109,
     bookClubId: 209,
-    rating: 5.0,
+    rating: 5,
     content: '원작과 영화 비교가 정말 재미있었어요!',
     clubImgUrl: '/images/defaultBookClub.jpg',
     clubImgAlt: '영화와 책 독서 모임',
@@ -120,7 +122,7 @@ const mockReviews: Review[] = [
     reviewId: 10,
     userId: 110,
     bookClubId: 210,
-    rating: 4.9,
+    rating: 4,
     content: '환상적인 경험이었습니다!',
     clubImgUrl: undefined,
     clubImgAlt: '환상 문학의 향연 독서 모임',
@@ -146,18 +148,24 @@ export default function MyReviewList({ user, sortBy }: MyReviewListProps) {
         reviewList.map((review, index) => (
           <div key={index} className="md:w-full">
             <WrittenReview>
-              <div className="flex flex-col items-center gap-x-6 sm:items-start sm:gap-y-2 md:flex-row">
+              <div className="flex items-center gap-x-6 sm:flex-col sm:items-start sm:gap-y-6 md:flex-row">
                 <WrittenReview.ClubImage
-                  src={review.clubImgUrl}
+                  src={review.clubImgUrl || '/images/defaultBookClub.jpg'}
                   alt={review.clubImgAlt}
                 />
-                <div className="flex flex-col justify-start gap-y-1">
+                <div className="relative flex min-h-[180px] w-[336px] flex-1 flex-col gap-y-1.5 text-sm font-medium text-gray-darker md:w-full">
                   <WrittenReview.Rating ratingCount={review.rating} />
-                  <WrittenReview.ClubInfo
-                    clubName={review.clubName}
-                    bookClubType={review.bookClubType}
-                  />
-                  <WrittenReview.Comment text={review.content} />
+                  <div className="flex flex-col gap-y-2">
+                    <WrittenReview.ClubInfo
+                      clubName={review.clubName}
+                      bookClubType={review.bookClubType}
+                    />
+                    <WrittenReview.Comment text={review.content} />
+                    <WrittenReview.UserProfile
+                      createdAt={formatDateSimple(review.createdAt)}
+                      className="gap-x-0"
+                    />
+                  </div>
                 </div>
               </div>
             </WrittenReview>
