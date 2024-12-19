@@ -1,3 +1,8 @@
+export interface WrittenReviewProps {
+  children: React.ReactNode;
+  onClickReview?: () => void;
+}
+
 export interface UserProfileProps {
   profileImage?: string;
   userName?: string;

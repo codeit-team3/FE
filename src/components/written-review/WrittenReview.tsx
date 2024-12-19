@@ -6,6 +6,7 @@ import {
   CommentProps,
   RatingProps,
   UserProfileProps,
+  WrittenReviewProps,
 } from './types/writtenReview';
 import ClubChip from '../chip/club-chip/ClubChip';
 import { twMerge } from 'tailwind-merge';
@@ -24,10 +25,7 @@ function handleImageError(
 export default function WrittenReview({
   children,
   onClickReview,
-}: {
-  children: React.ReactNode;
-  onClickReview: () => void;
-}) {
+}: WrittenReviewProps) {
   return (
     <article
       className="flex w-full flex-col items-start sm:justify-center"
