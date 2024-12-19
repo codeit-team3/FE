@@ -2,6 +2,7 @@ import WrittenReview from '@/components/written-review/WrittenReview';
 import { Review, User } from '../../types';
 import { formatDateSimple } from '@/lib/utils/dateUtils';
 import { useRouter } from 'next/navigation';
+import { NO_LIST_MESSAGE } from '../../constants/meassage';
 
 interface MyReviewListProps {
   user: User | null;
@@ -142,7 +143,9 @@ export default function MyReviewList({ user, sortBy }: MyReviewListProps) {
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
       {reviewList.length === 0 ? (
         <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
-          <span className="whitespace-pre-wrap">{}</span>
+          <span className="whitespace-pre-wrap">
+            {NO_LIST_MESSAGE['MY_REVIEW']}
+          </span>
         </div>
       ) : (
         reviewList.map((review, index) => (
