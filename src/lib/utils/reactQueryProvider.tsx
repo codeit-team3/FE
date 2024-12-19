@@ -10,9 +10,11 @@ export default function ReactQueryProviders({
     new QueryClient({
       defaultOptions: {
         queries: {
-          refetchOnWindowFocus: false, // 윈도우가 다시 포커스되었을때 데이터를 refetch
-          refetchOnMount: false, // 데이터가 stale 상태이면 컴포넌트가 마운트될 때 refetch
-          retry: 1, // API 요청 실패시 재시도 하는 옵션 (설정값 만큼 재시도)
+          refetchOnWindowFocus: false, // 윈도우 다시 포커스되었을때 데이터 refetch X
+          refetchOnMount: false, // 컴포넌트 마운트될 때 데이터 refetch X
+          retry: 0, // API 요청 실패시 재시도 X
+          refetchOnReconnect: false, // 네트워크가 재연결될 때 데이터를 refetch X
+          retryOnMount: false, // 컴포넌트가 마운트될 때 실패한 쿼리를 재시도 X
         },
       },
     }),
