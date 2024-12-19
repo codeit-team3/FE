@@ -27,12 +27,37 @@ apiClient.interceptors.request.use(
 // Response Interceptor
 apiClient.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      const { setIsLoggedIn } = useAuthStore.getState();
-      setIsLoggedIn(false);
-      deleteCookie('auth_token');
-      alert('로그인이 필요합니다.');
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        const refreshToken = getCookie('refresh_token');
+        if (refreshToken) {
+          const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL}/auths/refresh`,
+            {
+              refreshToken,
+            },
+          );
+
+          const newAccessToken = response.data.accessToken;
+
+          document.cookie = `auth_token=${newAccessToken}; max-age=3600; path=/`;
+
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+          return apiClient(originalRequest);
+        }
+      } catch (error) {
+        console.error('토큰 갱신 중 오류 발생:', error);
+        const { setIsLoggedIn } = useAuthStore.getState();
+        setIsLoggedIn(false);
+        deleteCookie('auth_token');
+        deleteCookie('refresh_token');
+        alert('세션이 만료되었습니다. 다시 로그인해주세요.');
+      }
     }
     return Promise.reject(error);
   },
