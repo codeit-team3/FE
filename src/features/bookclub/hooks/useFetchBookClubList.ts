@@ -1,24 +1,54 @@
-import apiClient from '@/lib/utils/apiClient';
-import { useEffect, useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { getBookClubs } from '../api/bookclubApi';
+import { BookClub, BookClubParams } from '../types/bookclubs';
 
-export const useFetchBookClubList = () => {
-  const [bookClubList, setBookClubList] = useState([]); // 목록 데이터 저장
-  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
+const useBookClubList = () => {
+  const [bookClubs, setBookClubs] = useState<BookClub[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  const [filters, setFilters] = useState<BookClubParams>({
+    bookClubType: 'ALL',
+    meetingType: 'ALL',
+    order: 'DESC',
+    page: 1,
+    size: 10,
+    searchKeyword: '',
+  });
+
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await getBookClubs(filters); // API 호출
+      setBookClubs(data);
+    } catch (err) {
+      setError(err as Error);
+    } finally {
+      setLoading(false);
+    }
+  }, [filters]);
 
   useEffect(() => {
-    const fetchBookClubs = async () => {
-      setIsLoading(true);
-      try {
-        const response = await apiClient.get('/api/v1/book-clubs');
-        setBookClubList(response.data.bookClubs);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchBookClubs();
-  }, []);
+    fetchData();
+  }, [fetchData]);
 
-  return { bookClubList, isLoading };
+  const updateFilters = (newFilters: Partial<BookClubParams>) => {
+    setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }));
+  };
+
+  const goToPage = (pageNumber: number) => {
+    setFilters((prevFilters) => ({ ...prevFilters, page: pageNumber }));
+  };
+
+  return {
+    bookClubs,
+    setBookClubs,
+    loading,
+    error,
+    filters,
+    updateFilters,
+    goToPage,
+  };
 };
+
+export default useBookClubList;
