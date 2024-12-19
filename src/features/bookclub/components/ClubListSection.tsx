@@ -12,8 +12,12 @@ interface ClubListSectionProps {
 function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
   const router = useRouter();
 
-  const clubStatus = (memberCount: number, endDate: string) => {
-    if (new Date(endDate) < new Date()) {
+  const clubStatus = (
+    memberCount: number,
+    memberLimit: number,
+    endDate: string,
+  ) => {
+    if (new Date(endDate) < new Date() || memberCount === memberLimit) {
       return 'closed';
     }
     return 3 < memberCount ? 'confirmed' : 'pending';
@@ -38,7 +42,11 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
             isCanceled={false} // 모임 취소 여부 (API 값에 따라 변경 가능)
             bookClubType={club.bookClubType}
             meetingType={club.meetingType}
-            clubStatus={clubStatus(club.memberCount, club.endDate)}
+            clubStatus={clubStatus(
+              club.memberCount,
+              club.memberLimit,
+              club.endDate,
+            )}
             onLikeClick={() => console.log(`${club.title} 좋아요 클릭`)}
             onClick={() => router.push(`/bookclub/${club.id}`)}
             onDelete={() => console.log(`${club.title} 삭제 클릭`)}
