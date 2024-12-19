@@ -13,14 +13,24 @@ const TAB_LABELS = {
 } as const;
 
 function CategoryTabs({ filters, onFilterChange }: CategoryTabsProps) {
-  const activeTab = filters?.bookClubType || 'ALL';
+  const activeTabKey = filters?.bookClubType || 'ALL';
+  const activeTabLabel = TAB_LABELS[activeTabKey as keyof typeof TAB_LABELS];
+
+  const handleTabChange = (selectedLabel: string) => {
+    const selectedKey = (
+      Object.keys(TAB_LABELS) as (keyof typeof TAB_LABELS)[]
+    ).find((key) => TAB_LABELS[key] === selectedLabel);
+    if (selectedKey) {
+      onFilterChange({ bookClubType: selectedKey });
+    }
+  };
 
   return (
     <div>
       <Tab
-        items={Object.keys(TAB_LABELS) as (keyof typeof TAB_LABELS)[]}
-        activeTab={activeTab}
-        onTabChange={(item) => onFilterChange({ bookClubType: item })}
+        items={Object.values(TAB_LABELS)}
+        activeTab={activeTabLabel}
+        onTabChange={(item) => handleTabChange(item)}
         tabType="MAIN_TAB"
       />
       <hr className="-mx-[20px] border-t border-gray-normal-01 md:-mx-[24px] lg:-mx-[102px]" />
