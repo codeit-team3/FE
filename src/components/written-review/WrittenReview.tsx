@@ -23,12 +23,16 @@ function handleImageError(
 
 export default function WrittenReview({
   children,
+  onClickReview,
 }: {
   children: React.ReactNode;
+  onClickReview: () => void;
 }) {
   return (
-    // <article className="flex w-full max-w-[948px] flex-col items-start sm:justify-center">
-    <article className="flex w-full flex-col items-start sm:justify-center">
+    <article
+      className="flex w-full flex-col items-start sm:justify-center"
+      onClick={onClickReview}
+    >
       {children}
       <hr className="border-t-1 mt-4 w-full border-gray-normal-01" />
     </article>

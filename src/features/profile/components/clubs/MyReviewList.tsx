@@ -1,7 +1,7 @@
 import WrittenReview from '@/components/written-review/WrittenReview';
 import { Review, User } from '../../types';
 import { formatDateSimple } from '@/lib/utils/dateUtils';
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 interface MyReviewListProps {
   user: User | null;
@@ -136,7 +136,7 @@ export default function MyReviewList({ user, sortBy }: MyReviewListProps) {
   console.log(user);
   console.log(sortBy);
 
-  // const router = useRouter();
+  const router = useRouter();
   const reviewList = mockReviews;
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
@@ -147,7 +147,11 @@ export default function MyReviewList({ user, sortBy }: MyReviewListProps) {
       ) : (
         reviewList.map((review, index) => (
           <div key={index} className="md:w-full">
-            <WrittenReview>
+            <WrittenReview
+              onClickReview={() =>
+                router.push(`/bookclub/${review.bookClubId}`)
+              }
+            >
               <div className="flex items-center gap-x-6 sm:flex-col sm:items-start sm:gap-y-6 md:flex-row">
                 <WrittenReview.ClubImage
                   src={review.clubImgUrl || '/images/defaultBookClub.jpg'}
