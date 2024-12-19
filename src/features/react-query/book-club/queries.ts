@@ -1,13 +1,13 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory';
 import apiClient from '@/lib/utils/apiClient';
 
+// TODO: 추후 각자 구현하는 api 명세에 맞게 filter 타입 정의해주세요
 interface BookClubFilters {
   category?: string;
   status?: string;
   search?: string;
   sort?: 'latest' | 'popular';
 }
-
 interface ReviewFilters {
   rating?: number;
   hasComment?: boolean;
@@ -41,10 +41,6 @@ export const bookClubs = createQueryKeys('bookClubs', {
             },
           }),
       }),
-      likes: {
-        queryKey: ['likes'],
-        queryFn: () => apiClient.get(`/book-clubs/${bookClubId}/likes`),
-      },
     },
   }),
   myJoined: (filters?: BookClubFilters) => ({
