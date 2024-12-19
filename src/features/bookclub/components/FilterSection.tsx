@@ -19,7 +19,7 @@ function FilterSection({
 }: CategoryTabsProps) {
   const [showAvailableOnly, setShowAvailableOnly] = useState(false); // 신청가능
 
-  const filterCheckboxHandelr = (e: ChangeEvent<HTMLInputElement>) => {
+  const filterCheckboxHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked;
     setShowAvailableOnly(isChecked);
     // onFilterChange(showAvailableOnly); // 백엔드에서 처리하는 로직 필요?
@@ -94,7 +94,7 @@ function FilterSection({
         <FilterCheckbox
           label="신청가능"
           checked={showAvailableOnly}
-          onChange={filterCheckboxHandelr}
+          onChange={filterCheckboxHandler}
           aria-label="신청가능 필터"
         />
       </div>
