@@ -9,7 +9,7 @@ const meta = {
     layout: 'centered',
   },
   argTypes: {
-    meetingType: {
+    bookClubType: {
       control: 'select',
       options: ['FREE', 'FIXED'],
     },
