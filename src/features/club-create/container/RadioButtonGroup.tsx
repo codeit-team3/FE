@@ -23,7 +23,7 @@ function RadioButtonGroup({
   const { handleRadioChange } = useSelectAddress({ setValue, name });
 
   return (
-    <div className="flex gap-4 md:gap-6">
+    <div className="flex flex-col gap-4 md:flex-row md:gap-6">
       {options.map((option) => (
         <label
           key={option.value}
@@ -69,7 +69,9 @@ function RadioButtonGroup({
           <div className="flex flex-col gap-0.5">
             <p
               className={`font-semibold ${
-                selectedValue === option.value ? 'text-green-normal-02' : ''
+                selectedValue === option.value
+                  ? 'text-green-normal-02'
+                  : 'text-gray-dark-03'
               }`}
             >
               {option.label}
