@@ -16,7 +16,7 @@ function ImageField({ register, setValue, error }: ImageUploadContainerProps) {
     useImageField(setValue);
 
   return (
-    <CreateClubFormField label="이미지" error={error}>
+    <CreateClubFormField label="이미지" error={error} optional={true}>
       <div className="flex w-full items-center gap-2">
         <InputField
           type="text"
