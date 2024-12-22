@@ -12,25 +12,29 @@ export const useSelectAddress = ({ setValue, name }: UseSelectAddressProps) => {
 
     if (!setValue) return;
 
-    setValue(name, value);
-
-    if (value === 'ONLINE') {
-      setValue('city', undefined);
-      setValue('town', undefined);
-      setValue('address', undefined);
-      setValue('addressDetail', undefined);
-    }
-
-    if (value === 'OFFLINE') {
-      new window.daum.Postcode({
-        oncomplete: function (data: any) {
-          if (setValue) {
-            setValue('city', data.sigungu);
-            setValue('town', data.bname);
-            setValue('address', data.jibunAddress || data.autoJibunAddress);
-          }
-        },
-      }).open();
+    if (name === 'meetingType') {
+      if (value === 'ONLINE') {
+        setValue(name, value, { shouldValidate: true });
+        setValue('city', undefined, { shouldValidate: true });
+        setValue('town', undefined, { shouldValidate: true });
+        setValue('address', undefined, { shouldValidate: true });
+        setValue('addressDetail', undefined, { shouldValidate: true });
+      } else if (value === 'OFFLINE') {
+        new window.daum.Postcode({
+          oncomplete: function (data: any) {
+            if (setValue) {
+              setValue('city', data.sigungu, { shouldValidate: true });
+              setValue('town', data.bname, { shouldValidate: true });
+              setValue('address', data.jibunAddress || data.autoJibunAddress, {
+                shouldValidate: true,
+              });
+              setValue(name, value, { shouldValidate: true });
+            }
+          },
+        }).open();
+      }
+    } else {
+      setValue(name, value, { shouldValidate: true });
     }
   };
 
