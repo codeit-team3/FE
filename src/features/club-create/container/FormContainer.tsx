@@ -98,9 +98,12 @@ function FormContainer() {
             ]}
             selectedValue={watch('meetingType')}
             register={register('meetingType')}
+            addressRegister={register('addressDetail')}
             setValue={setValue}
             name="meetingType"
             town={watch('town')}
+            watch={watch}
+            errors={errors}
           />
         </CreateClubFormField>
 

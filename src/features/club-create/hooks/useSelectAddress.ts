@@ -17,6 +17,8 @@ export const useSelectAddress = ({ setValue, name }: UseSelectAddressProps) => {
     if (value === 'ONLINE') {
       setValue('city', undefined);
       setValue('town', undefined);
+      setValue('address', undefined);
+      setValue('addressDetail', undefined);
     }
 
     if (value === 'OFFLINE') {
@@ -25,6 +27,7 @@ export const useSelectAddress = ({ setValue, name }: UseSelectAddressProps) => {
           if (setValue) {
             setValue('city', data.sigungu);
             setValue('town', data.bname);
+            setValue('address', data.jibunAddress || data.autoJibunAddress);
           }
         },
       }).open();
