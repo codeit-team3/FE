@@ -30,7 +30,7 @@ function CreateClubFormField({
         </label>
         {maxLength !== undefined && (
           <span className="text-sm">
-            <span className="text-gray-dark-01">{currentLength}</span>/
+            <span className="text-gray-dark-01">{currentLength}/</span>
             <span
               className={
                 isOverMaxLength ? 'text-red-normal' : 'text-blue-light-active'
