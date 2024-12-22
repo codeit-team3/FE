@@ -34,7 +34,7 @@ function ImageField({ register, setValue, error }: ImageUploadContainerProps) {
           <div className="flex flex-col items-center gap-1">
             <CameraIcon />
             <span className="text-sm text-gray-dark-01">
-              이미지를 첨부해 주세요
+              이미지를 첨부해 주세요 (jpg, jpeg)
             </span>
           </div>
         )}
