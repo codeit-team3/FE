@@ -2,7 +2,6 @@ import { twMerge } from 'tailwind-merge';
 import Image from 'next/image';
 import { HostIcon } from '../../../public/icons';
 import {
-  ChatCardProps,
   ChatCardBoxProps,
   ChatCardTitleProps,
   ChatCardImageProps,
@@ -10,9 +9,12 @@ import {
   ChatCardDateTimeProps,
   ChatCardLastMessageProps,
   ChatCardLastMessageTimeProps,
+  ChatCardComponentProps,
 } from './types';
 import { LocationIcon } from '../../../public/icons';
 import defaultBookClub from '../../../public/images/defaultBookClub.jpg';
+import ParticipantCounter from '../participant-counter/ParticipantCounter';
+import Badge from '../badge/Badge';
 
 function ChatCardBox({
   children,
@@ -139,7 +141,7 @@ function ChatCardLastMessageTime({
   return (
     <span
       className={twMerge(
-        'text-xs font-medium text-gray-dark-01 md:text-sm',
+        'text-xs font-medium text-gray-normal-03 md:text-sm',
         className,
       )}
       {...props}
@@ -149,15 +151,58 @@ function ChatCardLastMessageTime({
   );
 }
 
-function ChatCard({ children, className, ...props }: ChatCardProps) {
-  return (
-    <article
-      className={twMerge('relative flex flex-col', className)}
-      {...props}
-    >
-      {children}
-    </article>
-  );
+function ChatCard({ variant, props }: ChatCardComponentProps) {
+  const renderContent = () => {
+    switch (variant) {
+      case 'bookClub': {
+        const {
+          imageUrl,
+          isHost,
+          title,
+          currentParticipants,
+          lastMessage,
+          lastMessageTime,
+          unreadCount,
+          className,
+        } = props;
+
+        return (
+          <ChatCardBox isHost={isHost} className={className}>
+            <div className="flex items-center gap-3 md:gap-6">
+              <ChatCardImage url={imageUrl} isHost={isHost} />
+
+              <div className="flex flex-1 flex-col gap-[10px] md:gap-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1">
+                    <ChatCardTitle>{title}</ChatCardTitle>
+                    <ParticipantCounter current={currentParticipants} />
+                  </div>
+                  {unreadCount && unreadCount > 0 && (
+                    <Badge count={unreadCount} size="md" />
+                  )}
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <ChatCardLastMessage>{lastMessage}</ChatCardLastMessage>
+                  <ChatCardLastMessageTime>
+                    {lastMessageTime}
+                  </ChatCardLastMessageTime>
+                </div>
+              </div>
+            </div>
+          </ChatCardBox>
+        );
+      }
+
+      case 'default':
+        return null; // 기본 케이스 처리
+
+      default:
+        return null;
+    }
+  };
+
+  return renderContent();
 }
 
 ChatCard.Box = ChatCardBox;
