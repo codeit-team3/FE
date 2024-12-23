@@ -1,7 +1,7 @@
 interface ParticipantCounterProps
   extends React.ComponentPropsWithoutRef<'div'> {
   current: number;
-  max: number;
+  max?: number;
   isPast?: boolean;
 }
 
@@ -11,7 +11,7 @@ function ParticipantCounter({
   isPast = false,
   ...props
 }: ParticipantCounterProps) {
-  const isFull = current >= max;
+  const isFull = max ? current >= max : false;
   const primaryColor = isPast ? 'text-gray-dark-02' : 'text-green-normal-01';
   const maxColor = isFull ? primaryColor : 'text-gray-dark-01';
 
@@ -33,7 +33,7 @@ function ParticipantCounter({
         className="text-sm font-medium"
       >
         <span className={primaryColor}>{current}</span>
-        <span className={maxColor}>/{max}</span>
+        {max && <span className={maxColor}>/{max}</span>}
       </span>
     </div>
   );
