@@ -1,27 +1,29 @@
-type ChatCardVariant = 'bookClub' | 'chatRoomHeader';
+export type ChatCardVariant = 'bookClub' | 'chatRoomHeader';
 
-export interface BookClubProps {
+interface CommonProps extends React.HTMLAttributes<HTMLDivElement> {
+  title: string;
   imageUrl?: string;
   isHost?: boolean;
-  title: string;
+}
+
+export interface BookClubProps extends CommonProps {
   currentParticipants: number;
   lastMessage?: string;
   lastMessageTime?: string;
   unreadCount?: number;
-  className?: string;
 }
 
-export interface ChatRoomHeaderProps {
-  imageUrl?: string;
-  isHost?: boolean;
-  title: string;
+export interface ChatRoomHeaderProps extends CommonProps {
   location: string;
   datetime: string;
-  className?: string;
 }
 
-export interface ChatCardComponentProps
-  extends React.HTMLAttributes<HTMLDivElement> {
-  variant: ChatCardVariant;
-  props: BookClubProps | ChatRoomHeaderProps;
+type ChatCardVariantProps = {
+  bookClub: BookClubProps;
+  chatRoomHeader: ChatRoomHeaderProps;
+};
+
+export interface ChatCardComponentProps<T extends ChatCardVariant> {
+  variant: T;
+  props: ChatCardVariantProps[T];
 }

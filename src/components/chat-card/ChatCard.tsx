@@ -12,6 +12,7 @@ import {
   ChatCardComponentProps,
   ChatRoomHeaderProps,
   BookClubProps,
+  ChatCardVariant,
 } from './types';
 import { LocationIcon } from '../../../public/icons';
 import defaultBookClub from '../../../public/images/defaultBookClub.jpg';
@@ -158,7 +159,10 @@ function ChatCardLastMessageTime({
   );
 }
 
-function ChatCard({ variant, props }: ChatCardComponentProps) {
+function ChatCard<T extends ChatCardVariant>({
+  variant,
+  props,
+}: ChatCardComponentProps<T>) {
   const renderContent = () => {
     switch (variant) {
       case 'bookClub': {
