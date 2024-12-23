@@ -1,5 +1,6 @@
 import { twMerge } from 'tailwind-merge';
 import Image from 'next/image';
+import { HostIcon } from '../../../public/icons';
 import {
   ChatCardProps,
   ChatCardBoxProps,
@@ -12,11 +13,18 @@ import {
 } from './types';
 import { LocationIcon } from '../../../public/icons';
 
-function ChatCardBox({ children, className, ...props }: ChatCardBoxProps) {
+function ChatCardBox({
+  children,
+  className,
+  isHost,
+  ...props
+}: ChatCardBoxProps) {
   return (
     <div
       className={twMerge(
-        'relative flex min-h-[74px] w-[336px] flex-col rounded-[20px] border-2 border-gray-normal-01 p-3 md:min-h-[155px] md:w-full md:p-6',
+        'relative flex min-h-[74px] w-[336px] flex-col rounded-[20px] border-2',
+        isHost ? 'border-green-normal-01' : 'border-gray-normal-01',
+        'p-3 md:min-h-[155px] md:w-full md:p-6',
         className,
       )}
       {...props}
@@ -40,6 +48,7 @@ function ChatCardTitle({ children, className, ...props }: ChatCardTitleProps) {
 function ChatCardImage({
   url,
   alt = '채팅방 이미지',
+  isHost,
   className,
   ...props
 }: ChatCardImageProps) {
@@ -52,6 +61,11 @@ function ChatCardImage({
       {...props}
     >
       <Image src={url} alt={alt} fill className="object-cover" />
+      {isHost && (
+        <div className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-gray-normal-01 bg-green-normal-01">
+          <HostIcon />
+        </div>
+      )}
     </div>
   );
 }

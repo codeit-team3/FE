@@ -4,6 +4,7 @@ export interface ChatCardProps extends React.HTMLAttributes<HTMLElement> {
 
 export interface ChatCardBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
+  isHost?: boolean;
 }
 
 export interface ChatCardTitleProps
@@ -15,6 +16,7 @@ export interface ChatCardImageProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
   url: string;
   alt?: string;
+  isHost?: boolean;
 }
 
 export interface ChatCardLocationProps
