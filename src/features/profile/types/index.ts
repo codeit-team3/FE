@@ -53,3 +53,11 @@ export interface Review {
   createdAt: string;
   bookClubType: 'FREE' | 'FIXED';
 }
+
+export type orderType = 'DESC' | 'ASC' | 'END';
+
+export interface myJoinedParams {
+  order?: orderType;
+  size?: number;
+  page?: number;
+}
