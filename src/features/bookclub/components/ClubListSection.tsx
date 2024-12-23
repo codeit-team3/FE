@@ -12,12 +12,20 @@ interface ClubListSectionProps {
 function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
   const router = useRouter();
 
+  const isClubClosed = (
+    endDate: string,
+    memberCount: number,
+    memberLimit: number,
+  ): boolean => {
+    return new Date(endDate) < new Date() || memberCount === memberLimit;
+  };
+
   const clubStatus = (
     memberCount: number,
     memberLimit: number,
     endDate: string,
   ) => {
-    if (new Date(endDate) < new Date() || memberCount === memberLimit) {
+    if (isClubClosed(endDate, memberCount, memberLimit)) {
       return 'closed';
     }
     return 3 < memberCount ? 'confirmed' : 'pending';
