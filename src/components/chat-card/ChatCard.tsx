@@ -10,6 +10,8 @@ import {
   ChatCardLastMessageProps,
   ChatCardLastMessageTimeProps,
   ChatCardComponentProps,
+  ChatRoomHeaderProps,
+  BookClubProps,
 } from './types';
 import { LocationIcon } from '../../../public/icons';
 import defaultBookClub from '../../../public/images/defaultBookClub.jpg';
@@ -92,7 +94,7 @@ function ChatCardLocation({
       <LocationIcon />
       <span
         className={twMerge(
-          'text-sm font-semibold text-gray-dark-03',
+          'text-xs font-semibold text-gray-dark-03 md:text-sm',
           textClassName,
         )}
       >
@@ -109,7 +111,10 @@ function ChatCardDateTime({
 }: ChatCardDateTimeProps) {
   return (
     <span
-      className={twMerge('text-sm font-medium text-gray-dark-03', className)}
+      className={twMerge(
+        'text-xs font-medium text-gray-dark-03 md:text-sm',
+        className,
+      )}
       {...props}
     >
       {children}
@@ -166,7 +171,7 @@ function ChatCard({ variant, props }: ChatCardComponentProps) {
           lastMessageTime,
           unreadCount,
           className,
-        } = props;
+        } = props as BookClubProps;
 
         return (
           <ChatCardBox isHost={isHost} className={className}>
@@ -207,8 +212,26 @@ function ChatCard({ variant, props }: ChatCardComponentProps) {
         );
       }
 
-      case 'default':
-        return null; // 기본 케이스 처리
+      case 'chatRoomHeader': {
+        const { imageUrl, isHost, title, location, datetime, className } =
+          props as ChatRoomHeaderProps;
+
+        return (
+          <ChatCardBox isHost={isHost} className={className}>
+            <div className="flex w-full items-center gap-3 md:gap-6">
+              <ChatCardImage url={imageUrl} isHost={isHost} />
+
+              <div className="flex min-w-0 flex-1 flex-col">
+                <ChatCardTitle>{title}</ChatCardTitle>
+                <div className="flex min-w-0 items-center gap-1 md:gap-1.5">
+                  <ChatCardLocation>{location}</ChatCardLocation>
+                  <ChatCardDateTime>{datetime}</ChatCardDateTime>
+                </div>
+              </div>
+            </div>
+          </ChatCardBox>
+        );
+      }
 
       default:
         return null;

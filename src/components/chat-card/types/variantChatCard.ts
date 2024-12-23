@@ -1,6 +1,6 @@
-type ChatCardVariant = 'bookClub' | 'default';
+type ChatCardVariant = 'bookClub' | 'chatRoomHeader';
 
-interface BookClubProps {
+export interface BookClubProps {
   imageUrl?: string;
   isHost?: boolean;
   title: string;
@@ -11,8 +11,17 @@ interface BookClubProps {
   className?: string;
 }
 
+export interface ChatRoomHeaderProps {
+  imageUrl?: string;
+  isHost?: boolean;
+  title: string;
+  location: string;
+  datetime: string;
+  className?: string;
+}
+
 export interface ChatCardComponentProps
   extends React.HTMLAttributes<HTMLDivElement> {
   variant: ChatCardVariant;
-  props: BookClubProps; // 추후 다른 variant props를 union type으로 추가
+  props: BookClubProps | ChatRoomHeaderProps;
 }
