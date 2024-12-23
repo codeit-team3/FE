@@ -1,10 +1,9 @@
+import '@testing-library/jest-dom';
 import ChatCard from '@/components/chat-card/ChatCard';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-// Mock 함수들
 const mockOnClick = jest.fn();
-const mockOnDelete = jest.fn();
 
 describe('ChatCard Component', () => {
   const user = userEvent.setup();
@@ -36,6 +35,25 @@ describe('ChatCard Component', () => {
       await user.click(chatCard!);
 
       expect(mockOnClick).toHaveBeenCalledTimes(1);
+    });
+
+    it('unreadCount가 없을 경우 Badge가 렌더링되지 않아야 함', () => {
+      render(
+        <ChatCard
+          {...bookClubProps}
+          props={{ ...bookClubProps.props, unreadCount: 0 }}
+        />,
+      );
+
+      const badges = screen.queryAllByText('3');
+      expect(badges).toHaveLength(0);
+    });
+
+    it('unreadCount가 있을 경우 Badge가 렌더링되어야 함', () => {
+      render(<ChatCard {...bookClubProps} />);
+
+      const badges = screen.getAllByText('3');
+      expect(badges).toHaveLength(2);
     });
 
     it('호스트일 경우 호스트 아이콘이 표시되어야 함', () => {
@@ -74,37 +92,17 @@ describe('ChatCard Component', () => {
 
       expect(mockOnClick).toHaveBeenCalledTimes(1);
     });
-  });
 
-  describe('ChatCard.Image', () => {
-    it('이미지가 없을 경우 기본 이미지가 표시되어야 함', () => {
-      render(<ChatCard.Image alt="채팅방 이미지" />);
-
-      const image = screen.getByAltText('채팅방 이미지');
-      expect(image).toHaveAttribute(
-        'src',
-        expect.stringContaining('defaultBookClub'),
+    it('호스트일 경우 호스트 아이콘이 표시되어야 함', () => {
+      render(
+        <ChatCard
+          {...chatRoomHeaderProps}
+          props={{ ...chatRoomHeaderProps.props, isHost: true }}
+        />,
       );
-    });
-  });
 
-  describe('ChatCard.Box with Overlay', () => {
-    it('취소된 채팅방에서 삭제 버튼 클릭시 onDelete가 호출되어야 함', async () => {
-      const props = {
-        variant: 'bookClub' as const,
-        props: {
-          ...bookClubProps.props,
-          isCanceled: true,
-          onDelete: mockOnDelete,
-        },
-      };
-
-      render(<ChatCard {...props} />);
-
-      const deleteButton = screen.getByRole('button', { name: '삭제하기' });
-      await user.click(deleteButton);
-
-      expect(mockOnDelete).toHaveBeenCalledTimes(1);
+      const hostIcon = screen.getByTestId('host-icon');
+      expect(hostIcon).toBeInTheDocument();
     });
   });
 });

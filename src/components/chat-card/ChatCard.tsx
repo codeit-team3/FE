@@ -80,7 +80,12 @@ function ChatCardImage({
       </div>
       {isHost && (
         <div className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full border-2 border-gray-normal-01 bg-green-normal-01 md:-right-2 md:h-6 md:w-6">
-          <HostIcon width={8} height={8} className="md:h-[13px] md:w-[13px]" />
+          <HostIcon
+            width={8}
+            height={8}
+            className="md:h-[13px] md:w-[13px]"
+            data-testid="host-icon"
+          />
         </div>
       )}
     </div>
