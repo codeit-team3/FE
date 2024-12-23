@@ -7,40 +7,80 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
+  argTypes: {
+    props: {
+      isHost: {
+        control: 'boolean',
+        description: '호스트 여부',
+      },
+    },
+  },
   tags: ['autodocs'],
 } satisfies Meta<typeof ChatCard>;
 
 export default meta;
 type Story = StoryObj<typeof ChatCard>;
 
-export const BookClub: Story = {
-  args: {
-    variant: 'bookClub',
-    props: {
-      title: '을지로에서 만나는 독서 모임',
-      imageUrl: 'https://picsum.photos/200',
-      isHost: true,
-      currentParticipants: 17,
-      maxParticipants: 20,
-      lastMessage: '반갑습니다~!',
-      lastMessageTime: '10:29',
-      unreadCount: 3,
-    },
+const baseArgs = {
+  variant: 'bookClub' as const,
+  props: {
+    title: '을지로에서 만나는 독서 모임',
+    imageUrl: 'https://picsum.photos/200',
+    isHost: true,
+    currentParticipants: 17,
+    lastMessage: '반갑습니다~!',
+    lastMessageTime: '10:29',
+    unreadCount: 3,
   },
 };
 
-export const BookClubWithoutHost: Story = {
-  args: {
-    variant: 'bookClub',
-    props: {
-      title: '강남 독서 모임',
-      imageUrl: 'https://picsum.photos/200',
-      isHost: false,
-      currentParticipants: 8,
-      maxParticipants: 10,
-      lastMessage: '안녕하세요!',
-      lastMessageTime: '방금 전',
-      unreadCount: 1,
+// 모바일 버전
+export const Mobile: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'mobile',
     },
   },
+  decorators: [
+    (Story) => (
+      <div className="w-[342px]">
+        <Story />
+      </div>
+    ),
+  ],
+  args: baseArgs,
+};
+
+// 태블릿 버전
+export const Tablet: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'tablet',
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div className="w-[700px]">
+        <Story />
+      </div>
+    ),
+  ],
+  args: baseArgs,
+};
+
+// 데스크톱 버전
+export const Desktop: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: 'desktop',
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div className="w-[1000px]">
+        <Story />
+      </div>
+    ),
+  ],
+  args: baseArgs,
 };
