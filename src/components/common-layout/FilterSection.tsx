@@ -23,26 +23,38 @@ function FilterSection({
   const toggleAvailableOnly = (e: ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked;
     setShowAvailableOnly(isChecked);
-    if (isChecked) {
-      const filteredBookClubs = bookClubs.filter(
-        (club) => club.memberCount < club.memberLimit,
-      );
-      setBookClubs(filteredBookClubs);
+
+    const filteredBookClubs = isChecked
+      ? bookClubs.filter((club) => club.memberCount < club.memberLimit)
+      : bookClubs;
+
+    setBookClubs(filteredBookClubs);
+  };
+
+  const updateMemberLimitFilter = (selectedValue: string | undefined) => {
+    const memberLimit = getMemberLimit(selectedValue);
+    if (selectedValue !== undefined) {
+      onFilterChange({ memberLimit });
     }
   };
 
-  const handleMemberLimitChange = (selectedValue: string | undefined) => {
-    const memberLimit = getMemberLimit(selectedValue);
-    onFilterChange({ memberLimit });
-  };
-
-  const handleMeetingTypeChange = (selectedLabel: string | undefined) => {
+  const updateMeetingTypeFilter = (selectedLabel: string | undefined) => {
     const meetingType = getMeetingType(selectedLabel);
-    onFilterChange({ meetingType });
+    if (selectedLabel !== undefined) {
+      onFilterChange({ meetingType });
+    }
   };
 
   const setSortingOrder = (order: string) => {
-    onFilterChange({ order: order as BookClubParams['order'] });
+    const isValidOrder = (
+      value: string | undefined,
+    ): value is BookClubParams['order'] => {
+      return value !== undefined && ['DESC', 'END'].includes(value);
+    };
+
+    if (isValidOrder(order)) {
+      onFilterChange({ order });
+    }
   };
 
   return (
@@ -51,12 +63,12 @@ function FilterSection({
       <div className="flex items-center gap-x-2">
         <DropDown
           variant="onOff"
-          onChangeSelection={handleMeetingTypeChange}
+          onChangeSelection={updateMeetingTypeFilter}
           aria-label="온라인/오프라인 선택"
         />
         <DropDown
           variant="memberCount"
-          onChangeSelection={handleMemberLimitChange}
+          onChangeSelection={updateMemberLimitFilter}
           aria-label="인원 수 선택"
         />
         <FilterCheckbox

@@ -22,11 +22,7 @@ export const getMeetingType = (selectedLabel: string | undefined) => {
     'OFFLINE',
   ];
 
-  if (
-    selectedLabel &&
-    validValues.includes(selectedLabel as BookClubParams['meetingType'])
-  ) {
-    return selectedLabel as BookClubParams['meetingType'];
-  }
-  return undefined;
+  return validValues.includes(selectedLabel as BookClubParams['meetingType'])
+    ? (selectedLabel as BookClubParams['meetingType'])
+    : undefined;
 };
