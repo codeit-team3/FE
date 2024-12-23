@@ -37,3 +37,11 @@ export interface BookClub {
   isPast: boolean;
   clubStatus: 'pending' | 'confirmed' | 'closed';
 }
+
+export type orderType = 'DESC' | 'ASC' | 'END';
+
+export interface myJoinedParams {
+  order?: orderType;
+  size?: number;
+  page?: number;
+}

@@ -1,10 +1,11 @@
 'use client';
 import React, { useState } from 'react';
 import { IcSorting } from '../../../public/icons/index';
+import { orderType } from '@/features/profile/types';
 
 interface SortingButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   variant: 'byDeadline' | 'byDate';
-  onClickSorting: (sortBy: string) => void;
+  onClickSorting: (order: orderType) => void;
 }
 
 function SortingButton({
@@ -15,18 +16,18 @@ function SortingButton({
   const [isActive, setIsActive] = useState(false);
 
   const onClick = (): void => {
-    let sortBy;
+    let order: orderType;
     setIsActive(!isActive);
     switch (variant) {
       case 'byDeadline':
-        sortBy = isActive ? 'DESC' : 'END';
+        order = isActive ? 'DESC' : 'END';
         break;
 
       case 'byDate':
-        sortBy = isActive ? 'NEWEST' : 'OLDEST';
+        order = isActive ? 'DESC' : 'ASC';
         break;
     }
-    onClickSorting(sortBy);
+    onClickSorting(order);
   };
 
   const renderLabel = () => {
