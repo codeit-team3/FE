@@ -25,9 +25,8 @@ function ChatCardBox({
   return (
     <div
       className={twMerge(
-        'relative flex min-h-[74px] w-[336px] flex-col rounded-[20px] border-2',
+        'relative flex min-h-[74px] min-w-[336px] flex-col rounded-[20px] border-2 bg-gray-light-01 p-3 md:min-h-[155px] md:p-6',
         isHost ? 'border-green-normal-01' : 'border-gray-normal-01',
-        'p-3 md:min-h-[155px] md:w-full md:p-6',
         className,
       )}
       {...props}
@@ -40,7 +39,10 @@ function ChatCardBox({
 function ChatCardTitle({ children, className, ...props }: ChatCardTitleProps) {
   return (
     <h3
-      className={twMerge('font-semibold text-gray-black md:text-xl', className)}
+      className={twMerge(
+        'truncate font-semibold text-gray-black md:text-xl',
+        className,
+      )}
       {...props}
     >
       {children}
@@ -123,7 +125,7 @@ function ChatCardLastMessage({
   return (
     <div
       className={twMerge(
-        'text-sm font-medium text-gray-dark-01 md:text-base',
+        'min-w-0 flex-1 truncate text-sm font-medium text-gray-dark-01 md:text-base',
         className,
       )}
       {...props}
@@ -141,7 +143,7 @@ function ChatCardLastMessageTime({
   return (
     <span
       className={twMerge(
-        'text-xs font-medium text-gray-normal-03 md:text-sm',
+        'shrink-0 text-xs font-medium text-gray-normal-03 md:text-sm',
         className,
       )}
       {...props}
@@ -168,21 +170,32 @@ function ChatCard({ variant, props }: ChatCardComponentProps) {
 
         return (
           <ChatCardBox isHost={isHost} className={className}>
-            <div className="flex items-center gap-3 md:gap-6">
+            <div className="flex w-full items-center gap-3 md:gap-6">
               <ChatCardImage url={imageUrl} isHost={isHost} />
 
-              <div className="flex flex-1 flex-col gap-[10px] md:gap-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1">
+              <div className="flex min-w-0 flex-1 flex-col gap-[10px] md:gap-3">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex min-w-0 items-center gap-1">
                     <ChatCardTitle>{title}</ChatCardTitle>
                     <ParticipantCounter current={currentParticipants} />
                   </div>
                   {unreadCount && unreadCount > 0 && (
-                    <Badge count={unreadCount} size="md" />
+                    <>
+                      <Badge
+                        count={unreadCount}
+                        size="sm"
+                        className="md:hidden"
+                      />
+                      <Badge
+                        count={unreadCount}
+                        size="md"
+                        className="hidden md:flex"
+                      />
+                    </>
                   )}
                 </div>
 
-                <div className="flex items-center justify-between">
+                <div className="flex min-w-0 items-center justify-between gap-2">
                   <ChatCardLastMessage>{lastMessage}</ChatCardLastMessage>
                   <ChatCardLastMessageTime>
                     {lastMessageTime}
