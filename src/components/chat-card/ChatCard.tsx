@@ -54,22 +54,23 @@ function ChatCardImage({
   ...props
 }: ChatCardImageProps) {
   return (
-    <div
-      className={twMerge(
-        'relative h-[50px] w-[50px] overflow-hidden rounded-[20px] md:h-[100px] md:w-[100px]',
-        className,
-      )}
-      {...props}
-    >
-      <Image
-        src={url || defaultBookClub}
-        alt={alt}
-        fill
-        className="object-cover"
-      />
+    <div className="relative" {...props}>
+      <div
+        className={twMerge(
+          'relative h-[50px] w-[50px] overflow-hidden rounded-[10px] md:h-[100px] md:w-[100px] md:rounded-[20px]',
+          className,
+        )}
+      >
+        <Image
+          src={url || defaultBookClub}
+          alt={alt}
+          fill
+          className="object-cover"
+        />
+      </div>
       {isHost && (
-        <div className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-gray-normal-01 bg-green-normal-01">
-          <HostIcon />
+        <div className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full border-2 border-gray-normal-01 bg-green-normal-01 md:-right-2 md:h-6 md:w-6">
+          <HostIcon width={8} height={8} className="md:h-[13px] md:w-[13px]" />
         </div>
       )}
     </div>
