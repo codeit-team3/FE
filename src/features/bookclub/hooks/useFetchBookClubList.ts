@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getBookClubs } from '../api/bookclubApi';
-import { BookClub, BookClubParams } from '../types/bookclubs';
+import { BookClub, BookClubParams } from '../../../types/bookclubs';
 
 const useBookClubList = () => {
   const [bookClubs, setBookClubs] = useState<BookClub[]>([]);

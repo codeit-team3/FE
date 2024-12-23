@@ -1,13 +1,8 @@
 'use client';
 
-import {
-  HeaderSection,
-  FilterSection,
-  ClubListSection,
-  SearchSection,
-} from '@/features/bookclub/components';
-import CategoryTabs from './CategoryTabs';
+import { HeaderSection, ClubListSection } from '@/features/bookclub/components';
 import useBookClubList from '../hooks/useFetchBookClubList';
+import FilterBar from '@/components/common-layout/FilterBar';
 
 function BookClubMainPage() {
   // 커스텀 훅에서 상태와 핸들러 가져오기
@@ -20,20 +15,12 @@ function BookClubMainPage() {
   return (
     <>
       <HeaderSection />
-      <section className="flex w-full flex-col gap-y-3 px-[20px] pt-[20px] md:px-[24px] lg:px-[102px]">
-        <CategoryTabs filters={filters} onFilterChange={handleFilterChange} />
-        <SearchSection
-          searchValue={filters?.searchKeyword || ''}
-          onSearchChange={(value: string) =>
-            handleFilterChange({ searchKeyword: value })
-          }
-        />
-        <FilterSection
-          bookClubs={bookClubs}
-          setBookClubs={setBookClubs}
-          onFilterChange={handleFilterChange}
-        />
-      </section>
+      <FilterBar
+        filters={filters}
+        handleFilterChange={handleFilterChange}
+        bookClubs={bookClubs}
+        setBookClubs={setBookClubs}
+      />
       <ClubListSection bookClubs={bookClubs} />
     </>
   );

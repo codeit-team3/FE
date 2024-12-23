@@ -1,5 +1,5 @@
 import Tab from '@/components/tab/Tab';
-import { BookClubParams } from '../types/bookclubs';
+import { BookClubParams } from '../../types/bookclubs';
 
 interface CategoryTabsProps {
   filters: BookClubParams;

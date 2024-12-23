@@ -1,7 +1,7 @@
 'use client';
 
 import Card from '@/components/card/Card';
-import { BookClub } from '../types/bookclubs';
+import { BookClub } from '../../../types/bookclubs';
 import { formatDateForUI } from '@/lib/utils/formatDateForUI';
 import { useRouter } from 'next/navigation';
 

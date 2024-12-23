@@ -4,7 +4,7 @@ import DropDown from '@/components/drop-down/DropDown';
 import FilterCheckbox from '@/components/filter-checkbox/FilterCheckbox';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import SortingButton from '@/components/sorting-button/SortingButton';
-import { BookClub, BookClubParams } from '../types/bookclubs';
+import { BookClub, BookClubParams } from '../../types/bookclubs';
 
 interface CategoryTabsProps {
   bookClubs: BookClub[];
