@@ -1,26 +1,33 @@
 import Card from '@/components/card/Card';
-import { User } from '../../types';
+import { NO_LIST_MESSAGE } from '../../constants/meassage';
+import { formatDateWithTime } from '@/lib/utils/dateUtils';
+import { orderType, User } from '../../types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { WriteReviewModal } from '../clubs';
-import { NO_LIST_MESSAGE } from '../../constants/meassage';
-import { mockJoinedBookClubList } from '../../constants/temp';
-import { formatDateWithTime } from '@/lib/utils/dateUtils';
+import useFetchMyJoinedList from '../../hooks/useFetchMyJoinedList';
 
 interface JoinedClubListProps {
   user: User | null;
-  sortBy: string | undefined;
+  order: orderType;
 }
 
-export default function JoinedClubList({ user, sortBy }: JoinedClubListProps) {
-  console.log(user, sortBy);
+export default function JoinedClubList({ user, order }: JoinedClubListProps) {
+  console.log(user, order);
 
   const router = useRouter();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { myJoinedList, isLoading, error } = useFetchMyJoinedList(order);
 
-  // const bookClubList: BookClub[] = [];
-  const bookClubList = mockJoinedBookClubList;
+  console.log(isLoading);
+  console.error(error);
+
+  const bookClubList = myJoinedList;
+
+  console.log(bookClubList);
+  // // const bookClubList: BookClub[] = [];
+  // const bookClubList = mockJoinedBookClubList;
 
   //카드 컴포넌트 클릭 시 해당 모임 상세페이지로 라우팅
   const handleCardClick = (clubId: number) => {
@@ -50,14 +57,14 @@ export default function JoinedClubList({ user, sortBy }: JoinedClubListProps) {
         onClose={() => setIsModalOpen(false)}
         onConfirm={(rating, review) => onSubmitReview(rating, review)}
       />
-      {bookClubList.length === 0 ? (
+      {bookClubList?.length === 0 ? (
         <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
           <span className="whitespace-pre-wrap">
             {NO_LIST_MESSAGE['JOINED']}
           </span>
         </div>
       ) : (
-        bookClubList.map((bookClub, index) => (
+        bookClubList?.map((bookClub, index) => (
           <div key={index} className="md:w-full">
             {/* TODO: isCanceled, imageUrl. isPast, status 수정 */}
             <Card
