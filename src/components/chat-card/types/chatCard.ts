@@ -14,7 +14,7 @@ export interface ChatCardTitleProps
 
 export interface ChatCardImageProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
-  url: string;
+  url?: string | undefined;
   alt?: string;
   isHost?: boolean;
 }

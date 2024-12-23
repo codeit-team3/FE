@@ -12,6 +12,7 @@ import {
   ChatCardLastMessageTimeProps,
 } from './types';
 import { LocationIcon } from '../../../public/icons';
+import defaultBookClub from '../../../public/images/defaultBookClub.jpg';
 
 function ChatCardBox({
   children,
@@ -60,7 +61,12 @@ function ChatCardImage({
       )}
       {...props}
     >
-      <Image src={url} alt={alt} fill className="object-cover" />
+      <Image
+        src={url || defaultBookClub}
+        alt={alt}
+        fill
+        className="object-cover"
+      />
       {isHost && (
         <div className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-gray-normal-01 bg-green-normal-01">
           <HostIcon />
