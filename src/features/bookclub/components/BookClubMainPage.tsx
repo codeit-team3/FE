@@ -4,18 +4,45 @@ import {
   HeaderSection,
   FilterSection,
   ClubListSection,
+  SearchSection,
 } from '@/features/bookclub/components';
 import CategoryTabs from './CategoryTabs';
+import { BookClub, BookClubParams } from '../types/bookclubs';
+import { Dispatch, SetStateAction } from 'react';
 
-function BookClubMainPage() {
+interface BookClubMainPageProps {
+  bookClubs: BookClub[];
+  setBookClubs: Dispatch<SetStateAction<BookClub[]>>;
+  loading: boolean;
+  filters: BookClubParams;
+  onFilterChange: (newFilters: Partial<BookClubParams>) => void;
+}
+
+function BookClubMainPage({
+  bookClubs,
+  setBookClubs,
+  // loading,
+  filters,
+  onFilterChange,
+}: BookClubMainPageProps) {
   return (
     <>
       <HeaderSection />
       <section className="flex w-full flex-col gap-y-3 px-[20px] pt-[20px] md:px-[24px] lg:px-[102px]">
-        <CategoryTabs />
-        <FilterSection />
+        <CategoryTabs filters={filters} onFilterChange={onFilterChange} />
+        <SearchSection
+          searchValue={filters?.searchKeyword || ''}
+          onSearchChange={(value: string) =>
+            onFilterChange({ searchKeyword: value })
+          }
+        />
+        <FilterSection
+          bookClubs={bookClubs}
+          setBookClubs={setBookClubs}
+          onFilterChange={onFilterChange}
+        />
       </section>
-      <ClubListSection />
+      <ClubListSection bookClubs={bookClubs} />
     </>
   );
 }
