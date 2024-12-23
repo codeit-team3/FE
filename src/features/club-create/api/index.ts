@@ -20,6 +20,8 @@ export const createBookClub = async (data: BookClubForm) => {
     memberLimit: data.memberLimit,
     city: data.city,
     town: data.town,
+    address: data.address,
+    addressDetail: data.addressDetail,
   };
 
   formData.append(

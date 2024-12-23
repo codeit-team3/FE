@@ -7,6 +7,7 @@ interface CreateClubFormFieldProps
   error?: string;
   currentLength?: number;
   maxLength?: number;
+  optional?: boolean;
 }
 
 function CreateClubFormField({
@@ -15,6 +16,7 @@ function CreateClubFormField({
   error,
   currentLength = 0,
   maxLength,
+  optional = false,
   ...props
 }: CreateClubFormFieldProps) {
   const isOverMaxLength = maxLength !== undefined && currentLength > maxLength;
@@ -22,12 +24,17 @@ function CreateClubFormField({
   return (
     <div className="flex w-full flex-col gap-3" {...props}>
       <div className="flex w-full items-center justify-between">
-        <label className="font-semibold text-gray-black">{label}</label>
+        <label className="font-bold text-gray-darker">
+          {label}
+          {optional && <span className="text-gray-dark-01"> (선택)</span>}
+        </label>
         {maxLength !== undefined && (
           <span className="text-sm">
-            <span className="text-gray-black">{currentLength}</span>/
+            <span className="text-gray-dark-01">{currentLength}/</span>
             <span
-              className={isOverMaxLength ? 'text-red-500' : 'text-blue-500'}
+              className={
+                isOverMaxLength ? 'text-red-normal' : 'text-blue-light-active'
+              }
             >
               {maxLength}
             </span>
@@ -35,7 +42,7 @@ function CreateClubFormField({
         )}
       </div>
       {children}
-      {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
+      {error && <p className="mt-1 text-sm text-red-normal">{error}</p>}
     </div>
   );
 }

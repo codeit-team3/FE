@@ -8,6 +8,7 @@ import {
   CreateClubFormField,
   InputField,
 } from '@/features/club-create/components';
+import './datepicker.css';
 
 interface DatePickerContainerProps {
   control: Control<BookClubForm>;
