@@ -14,7 +14,7 @@ describe('Badge', () => {
   });
 
   it('variant가 dot일 때는 숫자가 표시되지 않는다', () => {
-    const { container } = render(<Badge variant="dot" count={5} />);
-    expect(container.textContent).toBe('');
+    render(<Badge variant="dot" count={5} />);
+    expect(screen.queryByText('5')).not.toBeInTheDocument();
   });
 });
