@@ -2,8 +2,9 @@
 
 import Card from '@/components/card/Card';
 import { BookClub } from '../../../types/bookclubs';
-import { formatDateForUI } from '@/lib/utils/formatDateForUI';
+import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { useRouter } from 'next/navigation';
+import { useMemo } from 'react';
 
 interface ClubListSectionProps {
   bookClubs: BookClub[];
@@ -12,12 +13,14 @@ interface ClubListSectionProps {
 function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
   const router = useRouter();
 
+  const today = useMemo(() => new Date(), []);
+
   const isClubClosed = (
     endDate: string,
     memberCount: number,
     memberLimit: number,
   ): boolean => {
-    return new Date(endDate) < new Date() || memberCount === memberLimit;
+    return isPastDate(endDate, today) || memberCount === memberLimit;
   };
 
   const clubStatus = (
@@ -46,7 +49,7 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
             isLiked={club.isLiked}
             current={club.memberCount}
             max={club.memberLimit}
-            isPast={new Date(club.endDate) < new Date()} // 지난 모임 여부
+            isPast={isPastDate(club.endDate, today)} // 지난 모임 여부
             isCanceled={false} // 모임 취소 여부 (API 값에 따라 변경 가능)
             bookClubType={club.bookClubType}
             meetingType={club.meetingType}
