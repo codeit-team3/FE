@@ -4,6 +4,7 @@ interface CommonProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   imageUrl?: string;
   isHost?: boolean;
+  onClick?: () => void;
 }
 
 export interface BookClubProps extends CommonProps {

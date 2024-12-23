@@ -23,6 +23,7 @@ function ChatCardBox({
   children,
   className,
   isHost,
+  onClick,
   ...props
 }: ChatCardBoxProps) {
   return (
@@ -30,8 +31,10 @@ function ChatCardBox({
       className={twMerge(
         'relative flex min-h-[74px] min-w-[336px] flex-col rounded-[20px] border-2 bg-gray-light-01 p-3 md:min-h-[155px] md:p-6',
         isHost ? 'border-green-normal-01' : 'border-gray-normal-01',
+        onClick && 'cursor-pointer',
         className,
       )}
+      onClick={onClick}
       {...props}
     >
       {children}
@@ -175,10 +178,11 @@ function ChatCard<T extends ChatCardVariant>({
           lastMessageTime,
           unreadCount,
           className,
+          onClick,
         } = props as BookClubProps;
 
         return (
-          <ChatCardBox isHost={isHost} className={className}>
+          <ChatCardBox isHost={isHost} className={className} onClick={onClick}>
             <div className="flex w-full items-center gap-3 md:gap-6">
               <ChatCardImage url={imageUrl} isHost={isHost} />
 
@@ -217,11 +221,18 @@ function ChatCard<T extends ChatCardVariant>({
       }
 
       case 'chatRoomHeader': {
-        const { imageUrl, isHost, title, location, datetime, className } =
-          props as ChatRoomHeaderProps;
+        const {
+          imageUrl,
+          isHost,
+          title,
+          location,
+          datetime,
+          className,
+          onClick,
+        } = props as ChatRoomHeaderProps;
 
         return (
-          <ChatCardBox isHost={isHost} className={className}>
+          <ChatCardBox isHost={isHost} className={className} onClick={onClick}>
             <div className="flex w-full items-center gap-3 md:gap-6">
               <ChatCardImage url={imageUrl} isHost={isHost} />
 
