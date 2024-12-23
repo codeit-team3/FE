@@ -1,4 +1,6 @@
 import Card from '@/components/card/Card';
+import { NO_LIST_MESSAGE } from '../../constants/meassage';
+import { formatDateWithTime } from '@/lib/utils/dateUtils';
 import { orderType, User } from '../../types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -26,8 +28,6 @@ export default function JoinedClubList({ user, order }: JoinedClubListProps) {
   console.log(bookClubList);
   // // const bookClubList: BookClub[] = [];
   // const bookClubList = mockJoinedBookClubList;
-  const NO_LIST_MESSAGE =
-    '아직 신청한 모임이 없어요.\n지금 바로 책 모임을 신청해 보세요';
 
   //카드 컴포넌트 클릭 시 해당 모임 상세페이지로 라우팅
   const handleCardClick = (clubId: number) => {
@@ -59,7 +59,9 @@ export default function JoinedClubList({ user, order }: JoinedClubListProps) {
       />
       {bookClubList?.length === 0 ? (
         <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
-          <span className="whitespace-pre-wrap">{NO_LIST_MESSAGE}</span>
+          <span className="whitespace-pre-wrap">
+            {NO_LIST_MESSAGE['JOINED']}
+          </span>
         </div>
       ) : (
         bookClubList?.map((bookClub, index) => (
@@ -69,10 +71,10 @@ export default function JoinedClubList({ user, order }: JoinedClubListProps) {
               variant="participatedClub"
               clubId={bookClub.clubId}
               isCanceled={bookClub.isCanceled}
-              imageUrl={bookClub.imageUrl}
+              imageUrl={bookClub.imageUrl || '/images/defaultBookClub.jpg'}
               title={bookClub.title}
               location={bookClub.town}
-              datetime={bookClub.targetDate}
+              datetime={formatDateWithTime(bookClub.targetDate)}
               meetingType={bookClub.meetingType}
               bookClubType={bookClub.bookClubType}
               isPast={bookClub.isPast}
