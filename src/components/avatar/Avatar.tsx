@@ -3,8 +3,8 @@ import Image from 'next/image';
 import { HTMLAttributes } from 'react';
 
 interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
-  src: string;
-  alt: string;
+  src?: string;
+  alt?: string;
   size?: AvatarSize;
   isPast?: boolean;
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
@@ -26,7 +26,12 @@ function Avatar({
       onClick={onClick}
       {...props}
     >
-      <Image src={src} alt={alt} fill className="object-cover" />
+      <Image
+        src={src || '/default-profile.png'}
+        alt={alt || '프로필 이미지'}
+        fill
+        className="object-cover"
+      />
     </div>
   );
 }
