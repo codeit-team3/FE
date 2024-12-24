@@ -18,7 +18,7 @@ export const handlers = [
           isLiked: true,
         },
         {
-          id: 0,
+          id: 1,
           title: '소설 읽기 모임',
           description: '매주 토요일 소설 읽기',
           meetingType: 'ONLINE',
