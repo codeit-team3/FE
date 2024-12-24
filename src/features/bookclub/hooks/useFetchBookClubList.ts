@@ -36,10 +36,6 @@ const useBookClubList = () => {
     setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }));
   };
 
-  const goToPage = (pageNumber: number) => {
-    setFilters((prevFilters) => ({ ...prevFilters, page: pageNumber }));
-  };
-
   return {
     bookClubs,
     setBookClubs,
@@ -47,7 +43,6 @@ const useBookClubList = () => {
     error,
     filters,
     updateFilters,
-    goToPage,
   };
 };
 
