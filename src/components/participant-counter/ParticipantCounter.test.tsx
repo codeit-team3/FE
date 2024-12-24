@@ -17,4 +17,10 @@ describe('ParticipantCounter', () => {
     render(<ParticipantCounter current={15} max={20} isPast={true} />);
     expect(screen.getByRole('participant-count')).toHaveTextContent('15/20');
   });
+
+  it('max 값이 없을 때 current만 표시되는지 확인', () => {
+    render(<ParticipantCounter current={15} />);
+    expect(screen.getByRole('participant-count')).toHaveTextContent('15');
+    expect(screen.getByRole('participant-count')).not.toHaveTextContent('/');
+  });
 });
