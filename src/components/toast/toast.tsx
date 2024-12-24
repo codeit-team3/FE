@@ -7,11 +7,9 @@ interface ToastProps {
 
 const defaultOptions: ToastOptions = {
   position: 'top-right',
-  autoClose: 3000,
-  hideProgressBar: false,
+  autoClose: 2000,
+  hideProgressBar: true,
   closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
   transition: Flip,
 };
 
