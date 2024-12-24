@@ -5,7 +5,7 @@ export interface ChatBubbleProps extends React.HTMLAttributes<HTMLElement> {
 export interface ChatBubbleBoxProps
   extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
-  variant: 'me' | 'opponent' | 'system';
+  variant: 'ME' | 'OPPONENT';
 }
 
 export interface ChatBubbleContentProps

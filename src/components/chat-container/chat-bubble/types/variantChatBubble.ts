@@ -1,4 +1,4 @@
-export type ChatBubbleVariant = 'me' | 'opponent' | 'system';
+export type ChatBubbleVariant = 'ME' | 'OPPONENT' | 'SYSTEM';
 
 interface CommonProps extends React.HTMLAttributes<HTMLDivElement> {
   content: string;
@@ -13,16 +13,16 @@ export interface OpponentProps extends CommonProps {
 }
 
 export interface SystemProps extends CommonProps {
-  time?: never; // 시스템 메시지는 시간 표시 없음
+  time?: never;
 }
 
 export type ChatBubbleVariantProps = {
-  me: MeProps;
-  opponent: OpponentProps;
-  system: SystemProps;
+  ME: MeProps;
+  OPPONENT: OpponentProps;
+  SYSTEM: SystemProps;
 };
 
-export interface ChatBubbleComponentProps<T extends ChatBubbleVariant> {
-  variant: T;
-  props: ChatBubbleVariantProps[T];
+export interface ChatBubbleComponentProps {
+  variant: ChatBubbleVariant;
+  props: ChatBubbleVariantProps[ChatBubbleVariant];
 }
