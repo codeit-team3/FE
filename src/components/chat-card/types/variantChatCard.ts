@@ -17,6 +17,7 @@ export interface BookClubProps extends CommonProps {
 export interface ChatRoomHeaderProps extends CommonProps {
   location: string;
   datetime: string;
+  meetingType: 'ONLINE' | 'OFFLINE';
 }
 
 type ChatCardVariantProps = {

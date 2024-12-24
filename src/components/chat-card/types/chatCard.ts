@@ -23,6 +23,7 @@ export interface ChatCardLocationProps
   extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   textClassName?: string;
+  meetingType: 'ONLINE' | 'OFFLINE';
 }
 
 export interface ChatCardDateTimeProps

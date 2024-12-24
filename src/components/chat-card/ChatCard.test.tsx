@@ -78,6 +78,7 @@ describe('ChatCard Component', () => {
         isHost: false,
         location: '서울시 강남구',
         datetime: '2024-03-20 14:00',
+        meetingType: 'OFFLINE' as const,
         onClick: mockOnClick,
       },
     };

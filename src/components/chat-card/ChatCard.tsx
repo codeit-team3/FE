@@ -1,6 +1,6 @@
 import { twMerge } from 'tailwind-merge';
 import Image from 'next/image';
-import { HostIcon } from '../../../public/icons';
+import { HostIcon, OnlineIcon, LocationIcon } from '../../../public/icons';
 import {
   ChatCardBoxProps,
   ChatCardTitleProps,
@@ -14,7 +14,6 @@ import {
   BookClubProps,
   ChatCardVariant,
 } from './types';
-import { LocationIcon } from '../../../public/icons';
 import defaultBookClub from '../../../public/images/defaultBookClub.jpg';
 import ParticipantCounter from '../participant-counter/ParticipantCounter';
 import Badge from '../badge/Badge';
@@ -93,21 +92,25 @@ function ChatCardImage({
 }
 
 function ChatCardLocation({
+  meetingType,
   children,
   className,
   textClassName,
   ...props
 }: ChatCardLocationProps) {
+  const displayText =
+    meetingType === 'ONLINE' ? '온라인' : children || '위치 정보 없음';
+
   return (
     <div className={twMerge('flex items-center', className)} {...props}>
-      <LocationIcon />
+      {meetingType === 'ONLINE' ? <OnlineIcon /> : <LocationIcon />}
       <span
         className={twMerge(
-          'text-xs font-semibold text-gray-dark-03 md:text-sm',
+          'text-xs font-semibold text-green-normal-02 md:text-sm',
           textClassName,
         )}
       >
-        {children}
+        {displayText}
       </span>
     </div>
   );
@@ -232,6 +235,7 @@ function ChatCard<T extends ChatCardVariant>({
           title,
           location,
           datetime,
+          meetingType,
           className,
           onClick,
         } = props as ChatRoomHeaderProps;
@@ -244,7 +248,9 @@ function ChatCard<T extends ChatCardVariant>({
               <div className="flex min-w-0 flex-1 flex-col">
                 <ChatCardTitle>{title}</ChatCardTitle>
                 <div className="flex min-w-0 items-center gap-1 md:gap-1.5">
-                  <ChatCardLocation>{location}</ChatCardLocation>
+                  <ChatCardLocation meetingType={meetingType}>
+                    {location}
+                  </ChatCardLocation>
                   <ChatCardDateTime>{datetime}</ChatCardDateTime>
                 </div>
               </div>

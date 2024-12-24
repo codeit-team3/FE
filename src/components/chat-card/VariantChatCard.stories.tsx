@@ -42,6 +42,7 @@ const chatRoomHeaderArgs = {
     isHost: false,
     location: '을지로 3가',
     datetime: '12/14(토) 오전 10:00',
+    meetingType: 'OFFLINE' as const,
   },
 };
 
