@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import ReactQueryProviders from '@/lib/utils/reactQueryProvider';
 import HeaderBar from '@/components/header/HeaderBar';
 import Script from 'next/script';
+import { Toast } from '@/components/toast/toast';
+
 import { MSWComponent } from '@/components/MSWComponent';
 import '@/styles/globals.css';
 
@@ -25,9 +27,12 @@ export default function RootLayout({
         <ReactQueryProviders>
           <HeaderBar />
           <main className="mx-auto flex w-full max-w-[1200px] flex-1 flex-col bg-white">
+            {children}
+            <Toast />
             <MSWComponent>{children}</MSWComponent>
           </main>
         </ReactQueryProviders>
+        <Toast />
       </body>
     </html>
   );

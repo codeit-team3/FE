@@ -15,3 +15,4 @@ export { default as EditIcon } from './EditIcon';
 export { default as IcEdit } from './IcEdit';
 export { default as ImageIcon } from './ImageIcon';
 export { default as CameraIcon } from './CameraIcon';
+export { default as OnlineIcon } from './OnlineIcon';
