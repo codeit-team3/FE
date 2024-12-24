@@ -1,7 +1,8 @@
 export type ChatBubbleVariant = 'ME' | 'OPPONENT' | 'SYSTEM';
+export type SystemAction = 'JOIN' | 'LEAVE';
 
 interface CommonProps extends React.HTMLAttributes<HTMLDivElement> {
-  content: string;
+  content?: string;
   time?: string;
 }
 
@@ -12,7 +13,10 @@ export interface OpponentProps extends CommonProps {
   name: string;
 }
 
-export interface SystemProps extends CommonProps {
+export interface SystemProps extends React.HTMLAttributes<HTMLDivElement> {
+  username: string;
+  action: SystemAction;
+  content?: never;
   time?: never;
 }
 
@@ -24,5 +28,5 @@ export type ChatBubbleVariantProps = {
 
 export interface ChatBubbleComponentProps {
   variant: ChatBubbleVariant;
-  props: ChatBubbleVariantProps[ChatBubbleVariant];
+  props: MeProps | OpponentProps | SystemProps;
 }

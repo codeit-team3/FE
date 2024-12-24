@@ -20,6 +20,7 @@ export interface ChatBubbleTimeProps
 
 export interface ChatBubbleProfileProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
-  imageUrl?: string;
   name: string;
+  imageUrl?: string;
+  isHost?: boolean;
 }
