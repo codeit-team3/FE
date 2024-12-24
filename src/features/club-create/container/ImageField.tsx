@@ -2,8 +2,9 @@
 
 import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { BookClubForm } from '../types';
-import { CreateClubFormField, InputField } from '../components';
+import { CreateClubFormField } from '../components';
 import { useImageField } from '@/features/club-create/hooks';
+import { CameraIcon, ImageIcon } from '../../../../public/icons';
 
 interface ImageUploadContainerProps {
   register: UseFormRegister<BookClubForm>;
@@ -12,42 +13,37 @@ interface ImageUploadContainerProps {
 }
 
 function ImageField({ register, setValue, error }: ImageUploadContainerProps) {
-  const { selectedFileName, handleFileChange, clearFile } =
-    useImageField(setValue);
+  const { selectedFileName, handleFileChange } = useImageField(
+    setValue,
+    register,
+  );
 
   return (
-    <CreateClubFormField label="이미지" error={error}>
-      <div className="flex w-full items-center gap-2">
-        <InputField
-          type="text"
-          value={selectedFileName}
-          readOnly
-          placeholder="이미지를 첨부해 주세요"
-          className="flex-1"
-        />
-        <InputField
+    <CreateClubFormField label="이미지" error={error} optional={true}>
+      <div className="relative flex h-[130px] w-full items-center justify-center rounded-xl bg-gray-light-02">
+        {selectedFileName ? (
+          <>
+            <div className="flex flex-col items-center gap-1">
+              <ImageIcon />
+              <span className="text-sm text-blue-light-active">
+                {selectedFileName}
+              </span>
+            </div>
+          </>
+        ) : (
+          <div className="flex flex-col items-center gap-1">
+            <CameraIcon />
+            <span className="text-sm text-gray-dark-01">
+              이미지를 첨부해 주세요 (jpg, jpeg)
+            </span>
+          </div>
+        )}
+        <input
           type="file"
           accept="image/*"
-          register={register('image')}
-          className="hidden"
-          id="image-upload"
+          className="absolute inset-0 cursor-pointer opacity-0"
           onChange={handleFileChange}
         />
-        <label
-          htmlFor="image-upload"
-          className="flex h-10 cursor-pointer items-center rounded-xl border border-green-normal-01 px-4 text-green-normal-01"
-        >
-          파일 찾기
-        </label>
-        {selectedFileName && (
-          <button
-            type="button"
-            onClick={clearFile}
-            className="ml-2 text-gray-dark-02"
-          >
-            ✕
-          </button>
-        )}
       </div>
     </CreateClubFormField>
   );

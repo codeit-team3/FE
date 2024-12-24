@@ -1,9 +1,9 @@
-import BookClubContainer from '@/features/bookclub/container/BookClubContainer';
+import { BookClubMainPage } from '@/features/bookclub/components';
 
 export default function Home() {
   return (
     <div>
-      <BookClubContainer />
+      <BookClubMainPage />
     </div>
   );
 }
