@@ -5,6 +5,8 @@ import { BookClub } from '../../../types/bookclubs';
 import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
+import EmptyState from '@/components/common-layout/EmptyState';
+import { clubStatus } from '@/lib/utils/clubUtils';
 
 interface ClubListSectionProps {
   bookClubs: BookClub[];
@@ -14,25 +16,6 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
   const router = useRouter();
 
   const today = useMemo(() => new Date(), []);
-
-  const isClubClosed = (
-    endDate: string,
-    memberCount: number,
-    memberLimit: number,
-  ): boolean => {
-    return isPastDate(endDate, today) || memberCount === memberLimit;
-  };
-
-  const clubStatus = (
-    memberCount: number,
-    memberLimit: number,
-    endDate: string,
-  ) => {
-    if (isClubClosed(endDate, memberCount, memberLimit)) {
-      return 'closed';
-    }
-    return 3 < memberCount ? 'confirmed' : 'pending';
-  };
 
   return (
     <main className="flex w-full min-w-[336px] flex-col items-center gap-y-[26px] bg-gray-light-01 px-[20px] pt-[18px] sm:justify-between md:px-[24px] lg:px-[102px]">
@@ -57,6 +40,7 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
               club.memberCount,
               club.memberLimit,
               club.endDate,
+              today,
             )}
             onLikeClick={() => console.log(`${club.title} 좋아요 클릭`)}
             onClick={() => router.push(`/bookclub/${club.id}`)}
@@ -64,10 +48,10 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
           />
         ))
       ) : (
-        <div className="mt-12 flex flex-col items-center justify-center font-medium text-gray-normal-03 md:mt-[207px] lg:mt-[180px]">
-          <p>아직 책 모임이 없어요.</p>
-          <p>지금 바로 책 모임을 만들어보세요.</p>
-        </div>
+        <EmptyState
+          title="아직 책 모임이 없어요."
+          subtitle="지금 바로 책 모임을 만들어보세요."
+        />
       )}
     </main>
   );
