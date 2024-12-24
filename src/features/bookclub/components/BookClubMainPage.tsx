@@ -1,47 +1,26 @@
 'use client';
 
-import {
-  HeaderSection,
-  FilterSection,
-  ClubListSection,
-  SearchSection,
-} from '@/features/bookclub/components';
-import CategoryTabs from './CategoryTabs';
-import { BookClub, BookClubParams } from '../types/bookclubs';
-import { Dispatch, SetStateAction } from 'react';
+import { HeaderSection, ClubListSection } from '@/features/bookclub/components';
+import useBookClubList from '../hooks/useFetchBookClubList';
+import FilterBar from '@/components/common-layout/FilterBar';
 
-interface BookClubMainPageProps {
-  bookClubs: BookClub[];
-  setBookClubs: Dispatch<SetStateAction<BookClub[]>>;
-  loading: boolean;
-  filters: BookClubParams;
-  onFilterChange: (newFilters: Partial<BookClubParams>) => void;
-}
+function BookClubMainPage() {
+  // 커스텀 훅에서 상태와 핸들러 가져오기
+  const { bookClubs, setBookClubs, filters, updateFilters } = useBookClubList();
 
-function BookClubMainPage({
-  bookClubs,
-  setBookClubs,
-  // loading,
-  filters,
-  onFilterChange,
-}: BookClubMainPageProps) {
+  const handleFilterChange = (newFilter: Partial<typeof filters>) => {
+    updateFilters(newFilter);
+  };
+
   return (
     <>
       <HeaderSection />
-      <section className="flex w-full flex-col gap-y-3 px-[20px] pt-[20px] md:px-[24px] lg:px-[102px]">
-        <CategoryTabs filters={filters} onFilterChange={onFilterChange} />
-        <SearchSection
-          searchValue={filters?.searchKeyword || ''}
-          onSearchChange={(value: string) =>
-            onFilterChange({ searchKeyword: value })
-          }
-        />
-        <FilterSection
-          bookClubs={bookClubs}
-          setBookClubs={setBookClubs}
-          onFilterChange={onFilterChange}
-        />
-      </section>
+      <FilterBar
+        filters={filters}
+        handleFilterChange={handleFilterChange}
+        bookClubs={bookClubs}
+        setBookClubs={setBookClubs}
+      />
       <ClubListSection bookClubs={bookClubs} />
     </>
   );
