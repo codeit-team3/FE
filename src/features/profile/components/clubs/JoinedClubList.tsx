@@ -6,7 +6,8 @@ import { useState } from 'react';
 import { WriteReviewModal } from '../clubs';
 import { formatDateForUI } from '@/lib/utils/formatDateForUI';
 import { useQuery } from '@tanstack/react-query';
-import { bookClubs } from '@/features/react-query/book-club';
+import { bookClubs, useLeaveBookClub } from '@/features/react-query/book-club';
+import PopUp from '@/components/pop-up/PopUp';
 
 interface JoinedClubListProps {
   order: orderType;
@@ -15,6 +16,9 @@ interface JoinedClubListProps {
 export default function JoinedClubList({ order }: JoinedClubListProps) {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPopUpOpen, setIsPopUpOpen] = useState(false);
+  const [label, setLabel] = useState('');
+  const [selectedClubId, setSelectedClubId] = useState<number | null>(null);
 
   const { queryKey, queryFn } = bookClubs.myJoined({ order: order });
   const { data, isLoading, error } = useQuery({
@@ -23,23 +27,37 @@ export default function JoinedClubList({ order }: JoinedClubListProps) {
   });
 
   const myJoinedList: BookClub[] = data?.data?.bookClubs || [];
+  const { mutate: leaveClub } = useLeaveBookClub();
 
   // 카드 클릭 이벤트
   const handleCardClick = (clubId: number) => {
     router.push(`/bookclub/${clubId}`);
   };
 
-  const handleCancelClick = (clubId: number) => {
-    alert(`${clubId} 취소하기`);
+  //모임 참가하기 취소 클릭 이벤트
+  const handleCancelClick = async (clubId: number) => {
+    setLabel('정말 모임 참여를 취소하시겠어요?');
+    setIsPopUpOpen(true);
+    setSelectedClubId(clubId);
   };
 
   const handleDeleteClick = (clubId: number) => {
+    leaveClub(clubId);
     alert(`${clubId} 삭제하기`);
   };
 
+  //TODO: 리뷰 작성하기 API 연결
   const onSubmitReview = (rating: number, review: string) => {
     alert(`점수: ${rating} 리뷰: ${review}`);
     setIsModalOpen(false);
+  };
+
+  const handlePopUpConfirm = () => {
+    if (selectedClubId) {
+      leaveClub(selectedClubId); // 모임 탈퇴
+      setIsPopUpOpen(false); // 팝업 닫기
+      setSelectedClubId(null); // 선택된 clubId 초기화
+    }
   };
 
   return (
@@ -48,6 +66,14 @@ export default function JoinedClubList({ order }: JoinedClubListProps) {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConfirm={(rating, review) => onSubmitReview(rating, review)}
+      />
+      <PopUp
+        isOpen={isPopUpOpen}
+        isLarge={true}
+        isTwoButton={true}
+        label={label}
+        handlePopUpClose={() => setIsPopUpOpen(false)}
+        handlePopUpConfirm={handlePopUpConfirm}
       />
       {isLoading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
