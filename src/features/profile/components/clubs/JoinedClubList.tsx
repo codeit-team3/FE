@@ -1,33 +1,37 @@
 import Card from '@/components/card/Card';
 import { NO_LIST_MESSAGE } from '../../constants/meassage';
-import { formatDateWithTime } from '@/lib/utils/dateUtils';
-import { orderType, User } from '../../types';
+import { myClubParams, orderType } from '../../types';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { WriteReviewModal } from '../clubs';
+import { formatDateForUI } from '@/lib/utils/formatDateForUI';
 import useFetchMyJoinedList from '../../hooks/useFetchMyJoinedList';
 
 interface JoinedClubListProps {
-  user: User | null;
   order: orderType;
 }
 
-export default function JoinedClubList({ user, order }: JoinedClubListProps) {
-  console.log(user, order);
-
+export default function JoinedClubList({ order }: JoinedClubListProps) {
   const router = useRouter();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { myJoinedList, isLoading, error } = useFetchMyJoinedList(order);
+  const [params, setParams] = useState<myClubParams>({
+    order: order,
+    size: 10,
+    page: 1,
+  });
+  const { myJoinedList, isLoading, error } = useFetchMyJoinedList(params);
 
-  console.log(isLoading);
-  console.error(error);
+  const updateParams = (newParam: Partial<myClubParams>) => {
+    setParams((prevParams) => ({
+      ...prevParams,
+      ...newParam,
+    }));
+  };
 
-  const bookClubList = myJoinedList;
-
-  console.log(bookClubList);
-  // // const bookClubList: BookClub[] = [];
-  // const bookClubList = mockJoinedBookClubList;
+  useEffect(() => {
+    updateParams({ order });
+  }, [order]);
 
   //카드 컴포넌트 클릭 시 해당 모임 상세페이지로 라우팅
   const handleCardClick = (clubId: number) => {
@@ -57,24 +61,26 @@ export default function JoinedClubList({ user, order }: JoinedClubListProps) {
         onClose={() => setIsModalOpen(false)}
         onConfirm={(rating, review) => onSubmitReview(rating, review)}
       />
-      {bookClubList?.length === 0 ? (
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Error: {error.message}</p>}
+      {myJoinedList?.length === 0 ? (
         <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
           <span className="whitespace-pre-wrap">
             {NO_LIST_MESSAGE['JOINED']}
           </span>
         </div>
       ) : (
-        bookClubList?.map((bookClub, index) => (
+        myJoinedList?.map((bookClub, index) => (
           <div key={index} className="md:w-full">
             {/* TODO: isCanceled, imageUrl. isPast, status 수정 */}
             <Card
               variant="participatedClub"
-              clubId={bookClub.clubId}
+              clubId={bookClub.id}
               isCanceled={bookClub.isCanceled}
               imageUrl={bookClub.imageUrl || '/images/defaultBookClub.jpg'}
               title={bookClub.title}
               location={bookClub.town}
-              datetime={formatDateWithTime(bookClub.targetDate)}
+              datetime={formatDateForUI(bookClub.targetDate, 'KOREAN')}
               meetingType={bookClub.meetingType}
               bookClubType={bookClub.bookClubType}
               isPast={bookClub.isPast}

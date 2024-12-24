@@ -21,7 +21,7 @@ export interface ProfileEditData {
 
 //TODO: isCanceled, imageUrl. isPast, status 수정
 export interface BookClub {
-  clubId: number;
+  id: number;
   title: string;
   description: string;
   meetingType: 'ONLINE' | 'OFFLINE';
@@ -45,7 +45,7 @@ export interface Review {
   bookClubId: number;
   clubName: string;
   rating: number;
-  comment: string;
+  content: string;
   clubImgUrl?: string | undefined;
   clubImgAlt?: string | undefined;
   profileImg?: string;
@@ -54,9 +54,7 @@ export interface Review {
   bookClubType: 'FREE' | 'FIXED';
 }
 
-export type orderType = 'DESC' | 'ASC' | 'END';
-
-export interface myJoinedParams {
+export interface myClubParams {
   order?: orderType;
   size?: number;
   page?: number;

@@ -1,16 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
-import { BookClub, myJoinedParams, orderType } from '../types';
+import { BookClub, myJoinedParams } from '../types';
 import { getMyJoined } from '../api/myJoinedApi';
 
-const useFetchMyJoinedList = (order: orderType) => {
+const useFetchMyJoinedList = (params: myJoinedParams) => {
   const [myJoinedList, setMyJoinedList] = useState<BookClub[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const [params, setParams] = useState<myJoinedParams>({
-    order: order,
-    size: 10,
-    page: 1,
-  });
 
   const fetchMyJoined = useCallback(async () => {
     setIsLoading(true);
@@ -29,14 +24,7 @@ const useFetchMyJoinedList = (order: orderType) => {
     fetchMyJoined();
   }, [fetchMyJoined]);
 
-  const updateParams = (newParam: Partial<myJoinedParams>) => {
-    setParams((prevParams) => ({
-      ...prevParams,
-      ...newParam,
-    }));
-  };
-
-  return { myJoinedList, isLoading, error, updateParams };
+  return { myJoinedList, isLoading, error };
 };
 
 export default useFetchMyJoinedList;

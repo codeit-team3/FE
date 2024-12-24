@@ -1,7 +1,7 @@
 import apiClient from '@/lib/utils/apiClient';
-import { myJoinedParams } from '../types';
+import { myClubParams } from '../types';
 
-export const getMyJoined = async (params: myJoinedParams) => {
+export const getMyJoined = async (params: myClubParams) => {
   const response = await apiClient.get('/book-clubs/my-joined', { params });
   return response.data;
 };
