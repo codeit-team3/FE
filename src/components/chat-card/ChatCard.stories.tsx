@@ -36,7 +36,11 @@ export const Image: Story = {
 };
 
 export const Location: Story = {
-  render: () => <ChatCard.Location>서울특별시 강남구</ChatCard.Location>,
+  render: () => (
+    <ChatCard.Location meetingType="OFFLINE">
+      서울특별시 강남구
+    </ChatCard.Location>
+  ),
 };
 
 export const DateTime: Story = {
