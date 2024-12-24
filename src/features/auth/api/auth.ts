@@ -2,6 +2,7 @@ import apiClient from '@/lib/utils/apiClient';
 import { LoginFormData } from '../types/loginFormSchema';
 import { useAuthStore } from '@/store/authStore';
 import { loginServer, logoutServer } from '@/app/actions';
+import { showToast } from '@/components/toast/toast';
 
 import { getCookie } from '@/features/auth/utils/cookies';
 import { User } from '../types/user';
@@ -10,11 +11,17 @@ import { SignUpFormData } from '../types/sign-up.schema';
 export const login = async (data: LoginFormData) => {
   try {
     const response = await loginServer.bind(null, data)();
+
+    if (response.error) {
+      showToast({ message: response.error, type: 'error' });
+      throw new Error(response.error);
+    }
+
     const { setIsLoggedIn } = useAuthStore.getState();
     setIsLoggedIn(true);
-
     await getUserInfo();
 
+    showToast({ message: '로그인에 성공했습니다.', type: 'success' });
     return response;
   } catch (error) {
     console.error('로그인 에러:', error);

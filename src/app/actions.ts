@@ -16,15 +16,18 @@ export async function loginServer(data: LoginFormData) {
       },
     );
     const json = await response.json();
-    const { accessToken, refreshToken } = json;
 
-    const cookieStore = await cookies();
-    cookieStore.set('auth_token', accessToken);
-    cookieStore.set('refresh_token', refreshToken);
-    return json;
+    if (response.ok && json.accessToken && json.refreshToken) {
+      const cookieStore = await cookies();
+      cookieStore.set('auth_token', json.accessToken);
+      cookieStore.set('refresh_token', json.refreshToken);
+      return json;
+    }
+
+    return { error: json.message || '로그인에 실패했습니다.' };
   } catch (error) {
     console.error(error);
-    return null;
+    return { error: '로그인 처리 중 오류가 발생했습니다.' };
   }
 }
 
