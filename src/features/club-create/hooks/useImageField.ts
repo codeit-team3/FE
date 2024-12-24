@@ -1,13 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { UseFormSetValue } from 'react-hook-form';
+import { UseFormSetValue, UseFormRegister } from 'react-hook-form';
 import { BookClubForm } from '../types';
 
-export const useImageField = (setValue: UseFormSetValue<BookClubForm>) => {
+export const useImageField = (
+  setValue: UseFormSetValue<BookClubForm>,
+  register: UseFormRegister<BookClubForm>,
+) => {
   const [selectedFileName, setSelectedFileName] = useState<string>('');
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    register('image').onChange(e);
     const file = e.target.files?.[0];
     if (file) {
       setSelectedFileName(file.name);

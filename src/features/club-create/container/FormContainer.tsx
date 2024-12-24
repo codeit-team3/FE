@@ -52,7 +52,7 @@ function FormContainer() {
         >
           <InputField
             register={register('description')}
-            placeholder="모임에 대한 설명을 입력해 주세요 (오프라인 모임시 만나는 장소도 같이 입력해 주세요!)"
+            placeholder="모임에 대한 설명을 입력해 주세요"
           />
         </CreateClubFormField>
 
@@ -98,9 +98,12 @@ function FormContainer() {
             ]}
             selectedValue={watch('meetingType')}
             register={register('meetingType')}
+            addressRegister={register('addressDetail')}
             setValue={setValue}
             name="meetingType"
             town={watch('town')}
+            watch={watch}
+            errors={errors}
           />
         </CreateClubFormField>
 

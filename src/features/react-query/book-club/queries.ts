@@ -1,6 +1,7 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory';
 import apiClient from '@/lib/utils/apiClient';
 import { orderType } from '@/features/profile/types';
+import { BookClubParams } from '@/types/bookclubs';
 
 // TODO: 추후 각자 구현하는 api 명세에 맞게 filter 타입 정의해주세요
 interface BookClubFilters {
@@ -20,7 +21,7 @@ interface MyProfileFilters {
 }
 
 export const bookClubs = createQueryKeys('bookClubs', {
-  all: (filters?: BookClubFilters) => ({
+  all: (filters?: BookClubParams) => ({
     queryKey: [{ filters: filters || {} }],
     queryFn: (ctx) =>
       apiClient.get('/book-clubs', {
@@ -59,7 +60,7 @@ export const bookClubs = createQueryKeys('bookClubs', {
         },
       }),
   }),
-  myCreated: (filters?: MyProfileFilters) => ({
+  myCreated: (filters?: BookClubFilters) => ({
     queryKey: [{ filters: filters || {} }],
     queryFn: (ctx) =>
       apiClient.get('/book-clubs/my-created', {

@@ -23,3 +23,8 @@ export const formatDateForUI = (
       return `${year}.${month}.${day}`;
   }
 };
+
+export const isPastDate = (date: string | Date, today: Date): boolean => {
+  const targetDate = typeof date === 'string' ? new Date(date) : date;
+  return targetDate < today;
+};

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getBookClubs } from '../api/bookclubApi';
-import { BookClub, BookClubParams } from '../types/bookclubs';
+import { BookClub, BookClubParams } from '../../../types/bookclubs';
 
 const useBookClubList = () => {
   const [bookClubs, setBookClubs] = useState<BookClub[]>([]);
@@ -36,10 +36,6 @@ const useBookClubList = () => {
     setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }));
   };
 
-  const goToPage = (pageNumber: number) => {
-    setFilters((prevFilters) => ({ ...prevFilters, page: pageNumber }));
-  };
-
   return {
     bookClubs,
     setBookClubs,
@@ -47,7 +43,6 @@ const useBookClubList = () => {
     error,
     filters,
     updateFilters,
-    goToPage,
   };
 };
 
