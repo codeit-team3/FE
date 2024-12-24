@@ -19,8 +19,12 @@ export async function loginServer(data: LoginFormData) {
 
     if (response.ok && json.accessToken && json.refreshToken) {
       const cookieStore = await cookies();
-      cookieStore.set('auth_token', json.accessToken);
-      cookieStore.set('refresh_token', json.refreshToken);
+      cookieStore.set('auth_token', json.accessToken, {
+        maxAge: 60 * 15,
+      });
+      cookieStore.set('refresh_token', json.refreshToken, {
+        maxAge: 60 * 60 * 24 * 14,
+      });
       return json;
     }
 
