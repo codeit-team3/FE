@@ -1,11 +1,12 @@
 import Card from '@/components/card/Card';
 import { NO_LIST_MESSAGE } from '../../constants/meassage';
-import { myClubParams, orderType } from '../../types';
+import { BookClub, orderType } from '../../types';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { WriteReviewModal } from '../clubs';
 import { formatDateForUI } from '@/lib/utils/formatDateForUI';
-import useFetchMyJoinedList from '../../hooks/useFetchMyJoinedList';
+import { useQuery } from '@tanstack/react-query';
+import { bookClubs } from '@/features/react-query/book-club';
 
 interface JoinedClubListProps {
   order: orderType;
@@ -13,44 +14,31 @@ interface JoinedClubListProps {
 
 export default function JoinedClubList({ order }: JoinedClubListProps) {
   const router = useRouter();
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [params, setParams] = useState<myClubParams>({
-    order: order,
-    size: 10,
-    page: 1,
+
+  const { queryKey, queryFn } = bookClubs.myJoined({ order: order });
+  const { data, isLoading, error } = useQuery({
+    queryKey,
+    queryFn,
   });
-  const { myJoinedList, isLoading, error } = useFetchMyJoinedList(params);
 
-  const updateParams = (newParam: Partial<myClubParams>) => {
-    setParams((prevParams) => ({
-      ...prevParams,
-      ...newParam,
-    }));
-  };
+  const myJoinedList: BookClub[] = data?.data?.bookClubs || [];
 
-  useEffect(() => {
-    updateParams({ order });
-  }, [order]);
-
-  //카드 컴포넌트 클릭 시 해당 모임 상세페이지로 라우팅
+  // 카드 클릭 이벤트
   const handleCardClick = (clubId: number) => {
     router.push(`/bookclub/${clubId}`);
   };
 
   const handleCancelClick = (clubId: number) => {
-    alert(`${clubId}취소하기`);
-    //TODO: 취소 확인 팝업 표시, API작업 필요
+    alert(`${clubId} 취소하기`);
   };
 
   const handleDeleteClick = (clubId: number) => {
-    alert(`${clubId}삭제하기`);
-    //TODO: 삭제 확인 팝업 표시, API 작업 필요
+    alert(`${clubId} 삭제하기`);
   };
 
   const onSubmitReview = (rating: number, review: string) => {
-    alert(`점수:${rating} 리뷰:${review}`);
-    //TODO: API 작업 필요
+    alert(`점수: ${rating} 리뷰: ${review}`);
     setIsModalOpen(false);
   };
 
@@ -72,7 +60,6 @@ export default function JoinedClubList({ order }: JoinedClubListProps) {
       ) : (
         myJoinedList?.map((bookClub, index) => (
           <div key={index} className="md:w-full">
-            {/* TODO: isCanceled, imageUrl. isPast, status 수정 */}
             <Card
               variant="participatedClub"
               clubId={bookClub.id}
