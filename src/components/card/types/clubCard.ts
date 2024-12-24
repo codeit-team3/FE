@@ -47,7 +47,7 @@ interface ParticipatedClubCard extends ClubCard {
 
 interface HostedClubCard extends ClubCard {
   // 모임 취소 액션
-  onCancel: () => void;
+  onCancel: (clubId: number) => void;
 
   // 리뷰 정보
   reviewScore?: number;

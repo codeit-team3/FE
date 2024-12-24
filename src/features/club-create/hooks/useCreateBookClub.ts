@@ -2,14 +2,14 @@
 
 import { useState } from 'react';
 import { BookClubForm } from '../types';
-import { createBookClub } from '../api';
+import { useBookClubCreateMutation } from '@/features/react-query/book-club';
 
 export const useCreateBookClub = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { mutateAsync: createBookClub, isPending } =
+    useBookClubCreateMutation();
 
   const onSubmit = async (data: BookClubForm) => {
-    setIsLoading(true);
     setError(null);
 
     try {
@@ -18,10 +18,8 @@ export const useCreateBookClub = () => {
     } catch (error) {
       setError('북클럽 생성에 실패했습니다.');
       throw error;
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  return { onSubmit, isLoading, error };
+  return { onSubmit, isLoading: isPending, error };
 };
