@@ -16,7 +16,6 @@ export const useLoginSubmit = (
       const response = await login(data);
       console.log('로그인 성공:', response);
       reset();
-
       const returnUrl = searchParams.get('returnUrl') || '/bookclub';
       router.replace(returnUrl);
     } catch (error) {
