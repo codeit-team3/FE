@@ -25,9 +25,9 @@ export default function JoinedClubList({ order }: JoinedClubListProps) {
     queryKey,
     queryFn,
   });
+  const { mutate: leaveClub } = useLeaveBookClub();
 
   const myJoinedList: BookClub[] = data?.data?.bookClubs || [];
-  const { mutate: leaveClub } = useLeaveBookClub();
 
   // 카드 클릭 이벤트
   const handleCardClick = (clubId: number) => {

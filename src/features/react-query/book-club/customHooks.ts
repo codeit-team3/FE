@@ -3,6 +3,7 @@ import { BookClubForm } from '@/features/club-create/types';
 import { createBookClub } from '@/features/club-create/api';
 import { bookClubs } from './queries';
 import { leaveBookClub } from '@/api/leaveBookClub';
+import { toast } from 'react-toastify';
 
 export function useBookClubCreateMutation() {
   const queryClient = useQueryClient();
@@ -29,6 +30,11 @@ export function useLeaveBookClub() {
       queryClient.invalidateQueries({
         queryKey: bookClubs.myJoined().queryKey,
       });
+      toast.success('모임 참여가 취소되었습니다.');
+    },
+    onError: (error: any) => {
+      toast.error('모임 취소를 실패하였습니다.');
+      console.error(error);
     },
   });
 }
