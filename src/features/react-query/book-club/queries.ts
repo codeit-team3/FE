@@ -32,7 +32,7 @@ export const bookClubs = createQueryKeys('bookClubs', {
         },
       }),
   }),
-  detail: (bookClubId: string) => ({
+  detail: (bookClubId: number) => ({
     queryKey: [bookClubId],
     queryFn: () => apiClient.get(`/book-clubs/${bookClubId}`),
     contextQueries: {

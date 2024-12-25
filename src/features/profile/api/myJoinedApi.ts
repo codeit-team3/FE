@@ -1,7 +1,7 @@
-// import apiClient from '@/lib/utils/apiClient';
-// import { myClubParams } from '../types';
+import apiClient from '@/lib/utils/apiClient';
+import { myJoinedParams } from '../types';
 
-// export const getMyJoined = async (params: myClubParams) => {
-//   const response = await apiClient.get('/book-clubs/my-joined', { params });
-//   return response.data;
-// };
+export const getMyJoined = async (params: myJoinedParams) => {
+  const response = await apiClient.get('/book-clubs/my-joined', { params });
+  return response.data;
+};

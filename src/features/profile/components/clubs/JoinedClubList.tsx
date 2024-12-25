@@ -4,10 +4,16 @@ import { BookClub, orderType } from '../../types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { WriteReviewModal } from '../clubs';
-import { formatDateForUI } from '@/lib/utils/formatDateForUI';
+import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { useQuery } from '@tanstack/react-query';
-import { bookClubs, useLeaveBookClub } from '@/features/react-query/book-club';
+import {
+  bookClubs,
+  useLeaveBookClub,
+  useWriteReview,
+} from '@/features/react-query/book-club';
 import PopUp from '@/components/pop-up/PopUp';
+import { clubStatus } from '@/lib/utils/clubUtils';
+import { toast } from 'react-toastify';
 
 interface JoinedClubListProps {
   order: orderType;
@@ -15,10 +21,12 @@ interface JoinedClubListProps {
 
 export default function JoinedClubList({ order }: JoinedClubListProps) {
   const router = useRouter();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
   const [label, setLabel] = useState('');
   const [selectedClubId, setSelectedClubId] = useState<number | null>(null);
+  const today = new Date();
 
   const { queryKey, queryFn } = bookClubs.myJoined({ order: order });
   const { data, isLoading, error } = useQuery({
@@ -26,55 +34,64 @@ export default function JoinedClubList({ order }: JoinedClubListProps) {
     queryFn,
   });
   const { mutate: leaveClub } = useLeaveBookClub();
+  const { mutate: writeReview } = useWriteReview();
 
   const myJoinedList: BookClub[] = data?.data?.bookClubs || [];
 
   // 카드 클릭 이벤트
-  const handleCardClick = (clubId: number) => {
+  const onClick = (clubId: number) => {
     router.push(`/bookclub/${clubId}`);
   };
 
   //모임 참가하기 취소 클릭 이벤트
-  const handleCancelClick = async (clubId: number) => {
+  const onCancel = async (clubId: number) => {
     setLabel('정말 모임 참여를 취소하시겠어요?');
     setIsPopUpOpen(true);
     setSelectedClubId(clubId);
   };
 
-  const handleDeleteClick = (clubId: number) => {
+  //모임 삭제하기 클릭 이벤트
+  const onDelete = (clubId: number) => {
     leaveClub(clubId);
-    alert(`${clubId} 삭제하기`);
+    toast.success('취소된 모임을 삭제하였습니다.');
   };
 
-  //TODO: 리뷰 작성하기 API 연결
-  const onSubmitReview = (rating: number, review: string) => {
-    alert(`점수: ${rating} 리뷰: ${review}`);
-    setIsModalOpen(false);
+  //리뷰 작성하기 클릭 이벤트
+  const onWriteReview = (clubId: number) => {
+    setIsModalOpen(true);
+    setSelectedClubId(clubId);
   };
 
-  const handlePopUpConfirm = () => {
+  const onConfirmReview = (rating: number, content: string) => {
+    //TODO: 토스트 메시지가 뜨더라도 모달이 열린 상태로 유지되도록 수정
+    if (!rating || !content) {
+      toast.error('점수와 리뷰 내용을 입력해주세요');
+      return;
+    }
+
     if (selectedClubId) {
-      leaveClub(selectedClubId); // 모임 탈퇴
-      setIsPopUpOpen(false); // 팝업 닫기
-      setSelectedClubId(null); // 선택된 clubId 초기화
+      writeReview({ bookClubId: selectedClubId, rating, content });
+      setIsModalOpen(false);
+      setSelectedClubId(null);
+    }
+  };
+
+  const onConfirmPopUp = async () => {
+    if (selectedClubId) {
+      try {
+        await leaveClub(selectedClubId);
+        toast.success('모임 참여가 취소되었습니다.');
+        setIsPopUpOpen(false);
+        setSelectedClubId(null);
+      } catch (err) {
+        toast.error('모임 참여 취소에 실패하였습니다');
+        console.error(err);
+      }
     }
   };
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
-      <WriteReviewModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onConfirm={(rating, review) => onSubmitReview(rating, review)}
-      />
-      <PopUp
-        isOpen={isPopUpOpen}
-        isLarge={true}
-        isTwoButton={true}
-        label={label}
-        handlePopUpClose={() => setIsPopUpOpen(false)}
-        handlePopUpConfirm={handlePopUpConfirm}
-      />
       {isLoading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
       {myJoinedList?.length === 0 ? (
@@ -89,23 +106,41 @@ export default function JoinedClubList({ order }: JoinedClubListProps) {
             <Card
               variant="participatedClub"
               clubId={bookClub.id}
-              isCanceled={bookClub.isCanceled}
+              isCanceled={bookClub.isCanceled} //TODO: api 응답값에 따라 수정가능
               imageUrl={bookClub.imageUrl || '/images/defaultBookClub.jpg'}
               title={bookClub.title}
               location={bookClub.town}
               datetime={formatDateForUI(bookClub.targetDate, 'KOREAN')}
               meetingType={bookClub.meetingType}
               bookClubType={bookClub.bookClubType}
-              isPast={bookClub.isPast}
-              clubStatus={bookClub.clubStatus}
-              onClick={(clubId) => handleCardClick(clubId)}
-              onCancel={(clubId) => handleCancelClick(clubId)}
-              onWriteReview={() => setIsModalOpen(true)}
-              onDelete={(clubId) => handleDeleteClick(clubId)}
+              isPast={isPastDate(bookClub.targetDate, today)}
+              clubStatus={clubStatus(
+                bookClub.memberCount,
+                bookClub.memberLimit,
+                bookClub.endDate,
+                today,
+              )}
+              onClick={(clubId) => onClick(clubId)}
+              onCancel={(clubId) => onCancel(clubId)}
+              onWriteReview={(clubId) => onWriteReview(clubId)}
+              onDelete={(clubId) => onDelete(clubId)}
             />
           </div>
         ))
       )}
+      <WriteReviewModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={(rating, content) => onConfirmReview(rating, content)}
+      />
+      <PopUp
+        isOpen={isPopUpOpen}
+        isLarge={true}
+        isTwoButton={true}
+        label={label}
+        handlePopUpClose={() => setIsPopUpOpen(false)}
+        handlePopUpConfirm={onConfirmPopUp}
+      />
     </div>
   );
 }

@@ -3,7 +3,14 @@ import { BookClubForm } from '@/features/club-create/types';
 import { createBookClub } from '@/features/club-create/api';
 import { bookClubs } from './queries';
 import { leaveBookClub } from '@/api/leaveBookClub';
+import { writeReview } from '@/features/profile/api/writeReviewApi';
 import { toast } from 'react-toastify';
+
+interface WriteReviewParams {
+  bookClubId: number;
+  rating: number;
+  content: string;
+}
 
 export function useBookClubCreateMutation() {
   const queryClient = useQueryClient();
@@ -30,11 +37,41 @@ export function useLeaveBookClub() {
       queryClient.invalidateQueries({
         queryKey: bookClubs.myJoined().queryKey,
       });
-      toast.success('모임 참여가 취소되었습니다.');
     },
     onError: (error: any) => {
-      toast.error('모임 취소를 실패하였습니다.');
       console.error(error);
+    },
+  });
+}
+
+export function useWriteReview() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ bookClubId, rating, content }: WriteReviewParams) =>
+      writeReview({ bookClubId, rating, content }),
+
+    onSuccess: (data, variables) => {
+      const { bookClubId } = variables;
+
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.detail(bookClubId).queryKey, // bookClubId에 해당하는 모임 상세 무효화
+      });
+
+      //TODO: reviews 하위 쿼리 무효화
+      // queryClient.invalidateQueries({
+      //   queryKey: bookClubs.detail(bookClubId).contextQueries.reviews().queryKey, // reviews 무효화
+      // });
+
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.myReviews().queryKey,
+      });
+
+      toast.success('리뷰 작성을 완료하였습니다');
+    },
+    onError: (error) => {
+      console.error(error);
+      toast.error('리뷰 작성을 실패하였습니다');
     },
   });
 }

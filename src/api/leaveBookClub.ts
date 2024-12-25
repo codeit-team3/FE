@@ -5,5 +5,6 @@ export const leaveBookClub = async (id: number) => {
     await apiClient.delete(`/book-clubs/${id}/leave`);
   } catch (err) {
     console.error(err);
+    throw err;
   }
 };

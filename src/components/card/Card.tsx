@@ -320,7 +320,7 @@ function Card(props: CardProps) {
                       themeColor="green-normal-01"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onWriteReview();
+                        onWriteReview(clubId);
                       }}
                       className="w-full"
                     />
