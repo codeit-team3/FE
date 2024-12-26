@@ -91,6 +91,7 @@ function ChatBubbleProfile({
       <div
         className={twMerge('relative', onClick && 'cursor-pointer')}
         onClick={onClick}
+        data-testid="profile-image"
       >
         <Avatar src={imageUrl} alt={name} size={'mdLg'} />
         {isHost && (
