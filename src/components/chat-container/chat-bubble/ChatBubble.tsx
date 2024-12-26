@@ -6,8 +6,10 @@ import {
   ChatBubbleProfileProps,
   ChatBubbleComponentProps,
   OpponentProps,
-  SystemProps,
+  ChatBubbleSystemProps,
   ChatBubbleContainerProps,
+  MeProps,
+  SystemProps,
 } from './types';
 import Avatar from '@/components/avatar/Avatar';
 import { HostIcon } from '../../../../public/icons';
@@ -15,6 +17,7 @@ import { HostIcon } from '../../../../public/icons';
 function ChatBubbleContainer({
   variant,
   className,
+  children,
   ...props
 }: ChatBubbleContainerProps) {
   return (
@@ -27,13 +30,15 @@ function ChatBubbleContainer({
         className,
       )}
       {...props}
-    />
+    >
+      {children}
+    </div>
   );
 }
 
 function ChatBubbleBox({
-  children,
   variant,
+  children,
   className,
   ...props
 }: ChatBubbleBoxProps) {
@@ -72,8 +77,8 @@ function ChatBubbleTime({
 }
 
 function ChatBubbleProfile({
-  imageUrl,
   name,
+  imageUrl,
   isHost,
   className,
   ...props
@@ -100,15 +105,18 @@ function ChatBubbleProfile({
   );
 }
 
-function ChatBubbleSystem({ username, action }: SystemProps) {
+function ChatBubbleSystem({
+  username,
+  action,
+  className,
+  ...props
+}: ChatBubbleSystemProps) {
   return (
-    <div className="flex justify-center py-2">
-      <span className="text-gray-darker">
-        {`${username}님이 ${
-          action === 'JOIN' ? '들어오셨습니다.' : '나가셨습니다.'
-        }`}
-      </span>
-    </div>
+    <span className={twMerge('text-gray-darker', className)} {...props}>
+      {`${username}님이 ${
+        action === 'JOIN' ? '들어오셨습니다.' : '나가셨습니다.'
+      }`}
+    </span>
   );
 }
 
@@ -122,7 +130,7 @@ function ChatBubble({ variant, props }: ChatBubbleComponentProps) {
   const renderContent = () => {
     switch (variant) {
       case 'ME': {
-        const { content, time, className } = props;
+        const { content, time } = props as MeProps;
         return (
           <ChatBubbleContainer variant="ME">
             <div className="flex gap-[14px]">
@@ -131,29 +139,25 @@ function ChatBubble({ variant, props }: ChatBubbleComponentProps) {
                   <ChatBubbleTime>{time}</ChatBubbleTime>
                 </div>
               )}
-              <ChatBubbleBox variant="ME" className={className}>
-                {content}
-              </ChatBubbleBox>
+              <ChatBubbleBox variant="ME">{content}</ChatBubbleBox>
             </div>
           </ChatBubbleContainer>
         );
       }
 
       case 'OPPONENT': {
-        const { content, time, profileImage, name, isHost, className } =
+        const { content, time, name, profileImage, isHost } =
           props as OpponentProps;
         return (
-          <ChatBubbleContainer variant="OPPONENT" className={className}>
+          <ChatBubbleContainer variant="OPPONENT">
             <div className="flex flex-col">
               <ChatBubbleProfile
-                imageUrl={profileImage}
                 name={name}
+                imageUrl={profileImage}
                 isHost={isHost}
               />
               <div className="flex gap-[14px] pl-16">
-                <ChatBubbleBox variant="OPPONENT" className={className}>
-                  {content}
-                </ChatBubbleBox>
+                <ChatBubbleBox variant="OPPONENT">{content}</ChatBubbleBox>
                 {time && (
                   <div className="flex items-end">
                     <ChatBubbleTime>{time}</ChatBubbleTime>
@@ -167,7 +171,11 @@ function ChatBubble({ variant, props }: ChatBubbleComponentProps) {
 
       case 'SYSTEM': {
         const { username, action } = props as SystemProps;
-        return <ChatBubbleSystem username={username} action={action} />;
+        return (
+          <ChatBubbleContainer variant="SYSTEM">
+            <ChatBubbleSystem username={username} action={action} />
+          </ChatBubbleContainer>
+        );
       }
 
       default:
