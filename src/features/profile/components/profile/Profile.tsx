@@ -10,24 +10,14 @@ function Profile({ user }: ProfilePageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onSubmitEditProfile = (formData: ProfileEditData) => {
-    alert(`name:${formData.name}, companyName:${formData.description}`);
+    alert(
+      `image: ${formData.image} name:${formData.name}, companyName:${formData.description}`,
+    );
     setIsModalOpen(false);
   };
 
   return (
     <div className="mt-5 w-full min-w-[336px] flex-col">
-      {isModalOpen && (
-        <ProfileEditModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onConfirm={(formData) => onSubmitEditProfile(formData)}
-          profileData={{
-            name: user?.name || '',
-            description: user?.description || '',
-            image: user?.image,
-          }}
-        />
-      )}
       {/* 프로필 제목 */}
       {/* TODO: 프로필 페이지가 로그인된 유저의 프로필 페이지와 일치 여부 확인 후 수정하기 아이콘 hidden or none */}
       <div
@@ -83,6 +73,18 @@ function Profile({ user }: ProfilePageProps) {
           </div>
         </div>
       </div>
+      {isModalOpen && (
+        <ProfileEditModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={(formData) => onSubmitEditProfile(formData)}
+          profileData={{
+            name: user?.name || '',
+            description: user?.description || '',
+            image: user?.image,
+          }}
+        />
+      )}
     </div>
   );
 }

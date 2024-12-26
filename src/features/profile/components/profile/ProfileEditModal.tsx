@@ -20,26 +20,46 @@ interface ProfileEditModalProps {
 function ProfileEditContent({
   formData,
   handleChange,
+  handleFileChange,
+  preview,
 }: {
   formData: ProfileData;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  preview: string | null;
 }) {
+  // const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  // const [preview, setPreview] = useState<string | null>(null);
+
   return (
     <div className="w-full">
       <div className="flex flex-col items-center gap-4">
         <div className="relative">
           <div className="rounded-full border-2 border-gray-normal-01">
-            <Avatar src={formData.image || ''} alt="프로필 이미지" size="xl" />
+            <Avatar
+              src={preview || formData.image || '/images/profile.png'}
+              alt="프로필 이미지"
+              size="xl"
+            />
           </div>
-          <button
+          <input
+            type="file"
+            id="profile-upload"
+            name="image"
+            className="hidden"
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+          <label
+            htmlFor="profile-upload"
             className="absolute bottom-0 right-0 translate-x-1/3 rounded-full border border-gray-normal-01 bg-white p-2"
-            onClick={() => {
-              /* 이미지 업로드 로직 추가 필요 */
-              console.log('이미지 업로드 로직 추가 필요');
-            }}
           >
-            <EditIcon width={14} height={18} className="text-gray-dark-01" />
-          </button>
+            <EditIcon
+              width={14}
+              height={18}
+              className="cursor-pointer text-gray-dark-01"
+            />
+          </label>
         </div>
 
         <div className="w-full space-y-4">
@@ -83,6 +103,22 @@ function ProfileEditModal({
     description: profileData.description || user?.description || '',
     image: profileData.image || user?.image || '/images/profile.png',
   });
+  const [preview, setPreview] = useState<string | null>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files ? e.target.files[0] : null;
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const fileResult = reader.result as string;
+        setPreview(fileResult);
+        setFormData((prev) => ({ ...prev, image: fileResult }));
+      };
+      reader.readAsDataURL(file);
+
+      // setFormData((prev) => ({ ...prev, image: reader.result as string }));
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -112,7 +148,12 @@ function ProfileEditModal({
         fillType: 'lightSolid',
       }}
     >
-      <ProfileEditContent formData={formData} handleChange={handleChange} />
+      <ProfileEditContent
+        formData={formData}
+        handleChange={handleChange}
+        handleFileChange={handleFileChange}
+        preview={preview}
+      />
     </Modal>
   );
 }

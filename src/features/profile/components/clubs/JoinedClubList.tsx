@@ -1,11 +1,11 @@
 import Card from '@/components/card/Card';
 import { NO_LIST_MESSAGE } from '../../constants/meassage';
 import { formatDateWithTime } from '@/lib/utils/dateUtils';
-import { orderType, User } from '../../types';
+import { orderType, User, BookClub } from '../../types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { WriteReviewModal } from '../clubs';
-import useFetchMyJoinedList from '../../hooks/useFetchMyJoinedList';
+// import useFetchMyJoinedList from '../../hooks/useFetchMyJoinedList';
 
 interface JoinedClubListProps {
   user: User | null;
@@ -18,15 +18,15 @@ export default function JoinedClubList({ user, order }: JoinedClubListProps) {
   const router = useRouter();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { myJoinedList, isLoading, error } = useFetchMyJoinedList(order);
+  // const { myJoinedList, isLoading, error } = useFetchMyJoinedList(order);
 
-  console.log(isLoading);
-  console.error(error);
+  // console.log(isLoading);
+  // console.error(error);
 
-  const bookClubList = myJoinedList;
+  // const bookClubList = myJoinedList;
 
-  console.log(bookClubList);
-  // // const bookClubList: BookClub[] = [];
+  // console.log(bookClubList);
+  const bookClubList: BookClub[] = [];
   // const bookClubList = mockJoinedBookClubList;
 
   //카드 컴포넌트 클릭 시 해당 모임 상세페이지로 라우팅
