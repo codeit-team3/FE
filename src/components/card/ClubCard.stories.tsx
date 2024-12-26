@@ -75,38 +75,6 @@ const detailedArgs = {
   onLikeClick: () => alert('좋아요 클릭!'),
   current: 5,
   max: 10,
-  participants: [
-    {
-      id: '1',
-      name: '참여자1',
-      profileImage: 'https://picsum.photos/200/200?random=1',
-      profileImageAlt: '참여자1 프로필 이미지',
-    },
-    {
-      id: '2',
-      name: '참여자2',
-      profileImage: 'https://picsum.photos/200/200?random=2',
-      profileImageAlt: '참여자2 프로필 이미지',
-    },
-    {
-      id: '3',
-      name: '참여자3',
-      profileImage: 'https://picsum.photos/200/200?random=3',
-      profileImageAlt: '참여자3 프로필 이미지',
-    },
-    {
-      id: '4',
-      name: '참여자4',
-      profileImage: 'https://picsum.photos/200/200?random=4',
-      profileImageAlt: '참여자4 프로필 이미지',
-    },
-    {
-      id: '5',
-      name: '참여자5',
-      profileImage: 'https://picsum.photos/200/200?random=5',
-      profileImageAlt: '참여자5 프로필 이미지',
-    },
-  ],
   host: {
     id: 'host1',
     name: '호스트',

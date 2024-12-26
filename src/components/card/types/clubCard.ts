@@ -61,12 +61,6 @@ interface DetailedClubCard extends ClubCard {
   // 참가자 정보
   current: number;
   max: number;
-  participants: ReadonlyArray<{
-    readonly id?: string;
-    readonly name: string;
-    readonly profileImage?: string;
-    readonly profileImageAlt?: string;
-  }>;
 
   // 호스트 정보
   host: {
