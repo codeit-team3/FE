@@ -78,3 +78,5 @@ export const bookClubs = createQueryKeys('bookClubs', {
       }),
   }),
 });
+
+export const profile = createQueryKeys('profile', {});

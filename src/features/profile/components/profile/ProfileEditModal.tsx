@@ -28,9 +28,6 @@ function ProfileEditContent({
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   preview: string | null;
 }) {
-  // const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  // const [preview, setPreview] = useState<string | null>(null);
-
   return (
     <div className="w-full">
       <div className="flex flex-col items-center gap-4">
@@ -107,6 +104,7 @@ function ProfileEditModal({
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
+
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -115,8 +113,6 @@ function ProfileEditModal({
         setFormData((prev) => ({ ...prev, image: fileResult }));
       };
       reader.readAsDataURL(file);
-
-      // setFormData((prev) => ({ ...prev, image: reader.result as string }));
     }
   };
 
