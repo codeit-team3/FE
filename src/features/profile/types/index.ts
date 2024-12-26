@@ -1,8 +1,9 @@
 export interface User {
-  teamId: string;
+  // teamId: string;
   id: number;
   email: string;
   name: string;
+  nickname: string;
   description?: string | null;
   image?: string | null;
   createdAt: Date;
@@ -14,7 +15,7 @@ export interface ProfilePageProps {
 }
 
 export interface ProfileEditData {
-  nick?: string;
+  nickname?: string;
   description?: string;
   image?: string | null;
 }

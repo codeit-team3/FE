@@ -2,8 +2,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { BookClubForm } from '@/features/club-create/types';
 import { createBookClub } from '@/features/club-create/api';
 import { bookClubs } from './queries';
-// import { editProfile } from '@/features/profile/api/editProfileApi';
-// import { editProfileParams } from '@/features/profile/types/profile';
+import { editProfile } from '@/features/profile/api/editProfileApi';
+import { showToast } from '@/components/toast/toast';
+import { ProfileEditData } from '@/features/profile/types';
+import { getUserInfo } from '@/features/auth/api/auth';
 
 export function useBookClubCreateMutation() {
   const queryClient = useQueryClient();
@@ -21,11 +23,16 @@ export function useBookClubCreateMutation() {
   });
 }
 
-// export function useEditProfile() {
-//   const queryClient = useQueryClient();
-
-//   return useMutation({
-//     mutationFn: (data: editProfileParams) => editProfile(data),
-//     onSuccess: () => {},
-//   });
-// }
+export function useEditProfile() {
+  return useMutation({
+    mutationFn: (data: ProfileEditData) => editProfile(data),
+    onSuccess: () => {
+      getUserInfo();
+      showToast({ message: '프로필 수정이 완료되었습니다.', type: 'success' });
+    },
+    onError: (error: any) => {
+      showToast({ message: '프로필 수정을 실패하였습니다', type: 'error' });
+      console.error(error);
+    },
+  });
+}

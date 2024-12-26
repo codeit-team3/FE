@@ -3,9 +3,10 @@ import { useAuthStore } from '@/store/authStore';
 import Avatar from '@/components/avatar/Avatar';
 import Modal from '@/components/modal/Modal';
 import { EditIcon } from '../../../../../public/icons';
+import { ProfileEditData } from '../../types';
 
 interface ProfileData {
-  name: string;
+  nickname: string;
   description: string;
   image?: string | null;
 }
@@ -13,8 +14,8 @@ interface ProfileData {
 interface ProfileEditModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: (updatedData: ProfileData) => void;
-  profileData: ProfileData;
+  onConfirm: (updatedData: ProfileEditData) => void;
+  profileData: ProfileEditData;
 }
 
 function ProfileEditContent({
@@ -23,7 +24,7 @@ function ProfileEditContent({
   handleFileChange,
   preview,
 }: {
-  formData: ProfileData;
+  formData: ProfileEditData;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   preview: string | null;
@@ -64,9 +65,9 @@ function ProfileEditContent({
             <span className="font-bold">닉네임</span>
             <input
               type="text"
-              name="name"
-              aria-label="name"
-              value={formData.name}
+              name="nickname"
+              aria-label="nickname"
+              value={formData.nickname}
               onChange={handleChange}
               className="w-full rounded-lg bg-gray-light-02 p-2 font-medium"
             />
@@ -96,7 +97,7 @@ function ProfileEditModal({
 }: ProfileEditModalProps) {
   const { user } = useAuthStore();
   const [formData, setFormData] = useState<ProfileData>({
-    name: profileData.name || user?.name || '',
+    nickname: profileData.nickname || user?.name || '',
     description: profileData.description || user?.description || '',
     image: profileData.image || user?.image || '/images/profile.png',
   });

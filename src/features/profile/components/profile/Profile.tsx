@@ -5,14 +5,14 @@ import Avatar from '@/components/avatar/Avatar';
 import { IcEdit } from '../../../../../public/icons/index';
 import { ProfileEditData, ProfilePageProps } from '../../types';
 import ProfileEditModal from './ProfileEditModal';
+import { useEditProfile } from '@/features/react-query/book-club';
 
 function Profile({ user }: ProfilePageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { mutate: editProfile } = useEditProfile();
 
   const onSubmitEditProfile = (formData: ProfileEditData) => {
-    alert(
-      `image: ${formData.image} name:${formData.name}, companyName:${formData.description}`,
-    );
+    editProfile(formData);
     setIsModalOpen(false);
   };
 
@@ -25,7 +25,7 @@ function Profile({ user }: ProfilePageProps) {
         role="title"
       >
         <label className="text-xl font-semibold text-green-dark-01">
-          {user?.name}님의 프로필
+          {user?.nickname}님의 프로필
         </label>
         <button
           className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-white"
@@ -51,7 +51,7 @@ function Profile({ user }: ProfilePageProps) {
         {/* 프로필 정보 */}
         <div className="flex w-full flex-col">
           <div className="mb-[14px] text-2xl font-bold text-green-normal-01">
-            {user?.name}님
+            {user?.nickname}님
           </div>
           <div className="flex flex-col gap-y-2">
             <div className="flex gap-y-1.5 sm:flex-col md:flex-row lg:flex-row">
@@ -79,7 +79,7 @@ function Profile({ user }: ProfilePageProps) {
           onClose={() => setIsModalOpen(false)}
           onConfirm={(formData) => onSubmitEditProfile(formData)}
           profileData={{
-            name: user?.name || '',
+            nickname: user?.nickname || '',
             description: user?.description || '',
             image: user?.image,
           }}

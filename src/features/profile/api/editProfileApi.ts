@@ -1,16 +1,11 @@
 import apiClient from '@/lib/utils/apiClient';
-
-interface editProfileParams {
-  nickname?: string;
-  image?: string;
-  description?: string;
-}
+import { ProfileEditData } from '../types';
 
 export const editProfile = async ({
   nickname,
   image,
   description,
-}: editProfileParams) => {
+}: ProfileEditData) => {
   try {
     await apiClient.post('auths/user', {
       nickname,
