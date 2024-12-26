@@ -5,7 +5,7 @@ import FilterCheckbox from './FilterCheckbox';
 describe('FilterCheckbox 컴포넌트', () => {
   it('체크박스를 클릭하면 onChange 핸들러가 호출된다', async () => {
     const mockOnChange = jest.fn();
-    const { debug } = render(
+    render(
       <FilterCheckbox
         label="신청가능"
         checked={false}
@@ -19,7 +19,6 @@ describe('FilterCheckbox 컴포넌트', () => {
     await waitFor(() => {
       expect(mockOnChange).toHaveBeenCalledTimes(1);
       expect(checkbox).toBeChecked();
-      debug();
     });
   });
 });
