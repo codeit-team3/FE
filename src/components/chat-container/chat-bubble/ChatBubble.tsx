@@ -86,7 +86,7 @@ function ChatBubbleProfile({
   ...props
 }: ChatBubbleProfileProps) {
   return (
-    <div className={twMerge('flex items-center gap-2.5', className)} {...props}>
+    <div className={twMerge('flex items-start gap-3', className)} {...props}>
       <div className="relative">
         <Avatar src={imageUrl} alt={name} size={'mdLg'} />
         {isHost && (
@@ -95,13 +95,13 @@ function ChatBubbleProfile({
           </div>
         )}
       </div>
-      <div className="flex flex-col gap-0.5">
+      <div className="flex flex-col py-1.5">
         {isHost && (
-          <span className="text-[10px] font-semibold text-gray-dark-01">
+          <span className="text-[10px] font-semibold leading-[10px] text-gray-dark-01">
             호스트
           </span>
         )}
-        <span className="font-semibold">{name}</span>
+        <span className={'font-semibold'}>{name}</span>
       </div>
     </div>
   );
