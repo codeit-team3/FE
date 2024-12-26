@@ -10,10 +10,10 @@ import {
   bookClubs,
   useLeaveBookClub,
   useWriteReview,
-} from '@/features/react-query/book-club';
+} from '@/api/react-query/book-club';
 import PopUp from '@/components/pop-up/PopUp';
 import { clubStatus } from '@/lib/utils/clubUtils';
-import { toast } from 'react-toastify';
+import { showToast } from '@/components/toast/toast';
 
 interface JoinedClubListProps {
   order: orderType;
@@ -53,7 +53,7 @@ export default function JoinedClubList({ order }: JoinedClubListProps) {
   //모임 삭제하기 클릭 이벤트
   const onDelete = (clubId: number) => {
     leaveClub(clubId);
-    toast.success('취소된 모임을 삭제하였습니다.');
+    showToast({ message: '취소된 모임을 삭제하였습니다.', type: 'success' });
   };
 
   //리뷰 작성하기 클릭 이벤트
@@ -65,7 +65,10 @@ export default function JoinedClubList({ order }: JoinedClubListProps) {
   const onConfirmReview = (rating: number, content: string) => {
     //TODO: 토스트 메시지가 뜨더라도 모달이 열린 상태로 유지되도록 수정
     if (!rating || !content) {
-      toast.error('점수와 리뷰 내용을 입력해주세요');
+      showToast({
+        message: '점수와 리뷰 내용을 모두 입력해주세요',
+        type: 'error',
+      });
       return;
     }
 
@@ -80,11 +83,14 @@ export default function JoinedClubList({ order }: JoinedClubListProps) {
     if (selectedClubId) {
       try {
         await leaveClub(selectedClubId);
-        toast.success('모임 참여가 취소되었습니다.');
+        // showToast({ message: '모임 참여가 취소되었습니다.', type: 'success' });
         setIsPopUpOpen(false);
         setSelectedClubId(null);
       } catch (err) {
-        toast.error('모임 참여 취소에 실패하였습니다');
+        // showToast({
+        //   message: '모임 참여 취소에 실패하였습니다',
+        //   type: 'error',
+        // });
         console.error(err);
       }
     }

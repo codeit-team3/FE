@@ -4,7 +4,7 @@ import { createBookClub } from '@/features/club-create/api';
 import { bookClubs } from './queries';
 import { leaveBookClub } from '@/api/leaveBookClub';
 import { writeReview } from '@/features/profile/api/writeReviewApi';
-import { toast } from 'react-toastify';
+import { showToast } from '@/components/toast/toast';
 
 interface WriteReviewParams {
   bookClubId: number;
@@ -37,8 +37,13 @@ export function useLeaveBookClub() {
       queryClient.invalidateQueries({
         queryKey: bookClubs.myJoined().queryKey,
       });
+      showToast({ message: '모임 참여가 취소되었습니다.', type: 'success' });
     },
     onError: (error: any) => {
+      showToast({
+        message: '모임 참여 취소에 실패하였습니다',
+        type: 'error',
+      });
       console.error(error);
     },
   });
@@ -66,12 +71,12 @@ export function useWriteReview() {
       queryClient.invalidateQueries({
         queryKey: bookClubs.myReviews().queryKey,
       });
-
-      toast.success('리뷰 작성을 완료하였습니다');
+      showToast({ message: '리뷰 작성을 완료하였습니다', type: 'success' });
     },
     onError: (error) => {
       console.error(error);
-      toast.error('리뷰 작성을 실패하였습니다');
+
+      showToast({ message: '리뷰 작성을 실패하였습니다.', type: 'error' });
     },
   });
 }
