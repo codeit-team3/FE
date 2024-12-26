@@ -16,7 +16,6 @@ export const EXCHANGE_TABS = [
 
 export type TabType = 'MAIN_TAB' | 'SUB_TAB';
 export type clubTabType = 'MY_JOINED' | 'MY_HOSTED' | 'MY_REVIEW';
-
 export type BookTab = (typeof BOOK_TABS)[number];
 export type ContentTab = (typeof CONTENT_TABS)[number];
 export type ClubTab = (typeof CLUB_TABS)[clubTabType];
