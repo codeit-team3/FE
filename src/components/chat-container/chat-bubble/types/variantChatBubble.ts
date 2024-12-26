@@ -11,6 +11,7 @@ export interface MeProps extends CommonProps {}
 export interface OpponentProps extends CommonProps {
   profileImage?: string;
   name: string;
+  isHost?: boolean;
 }
 
 export interface SystemProps extends React.HTMLAttributes<HTMLDivElement> {

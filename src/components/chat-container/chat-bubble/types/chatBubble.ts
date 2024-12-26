@@ -24,3 +24,9 @@ export interface ChatBubbleProfileProps
   imageUrl?: string;
   isHost?: boolean;
 }
+
+export interface ChatBubbleContainerProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  variant: 'ME' | 'OPPONENT' | 'SYSTEM';
+  className?: string;
+}
