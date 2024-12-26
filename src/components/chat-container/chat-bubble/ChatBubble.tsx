@@ -1,5 +1,4 @@
 import { twMerge } from 'tailwind-merge';
-
 import {
   ChatBubbleBoxProps,
   ChatBubbleTimeProps,
