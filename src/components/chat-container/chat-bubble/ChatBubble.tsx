@@ -87,16 +87,11 @@ function ChatBubbleProfile({
   ...props
 }: ChatBubbleProfileProps) {
   return (
-    <div
-      className={twMerge(
-        'flex items-start gap-3',
-        onClick && 'cursor-pointer',
-        className,
-      )}
-      onClick={onClick}
-      {...props}
-    >
-      <div className="relative">
+    <div className={twMerge('flex items-start gap-3', className)} {...props}>
+      <div
+        className={twMerge('relative', onClick && 'cursor-pointer')}
+        onClick={onClick}
+      >
         <Avatar src={imageUrl} alt={name} size={'mdLg'} />
         {isHost && (
           <div className="absolute -right-1 -top-1 flex h-[18px] w-[18px] items-center justify-center rounded-full border-2 border-gray-normal-01 bg-green-normal-01">
