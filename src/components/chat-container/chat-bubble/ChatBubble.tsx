@@ -44,7 +44,7 @@ function ChatBubbleBox({
   return (
     <div
       className={twMerge(
-        'rounded-xl px-4 py-[10px]',
+        'whitespace-pre-wrap rounded-xl px-4 py-[10px]',
         variant === 'ME' && [
           'rounded-tr-none bg-green-light-01 font-medium text-green-dark-03',
         ],
@@ -67,7 +67,10 @@ function ChatBubbleTime({
 }: ChatBubbleTimeProps) {
   return (
     <span
-      className={twMerge('text-xs font-light text-gray-normal-03', className)}
+      className={twMerge(
+        'whitespace-nowrap text-xs font-light text-gray-normal-03',
+        className,
+      )}
       {...props}
     >
       {children}
