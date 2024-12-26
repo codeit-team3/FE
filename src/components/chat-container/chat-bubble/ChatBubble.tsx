@@ -83,10 +83,19 @@ function ChatBubbleProfile({
   imageUrl,
   isHost,
   className,
+  onClick,
   ...props
 }: ChatBubbleProfileProps) {
   return (
-    <div className={twMerge('flex items-start gap-3', className)} {...props}>
+    <div
+      className={twMerge(
+        'flex items-start gap-3',
+        onClick && 'cursor-pointer',
+        className,
+      )}
+      onClick={onClick}
+      {...props}
+    >
       <div className="relative">
         <Avatar src={imageUrl} alt={name} size={'mdLg'} />
         {isHost && (
@@ -148,7 +157,7 @@ function ChatBubble({ variant, props }: ChatBubbleComponentProps) {
       }
 
       case 'OPPONENT': {
-        const { content, time, name, profileImage, isHost } =
+        const { content, time, name, profileImage, isHost, onProfileClick } =
           props as OpponentProps;
         return (
           <ChatBubbleContainer variant="OPPONENT">
@@ -157,6 +166,7 @@ function ChatBubble({ variant, props }: ChatBubbleComponentProps) {
                 name={name}
                 imageUrl={profileImage}
                 isHost={isHost}
+                onClick={onProfileClick}
               />
               <div className="flex gap-[14px] pl-16">
                 <ChatBubbleBox variant="OPPONENT">{content}</ChatBubbleBox>

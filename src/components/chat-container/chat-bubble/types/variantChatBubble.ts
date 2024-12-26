@@ -13,6 +13,7 @@ export interface OpponentProps extends CommonProps {
   name: string;
   profileImage?: string;
   isHost?: boolean;
+  onProfileClick?: () => void;
 }
 
 export interface SystemProps extends ChatBubbleSystemProps {}
