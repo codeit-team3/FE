@@ -18,9 +18,9 @@ import {
   BookClubProps,
   ChatCardVariant,
 } from './types';
-import defaultBookClub from '../../../public/images/defaultBookClub.jpg';
-import ParticipantCounter from '../../../../components/participant-counter/ParticipantCounter';
-import Badge from '../../../../components/badge/Badge';
+import defaultBookClub from '../../../../../public/images/defaultBookClub.jpg';
+import ParticipantCounter from '@/components/participant-counter/ParticipantCounter';
+import Badge from '@/components/badge/Badge';
 
 function ChatCardBox({
   children,
