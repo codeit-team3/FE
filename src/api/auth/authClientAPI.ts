@@ -6,16 +6,11 @@ export const authClientAPI = {
 
   //회원정보 수정
   editInfo: async ({ nickname, image, description }: EditInfoParams) => {
-    try {
-      await apiClient.post('auths/user', {
-        nickname,
-        image,
-        description,
-      });
-    } catch (err) {
-      console.error(err);
-      throw err;
-    }
+    await apiClient.post('auths/user', {
+      nickname,
+      image,
+      description,
+    });
   },
 
   //회원가입
