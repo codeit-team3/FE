@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import ChatCard from '@/components/chat-card/ChatCard';
+import ChatCard from '@/features/chat/components/chat-card/ChatCard';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 

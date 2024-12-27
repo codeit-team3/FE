@@ -1,6 +1,6 @@
 import { HTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { HostIcon } from '../../../../../../public/icons';
+import { HostIcon } from '../../../../../../../public/icons';
 import Avatar from '@/components/avatar/Avatar';
 
 interface ChatBubbleContainerProps extends HTMLAttributes<HTMLDivElement> {

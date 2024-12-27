@@ -1,10 +1,10 @@
 import { format } from 'date-fns';
-import ChatBubble from './chat-bubble/ChatBubble';
+import ChatBubble from '../../components/chat-bubble/ChatBubble';
 import {
   ChatContainerProps,
   ChatMessage,
   Message,
-} from '@/components/chat-bubble-list/types';
+} from '@/features/chat-room/containers/chat-bubble-list/types';
 import { useAuthStore } from '@/store/authStore';
 
 function ChatContainer({

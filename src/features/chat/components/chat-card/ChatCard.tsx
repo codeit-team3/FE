@@ -1,6 +1,10 @@
 import { twMerge } from 'tailwind-merge';
 import Image from 'next/image';
-import { HostIcon, OnlineIcon, LocationIcon } from '../../../public/icons';
+import {
+  HostIcon,
+  OnlineIcon,
+  LocationIcon,
+} from '../../../../../public/icons';
 import {
   ChatCardBoxProps,
   ChatCardTitleProps,
@@ -15,8 +19,8 @@ import {
   ChatCardVariant,
 } from './types';
 import defaultBookClub from '../../../public/images/defaultBookClub.jpg';
-import ParticipantCounter from '../participant-counter/ParticipantCounter';
-import Badge from '../badge/Badge';
+import ParticipantCounter from '../../../../components/participant-counter/ParticipantCounter';
+import Badge from '../../../../components/badge/Badge';
 
 function ChatCardBox({
   children,
