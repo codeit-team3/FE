@@ -39,7 +39,7 @@ export const useMessageRenderer = ({
     index: number,
   ) => ({
     message,
-    isMyMessage: user!.id == message.senderId,
+    isMyMessage: user?.id == message.senderId,
     isConsecutive: isConsecutiveMessage(message, messages[index - 1]),
     hostId,
     time: format(new Date(message.date), 'HH:mm'),
