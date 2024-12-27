@@ -27,9 +27,9 @@ function IcCheckOnly({
       <path
         d="M1.00004 2.5L4.50009 6C6.98524 3.21054 6.46948 3.78946 8.95464 1"
         stroke={stroke}
-        stroke-width="1.4"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
