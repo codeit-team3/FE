@@ -1,14 +1,5 @@
 import ChatBubble from '@/features/chat-room/components/chat-bubble/ChatBubble';
-
-interface BaseMessage {
-  type: 'chat' | 'join' | 'leave';
-  date: string;
-}
-
-export interface SystemMessageType extends BaseMessage {
-  type: 'join' | 'leave';
-  user: string;
-}
+import { SystemMessageType } from '../../../types/chatBubbleList';
 
 interface SystemMessageProps {
   message: SystemMessageType;

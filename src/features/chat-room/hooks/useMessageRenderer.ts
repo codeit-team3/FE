@@ -1,8 +1,10 @@
 import { format } from 'date-fns';
 import { useAuthStore } from '@/store/authStore';
-import { Message } from '../container/chat-bubble-list/ChatBubbleList';
-import { ChatMessageType } from '../container/chat-bubble-list/components/ChatMessage';
-import { SystemMessageType } from '../container/chat-bubble-list/components/SystemMessage';
+import {
+  Message,
+  ChatMessageType,
+  SystemMessageType,
+} from '../types/chatBubbleList';
 
 interface UseMessageRendererProps {
   hostId: string | number;
@@ -24,9 +26,10 @@ export const useMessageRenderer = ({
     const timeDiff =
       new Date(currentMessage.date).getTime() -
       new Date(prevMessage.date).getTime();
+
     return (
       prevMessage.senderId === currentMessage.senderId &&
-      timeDiff < 5 * 60 * 1000
+      timeDiff < 10 * 60 * 1000
     );
   };
 

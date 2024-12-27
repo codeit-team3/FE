@@ -1,15 +1,9 @@
-import ChatMessage, { ChatMessageType } from './components/ChatMessage';
-import SystemMessage, { SystemMessageType } from './components/SystemMessage';
+import ChatMessage from './components/ChatMessage';
+import SystemMessage from './components/SystemMessage';
 import { useMessageRenderer } from '../../hooks/useMessageRenderer';
+import { Message, GroupedMessage } from '../../types/chatBubbleList';
 
-export type Message = ChatMessageType | SystemMessageType;
-
-export interface GroupedMessage {
-  date: string;
-  messages: Message[];
-}
-
-export interface ChatContainerProps {
+export interface ChatBubbleListProps {
   groupedMessages: GroupedMessage[];
   hostId: string | number;
   onProfileClick?: (userId: string | number) => void;
@@ -19,7 +13,7 @@ function ChatBubbleList({
   groupedMessages,
   hostId,
   onProfileClick,
-}: ChatContainerProps) {
+}: ChatBubbleListProps) {
   const { getChatMessageProps, getSystemMessageProps } = useMessageRenderer({
     hostId,
     onProfileClick,

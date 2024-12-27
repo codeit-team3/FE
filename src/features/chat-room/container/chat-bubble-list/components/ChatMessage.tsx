@@ -1,17 +1,5 @@
 import ChatBubble from '@/features/chat-room/components/chat-bubble/ChatBubble';
-
-interface BaseMessage {
-  type: 'chat' | 'join' | 'leave';
-  date: string;
-}
-
-export interface ChatMessageType extends BaseMessage {
-  type: 'chat';
-  sender: string;
-  senderId: string | number;
-  content: string;
-  profileImage?: string;
-}
+import { ChatMessageType } from '../../../types/chatBubbleList';
 
 interface ChatMessageProps {
   message: ChatMessageType;
