@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { BookClubForm } from '../types';
-import { useBookClubCreateMutation } from '@/api/react-query/book-club';
+import { useBookClubCreateMutation } from '@/api/book-club/react-query';
 
 export const useCreateBookClub = () => {
   const [error, setError] = useState<string | null>(null);

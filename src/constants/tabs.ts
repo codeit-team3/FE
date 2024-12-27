@@ -2,11 +2,11 @@ export const BOOK_TABS = ['전체', '자유책', '지정책'] as const;
 
 export const CONTENT_TABS = ['모임', '교환'] as const;
 
-export const CLUB_TABS = {
-  MY_JOINED: '나의 모임',
-  MY_HOSTED: '내가 만든 모임',
-  MY_REVIEW: '나의 리뷰',
-} as const;
+export enum CLUB_TABS {
+  MY_JOINED = '나의 모임',
+  MY_HOSTED = '내가 만든 모임',
+  MY_REVIEW = '나의 리뷰',
+}
 
 export const EXCHANGE_TABS = [
   '나의 교환',

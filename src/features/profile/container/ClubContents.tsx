@@ -14,16 +14,16 @@ import {
 export default function ClubContents({ user }: ProfilePageProps) {
   const [order, setOrder] = useState<orderType>('DESC');
   const [selectedList, setSelectedList] = useState<ClubTab>(
-    CLUB_TABS['MY_JOINED'],
+    CLUB_TABS.MY_JOINED,
   );
 
   const renderList = (selectedList: ClubTab) => {
     switch (selectedList) {
-      case CLUB_TABS['MY_JOINED']:
+      case CLUB_TABS.MY_JOINED:
         return <JoinedClubList order={order} />;
-      case CLUB_TABS['MY_HOSTED']:
+      case CLUB_TABS.MY_HOSTED:
         return <HostedClubList user={user} sortBy={order} />;
-      case CLUB_TABS['MY_REVIEW']:
+      case CLUB_TABS.MY_REVIEW:
         return <MyReviewList user={user} sortBy={order} />;
     }
   };

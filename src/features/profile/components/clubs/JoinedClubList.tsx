@@ -6,13 +6,13 @@ import { useState } from 'react';
 import { WriteReviewModal } from '../clubs';
 import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { useQuery } from '@tanstack/react-query';
+import PopUp from '@/components/pop-up/PopUp';
+import { clubStatus } from '@/lib/utils/clubUtils';
 import {
   bookClubs,
   useLeaveBookClub,
   useWriteReview,
-} from '@/api/react-query/book-club';
-import PopUp from '@/components/pop-up/PopUp';
-import { clubStatus } from '@/lib/utils/clubUtils';
+} from '@/api/book-club/react-query';
 import { showToast } from '@/components/toast/toast';
 
 interface JoinedClubListProps {
@@ -33,7 +33,7 @@ export default function JoinedClubList({ order }: JoinedClubListProps) {
     queryKey,
     queryFn,
   });
-  const { mutate: leaveClub } = useLeaveBookClub();
+  const { mutateAsync: leaveClub } = useLeaveBookClub();
   const { mutate: writeReview } = useWriteReview();
 
   const myJoinedList: BookClub[] = data?.data?.bookClubs || [];
@@ -44,16 +44,18 @@ export default function JoinedClubList({ order }: JoinedClubListProps) {
   };
 
   //모임 참가하기 취소 클릭 이벤트
-  const onCancel = async (clubId: number) => {
+  const onCancel = (clubId: number) => {
     setLabel('정말 모임 참여를 취소하시겠어요?');
     setIsPopUpOpen(true);
     setSelectedClubId(clubId);
   };
 
   //모임 삭제하기 클릭 이벤트
-  const onDelete = (clubId: number) => {
-    leaveClub(clubId);
-    showToast({ message: '취소된 모임을 삭제하였습니다.', type: 'success' });
+  const onDelete = async (clubId: number) => {
+    const res = await leaveClub(clubId);
+    if (res) {
+      showToast({ message: '취소된 모임을 삭제하였습니다.', type: 'success' });
+    }
   };
 
   //리뷰 작성하기 클릭 이벤트
@@ -65,10 +67,7 @@ export default function JoinedClubList({ order }: JoinedClubListProps) {
   const onConfirmReview = (rating: number, content: string) => {
     //TODO: 토스트 메시지가 뜨더라도 모달이 열린 상태로 유지되도록 수정
     if (!rating || !content) {
-      showToast({
-        message: '점수와 리뷰 내용을 모두 입력해주세요',
-        type: 'error',
-      });
+      showToast({ message: '점수와 리뷰 내용을 입력해주세요', type: 'error' });
       return;
     }
 
@@ -81,18 +80,17 @@ export default function JoinedClubList({ order }: JoinedClubListProps) {
 
   const onConfirmPopUp = async () => {
     if (selectedClubId) {
-      try {
-        await leaveClub(selectedClubId);
-        // showToast({ message: '모임 참여가 취소되었습니다.', type: 'success' });
-        setIsPopUpOpen(false);
-        setSelectedClubId(null);
-      } catch (err) {
-        // showToast({
-        //   message: '모임 참여 취소에 실패하였습니다',
-        //   type: 'error',
-        // });
-        console.error(err);
+      const res = await leaveClub(selectedClubId);
+      if (res) {
+        showToast({ message: '모임 참여를 취소하였습니다.', type: 'success' });
+      } else {
+        showToast({
+          message: '모임 참여 취소에 실패하였습니다.',
+          type: 'error',
+        });
       }
+      setIsPopUpOpen(false);
+      setSelectedClubId(null);
     }
   };
 

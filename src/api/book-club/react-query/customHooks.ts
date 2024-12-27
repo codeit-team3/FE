@@ -2,15 +2,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { BookClubForm } from '@/features/club-create/types';
 import { createBookClub } from '@/features/club-create/api';
 import { bookClubs } from './queries';
-import { leaveBookClub } from '@/api/leaveBookClub';
-import { writeReview } from '@/features/profile/api/writeReviewApi';
 import { showToast } from '@/components/toast/toast';
-
-interface WriteReviewParams {
-  bookClubId: number;
-  rating: number;
-  content: string;
-}
+import { bookClubMemberAPI, bookClubReviewAPI } from '../index';
+import { WriteReviewParams } from '../types';
 
 export function useBookClubCreateMutation() {
   const queryClient = useQueryClient();
@@ -28,18 +22,18 @@ export function useBookClubCreateMutation() {
   });
 }
 
+//북클럽 참여 취소하기
 export function useLeaveBookClub() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (id: number) => leaveBookClub(id),
+    mutationFn: (id: number) => bookClubMemberAPI.leave(id),
     onSuccess: () => {
-      // 성공 후 데이터를 새로고침
       queryClient.invalidateQueries({
         queryKey: bookClubs.myJoined().queryKey,
       });
       showToast({ message: '모임 참여가 취소되었습니다.', type: 'success' });
     },
-    onError: (error: any) => {
+    onError: (error) => {
       showToast({
         message: '모임 참여 취소에 실패하였습니다',
         type: 'error',
@@ -49,12 +43,13 @@ export function useLeaveBookClub() {
   });
 }
 
+//리뷰 작성하기
 export function useWriteReview() {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: ({ bookClubId, rating, content }: WriteReviewParams) =>
-      writeReview({ bookClubId, rating, content }),
+      bookClubReviewAPI.write({ bookClubId, rating, content }),
 
     onSuccess: (data, variables) => {
       const { bookClubId } = variables;
