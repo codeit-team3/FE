@@ -7,11 +7,16 @@ import { filters, mockBookClubs } from '../mocks/wishPageMockData';
 function WishPage() {
   return (
     <>
-      <HeaderSection>
-        찜한 모임을 마감되기 전에
-        <br />
-        참여해 보세요!
-      </HeaderSection>
+      <HeaderSection
+        title={
+          <>
+            찜한 모임을 마감되기 전에
+            <br />
+            참여해 보세요!
+          </>
+        }
+      />
+
       <FilterBar
         filters={filters}
         handleFilterChange={() => {}}
