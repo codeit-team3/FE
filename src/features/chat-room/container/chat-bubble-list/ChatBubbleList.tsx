@@ -4,7 +4,7 @@ import {
   ChatContainerProps,
   ChatMessage,
   Message,
-} from '@/features/chat-room/containers/chat-bubble-list/types';
+} from '@/features/chat-room/container/chat-bubble-list/types';
 import { useAuthStore } from '@/store/authStore';
 
 function ChatContainer({

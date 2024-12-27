@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import ChatContainer from './ChatBubbleList';
-import { GroupedMessage } from '@/features/chat-room/containers/chat-bubble-list/types';
+import { GroupedMessage } from '@/features/chat-room/container/chat-bubble-list/types';
 import { useAuthStore } from '@/store/authStore';
 import { User } from '@/features/auth/types/user';
 import { jest } from '@storybook/jest';
