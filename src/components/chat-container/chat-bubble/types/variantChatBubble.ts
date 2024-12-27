@@ -11,6 +11,7 @@ export interface MeProps extends CommonProps {}
 
 export interface OpponentProps extends CommonProps {
   name: string;
+  isConsecutive?: boolean;
   profileImage?: string;
   isHost?: boolean;
   onProfileClick?: () => void;

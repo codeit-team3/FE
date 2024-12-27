@@ -153,17 +153,26 @@ function ChatBubble({ variant, props }: ChatBubbleComponentProps) {
       }
 
       case 'OPPONENT': {
-        const { content, time, name, profileImage, isHost, onProfileClick } =
-          props as OpponentProps;
+        const {
+          content,
+          time,
+          name,
+          profileImage,
+          isHost,
+          onProfileClick,
+          isConsecutive,
+        } = props as OpponentProps;
         return (
           <ChatBubbleContainer variant="OPPONENT">
             <div className="flex flex-col">
-              <ChatBubbleProfile
-                name={name}
-                imageUrl={profileImage}
-                isHost={isHost}
-                onClick={onProfileClick}
-              />
+              {!isConsecutive && (
+                <ChatBubbleProfile
+                  name={name}
+                  imageUrl={profileImage}
+                  isHost={isHost}
+                  onClick={onProfileClick}
+                />
+              )}
               <div className="flex gap-[14px] pl-16">
                 <ChatBubbleBox variant="OPPONENT">{content}</ChatBubbleBox>
                 {time && (

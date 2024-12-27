@@ -1,23 +1,46 @@
 import { format } from 'date-fns';
 import ChatBubble from './chat-bubble/ChatBubble';
-import { ChatContainerProps, Message } from '@/components/chat-container/types';
+import {
+  ChatContainerProps,
+  ChatMessage,
+  Message,
+} from '@/components/chat-container/types';
+import { useAuthStore } from '@/store/authStore';
 
 function ChatContainer({
   groupedMessages,
-  currentUser,
-  isHost,
+  hostId,
   onProfileClick,
 }: ChatContainerProps) {
-  const renderMessage = (message: Message) => {
+  const { user } = useAuthStore();
+
+  const renderMessage = (
+    message: Message,
+    messages: Message[],
+    index: number,
+  ) => {
     const time = format(new Date(message.date), 'HH:mm');
 
     switch (message.type) {
-      case 'chat':
-        return message.sender === currentUser ? (
+      case 'chat': {
+        const { senderId, content, sender, profileImage } = message;
+        const isMyMessage = user!.id == senderId;
+
+        const prevMessage = messages[index - 1];
+        const isConsecutive =
+          index > 0 &&
+          prevMessage.type === 'chat' &&
+          message.type === 'chat' &&
+          (prevMessage as ChatMessage).senderId === senderId &&
+          new Date(message.date).getTime() -
+            new Date(prevMessage.date).getTime() <
+            5 * 60 * 1000;
+
+        return isMyMessage ? (
           <ChatBubble
             variant="ME"
             props={{
-              content: message.content,
+              content,
               time,
             }}
           />
@@ -25,27 +48,31 @@ function ChatContainer({
           <ChatBubble
             variant="OPPONENT"
             props={{
-              content: message.content,
+              content,
               time,
-              name: message.sender,
-              profileImage: '', // 프로필 이미지 URL 필요
-              isHost: isHost,
-              onProfileClick: () => onProfileClick?.(message.sender),
+              name: sender,
+              profileImage: profileImage || '',
+              isHost: senderId === hostId,
+              onProfileClick: () => onProfileClick?.(senderId),
+              isConsecutive,
             }}
           />
         );
+      }
 
       case 'join':
-      case 'leave':
+      case 'leave': {
+        const { user, type } = message;
         return (
           <ChatBubble
             variant="SYSTEM"
             props={{
-              username: message.sender,
-              action: message.type === 'join' ? 'JOIN' : 'LEAVE',
+              username: user,
+              action: type === 'join' ? 'JOIN' : 'LEAVE',
             }}
           />
         );
+      }
     }
   };
 
@@ -53,16 +80,16 @@ function ChatContainer({
     <div className="flex w-full flex-col gap-3">
       {groupedMessages.map((group, groupIndex) => (
         <div key={groupIndex} className="flex w-full flex-col gap-3">
-          {/* 날짜 디바이더 */}
           <div className="flex items-center justify-center py-1.5">
             <div className="rounded-full bg-gray-normal-01 px-3.5 py-1.5 text-sm font-medium text-gray-normal-03">
               {group.date}
             </div>
           </div>
 
-          {/* 메시지 목록 */}
           {group.messages.map((message, messageIndex) => (
-            <div key={messageIndex}>{renderMessage(message)}</div>
+            <div key={messageIndex}>
+              {renderMessage(message, group.messages, messageIndex)}
+            </div>
           ))}
         </div>
       ))}
