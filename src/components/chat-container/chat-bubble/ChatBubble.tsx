@@ -1,17 +1,11 @@
+import { HTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
-import {
-  ChatBubbleBoxProps,
-  ChatBubbleTimeProps,
-  ChatBubbleProfileProps,
-  ChatBubbleComponentProps,
-  OpponentProps,
-  ChatBubbleSystemProps,
-  ChatBubbleContainerProps,
-  MeProps,
-  SystemProps,
-} from './types';
 import Avatar from '@/components/avatar/Avatar';
 import { HostIcon } from '../../../../public/icons';
+
+interface ChatBubbleContainerProps extends HTMLAttributes<HTMLDivElement> {
+  variant: 'ME' | 'OPPONENT' | 'SYSTEM';
+}
 
 function ChatBubbleContainer({
   variant,
@@ -33,6 +27,10 @@ function ChatBubbleContainer({
       {children}
     </div>
   );
+}
+
+interface ChatBubbleBoxProps extends HTMLAttributes<HTMLDivElement> {
+  variant: 'ME' | 'OPPONENT';
 }
 
 function ChatBubbleBox({
@@ -60,6 +58,8 @@ function ChatBubbleBox({
   );
 }
 
+interface ChatBubbleTimeProps extends HTMLAttributes<HTMLSpanElement> {}
+
 function ChatBubbleTime({
   children,
   className,
@@ -76,6 +76,12 @@ function ChatBubbleTime({
       {children}
     </span>
   );
+}
+
+interface ChatBubbleProfileProps extends HTMLAttributes<HTMLDivElement> {
+  name: string;
+  imageUrl: string;
+  isHost?: boolean;
 }
 
 function ChatBubbleProfile({
@@ -112,6 +118,11 @@ function ChatBubbleProfile({
   );
 }
 
+interface ChatBubbleSystemProps extends HTMLAttributes<HTMLSpanElement> {
+  username: string;
+  action: 'JOIN' | 'LEAVE';
+}
+
 function ChatBubbleSystem({
   username,
   action,
@@ -127,11 +138,30 @@ function ChatBubbleSystem({
   );
 }
 
-ChatBubble.Container = ChatBubbleContainer;
-ChatBubble.Box = ChatBubbleBox;
-ChatBubble.Time = ChatBubbleTime;
-ChatBubble.Profile = ChatBubbleProfile;
-ChatBubble.System = ChatBubbleSystem;
+interface ChatBubbleComponentProps {
+  variant: 'ME' | 'OPPONENT' | 'SYSTEM';
+  props: MeProps | OpponentProps | SystemProps;
+}
+
+interface MeProps {
+  content: string;
+  time?: string;
+}
+
+interface OpponentProps {
+  content: string;
+  time?: string;
+  name: string;
+  profileImage: string;
+  isHost?: boolean;
+  onProfileClick?: () => void;
+  isConsecutive?: boolean;
+}
+
+interface SystemProps {
+  username: string;
+  action: 'JOIN' | 'LEAVE';
+}
 
 function ChatBubble({ variant, props }: ChatBubbleComponentProps) {
   const renderContent = () => {
