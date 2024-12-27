@@ -1,78 +1,43 @@
-import { format } from 'date-fns';
-import ChatBubble from '../../components/chat-bubble/ChatBubble';
-import {
-  ChatContainerProps,
-  ChatMessage,
-  Message,
-} from '@/features/chat-room/container/chat-bubble-list/types';
-import { useAuthStore } from '@/store/authStore';
+import ChatMessage, { ChatMessageType } from './components/ChatMessage';
+import SystemMessage, { SystemMessageType } from './components/SystemMessage';
+import { useMessageRenderer } from '../../hooks/useMessageRenderer';
 
-function ChatContainer({
+export type Message = ChatMessageType | SystemMessageType;
+
+export interface GroupedMessage {
+  date: string;
+  messages: Message[];
+}
+
+export interface ChatContainerProps {
+  groupedMessages: GroupedMessage[];
+  hostId: string | number;
+  onProfileClick?: (userId: string | number) => void;
+}
+
+function ChatBubbleList({
   groupedMessages,
   hostId,
   onProfileClick,
 }: ChatContainerProps) {
-  const { user } = useAuthStore();
+  const { getChatMessageProps, getSystemMessageProps } = useMessageRenderer({
+    hostId,
+    onProfileClick,
+  });
 
   const renderMessage = (
     message: Message,
     messages: Message[],
     index: number,
   ) => {
-    const time = format(new Date(message.date), 'HH:mm');
-
     switch (message.type) {
-      case 'chat': {
-        const { senderId, content, sender, profileImage } = message;
-        const isMyMessage = user!.id == senderId;
-
-        const prevMessage = messages[index - 1];
-        const isConsecutive =
-          index > 0 &&
-          prevMessage.type === 'chat' &&
-          message.type === 'chat' &&
-          (prevMessage as ChatMessage).senderId === senderId &&
-          new Date(message.date).getTime() -
-            new Date(prevMessage.date).getTime() <
-            5 * 60 * 1000;
-
-        return isMyMessage ? (
-          <ChatBubble
-            variant="ME"
-            props={{
-              content,
-              time,
-            }}
-          />
-        ) : (
-          <ChatBubble
-            variant="OPPONENT"
-            props={{
-              content,
-              time,
-              name: sender,
-              profileImage: profileImage || '',
-              isHost: senderId === hostId,
-              onProfileClick: () => onProfileClick?.(senderId),
-              isConsecutive,
-            }}
-          />
-        );
-      }
-
-      case 'join':
-      case 'leave': {
-        const { user, type } = message;
+      case 'chat':
         return (
-          <ChatBubble
-            variant="SYSTEM"
-            props={{
-              username: user,
-              action: type === 'join' ? 'JOIN' : 'LEAVE',
-            }}
-          />
+          <ChatMessage {...getChatMessageProps(message, messages, index)} />
         );
-      }
+      case 'join':
+      case 'leave':
+        return <SystemMessage {...getSystemMessageProps(message)} />;
     }
   };
 
@@ -85,7 +50,6 @@ function ChatContainer({
               {group.date}
             </div>
           </div>
-
           {group.messages.map((message, messageIndex) => (
             <div key={messageIndex}>
               {renderMessage(message, group.messages, messageIndex)}
@@ -97,4 +61,4 @@ function ChatContainer({
   );
 }
 
-export default ChatContainer;
+export default ChatBubbleList;
