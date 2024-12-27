@@ -3,17 +3,17 @@
 import { useState } from 'react';
 import Avatar from '@/components/avatar/Avatar';
 import { IcEdit } from '../../../../../public/icons/index';
+import { EditInfoParams } from '@/types/Info';
+import { useEditInfo } from '@/api/auth/react-query';
+import InfoEditModal from './InfoEditModal';
 import { ProfilePageProps } from '../../types';
-import ProfileEditModal from './ProfileEditModal';
-import { useEditProfile } from '@/api/auth/react-query';
-import { EditProfileParams } from '@/types/profile';
 
-function Profile({ user }: ProfilePageProps) {
+export default function Info({ user }: ProfilePageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { mutate: editProfile } = useEditProfile();
+  const { mutate: editInfo } = useEditInfo();
 
-  const onSubmitEditProfile = (formData: EditProfileParams) => {
-    editProfile(formData);
+  const onSubmitEditInfo = (formData: EditInfoParams) => {
+    editInfo(formData);
     setIsModalOpen(false);
   };
 
@@ -75,11 +75,11 @@ function Profile({ user }: ProfilePageProps) {
         </div>
       </div>
       {isModalOpen && (
-        <ProfileEditModal
+        <InfoEditModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          onConfirm={(formData) => onSubmitEditProfile(formData)}
-          profileData={{
+          onConfirm={(formData) => onSubmitEditInfo(formData)}
+          infoData={{
             nickname: user?.nickname || '',
             description: user?.description || '',
             image: user?.image,
@@ -89,4 +89,3 @@ function Profile({ user }: ProfilePageProps) {
     </div>
   );
 }
-export default Profile;

@@ -1,5 +1,4 @@
 export interface User {
-  // teamId: string;
   id: number;
   email: string;
   name: string;

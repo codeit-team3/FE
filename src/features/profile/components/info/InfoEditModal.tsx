@@ -3,28 +3,22 @@ import { useAuthStore } from '@/store/authStore';
 import Avatar from '@/components/avatar/Avatar';
 import Modal from '@/components/modal/Modal';
 import { EditIcon } from '../../../../../public/icons';
-import { EditProfileParams } from '@/types/profile';
+import { EditInfoParams } from '@/types/Info';
 
-interface ProfileData {
-  nickname: string;
-  description: string;
-  image?: string | null;
-}
-
-interface ProfileEditModalProps {
+interface InfoEditModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: (updatedData: EditProfileParams) => void;
-  profileData: EditProfileParams;
+  onConfirm: (updatedData: EditInfoParams) => void;
+  infoData: EditInfoParams;
 }
 
-function ProfileEditContent({
+function InfoEditContent({
   formData,
   handleChange,
   handleFileChange,
   preview,
 }: {
-  formData: EditProfileParams;
+  formData: EditInfoParams;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   preview: string | null;
@@ -89,17 +83,17 @@ function ProfileEditContent({
   );
 }
 
-function ProfileEditModal({
+export default function InfoEditModal({
   isOpen,
   onClose,
   onConfirm,
-  profileData,
-}: ProfileEditModalProps) {
+  infoData,
+}: InfoEditModalProps) {
   const { user } = useAuthStore();
-  const [formData, setFormData] = useState<ProfileData>({
-    nickname: profileData.nickname || user?.name || '',
-    description: profileData.description || user?.description || '',
-    image: profileData.image || user?.image || '/images/profile.png',
+  const [formData, setFormData] = useState<EditInfoParams>({
+    nickname: infoData.nickname || user?.name || '',
+    description: infoData.description || user?.description || '',
+    image: infoData.image || user?.image || '/images/profile.png',
   });
   const [preview, setPreview] = useState<string | null>(null);
 
@@ -145,7 +139,7 @@ function ProfileEditModal({
         fillType: 'lightSolid',
       }}
     >
-      <ProfileEditContent
+      <InfoEditContent
         formData={formData}
         handleChange={handleChange}
         handleFileChange={handleFileChange}
@@ -154,5 +148,3 @@ function ProfileEditModal({
     </Modal>
   );
 }
-
-export default ProfileEditModal;

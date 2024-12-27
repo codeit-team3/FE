@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom';
-import Profile from './Profile';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { User } from '../../types';
+import Info from './Info';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const mockUser: User = {
   id: 123,
@@ -14,20 +15,29 @@ const mockUser: User = {
   createdAt: new Date('2024-01-01T00:00:00Z'),
   updatedAt: new Date('2024-01-10T00:00:00Z'),
 };
-// const mockSubmit = jest.fn();
 
-describe('Profile 테스트', () => {
-  it('프로필 컴포넌트의 데이터 렌더링 확인', () => {
-    render(<Profile user={mockUser} />);
+const queryClient = new QueryClient();
+
+describe('Info 테스트', () => {
+  it('Info 컴포넌트의 데이터 렌더링 확인', () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Info user={mockUser} />
+      </QueryClientProvider>,
+    );
 
     //프로필 컴포넌트 데이터 렌더링 확인
-    expect(screen.getByText('John Doe님의 프로필')).toBeInTheDocument;
+    expect(screen.getByText('DoeJon님의 프로필')).toBeInTheDocument;
     expect(screen.getByText('john.doe@example.com')).toBeInTheDocument;
     expect(screen.getByText('Example Company')).toBeInTheDocument;
   });
 
   it('수정하기 아이콘 버튼 클릭 후 프로필 수정하기 모달 렌더링 테스트', async () => {
-    render(<Profile user={mockUser} />);
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Info user={mockUser} />
+      </QueryClientProvider>,
+    );
     const editButton = screen.getByLabelText('프로필 수정');
 
     expect(screen.queryByText('프로필 수정하기')).not.toBeInTheDocument;
@@ -55,14 +65,18 @@ describe('Profile 테스트', () => {
 
   it("수정하기 모달에서 닉네임을 입력하지 않고 수정하기 버튼 클릭 시 '닉네임을 입력해주세요' 팝업창 렌더링 확인", () => {});
 
-  it('수정하기 모달에서 수정 후 수정하기 버튼 클릭 시 onSubmitEditProfile 함수 호출 확인', async () => {
-    render(<Profile user={mockUser} />);
+  it('수정하기 모달에서 수정 후 수정하기 버튼 클릭 시 onSubmitEditInfo 함수 호출 확인', async () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Info user={mockUser} />
+      </QueryClientProvider>,
+    );
 
     const editButton = screen.getByLabelText('프로필 수정');
     await userEvent.click(editButton);
 
     //닉네임 수정
-    const nameInput = screen.getByRole('textbox', { name: 'name' });
+    const nameInput = screen.getByRole('textbox', { name: 'nickname' });
     await userEvent.clear(nameInput);
     await userEvent.type(nameInput, 'Edited Name');
 

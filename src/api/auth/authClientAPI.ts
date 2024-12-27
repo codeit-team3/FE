@@ -1,11 +1,11 @@
 import apiClient from '@/lib/utils/apiClient';
-import { EditProfileParams } from '@/types/profile';
+import { EditInfoParams } from '@/types/Info';
 
 export const authClientAPI = {
   //회원정보 확인
 
   //회원정보 수정
-  editProfile: async ({ nickname, image, description }: EditProfileParams) => {
+  editInfo: async ({ nickname, image, description }: EditInfoParams) => {
     try {
       await apiClient.post('auths/user', {
         nickname,
@@ -19,5 +19,6 @@ export const authClientAPI = {
   },
 
   //회원가입
+
   //액세스 토큰 재발급
 };
