@@ -1,4 +1,6 @@
+import WishPage from '@/features/club-wish/components/WishPage';
+
 function Wish() {
-  return <div>Wish</div>;
+  return <WishPage />;
 }
 export default Wish;
