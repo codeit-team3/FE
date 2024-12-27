@@ -1,9 +1,9 @@
 'use client';
 
-import { ClubListSection } from '@/features/bookclub/components';
 import useBookClubList from '../hooks/useFetchBookClubList';
 import { FilterBar, HeaderSection } from '@/components/common-layout';
 import { useAuthStore } from '@/store/authStore';
+import ClubListSection from './ClubListSection';
 
 function BookClubMainPage() {
   // 커스텀 훅에서 상태와 핸들러 가져오기
