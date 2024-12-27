@@ -31,13 +31,13 @@ function PopUp({
   };
   return (
     <>
-      <div className={`${isOpen ? 'block' : 'hidden'}`}>
+      <div className={`${isOpen ? 'block' : 'hidden'} `}>
         <div
-          className={`fixed left-0 top-0 h-screen w-screen bg-black bg-opacity-50`}
+          className={`fixed left-0 top-0 z-50 h-screen w-screen bg-black bg-opacity-50`}
         >
           <div
             role="pop-up"
-            className={`absolute left-2/4 top-2/4 flex -translate-x-2/4 -translate-y-2/4 flex-col items-center justify-between rounded-lg border opacity-100 ${isLarge ? 'h-[212px] w-[450px]' : 'h-[199px] w-[300px]'} bg-white p-[24px]`}
+            className={`z-60 absolute left-2/4 top-2/4 flex -translate-x-2/4 -translate-y-2/4 flex-col items-center justify-between rounded-lg border opacity-100 ${isLarge ? 'h-[212px] w-[450px]' : 'h-[199px] w-[300px]'} bg-white p-[24px]`}
           >
             <button className="ml-auto" onClick={onClickClose}>
               <IcClose role="close-icon" className="ml-auto" />
