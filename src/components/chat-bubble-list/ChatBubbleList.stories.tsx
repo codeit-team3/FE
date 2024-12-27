@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import ChatContainer from './ChatContainer';
-import { GroupedMessage } from '@/components/chat-container/types';
+import ChatContainer from './ChatBubbleList';
+import { GroupedMessage } from '@/components/chat-bubble-list/types';
 import { useAuthStore } from '@/store/authStore';
 import { User } from '@/features/auth/types/user';
 import { jest } from '@storybook/jest';
@@ -26,7 +26,7 @@ jest.spyOn(useAuthStore, 'getState').mockImplementation(() => ({
 }));
 
 const meta: Meta<typeof ChatContainer> = {
-  title: 'Components/ChatContainer',
+  title: 'Components/ChatList',
   component: ChatContainer,
   parameters: {
     layout: 'centered',

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import ChatBubble from './ChatBubble';
+import ChatBubble from '../../ChatBubble';
 
 const meta = {
-  title: 'Components/ChatBubble/Atoms',
+  title: 'Components/ChatList/ChatBubble/Atoms',
   component: ChatBubble,
   parameters: {
     layout: 'centered',
