@@ -3,7 +3,7 @@ import { useAuthStore } from '@/store/authStore';
 import Avatar from '@/components/avatar/Avatar';
 import Modal from '@/components/modal/Modal';
 import { EditIcon } from '../../../../../public/icons';
-import { ProfileEditData } from '../../types';
+import { EditProfileParams } from '@/types/profile';
 
 interface ProfileData {
   nickname: string;
@@ -14,8 +14,8 @@ interface ProfileData {
 interface ProfileEditModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: (updatedData: ProfileEditData) => void;
-  profileData: ProfileEditData;
+  onConfirm: (updatedData: EditProfileParams) => void;
+  profileData: EditProfileParams;
 }
 
 function ProfileEditContent({
@@ -24,7 +24,7 @@ function ProfileEditContent({
   handleFileChange,
   preview,
 }: {
-  formData: ProfileEditData;
+  formData: EditProfileParams;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   preview: string | null;

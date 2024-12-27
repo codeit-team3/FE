@@ -14,12 +14,6 @@ export interface ProfilePageProps {
   user: User | null;
 }
 
-export interface ProfileEditData {
-  nickname?: string;
-  description?: string;
-  image?: string | null;
-}
-
 //TODO: isCanceled, imageUrl. isPast, status 수정
 export interface BookClub {
   id: number;

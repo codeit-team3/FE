@@ -3,15 +3,16 @@
 import { useState } from 'react';
 import Avatar from '@/components/avatar/Avatar';
 import { IcEdit } from '../../../../../public/icons/index';
-import { ProfileEditData, ProfilePageProps } from '../../types';
+import { ProfilePageProps } from '../../types';
 import ProfileEditModal from './ProfileEditModal';
-import { useEditProfile } from '@/features/react-query/book-club/customHooks';
+import { useEditProfile } from '@/api/auth/react-query';
+import { EditProfileParams } from '@/types/profile';
 
 function Profile({ user }: ProfilePageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { mutate: editProfile } = useEditProfile();
 
-  const onSubmitEditProfile = (formData: ProfileEditData) => {
+  const onSubmitEditProfile = (formData: EditProfileParams) => {
     editProfile(formData);
     setIsModalOpen(false);
   };
