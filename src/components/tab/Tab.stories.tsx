@@ -22,7 +22,12 @@ const meta = {
     },
     items: {
       control: 'select',
-      options: [BOOK_TABS, CONTENT_TABS, CLUB_TABS, EXCHANGE_TABS],
+      options: [
+        BOOK_TABS,
+        CONTENT_TABS,
+        Object.values(CLUB_TABS),
+        EXCHANGE_TABS,
+      ],
       mapping: {
         BOOK_TABS: BOOK_TABS,
         CONTENT_TABS: CONTENT_TABS,
@@ -32,7 +37,12 @@ const meta = {
     },
     activeTab: {
       control: 'select',
-      options: [...BOOK_TABS, ...CONTENT_TABS, ...CLUB_TABS, ...EXCHANGE_TABS],
+      options: [
+        ...BOOK_TABS,
+        ...CONTENT_TABS,
+        ...Object.values(CLUB_TABS),
+        ...EXCHANGE_TABS,
+      ],
       description: '현재 선택된 탭',
     },
   },
