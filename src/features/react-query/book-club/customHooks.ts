@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { BookClubForm } from '@/features/club-create/types';
 import { createBookClub } from '@/features/club-create/api';
-import { bookClubs } from './queries';
 import { editProfile } from '@/features/profile/api/editProfileApi';
 import { showToast } from '@/components/toast/toast';
 import { ProfileEditData } from '@/features/profile/types';
 import { getUserInfo } from '@/features/auth/api/auth';
+import { bookClubs } from '@/api/book-club/react-query';
 
 export function useBookClubCreateMutation() {
   const queryClient = useQueryClient();

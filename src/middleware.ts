@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { refreshAccessToken } from '@/features/auth/api/auth';
-const AUTH_REQUIRED_PATHS = ['/wish', '/profile', '/bookclub/create'];
+const AUTH_REQUIRED_PATHS = ['/wish', '/profile', '/bookclub/create', '/chat'];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -16,9 +16,6 @@ export async function middleware(request: NextRequest) {
           const nextResponse = NextResponse.next();
           nextResponse.cookies.set('auth_token', data.accessToken, {
             maxAge: 60 * 15,
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
           });
           return nextResponse;
         } catch (error) {
@@ -40,5 +37,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/wish', '/profile', '/login', '/bookclub/create'],
+  matcher: ['/wish', '/profile', '/login', '/bookclub/create', '/chat'],
 };

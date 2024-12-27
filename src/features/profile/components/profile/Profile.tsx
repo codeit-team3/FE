@@ -5,7 +5,7 @@ import Avatar from '@/components/avatar/Avatar';
 import { IcEdit } from '../../../../../public/icons/index';
 import { ProfileEditData, ProfilePageProps } from '../../types';
 import ProfileEditModal from './ProfileEditModal';
-import { useEditProfile } from '@/features/react-query/book-club';
+import { useEditProfile } from '@/features/react-query/book-club/customHooks';
 
 function Profile({ user }: ProfilePageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);

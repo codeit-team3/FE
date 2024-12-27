@@ -15,7 +15,7 @@ const mockReviews: Review[] = [
     userId: 101,
     bookClubId: 201,
     rating: 4,
-    comment: '정말 유익한 시간이었어요!',
+    content: '정말 유익한 시간이었어요!',
     clubImgUrl: '/images/defaultBookClub.jpg',
     clubImgAlt: '문학의 밤 독서 모임',
     clubName: '문학의 밤',
@@ -27,7 +27,7 @@ const mockReviews: Review[] = [
     userId: 102,
     bookClubId: 202,
     rating: 3,
-    comment:
+    content:
       '다소 아쉬운 부분도 있었지만 재미있었어요.다소 아쉬운 부분도 있었지만 재미있었어요.다소 아쉬운 부분도 있었지만 재미있었어요.다소 아쉬운 부분도 있었지만 재미있었어요.다소 아쉬운 부분도 있었지만 재미있었어요.다소 아쉬운 부분도 있었지만 재미있었어요.다소 아쉬운 부분도 있었지만 재미있었어요.다소 아쉬운 부분도 있었지만 재미있었어요.',
     clubImgUrl: undefined,
     clubImgAlt: '철학과 삶 독서 모임',
@@ -40,7 +40,7 @@ const mockReviews: Review[] = [
     userId: 103,
     bookClubId: 203,
     rating: 5,
-    comment: '추리 소설 애호가로서 정말 만족스러웠습니다.',
+    content: '추리 소설 애호가로서 정말 만족스러웠습니다.',
     clubImgUrl: '/images/defaultBookClub.jpg',
     clubImgAlt: '추리소설 탐독 독서 모임',
     clubName: '추리소설 탐독',
@@ -52,7 +52,7 @@ const mockReviews: Review[] = [
     userId: 104,
     bookClubId: 204,
     rating: 4,
-    comment: '과학 소설에 대한 흥미가 더 커졌어요.',
+    content: '과학 소설에 대한 흥미가 더 커졌어요.',
     clubImgUrl: undefined,
     clubImgAlt: 'SF소설의 미래 독서 모임',
     clubName: 'SF소설의 미래',
@@ -64,7 +64,7 @@ const mockReviews: Review[] = [
     userId: 105,
     bookClubId: 205,
     rating: 3,
-    comment: '조금 더 다양한 주제가 다뤄졌으면 좋겠어요.',
+    content: '조금 더 다양한 주제가 다뤄졌으면 좋겠어요.',
     clubImgUrl: '/images/defaultBookClub.jpg',
     clubImgAlt: '시의 세계 독서 모임',
     clubName: '시의 세계',
@@ -76,7 +76,7 @@ const mockReviews: Review[] = [
     userId: 106,
     bookClubId: 206,
     rating: 4,
-    comment: '경제적 주제를 다뤄서 흥미로웠습니다.',
+    content: '경제적 주제를 다뤄서 흥미로웠습니다.',
     clubImgUrl: undefined,
     clubImgAlt: '경제와 사회 독서 모임',
     clubName: '경제와 사회',
@@ -88,7 +88,7 @@ const mockReviews: Review[] = [
     userId: 107,
     bookClubId: 207,
     rating: 5,
-    comment: '청소년 문학에 대한 새로운 시각을 얻었어요.',
+    content: '청소년 문학에 대한 새로운 시각을 얻었어요.',
     clubImgUrl: '/images/defaultBookClub.jpg',
     clubImgAlt: '청소년 문학 클럽',
     clubName: '청소년 문학 클럽',
@@ -100,7 +100,7 @@ const mockReviews: Review[] = [
     userId: 108,
     bookClubId: 208,
     rating: 4,
-    comment: '문학과 미술의 접점을 새롭게 느꼈어요.',
+    content: '문학과 미술의 접점을 새롭게 느꼈어요.',
     clubImgUrl: undefined,
     clubImgAlt: '현대 미술과 문학 독서 모임',
     clubName: '현대 미술과 문학',
@@ -112,7 +112,7 @@ const mockReviews: Review[] = [
     userId: 109,
     bookClubId: 209,
     rating: 5,
-    comment: '원작과 영화 비교가 정말 재미있었어요!',
+    content: '원작과 영화 비교가 정말 재미있었어요!',
     clubImgUrl: '/images/defaultBookClub.jpg',
     clubImgAlt: '영화와 책 독서 모임',
     clubName: '영화와 책',
@@ -124,7 +124,7 @@ const mockReviews: Review[] = [
     userId: 110,
     bookClubId: 210,
     rating: 4,
-    comment: '환상적인 경험이었습니다!',
+    content: '환상적인 경험이었습니다!',
     clubImgUrl: undefined,
     clubImgAlt: '환상 문학의 향연 독서 모임',
     clubName: '환상 문학의 향연',
@@ -167,7 +167,7 @@ export default function MyReviewList({ user, sortBy }: MyReviewListProps) {
                       clubName={review.clubName}
                       bookClubType={review.bookClubType}
                     />
-                    <WrittenReview.Comment text={review.comment} />
+                    <WrittenReview.Comment text={review.content} />
                     <WrittenReview.UserProfile
                       createdAt={formatDateSimple(review.createdAt)}
                       className="gap-x-0"
