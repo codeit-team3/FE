@@ -52,9 +52,21 @@ export default function JoinedClubList({ order }: JoinedClubListProps) {
 
   //모임 삭제하기 클릭 이벤트
   const onDelete = async (clubId: number) => {
-    const res = await leaveClub(clubId);
-    if (res) {
-      showToast({ message: '취소된 모임을 삭제하였습니다.', type: 'success' });
+    try {
+      const res = await leaveClub(clubId);
+      console.log(res);
+      if (res) {
+        showToast({
+          message: '취소된 모임을 삭제하였습니다.',
+          type: 'success',
+        });
+      }
+    } catch (error) {
+      showToast({
+        message: '모임삭제를 실패하였습니다.',
+        type: 'error',
+      });
+      console.error(error);
     }
   };
 
@@ -79,16 +91,23 @@ export default function JoinedClubList({ order }: JoinedClubListProps) {
   };
 
   const onConfirmPopUp = async () => {
-    if (selectedClubId) {
-      const res = await leaveClub(selectedClubId);
-      if (res) {
-        showToast({ message: '모임 참여를 취소하였습니다.', type: 'success' });
-      } else {
-        showToast({
-          message: '모임 참여 취소에 실패하였습니다.',
-          type: 'error',
-        });
+    try {
+      if (selectedClubId) {
+        const res = await leaveClub(selectedClubId);
+        if (res) {
+          showToast({
+            message: '모임 참여를 취소하였습니다.',
+            type: 'success',
+          });
+        }
       }
+    } catch (error) {
+      showToast({
+        message: '모임 참여를 취소를 실패하였습니다.',
+        type: 'error',
+      });
+      console.error(error);
+    } finally {
       setIsPopUpOpen(false);
       setSelectedClubId(null);
     }

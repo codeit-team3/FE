@@ -31,14 +31,6 @@ export function useLeaveBookClub() {
       queryClient.invalidateQueries({
         queryKey: bookClubs.myJoined().queryKey,
       });
-      showToast({ message: '모임 참여가 취소되었습니다.', type: 'success' });
-    },
-    onError: (error) => {
-      showToast({
-        message: '모임 참여 취소에 실패하였습니다',
-        type: 'error',
-      });
-      console.error(error);
     },
   });
 }
