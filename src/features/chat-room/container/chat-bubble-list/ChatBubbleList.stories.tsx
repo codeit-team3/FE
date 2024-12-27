@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import ChatBubbleList from './ChatBubbleList';
+import { GroupedMessage } from '@/features/chat-room/types/chatBubbleList';
 import { useAuthStore } from '@/store/authStore';
 import { User } from '@/features/auth/types/user';
-import { jest } from '@storybook/jest';
-import { GroupedMessage } from '@/features/chat-room/types/chatBubbleList';
+import { useEffect } from 'react';
 
 const mockUser: User = {
   teamId: 'team1',
@@ -17,14 +17,13 @@ const mockUser: User = {
   updatedAt: new Date(),
 };
 
-const withMockAuth = (Story: any) => {
-  jest.spyOn(useAuthStore, 'getState').mockImplementation(() => ({
-    user: mockUser,
-    isLoggedIn: true,
-    setIsLoggedIn: () => {},
-    setUser: () => {},
-    checkLoginStatus: () => {},
-  }));
+const AuthDecorator = (Story: React.ComponentType) => {
+  useEffect(() => {
+    useAuthStore.setState({
+      user: mockUser,
+      isLoggedIn: true,
+    });
+  }, []);
 
   return <Story />;
 };
@@ -32,7 +31,7 @@ const withMockAuth = (Story: any) => {
 const meta: Meta<typeof ChatBubbleList> = {
   title: 'Features/ChatRoom/ChatBubbleList',
   component: ChatBubbleList,
-  decorators: [withMockAuth],
+  decorators: [AuthDecorator],
   parameters: {
     layout: 'centered',
   },
