@@ -3,8 +3,10 @@
 import Card from '@/components/card/Card';
 import { CardProps } from '@/components/card/types';
 import PopUp from '@/components/pop-up/PopUp';
+import { bookClubs } from '@/features/react-query/book-club';
 import { useAuthStore } from '@/store/authStore';
-import { useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { useParams, useRouter } from 'next/navigation';
 
 import { useEffect, useState } from 'react';
 
@@ -12,8 +14,30 @@ function HeaderSection() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
 
+  const { id } = useParams();
+  const idAsString = Array.isArray(id) ? id[0] : id || '';
   const { isLoggedIn, checkLoginStatus } = useAuthStore();
+  const { data, isLoading, error } = useQuery({
+    ...bookClubs.detail(idAsString),
+  });
+
   const router = useRouter();
+
+  useEffect(() => {
+    checkLoginStatus();
+  }, [checkLoginStatus]);
+
+  useEffect(() => {
+    console.log(data);
+  });
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
   let isMember;
 
@@ -31,10 +55,6 @@ function HeaderSection() {
       handlePopUpConfirm: () => router.replace('/login'),
     };
   }
-
-  useEffect(() => {
-    checkLoginStatus();
-  }, [checkLoginStatus]);
 
   const EXAMPLE_IMAGE = '/images/profile.png';
 
@@ -57,38 +77,6 @@ function HeaderSection() {
     onLikeClick: () => {
       setIsLiked(!isLiked);
     }, // api 연동 후 수정
-    participants: [
-      {
-        id: '1',
-        name: '참여자1',
-        profileImage: EXAMPLE_IMAGE,
-        profileImageAlt: '참여자1 프로필 이미지',
-      },
-      {
-        id: '2',
-        name: '참여자2',
-        profileImage: EXAMPLE_IMAGE,
-        profileImageAlt: '참여자2 프로필 이미지',
-      },
-      {
-        id: '3',
-        name: '참여자3',
-        profileImage: EXAMPLE_IMAGE,
-        profileImageAlt: '참여자3 프로필 이미지',
-      },
-      {
-        id: '4',
-        name: '참여자4',
-        profileImage: EXAMPLE_IMAGE,
-        profileImageAlt: '참여자4 프로필 이미지',
-      },
-      {
-        id: '5',
-        name: '참여자5',
-        profileImage: EXAMPLE_IMAGE,
-        profileImageAlt: '참여자5 프로필 이미지',
-      },
-    ],
     host: {
       id: 'host1',
       name: '호스트',
