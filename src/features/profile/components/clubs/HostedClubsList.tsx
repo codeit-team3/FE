@@ -1,9 +1,8 @@
 import Card from '@/components/card/Card';
 import { NO_LIST_MESSAGE } from '../../constants/meassage';
 import { useRouter } from 'next/navigation';
-import { User } from '../../types';
+import { BookClub, User } from '../../types';
 import { formatDateWithTime } from '@/lib/utils/dateUtils';
-import { mockJoinedBookClubList } from '../../constants/temp';
 
 interface HostedClubListProps {
   user: User | null;
@@ -14,8 +13,7 @@ export default function HostedClubList({ user, sortBy }: HostedClubListProps) {
   console.log(user);
   console.log(sortBy);
 
-  // const bookClubList: BookClub[] = [];
-  const bookClubList = mockJoinedBookClubList;
+  const bookClubList: BookClub[] = [];
 
   const router = useRouter();
 
@@ -38,7 +36,7 @@ export default function HostedClubList({ user, sortBy }: HostedClubListProps) {
             {/* TODO: isCanceled, imageUrl. isPast, status 수정 */}
             <Card
               variant="hostedClub"
-              clubId={bookClub.clubId}
+              clubId={bookClub.id}
               imageUrl={bookClub.imageUrl || '/images/defaultBookClub.jpg'}
               title={bookClub.title}
               location={bookClub.town}

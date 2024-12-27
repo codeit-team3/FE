@@ -16,9 +16,6 @@ export async function middleware(request: NextRequest) {
           const nextResponse = NextResponse.next();
           nextResponse.cookies.set('auth_token', data.accessToken, {
             maxAge: 60 * 15,
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
           });
           return nextResponse;
         } catch (error) {

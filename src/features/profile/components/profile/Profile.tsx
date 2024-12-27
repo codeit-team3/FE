@@ -10,7 +10,8 @@ function Profile({ user }: ProfilePageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onSubmitEditProfile = (formData: ProfileEditData) => {
-    alert(`name:${formData.name}, companyName:${formData.description}`);
+    // alert(`name:${formData.name}, companyName:${formData.description}`);
+    console.log(formData);
     setIsModalOpen(false);
   };
 
