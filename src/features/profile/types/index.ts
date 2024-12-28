@@ -9,10 +9,6 @@ export interface User {
   updatedAt: Date;
 }
 
-export interface ProfilePageProps {
-  user: User | null;
-}
-
 export interface ProfileEditData {
   name: string;
   description?: string;
