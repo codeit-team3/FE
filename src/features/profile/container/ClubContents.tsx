@@ -22,7 +22,7 @@ export default function ClubContents({ user }: ProfilePageProps) {
       case CLUB_TABS.MY_JOINED:
         return <JoinedClubList order={order} />;
       case CLUB_TABS.MY_HOSTED:
-        return <HostedClubList user={user} sortBy={order} />;
+        return <HostedClubList order={order} />;
       case CLUB_TABS.MY_REVIEW:
         return <MyReviewList user={user} sortBy={order} />;
     }

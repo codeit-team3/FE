@@ -28,12 +28,12 @@ export interface BookClub {
   bookClubType: 'FREE' | 'FIXED';
   targetDate: string;
   endDate: string;
-  memberLimit: number;
   town: string;
+  memberLimit: number;
   memberCount: number;
   isLiked: boolean;
   isCanceled: boolean;
-  imageUrl: string | undefined;
+  imageUrl?: string | undefined;
   isPast: boolean;
   clubStatus: 'pending' | 'confirmed' | 'closed';
   reviewScore?: number | undefined;
