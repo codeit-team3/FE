@@ -11,11 +11,11 @@ import { showToast } from '@/components/toast/toast';
 import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { clubStatus } from '@/lib/utils/clubUtils';
 
-interface HostedClubListProps {
+interface CreatedClubListProps {
   order: orderType;
 }
 
-export default function HostedClubList({ order }: HostedClubListProps) {
+export default function CreatedClubList({ order }: CreatedClubListProps) {
   const router = useRouter();
 
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
@@ -28,7 +28,7 @@ export default function HostedClubList({ order }: HostedClubListProps) {
   const { data, isLoading, error } = useQuery({ queryKey, queryFn });
   const { mutateAsync: cancelClub } = useCancelBookClub();
 
-  const myHostedList: BookClub[] = data?.data?.bookClubs || [];
+  const myCreatedList: BookClub[] = data?.data?.bookClubs || [];
 
   const onCancel = (clubId: number) => {
     setLabel('정말 모임을 취소하시겠어요?');
@@ -63,14 +63,14 @@ export default function HostedClubList({ order }: HostedClubListProps) {
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
       {isLoading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
-      {myHostedList?.length === 0 ? (
+      {myCreatedList?.length === 0 ? (
         <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
           <span className="whitespace-pre-wrap">
             {NO_LIST_MESSAGE['HOSTED']}
           </span>
         </div>
       ) : (
-        myHostedList?.map((bookClub, index) => (
+        myCreatedList?.map((bookClub, index) => (
           <div key={index} className="md:w-full">
             {/* TODO: isCanceled, imageUrl. isPast, status 수정 */}
             <Card

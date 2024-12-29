@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Tab from '@/components/tab/Tab';
 import { orderType } from '../types';
 import {
-  HostedClubList,
+  CreatedClubList,
   JoinedClubList,
   MyReviewList,
 } from '../components/clubs';
@@ -21,8 +21,8 @@ export default function ClubContents() {
     switch (selectedList) {
       case CLUB_TABS.MY_JOINED:
         return <JoinedClubList order={order} />;
-      case CLUB_TABS.MY_HOSTED:
-        return <HostedClubList order={order} />;
+      case CLUB_TABS.MY_CREATED:
+        return <CreatedClubList order={order} />;
       case CLUB_TABS.MY_REVIEW:
         return <MyReviewList order={order} />;
     }
