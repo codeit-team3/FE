@@ -1,7 +1,7 @@
 import Card from '@/components/card/Card';
-import { NO_LIST_MESSAGE } from '../../constants/meassage';
+import { NO_LIST_MESSAGE } from '../constants/meassage';
 import { useRouter } from 'next/navigation';
-import { BookClub } from '../../types';
+import { BookClub } from '../types';
 import { bookClubs } from '@/api/book-club/react-query';
 import { orderType } from '@/types/bookclubs';
 import { useQuery } from '@tanstack/react-query';

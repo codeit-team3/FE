@@ -9,7 +9,7 @@ import {
   CreatedClubList,
   JoinedClubList,
   MyReviewList,
-} from '../components/clubs';
+} from '../container/index';
 
 export default function ClubContents() {
   const [order, setOrder] = useState<orderType>('DESC');

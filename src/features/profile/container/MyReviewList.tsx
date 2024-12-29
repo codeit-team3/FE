@@ -1,12 +1,11 @@
 import WrittenReview from '@/components/written-review/WrittenReview';
-import { Review } from '../../types';
 import { formatDateSimple } from '@/lib/utils/dateUtils';
 import { useRouter } from 'next/navigation';
-import { NO_LIST_MESSAGE } from '../../constants/meassage';
 import { orderType } from '@/types/bookclubs';
 import { bookClubs } from '@/api/book-club/react-query';
 import { useQuery } from '@tanstack/react-query';
-// import { mockReviews } from '../../constants/mock';
+import { Review } from '../types';
+import { NO_LIST_MESSAGE } from '../constants/meassage';
 
 interface MymyReviewListProps {
   order: orderType;
@@ -35,8 +34,8 @@ export default function MymyReviewList({ order }: MymyReviewListProps) {
           </span>
         </div>
       ) : (
-        myReviewList?.map((review, index) => (
-          <div key={index} className="md:w-full">
+        myReviewList?.map((review) => (
+          <div key={review.reviewId} className="md:w-full">
             <WrittenReview
               onClickReview={() =>
                 router.push(`/bookclub/${review.bookClubId}`)
