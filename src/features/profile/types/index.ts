@@ -1,8 +1,8 @@
 export interface User {
-  teamId: string;
   id: number;
   email: string;
   name: string;
+  nickname: string;
   description?: string | null;
   image?: string | null;
   createdAt: Date;
@@ -11,12 +11,6 @@ export interface User {
 
 export interface ProfilePageProps {
   user: User | null;
-}
-
-export interface ProfileEditData {
-  name: string;
-  description?: string;
-  image?: string | null;
 }
 
 //TODO: isCanceled, imageUrl. isPast, status 수정
