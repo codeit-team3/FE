@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import { IcDropDown } from '../../../public/icons';
 import Avatar from '../avatar/Avatar';
 import { DROPDOWN_LABELS, MENU_ITEMS, MenuItem } from '@/constants/index';
@@ -39,7 +40,8 @@ function DropDown({ variant, imgSrc, onChangeSelection }: DropDownProps) {
     switch (variant) {
       case 'navbar':
         return (
-          <ListboxButton className="relative h-[40px] w-[40px] justify-center">
+          // <ListboxButton className="relative h-[40px] w-[40px] justify-center">
+          <ListboxButton className="h-[40px] w-[40px] justify-center">
             <Avatar
               src={imgSrc || '/images/profile.png'}
               alt="nav_profile"
@@ -74,19 +76,22 @@ function DropDown({ variant, imgSrc, onChangeSelection }: DropDownProps) {
     >
       <Listbox value={selectedItem} onChange={onChange}>
         {renderButton(variant)}
-        <ListboxOptions
-          className={`absolute top-[50px] w-full min-w-max rounded-xl shadow-[0_10px_10px_-5px_rgba(0,0,0,0.08)]`}
-        >
-          {items.map((item) => (
-            <ListboxOption
-              className={`flex h-[40px] w-full items-center justify-start bg-gray-white px-[16px] py-[10px] text-sm font-medium text-gray-dark-01 first:rounded-t-xl last:rounded-b-xl hover:bg-gray-light-02 hover:font-semibold hover:text-gray-darker`}
-              key={item.value}
-              value={item}
-            >
-              {item.label}
-            </ListboxOption>
-          ))}
-        </ListboxOptions>
+        {ReactDOM.createPortal(
+          <ListboxOptions
+            className={`absolute top-[320px] z-50 w-[110px] min-w-max rounded-xl shadow-[0_10px_10px_-5px_rgba(0,0,0,0.08)]`}
+          >
+            {items.map((item) => (
+              <ListboxOption
+                className={`flex h-[40px] w-full items-center justify-start bg-gray-white px-[16px] py-[10px] text-sm font-medium text-gray-dark-01 first:rounded-t-xl last:rounded-b-xl hover:bg-gray-light-02 hover:font-semibold hover:text-gray-darker`}
+                key={item.value}
+                value={item}
+              >
+                {item.label}
+              </ListboxOption>
+            ))}
+          </ListboxOptions>,
+          document.body,
+        )}
       </Listbox>
     </div>
   );
