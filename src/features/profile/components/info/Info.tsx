@@ -5,7 +5,7 @@ import Avatar from '@/components/avatar/Avatar';
 import { IcEdit } from '../../../../../public/icons/index';
 import { EditInfoParams } from '@/types/Info';
 import { useEditInfo } from '@/api/auth/react-query';
-import InfoEditModal from './InfoEditModal';
+import { InfoEditModal } from './index';
 import { ProfilePageProps } from '../../types';
 
 export default function Info({ user }: ProfilePageProps) {
