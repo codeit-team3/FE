@@ -1,10 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Profile from './Profile';
+import Info from './Info';
 import { User } from '../../types';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 const mockUser: User = {
-  teamId: '1',
   id: 123,
+  nickname: 'test',
   email: 'john.doe@example.com',
   name: 'John Doe',
   description: 'Example Company',
@@ -13,12 +16,16 @@ const mockUser: User = {
 };
 
 const meta = {
-  title: 'Components/Profile',
-  component: Profile,
-  parameters: {
-    componentSubtitle: '목록의 아이템들의 순서를 정렬하게 만드는 컴포넌트',
-  },
-} satisfies Meta<typeof Profile>;
+  title: 'Components/Info',
+  component: Info,
+  decorators: [
+    (Story) => (
+      <QueryClientProvider client={queryClient}>
+        <Story />
+      </QueryClientProvider>
+    ),
+  ],
+} satisfies Meta<typeof Info>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
