@@ -11,10 +11,11 @@ import {
 
 interface DropDownProps {
   variant: 'navbar' | 'onOff' | 'memberCount' | 'sortingReview';
+  onChangeSelection: (selectedLabel: string | undefined) => void;
   imgSrc?: string;
 }
 
-function DropDown({ variant, imgSrc }: DropDownProps) {
+function DropDown({ variant, imgSrc, onChangeSelection }: DropDownProps) {
   const [isActive, setIsActive] = useState(false);
   const items = MENU_ITEMS[variant];
 
@@ -25,6 +26,9 @@ function DropDown({ variant, imgSrc }: DropDownProps) {
   const onChange = (item: MenuItem) => {
     setIsActive(true);
     setSelectedItem(item);
+    if (onChangeSelection) {
+      onChangeSelection(item.value);
+    }
   };
 
   const renderButton = (variant: string) => {

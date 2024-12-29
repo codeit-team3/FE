@@ -4,16 +4,26 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MENU_ITEMS } from '@/constants';
 
+beforeAll(() => {
+  global.ResizeObserver = class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  };
+});
+
 describe('DropDown variant:navbar 일 때', () => {
   const mockHandleSelectionChange = jest.fn();
+  const items = MENU_ITEMS['navbar'];
 
-  it('드롭다운 버튼 클릭 이벤트로 드롭다운 메뉴 아이템 렌더링 확인', () => {
+  it('드롭다운 버튼 클릭 이벤트로 드롭다운 메뉴 아이템 렌더링 확인', async () => {
     render(
       <DropDown
         variant="navbar"
         onChangeSelection={mockHandleSelectionChange}
       />,
     );
+
     //드롭다운 버튼 렌더링 확인
     const button = screen.getByRole('button');
     expect(button).toBeInTheDocument();
@@ -23,8 +33,8 @@ describe('DropDown variant:navbar 일 때', () => {
     expect(menuItems).not.toBeInTheDocument();
 
     //유저가 드롭다운 클릭 후엔 메뉴 아이템들이 나타남
-    userEvent.click(button);
-    expect(menuItems).toBeInTheDocument;
+    await userEvent.click(button);
+    expect(screen.queryByRole('listbox')).toBeInTheDocument();
   });
 
   it('드롭다운 메뉴 아이템 클릭 시 해당 아이템 value 값 반환', async () => {
@@ -42,16 +52,14 @@ describe('DropDown variant:navbar 일 때', () => {
     expect(menuItems).not.toBeInTheDocument();
 
     //유저가 드롭다운 클릭 후엔 메뉴 아이템들이 나타남
-    userEvent.click(button);
-    expect(menuItems).toBeInTheDocument;
+    await userEvent.click(button);
+    expect(screen.queryByRole('listbox')).toBeInTheDocument();
 
     //유저가 메뉴 아이템의 label을 보고 클릭하면 메뉴 아이템의 value값과 handle 함수를 호출
-    const menuItem = screen.getByText(MENU_ITEMS['navbar'][0].label);
+    const menuItem = screen.getByText(items[0].label);
     await user.click(menuItem);
 
-    expect(mockHandleSelectionChange).toHaveBeenCalledWith(
-      MENU_ITEMS['navbar'][0].value,
-    );
+    expect(mockHandleSelectionChange).toHaveBeenCalledWith(items[0].value);
   });
 
   it('드롭다운 외부 영역을 클릭했을 때 드롭다운 메뉴가 닫히는지 확인', async () => {
