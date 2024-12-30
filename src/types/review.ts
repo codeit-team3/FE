@@ -7,6 +7,7 @@ export interface Review {
   content: string;
   image?: string | undefined; // TODO:clubImgUrl로 변경 필요
   createdAt: string;
+
   profileImg?: string;
   userName?: string;
   clubName: string;
