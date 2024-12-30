@@ -2,12 +2,12 @@ import { ChangeEvent } from 'react';
 import Input from '../Input';
 import PencilIcon from '../../../../public/icons/PencilIcon';
 
-interface MessageBoxProps {
+interface MessageInputProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-function MessageBox({ value, onChange }: MessageBoxProps) {
+function MessageInput({ value, onChange }: MessageInputProps) {
   return (
     <Input
       value={value}
@@ -19,4 +19,4 @@ function MessageBox({ value, onChange }: MessageBoxProps) {
   );
 }
 
-export default MessageBox;
+export default MessageInput;

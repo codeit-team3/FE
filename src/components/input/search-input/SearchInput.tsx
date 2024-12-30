@@ -2,12 +2,12 @@ import { ChangeEvent } from 'react';
 import Input from '../Input';
 import SearchIcon from '../../../../public/icons/SearchIcon';
 
-interface SearchBoxProps {
+interface SearchInputProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-function SearchBox({ value, onChange }: SearchBoxProps) {
+function SearchInput({ value, onChange }: SearchInputProps) {
   return (
     <Input
       value={value}
@@ -18,4 +18,4 @@ function SearchBox({ value, onChange }: SearchBoxProps) {
   );
 }
 
-export default SearchBox;
+export default SearchInput;

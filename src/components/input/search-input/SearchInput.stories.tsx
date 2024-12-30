@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import SearchBox from './SearchBox';
+import SearchInput from './SearchInput';
 
 const meta = {
-  title: 'Components/Input/SearchBox',
-  component: SearchBox,
+  title: 'Components/Input/SearchInput',
+  component: SearchInput,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof SearchBox>;
+} satisfies Meta<typeof SearchInput>;
 
 export default meta;
-type Story = StoryObj<typeof SearchBox>;
+type Story = StoryObj<typeof SearchInput>;
 
 export const Default: Story = {
   args: {

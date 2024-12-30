@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import MessageBox from './MessageBox';
+import MessageInput from './MessageInput';
 
 const meta = {
-  title: 'Components/Input/MessageBox',
-  component: MessageBox,
+  title: 'Components/Input/MessageInput',
+  component: MessageInput,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof MessageBox>;
+} satisfies Meta<typeof MessageInput>;
 
 export default meta;
-type Story = StoryObj<typeof MessageBox>;
+type Story = StoryObj<typeof MessageInput>;
 
 export const Default: Story = {
   args: {
