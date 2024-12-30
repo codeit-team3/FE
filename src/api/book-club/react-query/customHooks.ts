@@ -43,6 +43,19 @@ export function useJoinBookClub() {
   });
 }
 
+export function useJoinBookClub() {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, AxiosError<{ message: string }>, number>({
+    mutationFn: (id: number) => bookClubMemberAPI.join(id),
+    onSuccess: (_, id) => {
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.detail(id).queryKey,
+      });
+    },
+  });
+}
+
 //북클럽 참여 취소하기
 export function useLeaveBookClub() {
   const queryClient = useQueryClient();
