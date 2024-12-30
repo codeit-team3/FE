@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import SearchBox from './SearchBox';
+import PencilIcon from '../../../public/icons/PencilIcon';
 
 describe('SearchBox', () => {
   const mockOnChange = jest.fn();
@@ -21,7 +22,7 @@ describe('SearchBox', () => {
   });
 
   it('사용자 정의 placeholder가 올바르게 렌더링되는지 확인', () => {
-    const customPlaceholder = 'placeholder 테스트';
+    const customPlaceholder = '메세지를 입력해주세요';
     render(<SearchBox {...defaultProps} placeholder={customPlaceholder} />);
     expect(screen.getByPlaceholderText(customPlaceholder)).toBeInTheDocument();
   });
@@ -40,5 +41,15 @@ describe('SearchBox', () => {
 
     const input = screen.getByRole('textbox') as HTMLInputElement;
     expect(input.value).toBe(initialValue);
+  });
+
+  it('커스텀 아이콘이 올바르게 렌더링되는지 확인', () => {
+    render(
+      <SearchBox
+        {...defaultProps}
+        icon={<PencilIcon data-testid="pencil-icon" />}
+      />,
+    );
+    expect(screen.getByTestId('pencil-icon')).toBeInTheDocument();
   });
 });
