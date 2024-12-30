@@ -1,5 +1,5 @@
 import { ProfilePageProps } from '../types';
-import { Profile } from '../components/profile';
+import { Info } from '../components/info';
 
 export default function ProfileHeader({ user }: ProfilePageProps) {
   return (
@@ -8,7 +8,7 @@ export default function ProfileHeader({ user }: ProfilePageProps) {
       <span className="w-full min-w-[336px] text-2xl font-bold text-gray-black">
         마이 페이지
       </span>
-      <Profile user={user} />
+      <Info user={user} />
     </div>
   );
 }

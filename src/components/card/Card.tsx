@@ -413,7 +413,7 @@ function Card(props: CardProps) {
                         </div>
                       ) : (
                         <span className="text-gray-dark-01">
-                          아직 리뷰가 달리지 않았습니다
+                          아직 작성된 리뷰가 없습니다
                         </span>
                       )}
                     </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import ChatCard from '@/components/chat-card/ChatCard';
+import ChatCard from '@/features/chat/components/chat-card/ChatCard';
 
 interface BookClubChatData {
   imageUrl: string;

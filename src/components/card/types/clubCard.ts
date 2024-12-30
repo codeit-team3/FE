@@ -11,7 +11,7 @@ interface ClubCard {
   meetingType: 'ONLINE' | 'OFFLINE';
   bookClubType: 'FREE' | 'FIXED';
   isPast: boolean; // 지난 모임인지 아닌지
-  clubStatus: 'pending' | 'confirmed' | 'closed'; // 개설 현황
+  clubStatus: 'pending' | 'confirmed' | 'closed'; // 개설 현황 TODO: 내가 만든 모임에서 '모임 완료' 상태 추가
 
   // 액션 (카드 클릭시 라우터 처리 등)
   onClick: (clubId: number) => void;
