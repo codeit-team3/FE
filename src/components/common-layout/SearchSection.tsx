@@ -1,4 +1,4 @@
-import SearchBox from '@/components/search-box/SearchBox';
+import SearchInput from '@/components/input/search-input/SearchInput';
 
 function SearchSection({
   searchValue,
@@ -9,7 +9,7 @@ function SearchSection({
 }) {
   return (
     <div className="bg-white">
-      <SearchBox
+      <SearchInput
         value={searchValue}
         onChange={(e) => onSearchChange(e.target.value)}
         aria-label="책 검색"
