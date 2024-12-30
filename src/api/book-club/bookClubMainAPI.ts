@@ -2,6 +2,10 @@ import apiClient from '@/lib/utils/apiClient';
 
 export const bookClubMainAPI = {
   //북클럽 삭제
+  cancel: async (id: number) => {
+    const res = await apiClient.delete(`book-clubs/${id}`);
+    return res;
+  },
 
   //북클럽 목록 조회
 
@@ -14,7 +18,4 @@ export const bookClubMainAPI = {
   //내가 만든 북클럽 조회
 
   //북클럽 생성
-  leave: async (id: number) => {
-    await apiClient.delete(`/book-clubs/${id}/leave`);
-  },
 };

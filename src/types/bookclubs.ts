@@ -24,3 +24,5 @@ export interface BookClub {
   isLiked: boolean;
   imageUrl?: string;
 }
+
+export type orderType = 'DESC' | 'ASC' | 'END' | 'RATE_DESC' | 'RATE_ASC';

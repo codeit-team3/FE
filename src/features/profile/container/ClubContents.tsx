@@ -4,14 +4,14 @@ import SortingButton from '@/components/sorting-button/SortingButton';
 import { CLUB_TABS, ClubTab } from '@/constants';
 import { useState } from 'react';
 import Tab from '@/components/tab/Tab';
-import { orderType, ProfilePageProps } from '../types';
+import { orderType } from '../types';
 import {
-  HostedClubList,
+  CreatedClubList,
   JoinedClubList,
   MyReviewList,
-} from '../components/clubs';
+} from '../container/index';
 
-export default function ClubContents({ user }: ProfilePageProps) {
+export default function ClubContents() {
   const [order, setOrder] = useState<orderType>('DESC');
   const [selectedList, setSelectedList] = useState<ClubTab>(
     CLUB_TABS.MY_JOINED,
@@ -21,10 +21,10 @@ export default function ClubContents({ user }: ProfilePageProps) {
     switch (selectedList) {
       case CLUB_TABS.MY_JOINED:
         return <JoinedClubList order={order} />;
-      case CLUB_TABS.MY_HOSTED:
-        return <HostedClubList user={user} sortBy={order} />;
+      case CLUB_TABS.MY_CREATED:
+        return <CreatedClubList order={order} />;
       case CLUB_TABS.MY_REVIEW:
-        return <MyReviewList user={user} sortBy={order} />;
+        return <MyReviewList order={order} />;
     }
   };
 

@@ -1,15 +1,6 @@
-import WrittenReview from '@/components/written-review/WrittenReview';
-import { Review, User } from '../../types';
-import { formatDateSimple } from '@/lib/utils/dateUtils';
-import { useRouter } from 'next/navigation';
-import { NO_LIST_MESSAGE } from '../../constants/meassage';
+import { Review } from '../types';
 
-interface MyReviewListProps {
-  user: User | null;
-  sortBy: string | undefined;
-}
-
-const mockReviews: Review[] = [
+export const mockReviews: Review[] = [
   {
     reviewId: 1,
     userId: 101,
@@ -132,53 +123,3 @@ const mockReviews: Review[] = [
     createdAt: '2023-12-18T12:00:00Z',
   },
 ];
-
-export default function MyReviewList({ user, sortBy }: MyReviewListProps) {
-  console.log(user);
-  console.log(sortBy);
-
-  const router = useRouter();
-  const reviewList = mockReviews;
-  return (
-    <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
-      {reviewList.length === 0 ? (
-        <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
-          <span className="whitespace-pre-wrap">
-            {NO_LIST_MESSAGE['MY_REVIEW']}
-          </span>
-        </div>
-      ) : (
-        reviewList.map((review, index) => (
-          <div key={index} className="md:w-full">
-            <WrittenReview
-              onClickReview={() =>
-                router.push(`/bookclub/${review.bookClubId}`)
-              }
-            >
-              <div className="flex items-center gap-x-6 sm:flex-col sm:items-start sm:gap-y-6 md:flex-row">
-                <WrittenReview.ClubImage
-                  src={review.clubImgUrl || '/images/defaultBookClub.jpg'}
-                  alt={review.clubImgAlt}
-                />
-                <div className="relative flex min-h-[180px] w-[336px] flex-1 flex-col gap-y-1.5 text-sm font-medium text-gray-darker md:w-full">
-                  <WrittenReview.Rating ratingCount={review.rating} />
-                  <div className="flex flex-col gap-y-2">
-                    <WrittenReview.ClubInfo
-                      clubName={review.clubName}
-                      bookClubType={review.bookClubType}
-                    />
-                    <WrittenReview.Comment text={review.content} />
-                    <WrittenReview.UserProfile
-                      createdAt={formatDateSimple(review.createdAt)}
-                      className="gap-x-0"
-                    />
-                  </div>
-                </div>
-              </div>
-            </WrittenReview>
-          </div>
-        ))
-      )}
-    </div>
-  );
-}

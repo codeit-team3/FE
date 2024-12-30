@@ -1,5 +1,5 @@
 import React from 'react';
-import { IcCheck } from '../../../public/icons';
+import { IcCheckOnly } from '../../../public/icons';
 
 interface FilterCheckboxProps extends React.ComponentPropsWithoutRef<'input'> {
   label: string;
@@ -27,13 +27,10 @@ function FilterCheckbox({ label, checked, ...props }: FilterCheckboxProps) {
           {...props}
           className="absolute h-5 w-5 appearance-none rounded-[5px] border border-gray-dark-02 bg-transparent transition duration-200 checked:border-green-normal-01 checked:bg-green-normal-01"
         />
-        <IcCheck
+        <IcCheckOnly
           className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform transition duration-200 ${
             checked ? 'opacity-100' : 'opacity-0'
           }`}
-          width={28}
-          height={28}
-          filled={checked}
         />
       </div>
     </label>
