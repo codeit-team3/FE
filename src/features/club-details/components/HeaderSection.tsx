@@ -72,7 +72,7 @@ function HeaderSection() {
     mutate(clubInfo.id, {
       onSuccess: () => {
         showToast({
-          message: '참여완료! 함께하게 되서 기뻐요🥰',
+          message: '참여 완료! 함께하게 돼서 기뻐요🥰',
           type: 'success',
         });
       },
