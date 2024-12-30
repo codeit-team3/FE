@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
 
-export const handlers = [
-  http.get('/api/bookclubs', () => {
+export const getBookclubsHandler = [
+  http.get('/bookclubs', () => {
     return HttpResponse.json({
       bookClubs: [
         {

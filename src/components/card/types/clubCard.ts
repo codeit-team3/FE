@@ -14,7 +14,7 @@ interface ClubCard {
   clubStatus: 'pending' | 'confirmed' | 'closed'; // 개설 현황 TODO: 내가 만든 모임에서 '모임 완료' 상태 추가
 
   // 액션 (카드 클릭시 라우터 처리 등)
-  onClick: (clubId: number) => void;
+  onClick?: (clubId: number) => void;
 }
 
 interface DefaultClubCard extends ClubCard {
@@ -53,12 +53,6 @@ interface DetailedClubCard extends ClubCard {
   // 참가자 정보
   current: number;
   max: number;
-  participants: ReadonlyArray<{
-    readonly id?: string;
-    readonly name: string;
-    readonly profileImage?: string;
-    readonly profileImageAlt?: string;
-  }>;
 
   // 호스트 정보
   host: {
