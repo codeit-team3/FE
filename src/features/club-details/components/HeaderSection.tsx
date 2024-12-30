@@ -1,9 +1,10 @@
 'use client';
 
+import { bookClubs } from '@/api/book-club/react-query';
 import Card from '@/components/card/Card';
 import { CardProps } from '@/components/card/types';
 import PopUp from '@/components/pop-up/PopUp';
-import { bookClubs } from '@/features/react-query/book-club';
+import { formatDateForUI } from '@/lib/utils/formatDateForUI';
 import { useAuthStore } from '@/store/authStore';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
@@ -16,9 +17,10 @@ function HeaderSection() {
 
   const { id } = useParams();
   const idAsString = Array.isArray(id) ? id[0] : id || '';
+  const idAsNumber = Number(idAsString);
   const { isLoggedIn, checkLoginStatus } = useAuthStore();
   const { data, isLoading, error } = useQuery({
-    ...bookClubs.detail(idAsString),
+    ...bookClubs.detail(idAsNumber),
   });
 
   const router = useRouter();
@@ -27,9 +29,9 @@ function HeaderSection() {
     checkLoginStatus();
   }, [checkLoginStatus]);
 
-  useEffect(() => {
-    console.log(data);
-  });
+  if (isNaN(Number(idAsString))) {
+    return <p>잘못된 접근입니다. 올바른 URL로 이동해주세요.</p>;
+  }
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -58,20 +60,22 @@ function HeaderSection() {
 
   const EXAMPLE_IMAGE = '/images/profile.png';
 
+  const clubInfo = data?.data;
+
   const defaultCardProps: CardProps = {
-    clubId: 45,
+    clubId: clubInfo.id,
     variant: 'detailedClub',
     imageUrl: EXAMPLE_IMAGE,
     imageAlt: '모임 이미지',
-    title: '독서 모임',
-    location: '서울 강남구',
-    datetime: '2024-01-20 14:00',
-    isLiked: isLiked,
-    current: 3,
-    max: 8,
-    isPast: false,
-    meetingType: 'OFFLINE',
-    bookClubType: 'FIXED',
+    title: clubInfo.title,
+    location: clubInfo.town || '',
+    datetime: formatDateForUI(clubInfo.targetDate, 'KOREAN'),
+    isLiked: clubInfo.isLiked,
+    current: clubInfo.memberCount,
+    max: clubInfo.memberLimit,
+    isPast: false, // TODO: new Date() 최적화 후 수정
+    meetingType: clubInfo.meetingType,
+    bookClubType: clubInfo.bookClubType,
     clubStatus: 'pending',
     onClick: () => {},
     onLikeClick: () => {
