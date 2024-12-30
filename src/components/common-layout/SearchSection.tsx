@@ -1,4 +1,4 @@
-import SearchBox from '@/components/search-box/SearchBox';
+import SearchBox from '@/components/input/search-box/SearchBox';
 
 function SearchSection({
   searchValue,
