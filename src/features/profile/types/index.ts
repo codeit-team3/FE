@@ -1,16 +1,18 @@
-export interface User {
-  teamId: string;
-  id: number;
-  email: string;
-  name: string;
-  description?: string | null;
-  image?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
+// export interface User {
+//   id: number;
+//   email: string;
+//   name: string;
+//   description?: string | null;
+//   image?: string | null;
+//   createdAt: Date;
+//   updatedAt: Date;
+// }
+
+import { User } from '@/types/user';
 
 export interface ProfilePageProps {
-  user: User | null;
+  user?: User | null;
+  isMyProfilePage: boolean;
 }
 
 export interface ProfileEditData {

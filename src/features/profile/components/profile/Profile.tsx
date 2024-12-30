@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import Avatar from '@/components/avatar/Avatar';
-import { IcEdit } from '../../../../../public/icons/index';
+import { IcEdit } from '../../../../../public/icons';
 import { ProfileEditData, ProfilePageProps } from '../../types';
 import ProfileEditModal from './ProfileEditModal';
 
-function Profile({ user }: ProfilePageProps) {
+function Profile({ user, isMyProfilePage }: ProfilePageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onSubmitEditProfile = (formData: ProfileEditData) => {
@@ -30,7 +30,6 @@ function Profile({ user }: ProfilePageProps) {
         />
       )}
       {/* 프로필 제목 */}
-      {/* TODO: 프로필 페이지가 로그인된 유저의 프로필 페이지와 일치 여부 확인 후 수정하기 아이콘 hidden or none */}
       <div
         className="flex h-[60px] w-full justify-between rounded-t-3xl border-l-2 border-r-2 border-t-2 border-green-light-02 bg-green-light-01 px-6 py-3.5"
         role="title"
@@ -38,13 +37,15 @@ function Profile({ user }: ProfilePageProps) {
         <label className="text-xl font-semibold text-green-dark-01">
           {user?.name}님의 프로필
         </label>
-        <button
-          className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-white"
-          aria-label="프로필 수정"
-          onClick={() => setIsModalOpen(true)}
-        >
-          <IcEdit />
-        </button>
+        {isMyProfilePage && (
+          <button
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-white"
+            aria-label="프로필 수정"
+            onClick={() => setIsModalOpen(true)}
+          >
+            <IcEdit />
+          </button>
+        )}
       </div>
       {/* 프로필 내용 */}
       <div

@@ -1,11 +1,8 @@
+import { ProfilePage } from '@/features/profile/container';
 import React from 'react';
 
 function Profile() {
-  return (
-    <div>
-      <div className="bg-black">profile page</div>
-    </div>
-  );
+  return <ProfilePage />;
 }
 
 export default Profile;

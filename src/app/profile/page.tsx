@@ -1,8 +1,6 @@
-import ProfilePage from '@/features/profile/container/ProfilePage';
+import { MyProfilePage } from '@/features/profile/container';
 import React from 'react';
 
-const Profile = () => {
-  return <ProfilePage />;
-};
-
-export default Profile;
+export default function MyProfile() {
+  return <MyProfilePage />;
+}
