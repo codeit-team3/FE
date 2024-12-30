@@ -1,6 +1,11 @@
-import { MyProfilePage } from '@/features/profile/container';
+'use client';
+
+import { ProfilePage } from '@/features/profile/container';
+import { useAuthStore } from '@/store/authStore';
 import React from 'react';
 
 export default function MyProfile() {
-  return <MyProfilePage />;
+  const { user } = useAuthStore();
+
+  return <ProfilePage user={user} isMyPage={true} />;
 }

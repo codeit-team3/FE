@@ -25,9 +25,9 @@ export interface BookClub {
   isLiked: boolean;
   isInactive: boolean;
   imageUrl?: string | undefined;
-  // isPast: boolean;
-  // clubStatus: 'pending' | 'confirmed' | 'closed';
-  // reviewScore?: number | undefined;
+  isPast: boolean;
+  clubStatus: 'pending' | 'confirmed' | 'closed'; // TODO: 내가 만든 모임에서 '모임 완료' 상태 추가
+  reviewScore?: number | undefined;
 }
 
 export type orderType = 'DESC' | 'ASC' | 'END' | 'RATE_DESC' | 'RATE_ASC';

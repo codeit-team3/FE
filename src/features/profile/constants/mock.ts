@@ -1,5 +1,6 @@
 import { BookClub } from '@/types/bookclubs';
 import { Review } from '@/types/review';
+import { User } from '@/types/user';
 
 export const mockBookClubs: BookClub[] = [
   {
@@ -316,3 +317,14 @@ export const mockReviews: Review[] = [
     bookClubType: 'FIXED',
   },
 ];
+
+export const mockUser: User = {
+  id: 1,
+  name: 'John Doe',
+  nickname: 'Johnny',
+  email: 'john.doe@example.com',
+  description: 'A software developer.',
+  image: '',
+  createdAt: '2024-12-30T05:37:19.084Z',
+  updatedAt: '2024-12-30T05:37:19.084Z',
+};

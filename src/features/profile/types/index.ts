@@ -1,10 +1,5 @@
 import { User } from '@/types/user';
 
-export interface ProfilePageProps {
-  user?: User | null;
-  isMyPage: boolean;
-}
-
 //TODO: isCanceled, imageUrl. isPast, status 수정
 export interface BookClub {
   id: number;
@@ -53,11 +48,14 @@ export interface myJoinedParams {
   size?: number;
   page?: number;
 }
-
-export interface ProfileContentProps {
-  user?: User;
+export interface ProfilePageProps {
+  user: User | null;
   isMyPage: boolean;
 }
+// export interface ProfileContentProps {
+//   user: User;
+//   isMyPage: boolean;
+// }
 
 export interface ClubListProps {
   user?: User;
