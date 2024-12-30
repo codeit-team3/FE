@@ -5,6 +5,7 @@ import Card from '@/components/card/Card';
 import { CardProps } from '@/components/card/types';
 import PopUp from '@/components/pop-up/PopUp';
 import { showToast } from '@/components/toast/toast';
+import { useCancelClub } from '@/lib/hooks/useCancelClub';
 import { clubStatus } from '@/lib/utils/clubUtils';
 import { formatDateForUI } from '@/lib/utils/formatDateForUI';
 import { useAuthStore } from '@/store/authStore';
@@ -30,6 +31,8 @@ function HeaderSection() {
     ...bookClubs.detail(idAsNumber),
   });
   const { mutate } = useJoinBookClub();
+  const { popUpState, onCancel, onConfirmCancel, onClosePopUp } =
+    useCancelClub();
 
   const router = useRouter();
 
@@ -124,7 +127,7 @@ function HeaderSection() {
     isHost: false,
     isParticipant: false,
     hasWrittenReview: false,
-    onCancel: () => alert('모임 취소하기 클릭!'),
+    onCancel: () => onCancel(clubInfo.id),
     onParticipate: handleJoin,
     onCancelParticipation: () => alert('참여 취소하기 클릭!'),
     onWriteReview: () => alert('리뷰 작성하기 클릭!'),
@@ -144,6 +147,14 @@ function HeaderSection() {
           handlePopUpConfirm={isMember.handlePopUpConfirm}
         />
       )}
+      <PopUp
+        isOpen={popUpState.isOpen}
+        isLarge={true}
+        isTwoButton={true}
+        label={popUpState.label}
+        handlePopUpClose={onClosePopUp}
+        handlePopUpConfirm={onConfirmCancel}
+      />
     </header>
   );
 }
