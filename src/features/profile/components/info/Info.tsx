@@ -7,6 +7,7 @@ import { EditInfoParams } from '@/types/Info';
 import { useEditInfo } from '@/api/auth/react-query';
 import { InfoEditModal } from './index';
 import { ProfilePageProps } from '../../types';
+import IconButton from '@/components/icon-button/IconButton';
 
 export default function Info({ user }: ProfilePageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,13 +29,11 @@ export default function Info({ user }: ProfilePageProps) {
         <label className="text-xl font-semibold text-green-dark-01">
           {user?.nickname}님의 프로필
         </label>
-        <button
-          className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-white"
+        <IconButton
+          icon={<IcEdit />}
           aria-label="프로필 수정"
           onClick={() => setIsModalOpen(true)}
-        >
-          <IcEdit />
-        </button>
+        />
       </div>
       {/* 프로필 내용 */}
       <div
