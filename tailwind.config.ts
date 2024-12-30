@@ -9,6 +9,9 @@ const config: Config = {
       lg: '1024px',
     },
     extend: {
+      fontFamily: {
+        sans: ['Pretendard', 'sans-serif'],
+      },
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
