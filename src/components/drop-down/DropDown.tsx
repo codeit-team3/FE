@@ -54,9 +54,11 @@ function DropDown({ variant, imgSrc, onChangeSelection }: DropDownProps) {
     setIsClient(true);
     updateDropdownPosition();
     window.addEventListener('resize', updateDropdownPosition);
+    window.addEventListener('scroll', updateDropdownPosition);
 
     return () => {
       window.removeEventListener('resize', updateDropdownPosition);
+      window.removeEventListener('scroll', updateDropdownPosition);
     };
   }, [isActive, variant]);
 
