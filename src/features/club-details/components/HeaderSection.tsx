@@ -38,7 +38,7 @@ function HeaderSection() {
   }, [checkLoginStatus]);
 
   useEffect(() => {
-    if (isNaN(Number(idAsString))) {
+    if (isFinite(Number(idAsString))) {
       alert('잘못된 접근입니다. 메인 페이지로 이동합니다.');
       router.replace('/');
     }
