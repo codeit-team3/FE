@@ -58,6 +58,7 @@ function HeaderSection() {
     };
   }
 
+  // TODO: 응답값 추가 후 제거
   const EXAMPLE_IMAGE = '/images/profile.png';
 
   const clubInfo = data?.data;
@@ -77,7 +78,6 @@ function HeaderSection() {
     meetingType: clubInfo.meetingType,
     bookClubType: clubInfo.bookClubType,
     clubStatus: 'pending',
-    onClick: () => {},
     onLikeClick: () => {
       setIsLiked(!isLiked);
     }, // api 연동 후 수정
