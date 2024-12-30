@@ -22,8 +22,8 @@ export interface BookClub {
   bookClubType: 'FREE' | 'FIXED';
   targetDate: string;
   endDate: string;
-  memberLimit: number;
   town: string;
+  memberLimit: number;
   memberCount: number;
   isLiked: boolean;
   isCanceled: boolean;

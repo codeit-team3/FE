@@ -3,7 +3,11 @@ import { BookClubForm } from '@/features/club-create/types';
 import { createBookClub } from '@/features/club-create/api';
 import { bookClubs } from './queries';
 import { showToast } from '@/components/toast/toast';
-import { bookClubMemberAPI, bookClubReviewAPI } from '../index';
+import {
+  bookClubMainAPI,
+  bookClubMemberAPI,
+  bookClubReviewAPI,
+} from '../index';
 import { WriteReviewParams } from '../types';
 
 export function useBookClubCreateMutation() {
@@ -17,6 +21,9 @@ export function useBookClubCreateMutation() {
       });
       queryClient.invalidateQueries({
         queryKey: bookClubs.myCreated().queryKey,
+      });
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.myJoined().queryKey,
       });
     },
   });
@@ -64,6 +71,22 @@ export function useWriteReview() {
       console.error(error);
 
       showToast({ message: '리뷰 작성을 실패하였습니다.', type: 'error' });
+    },
+  });
+}
+
+//북클럽 취소하기
+export function useCancelBookClub() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: number) => bookClubMainAPI.cancel(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.myCreated().queryKey,
+      });
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.myJoined().queryKey,
+      });
     },
   });
 }
