@@ -1,5 +1,5 @@
 import { ProfilePageProps } from '../types';
-import { Profile } from '../components/profile';
+import { Info } from '../components/info';
 
 export default function ProfileHeader({
   user,
@@ -11,7 +11,7 @@ export default function ProfileHeader({
       <span className="w-full min-w-[336px] text-2xl font-bold text-gray-black">
         {isMyProfilePage ? '마이페이지' : ''}
       </span>
-      <Profile user={user} isMyProfilePage={isMyProfilePage} />
+      <Info user={user} isMyProfilePage={isMyProfilePage} />
     </div>
   );
 }
