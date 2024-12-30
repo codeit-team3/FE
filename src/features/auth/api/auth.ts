@@ -7,6 +7,10 @@ import { showToast } from '@/components/toast/toast';
 import { getCookie } from '@/features/auth/utils/cookies';
 import { User } from '../types/user';
 import { SignUpFormData } from '../types/sign-up.schema';
+import {
+  initializeSocket,
+  disconnectSocket,
+} from '@/features/chat/utils/socket';
 
 export const login = async (data: LoginFormData) => {
   try {
@@ -20,6 +24,12 @@ export const login = async (data: LoginFormData) => {
     const { setIsLoggedIn } = useAuthStore.getState();
     setIsLoggedIn(true);
     await getUserInfo();
+
+    const token = getCookie('auth_token');
+    console.log('token', token);
+    if (token) {
+      initializeSocket(token);
+    }
 
     showToast({ message: '로그인에 성공했습니다.', type: 'success' });
     return response;
@@ -42,6 +52,8 @@ export const logout = async () => {
     }
 
     const response = await logoutServer.bind(null, accessToken, refreshToken)();
+
+    disconnectSocket();
 
     const { setIsLoggedIn, setUser } = useAuthStore.getState();
     setIsLoggedIn(false);
