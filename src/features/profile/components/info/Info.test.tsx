@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { User } from '../../types';
 import Info from './Info';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { User } from '@/types/user';
 
 const mockUser: User = {
   id: 123,
@@ -22,7 +22,7 @@ describe('Info 테스트', () => {
   it('Info 컴포넌트의 데이터 렌더링 확인', () => {
     render(
       <QueryClientProvider client={queryClient}>
-        <Info user={mockUser} />
+        <Info user={mockUser} isMyPage={true} />
       </QueryClientProvider>,
     );
 
@@ -35,7 +35,7 @@ describe('Info 테스트', () => {
   it('수정하기 아이콘 버튼 클릭 후 프로필 수정하기 모달 렌더링 테스트', async () => {
     render(
       <QueryClientProvider client={queryClient}>
-        <Info user={mockUser} />
+        <Info user={mockUser} isMyPage={true} />
       </QueryClientProvider>,
     );
     const editButton = screen.getByLabelText('프로필 수정');
@@ -68,7 +68,7 @@ describe('Info 테스트', () => {
   it('수정하기 모달에서 수정 후 수정하기 버튼 클릭 시 onSubmitEditInfo 함수 호출 확인', async () => {
     render(
       <QueryClientProvider client={queryClient}>
-        <Info user={mockUser} />
+        <Info user={mockUser} isMyPage={true} />
       </QueryClientProvider>,
     );
 
