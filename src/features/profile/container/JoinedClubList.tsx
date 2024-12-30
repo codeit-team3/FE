@@ -50,31 +50,33 @@ export default function JoinedClubList({ user, order }: ClubListProps) {
       ) : (
         myJoinedList?.map((bookClub) => (
           <div key={bookClub.id} className="md:w-full">
-            <Card
-              variant="defaultClub"
-              clubId={bookClub.id}
-              imageUrl={bookClub.imageUrl || '/images/defaultBookClub.jpg'}
-              imageAlt="club_image"
-              title={bookClub.title}
-              location={bookClub.town}
-              datetime={formatDateForUI(bookClub.targetDate, 'KOREAN')}
-              isLiked={bookClub.isLiked}
-              current={bookClub.memberCount}
-              max={bookClub.memberLimit}
-              isPast={isPastDate(bookClub.targetDate, today)}
-              isCanceled={bookClub.isInactive}
-              meetingType={bookClub.meetingType}
-              bookClubType={bookClub.bookClubType}
-              clubStatus={clubStatus(
-                bookClub.memberCount,
-                bookClub.memberLimit,
-                bookClub.endDate,
-                today,
-              )}
-              isMyPage={false}
-              onClick={() => onClick(bookClub.id)}
-              onLikeClick={() => onLikeClick(bookClub.id)}
-            />
+            {!bookClub.isInactive && (
+              <Card
+                variant="defaultClub"
+                clubId={bookClub.id}
+                imageUrl={bookClub.imageUrl || '/images/defaultBookClub.jpg'}
+                imageAlt="club_image"
+                title={bookClub.title}
+                location={bookClub.town}
+                datetime={formatDateForUI(bookClub.targetDate, 'KOREAN')}
+                isLiked={bookClub.isLiked}
+                current={bookClub.memberCount}
+                max={bookClub.memberLimit}
+                isPast={isPastDate(bookClub.targetDate, today)}
+                isCanceled={bookClub.isInactive}
+                meetingType={bookClub.meetingType}
+                bookClubType={bookClub.bookClubType}
+                clubStatus={clubStatus(
+                  bookClub.memberCount,
+                  bookClub.memberLimit,
+                  bookClub.endDate,
+                  today,
+                )}
+                isMyPage={false}
+                onClick={() => onClick(bookClub.id)}
+                onLikeClick={() => onLikeClick(bookClub.id)}
+              />
+            )}
           </div>
         ))
       )}

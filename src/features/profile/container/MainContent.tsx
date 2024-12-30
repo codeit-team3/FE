@@ -4,9 +4,9 @@ import { CONTENT_TABS, ContentTab } from '@/constants';
 import { useState } from 'react';
 import { ClubContents } from '../container';
 import ExchangeContents from '../components/exchange/ExchangeContents';
-import { ProfileContentProps } from '../types';
+import { ProfilePageProps } from '../types';
 
-function MainContent({ user, isMyPage }: ProfileContentProps) {
+function MainContent({ user, isMyPage }: ProfilePageProps) {
   const [selectedTab, setSelectedTab] = useState<ContentTab>(CONTENT_TABS[0]);
 
   return (

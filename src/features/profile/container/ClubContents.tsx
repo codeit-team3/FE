@@ -4,7 +4,7 @@ import SortingButton from '@/components/sorting-button/SortingButton';
 import { CLUB_TABS, ClubTab } from '@/constants';
 import { useState } from 'react';
 import Tab from '@/components/tab/Tab';
-import { orderType, ProfileContentProps } from '../types';
+import { orderType, ProfilePageProps } from '../types';
 import {
   CreatedClubList,
   JoinedClubList,
@@ -14,7 +14,7 @@ import {
   WrittenReviewList,
 } from '../container/index';
 
-export default function ClubContents({ user, isMyPage }: ProfileContentProps) {
+export default function ClubContents({ user, isMyPage }: ProfilePageProps) {
   const [order, setOrder] = useState<orderType>('DESC');
   const [selectedList, setSelectedList] = useState<ClubTab>(
     CLUB_TABS.MY_JOINED,
