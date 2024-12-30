@@ -1,19 +1,21 @@
+'use client';
+
 import WrittenReview from '@/components/written-review/WrittenReview';
 import { formatDateSimple } from '@/lib/utils/dateUtils';
 import { useRouter } from 'next/navigation';
-import { orderType } from '@/types/bookclubs';
 import { bookClubs } from '@/api/book-club/react-query';
 import { useQuery } from '@tanstack/react-query';
-import { Review } from '../types';
+import { ClubListProps, Review } from '../types';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
 
-interface MyReviewListProps {
-  order: orderType;
-}
-
-export default function MyReviewList({ order }: MyReviewListProps) {
+export default function MyReviewList({
+  user,
+  isMyProfilePage,
+  order,
+}: ClubListProps) {
   const router = useRouter();
 
+  console.log(user, isMyProfilePage);
   const { queryKey, queryFn } = bookClubs.myReviews({ order });
   const { data, isLoading, error } = useQuery({
     queryKey,

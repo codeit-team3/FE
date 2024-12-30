@@ -1,6 +1,8 @@
+'use client';
+
 import Card from '@/components/card/Card';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
-import { BookClub, orderType } from '../types';
+import { BookClub, ClubListProps } from '../types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { WriteReviewModal } from '../components/clubs';
@@ -15,13 +17,14 @@ import {
 } from '@/api/book-club/react-query';
 import { showToast } from '@/components/toast/toast';
 
-interface JoinedClubListProps {
-  order: orderType;
-}
-
-export default function JoinedClubList({ order }: JoinedClubListProps) {
+export default function JoinedClubList({
+  user,
+  isMyProfilePage,
+  order,
+}: ClubListProps) {
   const router = useRouter();
 
+  console.log(user, isMyProfilePage);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
   const [label, setLabel] = useState('');

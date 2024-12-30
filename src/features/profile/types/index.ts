@@ -53,3 +53,14 @@ export interface myJoinedParams {
   size?: number;
   page?: number;
 }
+
+export interface ProfileContentProps {
+  user?: User;
+  isMyProfilePage: boolean;
+}
+
+export interface ClubListProps {
+  user?: User;
+  isMyProfilePage: boolean;
+  order: orderType;
+}

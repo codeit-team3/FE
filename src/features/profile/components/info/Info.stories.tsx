@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Info from './Info';
-import { User } from '../../types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { User } from '@/types/user';
 
 const queryClient = new QueryClient();
 
@@ -33,5 +33,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     user: mockUser,
+    isMyProfilePage: true,
   },
 };

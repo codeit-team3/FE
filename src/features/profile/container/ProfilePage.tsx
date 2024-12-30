@@ -10,7 +10,7 @@ export default function ProfilePage() {
     nickname: 'Johnny',
     email: 'john.doe@example.com',
     description: 'A software developer.',
-    image: 'https://example.com/profile.jpg',
+    image: '',
     createdAt: '2024-12-30T05:37:19.084Z',
     updatedAt: '2024-12-30T05:37:19.084Z',
   };
@@ -18,7 +18,7 @@ export default function ProfilePage() {
   return (
     <div className="flex w-full min-w-[375px] flex-1 flex-col">
       <ProfileHeader user={user} isMyProfilePage={false} />
-      <MainContent />
+      <MainContent user={user} isMyProfilePage={false} />
     </div>
   );
 }

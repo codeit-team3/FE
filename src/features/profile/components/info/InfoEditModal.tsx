@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import Avatar from '@/components/avatar/Avatar';
