@@ -1,9 +1,9 @@
 import Card from '@/components/card/Card';
-import { NO_LIST_MESSAGE } from '../../constants/meassage';
-import { BookClub, orderType } from '../../types';
+import { NO_LIST_MESSAGE } from '../constants/meassage';
+import { BookClub, orderType } from '../types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { WriteReviewModal } from '../clubs';
+import { WriteReviewModal } from '../components/clubs';
 import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { useQuery } from '@tanstack/react-query';
 import PopUp from '@/components/pop-up/PopUp';
@@ -124,8 +124,8 @@ export default function JoinedClubList({ order }: JoinedClubListProps) {
           </span>
         </div>
       ) : (
-        myJoinedList?.map((bookClub, index) => (
-          <div key={index} className="md:w-full">
+        myJoinedList?.map((bookClub) => (
+          <div key={bookClub.id} className="md:w-full">
             <Card
               variant="participatedClub"
               clubId={bookClub.id}
