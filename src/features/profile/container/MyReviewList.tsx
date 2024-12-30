@@ -7,11 +7,11 @@ import { useQuery } from '@tanstack/react-query';
 import { Review } from '../types';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
 
-interface MymyReviewListProps {
+interface MyReviewListProps {
   order: orderType;
 }
 
-export default function MymyReviewList({ order }: MymyReviewListProps) {
+export default function MyReviewList({ order }: MyReviewListProps) {
   const router = useRouter();
 
   const { queryKey, queryFn } = bookClubs.myReviews({ order });
