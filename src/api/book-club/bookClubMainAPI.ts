@@ -1,4 +1,5 @@
 import apiClient from '@/lib/utils/apiClient';
+import { BookClubParams } from '@/types/bookclubs';
 
 export const bookClubMainAPI = {
   //북클럽 삭제
@@ -8,6 +9,9 @@ export const bookClubMainAPI = {
   },
 
   //북클럽 목록 조회
+  getBookClubs: async (params?: BookClubParams) => {
+    await apiClient.get('/book-clubs', { params });
+  },
 
   //단일 북클럽 조회
 

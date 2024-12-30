@@ -2,7 +2,6 @@
 
 import { createContext, useContext } from 'react';
 import ParticipantCounter from '../participant-counter/ParticipantCounter';
-import AvatarGroup from '../avatar-group/AvatarGroup';
 import ProgressBar from '../progress-bar/ProgressBar';
 import Avatar from '../avatar/Avatar';
 import {
@@ -241,7 +240,7 @@ function Card(props: CardProps) {
             />
 
             <Card.Box
-              onClick={() => onClick(clubId)}
+              onClick={() => onClick?.(clubId)}
               className="justify-between"
             >
               <div className="flex flex-col gap-0.5">
@@ -307,7 +306,7 @@ function Card(props: CardProps) {
               // onLikeClick={onLikeClick}
             />
             <Card.Box
-              onClick={() => onClick(clubId)}
+              onClick={() => onClick?.(clubId)}
               className="justify-between"
             >
               <div className="flex flex-col gap-2.5">
@@ -383,7 +382,7 @@ function Card(props: CardProps) {
           <div className="flex flex-col gap-6 md:flex-row">
             <Card.Image url={imageUrl} alt={imageAlt} />
             <Card.Box
-              onClick={() => onClick(clubId)}
+              onClick={() => onClick?.(clubId)}
               className="justify-between"
             >
               <div className="flex flex-col gap-2.5">
@@ -460,7 +459,6 @@ function Card(props: CardProps) {
           isPast,
           host,
           clubStatus,
-          participants,
           onClick,
           isHost,
           isParticipant,
@@ -576,7 +574,7 @@ function Card(props: CardProps) {
                 />
 
                 <Card.Box
-                  onClick={() => onClick(clubId)}
+                  onClick={() => onClick?.(clubId)}
                   className="justify-between"
                 >
                   <div className="flex flex-col gap-0.5">
@@ -594,22 +592,11 @@ function Card(props: CardProps) {
 
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <div className="flex gap-2.5">
-                        <ParticipantCounter
-                          current={current}
-                          max={max}
-                          isPast={isPast}
-                        />
-                        <AvatarGroup isPast={isPast}>
-                          {participants.map((participant, index) => (
-                            <Avatar
-                              key={index}
-                              src={participant.profileImage || ''}
-                              alt={participant.profileImageAlt || ''}
-                            />
-                          ))}
-                        </AvatarGroup>
-                      </div>
+                      <ParticipantCounter
+                        current={current}
+                        max={max}
+                        isPast={isPast}
+                      />
                       <ClubChip variant={clubStatus} isPast={isPast} />
                     </div>
                     <ProgressBar
