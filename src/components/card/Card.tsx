@@ -228,7 +228,7 @@ function Card(props: CardProps) {
             />
 
             <Card.Box
-              onClick={() => onClick(clubId)}
+              onClick={() => onClick?.(clubId)}
               className="justify-between"
             >
               <div className="flex flex-col gap-0.5">
@@ -292,7 +292,7 @@ function Card(props: CardProps) {
               // onLikeClick={onLikeClick}
             />
             <Card.Box
-              onClick={() => onClick(clubId)}
+              onClick={() => onClick?.(clubId)}
               className="justify-between"
             >
               <div className="flex flex-col gap-2.5">
@@ -366,7 +366,7 @@ function Card(props: CardProps) {
           <div className="flex flex-col gap-6 md:flex-row">
             <Card.Image url={imageUrl} alt={imageAlt} />
             <Card.Box
-              onClick={() => onClick(clubId)}
+              onClick={() => onClick?.(clubId)}
               className="justify-between"
             >
               <div className="flex flex-col gap-2.5">
@@ -555,7 +555,7 @@ function Card(props: CardProps) {
                 />
 
                 <Card.Box
-                  onClick={() => onClick(clubId)}
+                  onClick={() => onClick?.(clubId)}
                   className="justify-between"
                 >
                   <div className="flex flex-col gap-0.5">
