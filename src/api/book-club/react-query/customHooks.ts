@@ -39,6 +39,9 @@ export function useJoinBookClub() {
       queryClient.invalidateQueries({
         queryKey: bookClubs.detail(id).queryKey,
       });
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.myJoined().queryKey,
+      });
     },
   });
 }
