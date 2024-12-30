@@ -16,4 +16,5 @@ export { default as IcEdit } from './IcEdit';
 export { default as ImageIcon } from './ImageIcon';
 export { default as CameraIcon } from './CameraIcon';
 export { default as OnlineIcon } from './OnlineIcon';
+export { default as PencilIcon } from './PencilIcon';
 export { default as IcCheckOnly } from './IcCheckOnly';

@@ -9,6 +9,7 @@ import {
   bookClubReviewAPI,
 } from '../index';
 import { WriteReviewParams } from '../types';
+import { AxiosError } from 'axios';
 
 export function useBookClubCreateMutation() {
   const queryClient = useQueryClient();
@@ -21,6 +22,22 @@ export function useBookClubCreateMutation() {
       });
       queryClient.invalidateQueries({
         queryKey: bookClubs.myCreated().queryKey,
+      });
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.myJoined().queryKey,
+      });
+    },
+  });
+}
+
+export function useJoinBookClub() {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, AxiosError<{ message: string }>, number>({
+    mutationFn: (id: number) => bookClubMemberAPI.join(id),
+    onSuccess: (_, id) => {
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.detail(id).queryKey,
       });
       queryClient.invalidateQueries({
         queryKey: bookClubs.myJoined().queryKey,

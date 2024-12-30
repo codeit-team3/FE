@@ -5,7 +5,7 @@ interface PopUpProps {
   isOpen: boolean;
   label: string;
   handlePopUpClose: (result: boolean) => void;
-  handlePopUpConfirm: (result: boolean) => void;
+  handlePopUpConfirm?: (result: boolean) => void;
   isLarge?: boolean;
   isTwoButton?: boolean;
 }
