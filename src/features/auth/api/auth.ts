@@ -5,8 +5,8 @@ import { loginServer, logoutServer } from '@/app/actions';
 import { showToast } from '@/components/toast/toast';
 
 import { getCookie } from '@/features/auth/utils/cookies';
-import { User } from '../types/user';
 import { SignUpFormData } from '../types/sign-up.schema';
+import { User } from '@/types/user';
 
 export const login = async (data: LoginFormData) => {
   try {

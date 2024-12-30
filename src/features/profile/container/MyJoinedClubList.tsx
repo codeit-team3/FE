@@ -2,7 +2,7 @@
 
 import Card from '@/components/card/Card';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
-import { BookClub, ClubListProps } from '../types';
+import { ClubListProps } from '../types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { WriteReviewModal } from '../components/clubs';
@@ -16,6 +16,7 @@ import {
   useWriteReview,
 } from '@/api/book-club/react-query';
 import { showToast } from '@/components/toast/toast';
+import { BookClub } from '@/types/bookclubs';
 
 export default function MyJoinedClubList({ order }: ClubListProps) {
   const router = useRouter();
@@ -127,7 +128,7 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
             <Card
               variant="participatedClub"
               clubId={bookClub.id}
-              isCanceled={bookClub.isCanceled} //TODO: api 응답값에 따라 수정가능
+              isCanceled={bookClub.isInactive} //TODO: api 응답값에 따라 수정가능
               imageUrl={bookClub.imageUrl || '/images/defaultBookClub.jpg'}
               title={bookClub.title}
               location={bookClub.town}
