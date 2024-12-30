@@ -8,13 +8,13 @@ import { orderType, ProfileContentProps } from '../types';
 import {
   CreatedClubList,
   JoinedClubList,
-  MyReviewList,
+  MyCreatedClubList,
+  MyJoinedClubList,
+  MyWrittenReviewList,
+  WrittenReviewList,
 } from '../container/index';
 
-export default function ClubContents({
-  user,
-  isMyProfilePage,
-}: ProfileContentProps) {
+export default function ClubContents({ user, isMyPage }: ProfileContentProps) {
   const [order, setOrder] = useState<orderType>('DESC');
   const [selectedList, setSelectedList] = useState<ClubTab>(
     CLUB_TABS.MY_JOINED,
@@ -23,28 +23,22 @@ export default function ClubContents({
   const renderList = (selectedList: ClubTab) => {
     switch (selectedList) {
       case CLUB_TABS.MY_JOINED:
-        return (
-          <JoinedClubList
-            user={user}
-            isMyProfilePage={isMyProfilePage}
-            order={order}
-          />
+        return isMyPage ? (
+          <MyJoinedClubList order={order} />
+        ) : (
+          <JoinedClubList user={user} order={order} />
         );
       case CLUB_TABS.MY_CREATED:
-        return (
-          <CreatedClubList
-            user={user}
-            isMyProfilePage={isMyProfilePage}
-            order={order}
-          />
+        return isMyPage ? (
+          <MyCreatedClubList order={order} />
+        ) : (
+          <CreatedClubList user={user} order={order} />
         );
       case CLUB_TABS.MY_REVIEW:
-        return (
-          <MyReviewList
-            user={user}
-            isMyProfilePage={isMyProfilePage}
-            order={order}
-          />
+        return isMyPage ? (
+          <MyWrittenReviewList order={order} />
+        ) : (
+          <WrittenReviewList user={user} order={order} />
         );
     }
   };

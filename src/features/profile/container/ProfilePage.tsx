@@ -17,8 +17,8 @@ export default function ProfilePage() {
 
   return (
     <div className="flex w-full min-w-[375px] flex-1 flex-col">
-      <ProfileHeader user={user} isMyProfilePage={false} />
-      <MainContent user={user} isMyProfilePage={false} />
+      <ProfileHeader user={user} isMyPage={false} />
+      <MainContent user={user} isMyPage={false} />
     </div>
   );
 }

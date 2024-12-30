@@ -10,6 +10,7 @@ export interface BookClubParams {
   searchKeyword?: string;
 }
 
+//TODO: imageUrl. isPast, clubStatus, reviewScore 수정
 export interface BookClub {
   id: number;
   title: string;
@@ -22,7 +23,11 @@ export interface BookClub {
   town: string | null;
   memberCount: number;
   isLiked: boolean;
-  imageUrl?: string;
+  isInactive: boolean;
+  imageUrl?: string | undefined;
+  // isPast: boolean;
+  // clubStatus: 'pending' | 'confirmed' | 'closed';
+  // reviewScore?: number | undefined;
 }
 
 export type orderType = 'DESC' | 'ASC' | 'END' | 'RATE_DESC' | 'RATE_ASC';

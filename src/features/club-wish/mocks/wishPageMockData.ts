@@ -1,4 +1,4 @@
-import { BookClub, BookClubParams } from '../../../types/bookclubs';
+import { BookClubParams } from '../../../types/bookclubs';
 
 export const filters: BookClubParams = {
   bookClubType: 'ALL',

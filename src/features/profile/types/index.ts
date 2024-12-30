@@ -2,7 +2,7 @@ import { User } from '@/types/user';
 
 export interface ProfilePageProps {
   user?: User | null;
-  isMyProfilePage: boolean;
+  isMyPage: boolean;
 }
 
 //TODO: isCanceled, imageUrl. isPast, status 수정
@@ -56,11 +56,10 @@ export interface myJoinedParams {
 
 export interface ProfileContentProps {
   user?: User;
-  isMyProfilePage: boolean;
+  isMyPage: boolean;
 }
 
 export interface ClubListProps {
   user?: User;
-  isMyProfilePage: boolean;
   order: orderType;
 }

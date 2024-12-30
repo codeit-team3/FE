@@ -8,14 +8,10 @@ import { useQuery } from '@tanstack/react-query';
 import { ClubListProps, Review } from '../types';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
 
-export default function MyReviewList({
-  user,
-  isMyProfilePage,
-  order,
-}: ClubListProps) {
+export default function WrittenReviewList({ user, order }: ClubListProps) {
   const router = useRouter();
 
-  console.log(user, isMyProfilePage);
+  console.log(user);
   const { queryKey, queryFn } = bookClubs.myReviews({ order });
   const { data, isLoading, error } = useQuery({
     queryKey,

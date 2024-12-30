@@ -33,6 +33,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     user: mockUser,
-    isMyProfilePage: true,
+    isMyPage: true,
   },
 };

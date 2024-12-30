@@ -1,14 +1,14 @@
+// TODO: profileImg, userName, clubName, bookClubType
 export interface Review {
-  reviewId: number;
+  id: number;
   userId: number;
   bookClubId: number;
-  clubName: string;
   rating: number;
-  comment: string;
-  clubImgUrl?: string | undefined;
-  clubImgAlt?: string | undefined;
+  content: string;
+  image?: string | undefined; // TODO:clubImgUrl로 변경 필요
+  createdAt: string;
   profileImg?: string;
   userName?: string;
-  createdAt: string;
+  clubName: string;
   bookClubType: 'FREE' | 'FIXED';
 }
