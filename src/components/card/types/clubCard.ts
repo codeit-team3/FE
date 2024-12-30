@@ -14,7 +14,7 @@ interface ClubCard {
   clubStatus: 'pending' | 'confirmed' | 'closed'; // 개설 현황
 
   // 액션 (카드 클릭시 라우터 처리 등)
-  onClick: (clubId: number) => void;
+  onClick?: (clubId: number) => void;
 }
 
 interface DefaultClubCard extends ClubCard {
