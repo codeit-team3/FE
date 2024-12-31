@@ -1,20 +1,46 @@
 'use client';
 
-import { bookClubs, useJoinBookClub } from '@/api/book-club/react-query';
 import Card from '@/components/card/Card';
 import { CardProps } from '@/components/card/types';
 import PopUp from '@/components/pop-up/PopUp';
 import { showToast } from '@/components/toast/toast';
-import { useCancelClub } from '@/lib/hooks/useCancelClub';
 import { clubStatus } from '@/lib/utils/clubUtils';
 import { formatDateForUI } from '@/lib/utils/formatDateForUI';
 import { useAuthStore } from '@/store/authStore';
-import { useQuery } from '@tanstack/react-query';
+import { BookClub } from '@/types/bookclubs';
+import { UseMutateFunction } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
-
 import { useEffect, useState } from 'react';
 
-function HeaderSection({ idAsNumber }: { idAsNumber: number }) {
+interface HeaderSectionProps {
+  clubInfo: BookClub;
+  joinClub: UseMutateFunction<
+    void,
+    AxiosError<{ message: string }>,
+    number,
+    unknown
+  >;
+  popUpState: {
+    isOpen: boolean;
+    label: string;
+    selectedClubId: number | null;
+  };
+  onCancel: (clubId: number) => void;
+  onConfirmCancel: () => Promise<void>;
+  onClosePopUp: () => void;
+  idAsNumber: number;
+}
+
+function HeaderSection({
+  clubInfo,
+  joinClub,
+  popUpState,
+  onCancel,
+  onConfirmCancel,
+  onClosePopUp,
+  idAsNumber,
+}: HeaderSectionProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [isMember, setIsMember] = useState<{
@@ -24,12 +50,6 @@ function HeaderSection({ idAsNumber }: { idAsNumber: number }) {
   } | null>(null);
 
   const { isLoggedIn, checkLoginStatus } = useAuthStore();
-  const { data, isLoading, error } = useQuery({
-    ...bookClubs.detail(idAsNumber),
-  });
-  const { mutate } = useJoinBookClub();
-  const { popUpState, onCancel, onConfirmCancel, onClosePopUp } =
-    useCancelClub();
 
   const router = useRouter();
 
@@ -44,19 +64,8 @@ function HeaderSection({ idAsNumber }: { idAsNumber: number }) {
     }
   }, [idAsNumber]);
 
-  // TODO: 공통 로딩 컴포넌트로 교체
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
-
   // TODO: 응답값 추가 후 제거
   const EXAMPLE_IMAGE = '/images/profile.png';
-
-  const clubInfo = data?.data;
 
   const handleJoin = () => {
     if (!isLoggedIn) {
@@ -69,7 +78,7 @@ function HeaderSection({ idAsNumber }: { idAsNumber: number }) {
       return;
     }
 
-    mutate(clubInfo.id, {
+    joinClub(clubInfo.id, {
       onSuccess: () => {
         showToast({
           message: '참여 완료! 함께하게 돼서 기뻐요🥰',
