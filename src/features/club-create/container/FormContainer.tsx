@@ -98,7 +98,7 @@ function FormContainer() {
             ]}
             selectedValue={watch('meetingType')}
             register={register('meetingType')}
-            addressRegister={register('addressDetail')}
+            addressRegister={register('detailAddress')}
             setValue={setValue}
             name="meetingType"
             town={watch('town')}
