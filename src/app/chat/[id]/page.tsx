@@ -6,6 +6,9 @@ import { usePathname } from 'next/navigation';
 import { GroupedMessage } from '@/features/chat-room/types/chatBubbleList';
 import ChatCard from '@/features/chat/components/chat-card/ChatCard';
 import ParticipantCounter from '@/components/participant-counter/ParticipantCounter';
+import IconButton from '@/components/icon-button/IconButton';
+import GoBackIcon from '../../../../public/icons/GoBackIcon';
+import HamburgerMenuIcon from '../../../../public/icons/HamburgerMenuIcon';
 
 const groupedMessagesExample: GroupedMessage[] = [
   {
@@ -42,12 +45,26 @@ function ChatRoomPage() {
   console.log('chatId: ', chatId);
 
   return (
-    <>
+    <div className="flex w-full flex-col gap-3">
       <header className="flex w-full min-w-[336px] items-end bg-gray-light-02 px-[20px] py-[30px] sm:justify-between md:px-[24px] lg:px-[102px]">
-        <div className="flex flex-col">
-          <div className="flex">
-            <h3>채팅</h3>
-            <ParticipantCounter current={10} />
+        <div className="flex w-full flex-col gap-5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <IconButton
+                icon={<GoBackIcon />}
+                onClick={() => console.log('채팅 버튼 클릭')}
+                className="bg-gray-light-02"
+              />
+              <h3>채팅</h3>
+              <ParticipantCounter current={10} />
+            </div>
+            <div>
+              <IconButton
+                icon={<HamburgerMenuIcon width={16} height={12} />}
+                onClick={() => console.log('메뉴 열기 버튼 클릭')}
+                className="bg-gray-light-02"
+              />
+            </div>
           </div>
           <ChatCard
             variant="chatRoomHeader"
@@ -68,7 +85,7 @@ function ChatRoomPage() {
         hostId={chatId}
         onProfileClick={() => {}}
       />
-    </>
+    </div>
   );
 }
 
