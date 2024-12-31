@@ -1,12 +1,10 @@
 'use client';
-
+import { useParams } from 'next/navigation';
 import {
   DescriptionSection,
   HeaderSection,
-  ReviewListSection,
-  ReviewSummarySection,
+  ReviewSection,
 } from '@/features/club-details/components';
-import { useParams } from 'next/navigation';
 
 function BookClubDetailPage() {
   const { id } = useParams();
@@ -17,8 +15,7 @@ function BookClubDetailPage() {
       <HeaderSection idAsNumber={idAsNumber} />
       <main className="flex flex-col gap-y-6">
         <DescriptionSection />
-        <ReviewSummarySection idAsNumber={idAsNumber} />
-        <ReviewListSection />
+        <ReviewSection idAsNumber={idAsNumber} />
       </main>
     </div>
   );

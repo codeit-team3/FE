@@ -1,27 +1,8 @@
-'use client';
-
-import { bookClubs } from '@/api/book-club/react-query';
 import ProgressBar from '@/components/progress-bar/ProgressBar';
 import RatingDisplay from '@/components/rating-display/RatingDisplay';
-import { useQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import { ClubReviewResponse } from '../types';
 
-function ReviewSummarySection({ idAsNumber }: { idAsNumber: number }) {
-  const { data, isLoading, error } = useQuery({
-    ...bookClubs.detail(idAsNumber)._ctx.reviews(),
-  });
-
-  useEffect(() => {
-    console.log(data);
-  });
-
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
+function ReviewSummary({ reviewInfo }: { reviewInfo: ClubReviewResponse }) {
   return (
     <section>
       <h2 className="mb-[10px] text-[20px] font-semibold text-gray-black">
@@ -35,7 +16,7 @@ function ReviewSummarySection({ idAsNumber }: { idAsNumber: number }) {
       >
         <div className="flex flex-col items-center justify-center gap-2">
           <div className="text-2xl font-semibold">
-            <span className="text-gray-black">4.0</span>
+            <span className="text-gray-black">{reviewInfo.averageScore}</span>
             <span className="text-gray-dark-01"> / 5</span>
           </div>
           <RatingDisplay ratingCount={4} />
@@ -65,4 +46,4 @@ function ReviewSummarySection({ idAsNumber }: { idAsNumber: number }) {
     </section>
   );
 }
-export default ReviewSummarySection;
+export default ReviewSummary;
