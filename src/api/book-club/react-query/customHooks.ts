@@ -1,6 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { BookClubForm } from '@/features/club-create/types';
-import { createBookClub } from '@/features/club-create/api';
 import { bookClubs } from './queries';
 import { showToast } from '@/components/toast/toast';
 import {
@@ -15,7 +13,7 @@ export function useBookClubCreateMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: BookClubForm) => createBookClub(data),
+    mutationFn: (formData: FormData) => bookClubMainAPI.create(formData),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: bookClubs.all().queryKey,
@@ -26,6 +24,13 @@ export function useBookClubCreateMutation() {
       queryClient.invalidateQueries({
         queryKey: bookClubs.myJoined().queryKey,
       });
+      showToast({
+        message: '북클럽이 성공적으로 생성되었습니다.',
+        type: 'success',
+      });
+    },
+    onError: () => {
+      showToast({ message: '북클럽 생성에 실패했습니다.', type: 'error' });
     },
   });
 }
