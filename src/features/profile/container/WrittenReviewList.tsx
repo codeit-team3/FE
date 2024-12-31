@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 // import { useQuery } from '@tanstack/react-query';
 import { ClubListProps } from '../types';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
-import { mockReviews } from '../constants/mock';
+import { mockReviews } from '../../../mocks/mockDatas';
 import { Review } from '@/types/review';
 
 export default function WrittenReviewList({ user, order }: ClubListProps) {

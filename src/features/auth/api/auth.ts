@@ -3,7 +3,6 @@ import { LoginFormData } from '../types/loginFormSchema';
 import { useAuthStore } from '@/store/authStore';
 import { loginServer, logoutServer } from '@/app/actions';
 import { showToast } from '@/components/toast/toast';
-
 import { getCookie } from '@/features/auth/utils/cookies';
 import { SignUpFormData } from '../types/sign-up.schema';
 import { User } from '@/types/user';

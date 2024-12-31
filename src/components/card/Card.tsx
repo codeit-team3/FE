@@ -9,6 +9,7 @@ import {
   HostIcon,
   HeartIcon,
   RatingIcon,
+  OnlineIcon,
 } from '../../../public/icons';
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
@@ -96,18 +97,28 @@ function CardLocation({
   children,
   className,
   textClassName,
+  meetingType,
+  isPast,
   ...props
 }: CardLocationProps) {
+  const displayText =
+    meetingType === 'ONLINE' ? '온라인' : children || '위치 정보 없음';
+
   return (
     <div className={twMerge('flex items-center', className)} {...props}>
-      <LocationIcon />
+      {meetingType === 'ONLINE' ? (
+        <OnlineIcon isPast={isPast} />
+      ) : (
+        <LocationIcon isPast={isPast} />
+      )}
       <span
         className={twMerge(
-          'text-sm font-semibold text-gray-dark-03',
+          'text-sm font-semibold',
+          isPast ? 'text-gray-dark-03' : 'text-green-normal-02',
           textClassName,
         )}
       >
-        {children}
+        {displayText}
       </span>
     </div>
   );
@@ -216,6 +227,7 @@ function Card(props: CardProps) {
           onLikeClick,
           onClick,
           onDelete,
+          meetingType,
         } = props as DefaultClubCard & { variant: 'defaultClub' };
 
         return (
@@ -238,7 +250,9 @@ function Card(props: CardProps) {
                   <ClubChip variant={bookClubType} isPast={isPast} />
                 </div>
                 <div className="flex items-center gap-1.5">
-                  {location && <Card.Location>{location}</Card.Location>}
+                  <Card.Location meetingType={meetingType} isPast={isPast}>
+                    {location}
+                  </Card.Location>
                   <Card.DateTime>{datetime}</Card.DateTime>
                 </div>
               </div>
@@ -272,7 +286,7 @@ function Card(props: CardProps) {
           onClick,
           onDelete,
           clubStatus,
-          // meetingType,
+          meetingType,
           bookClubType,
           title,
           location,
@@ -300,7 +314,9 @@ function Card(props: CardProps) {
                 <div className="flex flex-col">
                   <Card.Title>{title}</Card.Title>
                   <div className="flex items-center gap-1.5">
-                    <Card.Location>{location}</Card.Location>
+                    <Card.Location meetingType={meetingType} isPast={isPast}>
+                      {location}
+                    </Card.Location>
                     <Card.DateTime>{datetime}</Card.DateTime>
                   </div>
                 </div>
@@ -346,7 +362,7 @@ function Card(props: CardProps) {
           imageAlt,
           onClick,
           clubStatus,
-          // meetingType,
+          meetingType,
           bookClubType,
           isPast,
           title,
@@ -371,7 +387,9 @@ function Card(props: CardProps) {
                 <div className="flex flex-col">
                   <Card.Title>{title}</Card.Title>
                   <div className="flex items-center gap-1.5">
-                    <Card.Location>{location}</Card.Location>
+                    <Card.Location meetingType={meetingType} isPast={isPast}>
+                      {location}
+                    </Card.Location>
                     <Card.DateTime>{datetime}</Card.DateTime>
                   </div>
                 </div>
@@ -429,6 +447,7 @@ function Card(props: CardProps) {
           isLiked,
           onLikeClick,
           bookClubType,
+          meetingType,
           current,
           max,
           isPast,
@@ -558,7 +577,9 @@ function Card(props: CardProps) {
                       <ClubChip variant={bookClubType} isPast={isPast} />
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <Card.Location>{location}</Card.Location>
+                      <Card.Location meetingType={meetingType} isPast={isPast}>
+                        {location}
+                      </Card.Location>
                       <Card.DateTime>{datetime}</Card.DateTime>
                     </div>
                   </div>

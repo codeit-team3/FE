@@ -3,13 +3,14 @@
 import Card from '@/components/card/Card';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
 import { useRouter } from 'next/navigation';
-import { BookClub, ClubListProps } from '../types';
+import { ClubListProps } from '../types';
 import { bookClubs } from '@/api/book-club/react-query';
 import { useQuery } from '@tanstack/react-query';
 import PopUp from '@/components/pop-up/PopUp';
 import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { clubStatus } from '@/lib/utils/clubUtils';
 import { useCancelClub } from '@/lib/hooks/useCancelClub';
+import { BookClub } from '@/types/bookclubs';
 
 export default function MyCreatedClubList({ order }: ClubListProps) {
   const router = useRouter();

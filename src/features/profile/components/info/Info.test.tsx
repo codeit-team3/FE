@@ -3,18 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Info from './Info';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { User } from '@/types/user';
-
-const mockUser: User = {
-  id: 123,
-  email: 'john.doe@example.com',
-  name: 'John Doe',
-  nickname: 'DoeJon',
-  description: 'Example Company',
-  image: 'https://example.com/profile.jpg',
-  createdAt: new Date('2024-01-01T00:00:00Z'),
-  updatedAt: new Date('2024-01-10T00:00:00Z'),
-};
+import { mockUser } from '@/mocks/mockDatas';
 
 const queryClient = new QueryClient();
 
@@ -27,9 +16,9 @@ describe('Info 테스트', () => {
     );
 
     //프로필 컴포넌트 데이터 렌더링 확인
-    expect(screen.getByText('DoeJon님의 프로필')).toBeInTheDocument;
+    expect(screen.getByText('Johnny님의 프로필')).toBeInTheDocument;
     expect(screen.getByText('john.doe@example.com')).toBeInTheDocument;
-    expect(screen.getByText('Example Company')).toBeInTheDocument;
+    expect(screen.getByText('A software developer.')).toBeInTheDocument;
   });
 
   it('수정하기 아이콘 버튼 클릭 후 프로필 수정하기 모달 렌더링 테스트', async () => {

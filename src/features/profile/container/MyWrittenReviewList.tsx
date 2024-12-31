@@ -41,8 +41,8 @@ export default function MyWrittenReviewList({ order }: ClubListProps) {
             >
               <div className="flex items-center gap-x-6 sm:flex-col sm:items-start sm:gap-y-6 md:flex-row">
                 <WrittenReview.ClubImage
-                  src={review.clubImgUrl || '/images/defaultBookClub.jpg'}
-                  alt={review.clubImgAlt}
+                  src={review.image || '/images/defaultBookClub.jpg'}
+                  alt="review_club_image"
                 />
                 <div className="relative flex min-h-[180px] w-[336px] flex-1 flex-col gap-y-1.5 text-sm font-medium text-gray-darker md:w-full">
                   <WrittenReview.Rating ratingCount={review.rating} />
