@@ -16,9 +16,9 @@ describe('Info 테스트', () => {
     );
 
     //프로필 컴포넌트 데이터 렌더링 확인
-    expect(screen.getByText('DoeJon님의 프로필')).toBeInTheDocument;
+    expect(screen.getByText('Johnny님의 프로필')).toBeInTheDocument;
     expect(screen.getByText('john.doe@example.com')).toBeInTheDocument;
-    expect(screen.getByText('Example Company')).toBeInTheDocument;
+    expect(screen.getByText('A software developer.')).toBeInTheDocument;
   });
 
   it('수정하기 아이콘 버튼 클릭 후 프로필 수정하기 모달 렌더링 테스트', async () => {
