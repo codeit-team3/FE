@@ -6,11 +6,9 @@ import {
   CreateClubFormField,
   InputField,
 } from '@/features/club-create/components';
-import {
-  RadioButtonGroup,
-  DatePickerContainer,
-  ImageField,
-} from '@/features/club-create/container';
+import ImageField from '@/features/club-create/container/ImageField';
+import RadioButtonGroup from '@/features/club-create/container/RadioButtonGroup';
+import DatePickerContainer from '@/features/club-create/container/DatePickerField';
 import { useBookClubForm } from '@/features/club-create/hooks';
 import PopUp from '@/components/pop-up/PopUp';
 
