@@ -4,9 +4,9 @@ import { BookClubParams, orderType } from '@/types/bookclubs';
 
 // TODO: 추후 각자 구현하는 api 명세에 맞게 filter 타입 정의해주세요
 interface ReviewFilters {
-  rating?: number;
-  hasComment?: boolean;
-  sort?: 'latest' | 'rating';
+  order?: 'DESC' | 'RATE_DESC' | 'RATE_ASC';
+  size?: number;
+  page?: number;
 }
 
 export interface MyProfileParams {

@@ -1,7 +1,27 @@
+'use client';
+
+import { bookClubs } from '@/api/book-club/react-query';
 import ProgressBar from '@/components/progress-bar/ProgressBar';
 import RatingDisplay from '@/components/rating-display/RatingDisplay';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
-function ReviewSummarySection() {
+function ReviewSummarySection({ idAsNumber }: { idAsNumber: number }) {
+  const { data, isLoading, error } = useQuery({
+    ...bookClubs.detail(idAsNumber)._ctx.reviews(),
+  });
+
+  useEffect(() => {
+    console.log(data);
+  });
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
   return (
     <section>
       <h2 className="mb-[10px] text-[20px] font-semibold text-gray-black">

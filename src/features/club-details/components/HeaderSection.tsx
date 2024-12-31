@@ -10,11 +10,11 @@ import { clubStatus } from '@/lib/utils/clubUtils';
 import { formatDateForUI } from '@/lib/utils/formatDateForUI';
 import { useAuthStore } from '@/store/authStore';
 import { useQuery } from '@tanstack/react-query';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import { useEffect, useState } from 'react';
 
-function HeaderSection() {
+function HeaderSection({ idAsNumber }: { idAsNumber: number }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [isMember, setIsMember] = useState<{
@@ -23,9 +23,6 @@ function HeaderSection() {
     handlePopUpConfirm?: () => void;
   } | null>(null);
 
-  const { id } = useParams();
-  const idAsString = Array.isArray(id) ? id[0] : id || '';
-  const idAsNumber = Number(idAsString);
   const { isLoggedIn, checkLoginStatus } = useAuthStore();
   const { data, isLoading, error } = useQuery({
     ...bookClubs.detail(idAsNumber),
@@ -41,11 +38,11 @@ function HeaderSection() {
   }, [checkLoginStatus]);
 
   useEffect(() => {
-    if (isNaN(Number(idAsString))) {
+    if (isNaN(idAsNumber)) {
       alert('잘못된 접근입니다. 메인 페이지로 이동합니다.');
       router.replace('/');
     }
-  }, [idAsString]);
+  }, [idAsNumber]);
 
   // TODO: 공통 로딩 컴포넌트로 교체
   if (isLoading) {
