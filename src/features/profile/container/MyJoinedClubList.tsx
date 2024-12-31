@@ -17,6 +17,7 @@ import {
 } from '@/api/book-club/react-query';
 import { showToast } from '@/components/toast/toast';
 import { BookClub } from '@/types/bookclubs';
+import { useAuthStore } from '@/store/authStore';
 
 export default function MyJoinedClubList({ order }: ClubListProps) {
   const router = useRouter();
@@ -25,9 +26,12 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
   const [label, setLabel] = useState('');
   const [selectedClubId, setSelectedClubId] = useState<number | null>(null);
+
+  const { user } = useAuthStore();
   const today = new Date();
 
-  const { queryKey, queryFn } = bookClubs.myJoined({ order: order });
+  const userId = user?.id ?? 0;
+  const { queryKey, queryFn } = bookClubs.myJoined(userId, { order: order });
   const { data, isLoading, error } = useQuery({
     queryKey,
     queryFn,

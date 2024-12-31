@@ -11,13 +11,16 @@ import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { clubStatus } from '@/lib/utils/clubUtils';
 import { useCancelClub } from '@/lib/hooks/useCancelClub';
 import { BookClub } from '@/types/bookclubs';
+import { useAuthStore } from '@/store/authStore';
 
 export default function MyCreatedClubList({ order }: ClubListProps) {
   const router = useRouter();
 
+  const { user } = useAuthStore();
   const today = new Date();
 
-  const { queryKey, queryFn } = bookClubs.myCreated({ order: order });
+  const userId = user?.id ?? 0;
+  const { queryKey, queryFn } = bookClubs.myCreated(userId, { order: order });
 
   const { data, isLoading, error } = useQuery({ queryKey, queryFn });
 

@@ -42,8 +42,8 @@ export const bookClubs = createQueryKeys('bookClubs', {
       }),
     },
   }),
-  myJoined: (filters?: MyProfileParams) => ({
-    queryKey: [{ filters: filters || {} }],
+  myJoined: (userId: number, filters?: MyProfileParams) => ({
+    queryKey: [userId, { filters: filters || {} }],
     queryFn: (ctx) =>
       apiClient.get('/book-clubs/my-joined', {
         params: {
@@ -53,8 +53,8 @@ export const bookClubs = createQueryKeys('bookClubs', {
         },
       }),
   }),
-  myCreated: (filters?: MyProfileParams) => ({
-    queryKey: [{ filters: filters || {} }],
+  myCreated: (userId: number, filters?: MyProfileParams) => ({
+    queryKey: [userId, { filters: filters || {} }],
     queryFn: (ctx) =>
       apiClient.get('/book-clubs/my-created', {
         params: {
@@ -64,8 +64,8 @@ export const bookClubs = createQueryKeys('bookClubs', {
         },
       }),
   }),
-  myReviews: (filters?: MyProfileParams) => ({
-    queryKey: [{ filters: filters || {} }],
+  myReviews: (userId: number, filters?: MyProfileParams) => ({
+    queryKey: [userId, { filters: filters || {} }],
     queryFn: (ctx) =>
       apiClient.get('/book-clubs/my-reviews', {
         params: {

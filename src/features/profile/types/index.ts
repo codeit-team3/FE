@@ -49,7 +49,7 @@ export interface myJoinedParams {
   page?: number;
 }
 export interface ProfilePageProps {
-  user: User | null | undefined;
+  user?: User | null | undefined;
   isMyPage: boolean;
 }
 
