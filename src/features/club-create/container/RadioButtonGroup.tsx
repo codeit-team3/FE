@@ -109,7 +109,7 @@ function RadioButtonGroup({
               <CreateClubFormField
                 label={`${address ? `${address}` : '오프라인 모임 장소'}`}
                 error={errors.addressDetail?.message}
-                currentLength={watch?.('addressDetail')?.length || 0}
+                currentLength={watch?.('detailAddress')?.length || 0}
               >
                 <InputField
                   register={addressRegister}
