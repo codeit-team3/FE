@@ -140,7 +140,7 @@ function FormContainer() {
           fillType="solid"
           themeColor="green-normal-01"
           disabled={!isValid || isLoading}
-          className="h-14"
+          className={`h-14 ${!isValid || isLoading ? '' : 'hover-dim'}`}
         />
       </form>
 
