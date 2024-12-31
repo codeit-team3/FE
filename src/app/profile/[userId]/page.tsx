@@ -1,16 +1,15 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import { ProfilePage } from '@/features/profile/container';
-import { auths } from '@/api/auth/react-query/queries';
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useUserIdFromPath } from '@/lib/hooks/useUserIdFromPath';
+import { users } from '@/api/user/react-query/queries';
 
 export default function Profile() {
-  const pathname = usePathname();
-  const userId = Number(pathname?.split('/')[2]);
+  const userId = useUserIdFromPath();
 
-  const { queryKey, queryFn } = auths.userInfo(userId);
+  const { queryKey, queryFn } = users.userInfo(userId);
   const { data } = useQuery({
     queryKey,
     queryFn,

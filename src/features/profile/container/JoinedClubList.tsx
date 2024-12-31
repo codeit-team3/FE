@@ -9,12 +9,12 @@ import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { clubStatus } from '@/lib/utils/clubUtils';
 import { BookClub } from '@/types/bookclubs';
 import { bookClubs } from '@/api/book-club/react-query';
-import { usePathname } from 'next/navigation';
+import { useUserIdFromPath } from '@/lib/hooks/useUserIdFromPath';
 
 export default function JoinedClubList({ order }: ClubListProps) {
   const router = useRouter();
-  const pathname = usePathname();
-  const userId = Number(pathname?.split('/')[2]);
+
+  const userId = useUserIdFromPath();
 
   const { queryKey, queryFn } = bookClubs.userJoined(userId, { order: order });
   const { data, isLoading, error } = useQuery({
@@ -23,11 +23,11 @@ export default function JoinedClubList({ order }: ClubListProps) {
   });
 
   const myJoinedList: BookClub[] = data?.data?.bookClubs || [];
+
   const today = new Date();
 
   // 카드 클릭 이벤트
   const onClick = (clubId: number) => {
-    alert(clubId);
     router.push(`/bookclub/${clubId}`);
   };
 

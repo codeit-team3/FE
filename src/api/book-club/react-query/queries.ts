@@ -70,6 +70,19 @@ export const bookClubs = createQueryKeys('bookClubs', {
       }),
   }),
 
+  //유저가 작성한 리뷰 조회
+  userReviewd: (userId: number, filters?: MyProfileParams) => ({
+    queryKey: [userId, { filter: filters || {} }],
+    queryFn: (ctx) =>
+      apiClient.get(`/book-clubs/users/${userId}/reviews`, {
+        params: {
+          ...filters,
+          page: ctx.pageParam ?? 1,
+          size: 10,
+        },
+      }),
+  }),
+
   //내가 참여한 북클럽 조회
   myJoined: (userId: number, filters?: MyProfileParams) => ({
     queryKey: [userId, { filters: filters || {} }],

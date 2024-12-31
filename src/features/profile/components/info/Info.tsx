@@ -25,7 +25,7 @@ export default function Info({ user, isMyPage }: ProfilePageProps) {
         role="title"
       >
         <label className="text-xl font-semibold text-green-dark-01">
-          {user?.nickname}님의 프로필
+          {isMyPage ? '나' : user?.nickname + '님'}의 프로필
         </label>
         {isMyPage && (
           <IconButton

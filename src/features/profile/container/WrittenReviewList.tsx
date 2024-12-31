@@ -3,30 +3,29 @@
 import WrittenReview from '@/components/written-review/WrittenReview';
 import { formatDateSimple } from '@/lib/utils/dateUtils';
 import { useRouter } from 'next/navigation';
-// import { bookClubs } from '@/api/book-club/react-query';
-// import { useQuery } from '@tanstack/react-query';
+import { bookClubs } from '@/api/book-club/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { ClubListProps } from '../types';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
-import { mockReviews } from '../../../mocks/mockDatas';
 import { Review } from '@/types/review';
+import { useUserIdFromPath } from '@/lib/hooks/useUserIdFromPath';
 
-export default function WrittenReviewList({ user, order }: ClubListProps) {
+export default function WrittenReviewList({ order }: ClubListProps) {
   const router = useRouter();
+  const userId = useUserIdFromPath();
 
-  console.log(user, order);
-  // const { queryKey, queryFn } = bookClubs.myReviews({ order });
-  // const { data, isLoading, error } = useQuery({
-  //   queryKey,
-  //   queryFn,
-  // });
+  const { queryKey, queryFn } = bookClubs.userReviewd(userId, { order });
+  const { data, isLoading, error } = useQuery({
+    queryKey,
+    queryFn,
+  });
 
-  // const myReviewList: Review[] = data?.data?.reviews || [];
-  const myReviewList: Review[] = mockReviews;
+  const myReviewList: Review[] = data?.data?.reviews || [];
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
-      {/* {isLoading && <p>Loading...</p>}
-      {error && <p>Error: {error.message}</p>} */}
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Error: {error.message}</p>}
       {myReviewList?.length === 0 ? (
         <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
           <span className="whitespace-pre-wrap">

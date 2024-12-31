@@ -4,28 +4,27 @@ import Card from '@/components/card/Card';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
 import { useRouter } from 'next/navigation';
 import { ClubListProps } from '../types';
-// import { bookClubs } from '@/api/book-club/react-query';
-// import { useQuery } from '@tanstack/react-query';
-// import PopUp from '@/components/pop-up/PopUp';
+import { bookClubs } from '@/api/book-club/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { clubStatus } from '@/lib/utils/clubUtils';
-// import { useCancelClub } from '@/lib/hooks/useCancelClub';
-import { mockBookClubs } from '../../../mocks/mockDatas';
 import { BookClub } from '@/types/bookclubs';
+import { useUserIdFromPath } from '@/lib/hooks/useUserIdFromPath';
 
-export default function CreatedClubList({ user, order }: ClubListProps) {
+export default function CreatedClubList({ order }: ClubListProps) {
   const router = useRouter();
+
+  const userId = useUserIdFromPath();
+
+  const { queryKey, queryFn } = bookClubs.userCreated(userId, { order: order });
+  const { data, isLoading, error } = useQuery({
+    queryKey,
+    queryFn,
+  });
 
   const today = new Date();
 
-  console.log(user, order);
-
-  // const { queryKey, queryFn } = bookClubs.myCreated({ order: order });
-
-  // const { data, isLoading, error } = useQuery({ queryKey, queryFn });
-
-  // const myCreatedList: BookClub[] = data?.data?.bookClubs || [];
-  const myCreatedList: BookClub[] = mockBookClubs;
+  const myCreatedList: BookClub[] = data?.data?.bookClubs || [];
 
   // 카드 클릭 이벤트
   const onClick = (clubId: number) => {
@@ -39,8 +38,9 @@ export default function CreatedClubList({ user, order }: ClubListProps) {
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
-      {/* {isLoading && <p>Loading...</p>}
-      {error && <p>Error: {error.message}</p>} */}
+      {/* TODO: 로딩 컴포넌트 */}
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Error: {error.message}</p>}
       {myCreatedList?.length === 0 ? (
         <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
           <span className="whitespace-pre-wrap">
@@ -48,10 +48,11 @@ export default function CreatedClubList({ user, order }: ClubListProps) {
           </span>
         </div>
       ) : (
-        myCreatedList?.map((bookClub) => (
-          <div key={bookClub.id} className="md:w-full">
-            {/* TODO: imageUrl. isPast, status 수정 */}
-            {!bookClub.isInactive && (
+        myCreatedList
+          ?.filter((bookClub) => !bookClub.isInactive)
+          ?.map((bookClub) => (
+            <div key={bookClub.id} className="md:w-full">
+              {/* TODO: imageUrl. isPast, status 수정 */}
               <Card
                 variant="defaultClub"
                 clubId={bookClub.id}
@@ -77,9 +78,8 @@ export default function CreatedClubList({ user, order }: ClubListProps) {
                 onClick={() => onClick(bookClub.id)}
                 onLikeClick={() => onLikeClick(bookClub.id)}
               />
-            )}
-          </div>
-        ))
+            </div>
+          ))
       )}
       {/* <PopUp
         isOpen={popUpState.isOpen}
