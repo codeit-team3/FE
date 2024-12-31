@@ -1,5 +1,5 @@
 import apiClient from '@/lib/utils/apiClient';
-import { WriteReviewParams, WrittenReviewParams } from './types';
+import { WriteReviewParams, DetailClubReviewParams } from './types';
 
 export const bookClubReviewAPI = {
   //리뷰 삭제하기
@@ -10,7 +10,7 @@ export const bookClubReviewAPI = {
     params,
   }: {
     bookClubId: number;
-    params?: WrittenReviewParams;
+    params?: DetailClubReviewParams;
   }) => {
     await apiClient.get(`book-clubs/${bookClubId}/reviews`, { params });
   },

@@ -19,7 +19,7 @@ function ReviewSummary({ reviewInfo }: { reviewInfo: ClubReviewResponse }) {
             <span className="text-gray-black">{reviewInfo.averageScore}</span>
             <span className="text-gray-dark-01"> / 5</span>
           </div>
-          <RatingDisplay ratingCount={4} />
+          <RatingDisplay ratingCount={reviewInfo.averageScore} />
         </div>
         <div className="flex flex-col gap-1">
           {Array.from({ length: 5 }).map((_, index) => (

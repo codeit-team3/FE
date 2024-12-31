@@ -1,6 +1,6 @@
-export interface WrittenReviewParams {
+export interface DetailClubReviewParams {
   bookClubId: number;
-  order?: string;
+  order?: 'DESC' | 'RATE_DESC' | 'RATE_ASC';
   size?: number;
   page?: number;
 }

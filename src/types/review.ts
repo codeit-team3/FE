@@ -12,3 +12,9 @@ export interface Review {
   createdAt: string;
   bookClubType: 'FREE' | 'FIXED';
 }
+
+export interface ClubDetailReviewFilters {
+  order?: 'DESC' | 'RATE_DESC' | 'RATE_ASC';
+  size?: number;
+  page?: number;
+}
