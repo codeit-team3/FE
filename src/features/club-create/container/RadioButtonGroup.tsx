@@ -34,12 +34,9 @@ function RadioButtonGroup({
   return (
     <div className="flex flex-col gap-4 md:flex-row md:gap-6">
       {options.map((option) => (
-        <div
-          key={option.value}
-          className="flex w-full flex-col gap-4 hover-dim"
-        >
+        <div key={option.value} className="flex w-full flex-col gap-4">
           <label
-            className={`flex w-full cursor-pointer items-start gap-2 rounded-xl px-4 py-5 ${
+            className={`flex w-full cursor-pointer items-start gap-2 rounded-xl px-4 py-5 hover-dim ${
               selectedValue === option.value
                 ? 'bg-green-light-02'
                 : 'bg-gray-light-02'
