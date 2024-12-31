@@ -3,6 +3,7 @@ import HeaderBar from './HeaderBar';
 import '@testing-library/jest-dom';
 import { NAV_ITEMS } from '@/constants/navigation';
 import { useAuthStore } from '@/store/authStore';
+import { mockUser } from '@/mocks/mockDatas';
 
 jest.mock('next/navigation', () => ({
   usePathname: jest.fn(() => '/exchange'),
@@ -79,17 +80,7 @@ describe('로그인 상태에 따른 버튼 렌더링', () => {
   it('로그인 상태일 때 드롭다운 버튼이 렌더링되어야 한다', () => {
     useAuthStore.setState({
       isLoggedIn: true,
-      user: {
-        image: '/images/profile.png',
-        id: 1,
-        email: 'user@example.com',
-        nickname: 'Nick Name',
-        name: 'User Name',
-        nickname: 'Nick Name',
-        description: 'description',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
+      user: mockUser,
       checkLoginStatus: jest.fn(),
     });
 
