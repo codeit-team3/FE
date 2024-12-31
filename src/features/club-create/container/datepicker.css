@@ -159,3 +159,13 @@
   fill: white !important;
   color: #f0f0f0;
 }
+
+/* 비활성화된 날짜 스타일 */
+.react-datepicker__day--disabled {
+  color: #f0f0f0 !important;
+  cursor: not-allowed !important;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: transparent !important;
+}
