@@ -1,7 +1,7 @@
 import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
-import { getMyJoined } from '@/features/profile/api/myJoinedApi';
 import { BookClub } from '@/types/bookclubs';
+import apiClient from '@/lib/utils/apiClient';
 
 let stompClient: Client | null = null;
 
@@ -17,11 +17,15 @@ export interface ChatMessage {
 
 export const initializeSocket = async (token: string) => {
   try {
-    const { bookClubs } = await getMyJoined({
-      order: 'DESC',
-      size: 10,
-      page: 1,
+    const response = await apiClient.get('/book-clubs/my-joined', {
+      params: {
+        order: 'DESC',
+        size: 10,
+        page: 1,
+      },
     });
+
+    const { bookClubs } = response.data;
 
     const client = new Client({
       webSocketFactory: () =>
@@ -29,21 +33,16 @@ export const initializeSocket = async (token: string) => {
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
-      debug: function (str) {
-        console.log('STOMP: ' + str);
-      },
     });
 
     client.onConnect = () => {
+      console.log('소켓 연결 성공');
       bookClubs.forEach((club: BookClub) => {
-        const subscription = client.subscribe(
-          `/topic/group-chat/${club.id}`,
-          (message) => {
-            const chatMessage: ChatMessage = JSON.parse(message.body);
-            console.log(`모임 ${club.title}의 새 메시지 수신:`, chatMessage);
-          },
-        );
-        console.log(`모임 ${club.id} 구독 완료:`, subscription.id);
+        console.log('구독 시도:', club.id);
+        client.subscribe(`/topic/group-chat/${club.id}`, (message) => {
+          const chatMessage: ChatMessage = JSON.parse(message.body);
+          console.log(`모임 ${club.title}의 새 메시지 수신:`, chatMessage);
+        });
       });
     };
 

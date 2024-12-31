@@ -36,7 +36,7 @@ function ChatBubbleList({
   };
 
   return (
-    <div className="flex w-full flex-col gap-3">
+    <div className="flex w-full flex-col gap-3 px-5">
       {groupedMessages.map((group, groupIndex) => (
         <div key={groupIndex} className="flex w-full flex-col gap-3">
           <div className="flex items-center justify-center py-1.5">
