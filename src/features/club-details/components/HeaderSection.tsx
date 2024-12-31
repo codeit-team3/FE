@@ -25,11 +25,13 @@ function HeaderSection() {
   const { id } = useParams();
   const idAsString = Array.isArray(id) ? id[0] : id || '';
   const idAsNumber = Number(idAsString);
-  const { isLoggedIn, checkLoginStatus } = useAuthStore();
+  const { user, isLoggedIn, checkLoginStatus } = useAuthStore();
   const { data, isLoading, error } = useQuery({
     ...bookClubs.detail(idAsNumber),
   });
-  const { mutate } = useJoinBookClub();
+
+  const userId = user?.id ?? 0;
+  const { mutate } = useJoinBookClub(userId);
 
   const router = useRouter();
 

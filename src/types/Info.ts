@@ -1,5 +1,5 @@
-export interface EditInfoParams {
-  nickname?: string;
-  description?: string;
-  image?: string | null;
-}
+// export interface EditInfoParams {
+//   nickname?: string;
+//   description?: string;
+//   image?: string | null;
+// }

@@ -17,7 +17,6 @@ export default function Profile() {
   });
 
   const user = data?.data;
-  console.log('user 출력', user);
 
   return <ProfilePage user={user} isMyPage={false} />;
 }

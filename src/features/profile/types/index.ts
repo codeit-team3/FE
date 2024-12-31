@@ -57,3 +57,9 @@ export interface ClubListProps {
   user?: User | null | undefined;
   order: orderType;
 }
+
+export interface EditInfoParams {
+  nickname?: string;
+  description?: string;
+  image?: string | null;
+}

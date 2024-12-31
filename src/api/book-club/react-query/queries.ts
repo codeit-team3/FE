@@ -25,6 +25,7 @@ export const bookClubs = createQueryKeys('bookClubs', {
         },
       }),
   }),
+
   detail: (bookClubId: number) => ({
     queryKey: [bookClubId],
     queryFn: () => apiClient.get(`/book-clubs/${bookClubId}`),
@@ -42,6 +43,34 @@ export const bookClubs = createQueryKeys('bookClubs', {
       }),
     },
   }),
+
+  //유저가 참여한 북클럽 조회
+  userJoined: (userId: number, filters?: MyProfileParams) => ({
+    queryKey: [userId, { filter: filters || {} }],
+    queryFn: (ctx) =>
+      apiClient.get(`/book-clubs/user/${userId}/joined`, {
+        params: {
+          ...filters,
+          page: ctx.pageParam ?? 1,
+          size: 10,
+        },
+      }),
+  }),
+
+  //유저가 만든 북클럽 조회
+  userCreated: (userId: number, filters?: MyProfileParams) => ({
+    queryKey: [userId, { filter: filters || {} }],
+    queryFn: (ctx) =>
+      apiClient.get(`/book-clubs/user/${userId}/created`, {
+        params: {
+          ...filters,
+          page: ctx.pageParam ?? 1,
+          size: 10,
+        },
+      }),
+  }),
+
+  //내가 참여한 북클럽 조회
   myJoined: (userId: number, filters?: MyProfileParams) => ({
     queryKey: [userId, { filters: filters || {} }],
     queryFn: (ctx) =>
@@ -53,6 +82,8 @@ export const bookClubs = createQueryKeys('bookClubs', {
         },
       }),
   }),
+
+  //내가 만든 북클럽 조회
   myCreated: (userId: number, filters?: MyProfileParams) => ({
     queryKey: [userId, { filters: filters || {} }],
     queryFn: (ctx) =>
@@ -64,6 +95,8 @@ export const bookClubs = createQueryKeys('bookClubs', {
         },
       }),
   }),
+
+  //내가 작성한 리뷰 조회
   myReviews: (userId: number, filters?: MyProfileParams) => ({
     queryKey: [userId, { filters: filters || {} }],
     queryFn: (ctx) =>

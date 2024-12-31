@@ -2,12 +2,11 @@
 
 import { useState } from 'react';
 import Avatar from '@/components/avatar/Avatar';
-import { IcEdit } from '../../../../../public/icons/index';
-import { EditInfoParams } from '@/types/Info';
 import { useEditInfo } from '@/api/auth/react-query';
 import { InfoEditModal } from './index';
-import { ProfilePageProps } from '../../types';
+import { EditInfoParams, ProfilePageProps } from '../../types';
 import IconButton from '@/components/icon-button/IconButton';
+import { IcEdit } from '../../../../../public/icons';
 
 export default function Info({ user, isMyPage }: ProfilePageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
