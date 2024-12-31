@@ -99,7 +99,7 @@ function RadioButtonGroup({
             </div>
             {option.value === 'OFFLINE' && town && (
               <div className="ml-auto flex items-center">
-                <Card.Location>{town}</Card.Location>
+                <Card.Location meetingType="OFFLINE">{town}</Card.Location>
               </div>
             )}
           </label>

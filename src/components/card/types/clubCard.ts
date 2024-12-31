@@ -6,7 +6,7 @@ interface ClubCard {
   // 모임 정보
   clubId: number;
   title: string;
-  location: string;
+  location: string | null;
   datetime: string;
   meetingType: 'ONLINE' | 'OFFLINE';
   bookClubType: 'FREE' | 'FIXED';
@@ -24,11 +24,14 @@ interface DefaultClubCard extends ClubCard {
 
   // 취소 정보 (블러)
   isCanceled: boolean;
-  onDelete: () => void;
+  onDelete?: () => void;
 
   // 참가자 현황
   current: number;
   max: number;
+
+  //마이페이지 판별
+  isMyPage?: boolean;
 }
 
 interface ParticipatedClubCard extends ClubCard {

@@ -2,7 +2,8 @@
 
 import { FilterBar, HeaderSection } from '@/components/common-layout';
 import ClubWishList from './ClubWishList';
-import { filters, mockBookClubs } from '../mocks/wishPageMockData';
+import { filters } from '../mocks/wishPageMockData';
+import { mockBookClubs } from '@/mocks/mockDatas';
 
 function WishPage() {
   return (
