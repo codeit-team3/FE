@@ -73,9 +73,9 @@ describe('로그인 상태에 따른 버튼 렌더링', () => {
       isLoggedIn: true,
       user: {
         image: '/images/profile.png',
-        teamId: 'team-id',
         id: 1,
         email: 'user@example.com',
+        nickname: 'Nick Name',
         name: 'User Name',
         description: 'description',
         createdAt: new Date(),

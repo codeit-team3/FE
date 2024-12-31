@@ -3,18 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Info from './Info';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { User } from '@/types/user';
-
-const mockUser: User = {
-  id: 123,
-  email: 'john.doe@example.com',
-  name: 'John Doe',
-  nickname: 'DoeJon',
-  description: 'Example Company',
-  image: 'https://example.com/profile.jpg',
-  createdAt: new Date('2024-01-01T00:00:00Z'),
-  updatedAt: new Date('2024-01-10T00:00:00Z'),
-};
+import { mockUser } from '@/mocks/mockDatas';
 
 const queryClient = new QueryClient();
 

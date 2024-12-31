@@ -11,7 +11,7 @@ import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 // import PopUp from '@/components/pop-up/PopUp';
 import { clubStatus } from '@/lib/utils/clubUtils';
 import { BookClub } from '@/types/bookclubs';
-import { mockBookClubs } from '../constants/mock';
+import { mockBookClubs } from '../../../mocks/mockDatas';
 
 export default function JoinedClubList({ user, order }: ClubListProps) {
   const router = useRouter();

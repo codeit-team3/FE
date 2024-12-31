@@ -10,7 +10,7 @@ import { ClubListProps } from '../types';
 import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { clubStatus } from '@/lib/utils/clubUtils';
 // import { useCancelClub } from '@/lib/hooks/useCancelClub';
-import { mockBookClubs } from '../constants/mock';
+import { mockBookClubs } from '../../../mocks/mockDatas';
 import { BookClub } from '@/types/bookclubs';
 
 export default function CreatedClubList({ user, order }: ClubListProps) {
