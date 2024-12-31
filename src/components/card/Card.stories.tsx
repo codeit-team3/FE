@@ -37,7 +37,24 @@ export const Title: Story = {
 };
 
 export const Location: Story = {
-  render: () => <Card.Location>서울특별시 강남구</Card.Location>,
+  render: () => (
+    <>
+      <Card.Location meetingType="OFFLINE">서울특별시 강남구</Card.Location>
+      <div className="mt-4">
+        <Card.Location meetingType="ONLINE">서울특별시 강남구</Card.Location>
+      </div>
+      <div className="mt-4">
+        <Card.Location meetingType="OFFLINE" isPast={true}>
+          서울특별시 강남구
+        </Card.Location>
+      </div>
+      <div className="mt-4">
+        <Card.Location meetingType="ONLINE" isPast={true}>
+          서울특별시 강남구
+        </Card.Location>
+      </div>
+    </>
+  ),
 };
 
 export const DateTime: Story = {

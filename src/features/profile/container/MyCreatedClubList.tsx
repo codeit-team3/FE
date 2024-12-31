@@ -1,20 +1,18 @@
+'use client';
+
 import Card from '@/components/card/Card';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
 import { useRouter } from 'next/navigation';
-import { BookClub } from '../types';
+import { ClubListProps } from '../types';
 import { bookClubs } from '@/api/book-club/react-query';
-import { orderType } from '@/types/bookclubs';
 import { useQuery } from '@tanstack/react-query';
 import PopUp from '@/components/pop-up/PopUp';
 import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { clubStatus } from '@/lib/utils/clubUtils';
 import { useCancelClub } from '@/lib/hooks/useCancelClub';
+import { BookClub } from '@/types/bookclubs';
 
-interface CreatedClubListProps {
-  order: orderType;
-}
-
-export default function CreatedClubList({ order }: CreatedClubListProps) {
+export default function MyCreatedClubList({ order }: ClubListProps) {
   const router = useRouter();
 
   const today = new Date();
