@@ -2,31 +2,30 @@
 
 import Card from '@/components/card/Card';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
-import { ClubListProps } from '../types';
 import { useRouter } from 'next/navigation';
-// import { useState } from 'react';
-// import { WriteReviewModal } from '../components/clubs';
-import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
+import { ClubListProps } from '../types';
+// import { bookClubs } from '@/api/book-club/react-query';
 // import { useQuery } from '@tanstack/react-query';
 // import PopUp from '@/components/pop-up/PopUp';
+import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { clubStatus } from '@/lib/utils/clubUtils';
-import { BookClub } from '@/types/bookclubs';
+// import { useCancelClub } from '@/lib/hooks/useCancelClub';
 import { mockBookClubs } from '../../../mocks/mockDatas';
+import { BookClub } from '@/types/bookclubs';
 
-export default function JoinedClubList({ user, order }: ClubListProps) {
+export default function CreatedClubList({ user, order }: ClubListProps) {
   const router = useRouter();
 
-  console.log(user, order);
   const today = new Date();
 
-  // const { queryKey, queryFn } = bookClubs.myJoined({ order: order });
-  // const { data, isLoading, error } = useQuery({
-  //   queryKey,
-  //   queryFn,
-  // });
+  console.log(user, order);
 
-  // const myJoinedList: BookClub[] = data?.data?.bookClubs || [];
-  const myJoinedList: BookClub[] = mockBookClubs;
+  // const { queryKey, queryFn } = bookClubs.myCreated({ order: order });
+
+  // const { data, isLoading, error } = useQuery({ queryKey, queryFn });
+
+  // const myCreatedList: BookClub[] = data?.data?.bookClubs || [];
+  const myCreatedList: BookClub[] = mockBookClubs;
 
   // 카드 클릭 이벤트
   const onClick = (clubId: number) => {
@@ -37,19 +36,21 @@ export default function JoinedClubList({ user, order }: ClubListProps) {
   const onLikeClick = (clubId: number) => {
     alert(clubId);
   };
+
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
       {/* {isLoading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>} */}
-      {myJoinedList?.length === 0 ? (
+      {myCreatedList?.length === 0 ? (
         <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
           <span className="whitespace-pre-wrap">
-            {NO_LIST_MESSAGE['JOINED']}
+            {NO_LIST_MESSAGE['CREATED']}
           </span>
         </div>
       ) : (
-        myJoinedList?.map((bookClub) => (
+        myCreatedList?.map((bookClub) => (
           <div key={bookClub.id} className="md:w-full">
+            {/* TODO: imageUrl. isPast, status 수정 */}
             {!bookClub.isInactive && (
               <Card
                 variant="defaultClub"
@@ -80,18 +81,13 @@ export default function JoinedClubList({ user, order }: ClubListProps) {
           </div>
         ))
       )}
-      {/* <WriteReviewModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onConfirm={(rating, content) => onConfirmReview(rating, content)}
-      />
-      <PopUp
-        isOpen={isPopUpOpen}
+      {/* <PopUp
+        isOpen={popUpState.isOpen}
         isLarge={true}
         isTwoButton={true}
-        label={label}
-        handlePopUpClose={() => setIsPopUpOpen(false)}
-        handlePopUpConfirm={onConfirmPopUp}
+        label={popUpState.label}
+        handlePopUpClose={onClosePopUp}
+        handlePopUpConfirm={onConfirmCancel}
       /> */}
     </div>
   );

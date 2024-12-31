@@ -217,15 +217,16 @@ function Card(props: CardProps) {
           location,
           datetime,
           isLiked,
-          onLikeClick,
           current,
           max,
           isPast,
           isCanceled,
+          // meetingType,
           bookClubType,
+          clubStatus,
+          onLikeClick,
           onClick,
           onDelete,
-          clubStatus,
           meetingType,
         } = props as DefaultClubCard & { variant: 'defaultClub' };
 
@@ -271,7 +272,7 @@ function Card(props: CardProps) {
                 />
               </div>
             </Card.Box>
-            {isCanceled && <Card.Overlay onDelete={() => onDelete()} />}
+            {isCanceled && <Card.Overlay onDelete={() => onDelete?.()} />}
           </div>
         );
       }
@@ -281,8 +282,6 @@ function Card(props: CardProps) {
           clubId,
           imageUrl,
           imageAlt,
-          // isLiked,
-          // onLikeClick,
           isCanceled,
           onClick,
           onDelete,
@@ -299,12 +298,7 @@ function Card(props: CardProps) {
 
         return (
           <div className="flex flex-col gap-6 md:flex-row">
-            <Card.Image
-              url={imageUrl}
-              alt={imageAlt}
-              // isLiked={isLiked}
-              // onLikeClick={onLikeClick}
-            />
+            <Card.Image url={imageUrl} alt={imageAlt} />
             <Card.Box
               onClick={() => onClick?.(clubId)}
               className="justify-between"

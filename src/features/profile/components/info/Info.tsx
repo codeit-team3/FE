@@ -9,7 +9,7 @@ import { InfoEditModal } from './index';
 import { ProfilePageProps } from '../../types';
 import IconButton from '@/components/icon-button/IconButton';
 
-export default function Info({ user }: ProfilePageProps) {
+export default function Info({ user, isMyPage }: ProfilePageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { mutate: editInfo } = useEditInfo();
 
@@ -21,7 +21,6 @@ export default function Info({ user }: ProfilePageProps) {
   return (
     <div className="mt-5 w-full min-w-[336px] flex-col">
       {/* 프로필 제목 */}
-      {/* TODO: 프로필 페이지가 로그인된 유저의 프로필 페이지와 일치 여부 확인 후 수정하기 아이콘 hidden or none */}
       <div
         className="flex h-[60px] w-full justify-between rounded-t-3xl border-l-2 border-r-2 border-t-2 border-green-light-02 bg-green-light-01 px-6 py-3.5"
         role="title"
@@ -29,11 +28,13 @@ export default function Info({ user }: ProfilePageProps) {
         <label className="text-xl font-semibold text-green-dark-01">
           {user?.nickname}님의 프로필
         </label>
-        <IconButton
-          icon={<IcEdit />}
-          aria-label="프로필 수정"
-          onClick={() => setIsModalOpen(true)}
-        />
+        {isMyPage && (
+          <IconButton
+            icon={<IcEdit />}
+            aria-label="프로필 수정"
+            onClick={() => setIsModalOpen(true)}
+          />
+        )}
       </div>
       {/* 프로필 내용 */}
       <div

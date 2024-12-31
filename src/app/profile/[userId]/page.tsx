@@ -1,11 +1,9 @@
+import { ProfilePage } from '@/features/profile/container';
+import { mockUser } from '@/mocks/mockDatas';
 import React from 'react';
 
-function Profile() {
-  return (
-    <div>
-      <div className="bg-black">profile page</div>
-    </div>
-  );
-}
+export default function Profile() {
+  const user = mockUser;
 
-export default Profile;
+  return <ProfilePage user={user} isMyPage={false} />;
+}
