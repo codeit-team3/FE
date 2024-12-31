@@ -1,5 +1,7 @@
 'use client';
 
+import 'react-datepicker/dist/react-datepicker.css';
+import '@/styles/datepicker.css';
 import { useMemo } from 'react';
 import DatePicker from 'react-datepicker';
 import { Control, Controller } from 'react-hook-form';
@@ -9,7 +11,6 @@ import {
   CreateClubFormField,
   InputField,
 } from '@/features/club-create/components';
-import '@/styles/datepicker.css';
 
 interface DatePickerContainerProps {
   control: Control<BookClubForm>;

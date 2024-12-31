@@ -1,6 +1,5 @@
 'use client';
 
-import 'react-datepicker/dist/react-datepicker.css';
 import Button from '@/components/button/Button';
 import {
   CreateClubFormField,

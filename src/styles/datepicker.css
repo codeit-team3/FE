@@ -124,6 +124,10 @@
 /* 시간 목록 아이템 스타일 */
 .react-datepicker__time-list-item {
   color: #6c6c6d !important;
+  font-size: 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 /* 선택된 시간 스타일 */
