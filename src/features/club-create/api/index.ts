@@ -21,7 +21,7 @@ export const createBookClub = async (data: BookClubForm) => {
     city: data.city,
     town: data.town,
     address: data.address,
-    addressDetail: data.addressDetail,
+    detailAddress: data.detailAddress,
   };
 
   formData.append(
