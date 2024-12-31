@@ -13,6 +13,14 @@ jest.mock('next/navigation', () => ({
   })),
 }));
 
+beforeAll(() => {
+  global.ResizeObserver = class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  };
+});
+
 describe('HeaderBar 컴포넌트 테스트', () => {
   beforeEach(() => {
     useAuthStore.setState({ isLoggedIn: false, user: null });
@@ -77,6 +85,7 @@ describe('로그인 상태에 따른 버튼 렌더링', () => {
         id: 1,
         email: 'user@example.com',
         name: 'User Name',
+        nickname: 'Nick Name',
         description: 'description',
         createdAt: new Date(),
         updatedAt: new Date(),
