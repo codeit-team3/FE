@@ -3,7 +3,6 @@
 import Card from '@/components/card/Card';
 import { CardProps } from '@/components/card/types';
 import PopUp from '@/components/pop-up/PopUp';
-import { showToast } from '@/components/toast/toast';
 import { clubStatus } from '@/lib/utils/clubUtils';
 import { formatDateForUI } from '@/lib/utils/formatDateForUI';
 import { useAuthStore } from '@/store/authStore';
@@ -66,28 +65,7 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
       return;
     }
 
-    handleJoin(
-      clubInfo.id,
-      () => {
-        showToast({
-          message: '참여 완료! 함께하게 돼서 기뻐요🥰',
-          type: 'success',
-        });
-      },
-      (error) => {
-        if (error.response?.data?.message) {
-          showToast({
-            message: error.response.data.message,
-            type: 'error',
-          });
-        } else {
-          showToast({
-            message: '참여 요청 중 문제가 발생했습니다. 다시 시도해주세요.',
-            type: 'error',
-          });
-        }
-      },
-    );
+    handleJoin(clubInfo.id);
   };
 
   const defaultCardProps: CardProps = {
