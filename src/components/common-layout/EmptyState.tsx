@@ -7,7 +7,7 @@ interface EmptyStateProps {
 function EmptyState({ title, subtitle, className }: EmptyStateProps) {
   return (
     <div
-      className={`mt-12 flex flex-col items-center justify-center font-medium text-gray-normal-03 md:mt-[207px] lg:mt-[180px] ${className || ''}`}
+      className={`flex flex-1 flex-col items-center justify-center text-center font-medium text-gray-normal-03 ${className || ''}`}
     >
       <p>{title}</p>
       <p>{subtitle}</p>
