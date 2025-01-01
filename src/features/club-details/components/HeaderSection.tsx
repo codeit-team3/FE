@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useJoinClub } from '../hooks/useJoinClub';
 import { useCancelClub } from '@/lib/hooks/useCancelClub';
+import { useLeaveClub } from '../hooks/useLeaveClub';
 
 interface HeaderSectionProps {
   clubInfo: BookClub;
@@ -30,13 +31,15 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
   const { handleJoin } = useJoinClub();
   const { popUpState, onCancel, onConfirmCancel, onClosePopUp } =
     useCancelClub();
+  const {
+    leavePopUpState,
+    onCancelParticipation,
+    onConfirmLeave,
+    onCloseLeavePopUp,
+  } = useLeaveClub();
   const { isLoggedIn, checkLoginStatus } = useAuthStore();
 
   const router = useRouter();
-
-  useEffect(() => {
-    console.log(clubInfo);
-  });
 
   useEffect(() => {
     checkLoginStatus();
@@ -117,11 +120,11 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
       profileImage: EXAMPLE_IMAGE,
     },
     isHost: false,
-    isParticipant: false,
+    isParticipant: true,
     hasWrittenReview: false,
     onCancel: () => onCancel(clubInfo.id),
     onParticipate: handleJoinClick,
-    onCancelParticipation: () => alert('모임 참여 취소하기 클릭!'),
+    onCancelParticipation: () => onCancelParticipation(clubInfo.id),
     onWriteReview: () => alert('리뷰 작성하기 클릭!'),
   };
 
@@ -139,6 +142,14 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
           handlePopUpConfirm={isMember.handlePopUpConfirm}
         />
       )}
+      <PopUp
+        isOpen={leavePopUpState.isOpen}
+        isLarge={true}
+        isTwoButton={true}
+        label={leavePopUpState.label}
+        handlePopUpClose={onCloseLeavePopUp}
+        handlePopUpConfirm={onConfirmLeave}
+      />
       <PopUp
         isOpen={popUpState.isOpen}
         isLarge={true}

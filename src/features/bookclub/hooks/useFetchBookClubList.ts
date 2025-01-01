@@ -21,7 +21,6 @@ const useBookClubList = () => {
     try {
       const data = await getBookClubs(filters); // API 호출
       setBookClubs(data);
-      console.log(data);
     } catch (err) {
       setError(err as Error);
     } finally {

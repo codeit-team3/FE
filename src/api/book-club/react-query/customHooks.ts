@@ -51,7 +51,10 @@ export function useLeaveBookClub() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: number) => bookClubMemberAPI.leave(id),
-    onSuccess: () => {
+    onSuccess: (_, id) => {
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.detail(id).queryKey,
+      });
       queryClient.invalidateQueries({
         queryKey: bookClubs.myJoined().queryKey,
       });

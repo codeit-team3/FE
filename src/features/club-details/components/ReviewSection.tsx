@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { ReviewList, ReviewSummary } from '.';
 import { bookClubs } from '@/api/book-club/react-query';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ClubDetailReviewFilters } from '@/types/review';
 
 function ReviewSection({ idAsNumber }: { idAsNumber: number }) {
@@ -17,10 +17,6 @@ function ReviewSection({ idAsNumber }: { idAsNumber: number }) {
     ...bookClubs.detail(idAsNumber)._ctx.reviews(filters),
   });
   let reviewInfo = data?.data;
-
-  useEffect(() => {
-    console.log(data?.data);
-  });
 
   if (isLoading) {
     return <p>Loading...</p>;
