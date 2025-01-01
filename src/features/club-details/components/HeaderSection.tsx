@@ -9,9 +9,9 @@ import { useAuthStore } from '@/store/authStore';
 import { BookClub } from '@/types/bookclubs';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useJoinClub } from '../hooks/useJoinClub';
 import { useCancelClub } from '@/lib/hooks/useCancelClub';
-import { useLeaveClub } from '../hooks/useLeaveClub';
+import { useLeaveClub, useJoinClub } from '../hooks';
+import { useLikeWithAuthCheck } from '@/lib/hooks/useLikeWithAuthCheck';
 
 interface HeaderSectionProps {
   clubInfo: BookClub;
@@ -20,7 +20,6 @@ interface HeaderSectionProps {
 
 function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
   const [isMember, setIsMember] = useState<{
     label: string;
     isTwoButton: boolean;
@@ -36,9 +35,20 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
     onConfirmLeave,
     onCloseLeavePopUp,
   } = useLeaveClub();
+  const {
+    isLikePopUpOpen,
+    likePopUpLabel,
+    onCheckAuthPopUp,
+    onCloseCheckAuthPopup,
+  } = useLikeWithAuthCheck();
+
   const { isLoggedIn, checkLoginStatus } = useAuthStore();
 
   const router = useRouter();
+
+  useEffect(() => {
+    console.log(clubInfo);
+  }, []);
 
   useEffect(() => {
     checkLoginStatus();
@@ -68,6 +78,10 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
     handleJoin(clubInfo.id);
   };
 
+  const handleLikePopUpConfirm = () => {
+    router.push('/login');
+  };
+
   const defaultCardProps: CardProps = {
     clubId: clubInfo.id,
     variant: 'detailedClub',
@@ -88,11 +102,9 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
       clubInfo.endDate,
       new Date(), // TODO: new Date() 최적화 후 수정
     ),
-    onLikeClick: () => {
-      setIsLiked(!isLiked);
-    }, // api 연동 후 수정
-    // TODO: 응답값 추가 후 수정
+    onLikeClick: () => onCheckAuthPopUp(clubInfo.id),
     host: {
+      // TODO: 응답값 추가 후 수정
       id: 'host1',
       name: '호스트',
       profileImage: EXAMPLE_IMAGE,
@@ -135,6 +147,15 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
         label={popUpState.label}
         handlePopUpClose={onClosePopUp}
         handlePopUpConfirm={onConfirmCancel}
+      />
+      {/* 찜하기 */}
+      <PopUp
+        isOpen={isLikePopUpOpen}
+        isLarge={true}
+        isTwoButton={true}
+        label={likePopUpLabel}
+        handlePopUpClose={onCloseCheckAuthPopup}
+        handlePopUpConfirm={handleLikePopUpConfirm}
       />
     </header>
   );

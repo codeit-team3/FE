@@ -117,7 +117,8 @@ export function useLikeBookClub() {
 
   return useMutation<void, AxiosError<{ message: string }>, number>({
     mutationFn: (id: number) => bookClubLikeAPI.like(id),
-    onSuccess: (_, id) => {
+    onSuccess: (response, id) => {
+      console.log('찜 성공 응답:', response);
       queryClient.invalidateQueries({
         queryKey: bookClubs.all().queryKey,
       });
