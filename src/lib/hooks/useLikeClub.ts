@@ -31,5 +31,5 @@ export const useLikeClub = () => {
     });
   };
 
-  return onConfirmLike;
+  return { onConfirmLike };
 };
