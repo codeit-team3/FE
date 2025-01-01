@@ -22,7 +22,6 @@ export default function MyWrittenReviewList({ order }: ClubListProps) {
   });
 
   const myReviewList: Review[] = data?.data?.reviews || [];
-  // const myReviewList: Review[] = mockReviews;
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
