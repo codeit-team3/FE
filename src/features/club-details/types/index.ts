@@ -3,7 +3,7 @@ export interface ClubReviewResponse {
   reviews: Review[];
 }
 
-interface Review {
+export interface Review {
   id: number;
   userId: number;
   bookClubId: number;
