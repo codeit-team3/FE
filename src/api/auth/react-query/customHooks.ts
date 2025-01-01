@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { showToast } from '@/components/toast/toast';
 import { authClientAPI } from '../authClientAPI';
 import { getUserInfo } from '@/features/auth/api/auth';
-import { EditInfoParams } from '@/types/Info';
+import { EditInfoParams } from '@/features/profile/types';
 
 //프로필 수정하기
 export function useEditInfo() {

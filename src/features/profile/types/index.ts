@@ -1,25 +1,5 @@
 import { User } from '@/types/user';
 
-//TODO: isCanceled, imageUrl. isPast, status 수정
-// export interface BookClub {
-//   id: number;
-//   title: string;
-//   description: string;
-//   meetingType: 'ONLINE' | 'OFFLINE';
-//   bookClubType: 'FREE' | 'FIXED';
-//   targetDate: string;
-//   endDate: string;
-//   town: string;
-//   memberLimit: number;
-//   memberCount: number;
-//   isLiked: boolean;
-//   isCanceled: boolean;
-//   imageUrl?: string | undefined;
-//   isPast: boolean;
-//   clubStatus: 'pending' | 'confirmed' | 'closed';
-//   reviewScore?: number | undefined;
-// }
-
 export interface Review {
   reviewId: number;
   userId: number;
