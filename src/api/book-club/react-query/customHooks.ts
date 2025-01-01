@@ -26,6 +26,12 @@ export function useBookClubCreateMutation(userId: number) {
       queryClient.invalidateQueries({
         queryKey: bookClubs.myJoined(userId).queryKey,
       });
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.userCreated(userId).queryKey,
+      });
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.userJoined(userId).queryKey,
+      });
     },
   });
 }
@@ -37,10 +43,13 @@ export function useJoinBookClub(userId: number) {
     mutationFn: (id: number) => bookClubMemberAPI.join(id),
     onSuccess: (_, id) => {
       queryClient.invalidateQueries({
-        queryKey: bookClubs.detail(id).queryKey,
+        queryKey: bookClubs.detail(userId, id).queryKey,
       });
       queryClient.invalidateQueries({
         queryKey: bookClubs.myJoined(userId).queryKey,
+      });
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.userJoined(userId).queryKey,
       });
     },
   });
@@ -54,6 +63,9 @@ export function useLeaveBookClub(userId: number) {
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: bookClubs.myJoined(userId).queryKey,
+      });
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.userJoined(userId).queryKey,
       });
     },
   });
@@ -71,13 +83,12 @@ export function useWriteReview(userId: number) {
       const { bookClubId } = variables;
 
       queryClient.invalidateQueries({
-        queryKey: bookClubs.detail(bookClubId).queryKey, // bookClubId에 해당하는 모임 상세 무효화
+        queryKey: bookClubs.detail(userId, bookClubId).queryKey, // bookClubId에 해당하는 모임 상세 무효화
       });
 
-      //TODO: reviews 하위 쿼리 무효화
-      // queryClient.invalidateQueries({
-      //   queryKey: bookClubs.detail(bookClubId).contextQueries.reviews().queryKey, // reviews 무효화
-      // });
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.userReviewd(userId).queryKey,
+      });
 
       queryClient.invalidateQueries({
         queryKey: bookClubs.myReviews(userId).queryKey,

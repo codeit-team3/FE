@@ -5,9 +5,8 @@ import { useAuthStore } from '@/store/authStore';
 
 export function useCancelClub() {
   const { user } = useAuthStore();
-  const userId = user?.id ?? 0;
 
-  const { mutateAsync: cancelClub } = useCancelBookClub(userId);
+  const { mutateAsync: cancelClub } = useCancelBookClub(user?.id ?? 0);
 
   const [popUpState, setPopUpState] = useState({
     isOpen: false,

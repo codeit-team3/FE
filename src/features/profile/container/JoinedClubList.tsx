@@ -10,16 +10,17 @@ import { clubStatus } from '@/lib/utils/clubUtils';
 import { BookClub } from '@/types/bookclubs';
 import { bookClubs } from '@/api/book-club/react-query';
 import { useGetUserByPath } from '@/lib/hooks/useGetUserByPath';
+import { showToast } from '@/components/toast/toast';
+import { useEffect } from 'react';
 
 export default function JoinedClubList({ order }: ClubListProps) {
   const router = useRouter();
-
   const user = useGetUserByPath();
 
   const { queryKey, queryFn } = bookClubs.userJoined(user?.id, {
     order: order,
   });
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, isError, error } = useQuery({
     queryKey,
     queryFn,
   });
@@ -36,6 +37,16 @@ export default function JoinedClubList({ order }: ClubListProps) {
   const onLikeClick = (clubId: number) => {
     alert(clubId);
   };
+
+  useEffect(() => {
+    if (isError) {
+      showToast({
+        message: '사용자 프로필 조회에 실패하였습니다. 주소를 확인해주세요 ',
+        type: 'error',
+      });
+    }
+  }, [isError]);
+
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
       {isLoading && <p>Loading...</p>}

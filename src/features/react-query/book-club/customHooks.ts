@@ -3,7 +3,7 @@ import { BookClubForm } from '@/features/club-create/types';
 import { createBookClub } from '@/features/club-create/api';
 import { bookClubs } from '@/api/book-club/react-query';
 
-export function useBookClubCreateMutation() {
+export function useBookClubCreateMutation(userId: number) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -13,7 +13,7 @@ export function useBookClubCreateMutation() {
         queryKey: bookClubs.all().queryKey,
       });
       queryClient.invalidateQueries({
-        queryKey: bookClubs.myCreated().queryKey,
+        queryKey: bookClubs.myCreated(userId).queryKey,
       });
     },
   });

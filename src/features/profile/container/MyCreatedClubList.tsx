@@ -15,19 +15,19 @@ import { useAuthStore } from '@/store/authStore';
 
 export default function MyCreatedClubList({ order }: ClubListProps) {
   const router = useRouter();
-
   const { user } = useAuthStore();
-  const today = new Date();
 
   const userId = user?.id ?? 0;
-  const { queryKey, queryFn } = bookClubs.myCreated(userId, { order: order });
-
+  const { queryKey, queryFn } = bookClubs.myCreated(userId, {
+    order: order,
+  });
   const { data, isLoading, error } = useQuery({ queryKey, queryFn });
+  const { popUpState, onCancel, onConfirmCancel, onClosePopUp } =
+    useCancelClub();
 
   const myCreatedList: BookClub[] = data?.data?.bookClubs || [];
 
-  const { popUpState, onCancel, onConfirmCancel, onClosePopUp } =
-    useCancelClub();
+  const today = new Date();
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">

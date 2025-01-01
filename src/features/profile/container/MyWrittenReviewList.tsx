@@ -14,9 +14,8 @@ export default function MyWrittenReviewList({ order }: ClubListProps) {
   const router = useRouter();
 
   const { user } = useAuthStore();
-  const userId = user?.id ?? 0;
 
-  const { queryKey, queryFn } = bookClubs.myReviews(userId, { order });
+  const { queryKey, queryFn } = bookClubs.myReviews(user?.id ?? 0, { order });
   const { data, isLoading, error } = useQuery({
     queryKey,
     queryFn,

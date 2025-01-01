@@ -26,12 +26,11 @@ function HeaderSection() {
   const idAsString = Array.isArray(id) ? id[0] : id || '';
   const idAsNumber = Number(idAsString);
   const { user, isLoggedIn, checkLoginStatus } = useAuthStore();
-  const { data, isLoading, error } = useQuery({
-    ...bookClubs.detail(idAsNumber),
-  });
 
-  const userId = user?.id ?? 0;
-  const { mutate } = useJoinBookClub(userId);
+  const { data, isLoading, error } = useQuery({
+    ...bookClubs.detail(user?.id ?? 0, idAsNumber),
+  });
+  const { mutate } = useJoinBookClub(user?.id ?? 0);
 
   const router = useRouter();
 
