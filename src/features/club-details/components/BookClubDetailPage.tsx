@@ -17,7 +17,6 @@ function BookClubDetailPage() {
     clubInfo,
     isLoading,
     error,
-    joinClub,
     popUpState,
     onCancel,
     onConfirmCancel,
@@ -38,7 +37,6 @@ function BookClubDetailPage() {
         <div className="w-full min-w-[336px] px-[20px] pb-[46px] md:px-[24px] md:pb-[38px] lg:px-[102px]">
           <HeaderSection
             clubInfo={clubInfo}
-            joinClub={joinClub}
             popUpState={popUpState}
             onCancel={onCancel}
             onConfirmCancel={onConfirmCancel}

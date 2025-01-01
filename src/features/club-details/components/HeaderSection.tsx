@@ -8,19 +8,12 @@ import { clubStatus } from '@/lib/utils/clubUtils';
 import { formatDateForUI } from '@/lib/utils/formatDateForUI';
 import { useAuthStore } from '@/store/authStore';
 import { BookClub } from '@/types/bookclubs';
-import { UseMutateFunction } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useJoinClub } from '../hooks/useJoinClub';
 
 interface HeaderSectionProps {
   clubInfo: BookClub;
-  joinClub: UseMutateFunction<
-    void,
-    AxiosError<{ message: string }>,
-    number,
-    unknown
-  >;
   popUpState: {
     isOpen: boolean;
     label: string;
@@ -34,7 +27,6 @@ interface HeaderSectionProps {
 
 function HeaderSection({
   clubInfo,
-  joinClub,
   popUpState,
   onCancel,
   onConfirmCancel,
@@ -49,9 +41,14 @@ function HeaderSection({
     handlePopUpConfirm?: () => void;
   } | null>(null);
 
+  const { handleJoin } = useJoinClub();
   const { isLoggedIn, checkLoginStatus } = useAuthStore();
 
   const router = useRouter();
+
+  useEffect(() => {
+    console.log(clubInfo);
+  });
 
   useEffect(() => {
     checkLoginStatus();
@@ -67,7 +64,7 @@ function HeaderSection({
   // TODO: 응답값 추가 후 제거
   const EXAMPLE_IMAGE = '/images/profile.png';
 
-  const handleJoin = () => {
+  const handleJoinClick = () => {
     if (!isLoggedIn) {
       setIsMember({
         label: '로그인 후 이용해주세요!',
@@ -78,14 +75,15 @@ function HeaderSection({
       return;
     }
 
-    joinClub(clubInfo.id, {
-      onSuccess: () => {
+    handleJoin(
+      clubInfo.id,
+      () => {
         showToast({
           message: '참여 완료! 함께하게 돼서 기뻐요🥰',
           type: 'success',
         });
       },
-      onError: (error) => {
+      (error) => {
         if (error.response?.data?.message) {
           showToast({
             message: error.response.data.message,
@@ -98,7 +96,7 @@ function HeaderSection({
           });
         }
       },
-    });
+    );
   };
 
   const defaultCardProps: CardProps = {
@@ -134,8 +132,8 @@ function HeaderSection({
     isParticipant: false,
     hasWrittenReview: false,
     onCancel: () => onCancel(clubInfo.id),
-    onParticipate: handleJoin,
-    onCancelParticipation: () => alert('참여 취소하기 클릭!'),
+    onParticipate: handleJoinClick,
+    onCancelParticipation: () => alert('모임 참여 취소하기 클릭!'),
     onWriteReview: () => alert('리뷰 작성하기 클릭!'),
   };
 
