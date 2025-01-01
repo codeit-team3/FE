@@ -117,8 +117,23 @@ export function useLikeBookClub() {
 
   return useMutation<void, AxiosError<{ message: string }>, number>({
     mutationFn: (id: number) => bookClubLikeAPI.like(id),
-    onSuccess: (response, id) => {
-      console.log('찜 성공 응답:', response);
+    onSuccess: (_, id) => {
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.all().queryKey,
+      });
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.detail(id).queryKey,
+      });
+    },
+  });
+}
+
+export function useUnLikeBookClub() {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, AxiosError<{ message: string }>, number>({
+    mutationFn: (id: number) => bookClubLikeAPI.unlike(id),
+    onSuccess: (_, id) => {
       queryClient.invalidateQueries({
         queryKey: bookClubs.all().queryKey,
       });

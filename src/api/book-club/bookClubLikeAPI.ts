@@ -7,7 +7,7 @@ export const bookClubLikeAPI = {
   },
   //찜하기
   like: async (id: number) => {
-    apiClient.post(`/book-clubs/${id}/likes`).then((res) => res.data);
+    apiClient.post(`/book-clubs/${id}/likes`);
   },
 
   //찜 목록 조회

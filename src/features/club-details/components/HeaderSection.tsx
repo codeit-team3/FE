@@ -9,9 +9,12 @@ import { useAuthStore } from '@/store/authStore';
 import { BookClub } from '@/types/bookclubs';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useCancelClub } from '@/lib/hooks/useCancelClub';
 import { useLeaveClub, useJoinClub } from '../hooks';
-import { useLikeWithAuthCheck } from '@/lib/hooks/useLikeWithAuthCheck';
+import {
+  useCancelClub,
+  useLikeWithAuthCheck,
+  useUnLikeClub,
+} from '@/lib/hooks/index';
 
 interface HeaderSectionProps {
   clubInfo: BookClub;
@@ -41,6 +44,7 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
     onCheckAuthPopUp,
     onCloseCheckAuthPopup,
   } = useLikeWithAuthCheck();
+  const { onConfirmUnLike } = useUnLikeClub();
 
   const { isLoggedIn, checkLoginStatus } = useAuthStore();
 
@@ -78,6 +82,12 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
     handleJoin(clubInfo.id);
   };
 
+  const handleLikeClub = () => {
+    clubInfo.isLiked
+      ? onCheckAuthPopUp(clubInfo.id)
+      : onConfirmUnLike(clubInfo.id);
+  };
+
   const handleLikePopUpConfirm = () => {
     router.push('/login');
   };
@@ -102,7 +112,7 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
       clubInfo.endDate,
       new Date(), // TODO: new Date() 최적화 후 수정
     ),
-    onLikeClick: () => onCheckAuthPopUp(clubInfo.id),
+    onLikeClick: handleLikeClub,
     host: {
       // TODO: 응답값 추가 후 수정
       id: 'host1',
