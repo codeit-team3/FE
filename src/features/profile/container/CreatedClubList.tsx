@@ -9,22 +9,22 @@ import { useQuery } from '@tanstack/react-query';
 import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { clubStatus } from '@/lib/utils/clubUtils';
 import { BookClub } from '@/types/bookclubs';
-import { useUserIdFromPath } from '@/lib/hooks/useUserIdFromPath';
+import { useGetUserByPath } from '@/lib/hooks/useGetUserByPath';
 
 export default function CreatedClubList({ order }: ClubListProps) {
   const router = useRouter();
+  const user = useGetUserByPath();
 
-  const userId = useUserIdFromPath();
-
-  const { queryKey, queryFn } = bookClubs.userCreated(userId, { order: order });
+  const { queryKey, queryFn } = bookClubs.userCreated(user?.id, {
+    order: order,
+  });
   const { data, isLoading, error } = useQuery({
     queryKey,
     queryFn,
   });
 
+  const CreatedList: BookClub[] = data?.data?.bookClubs || [];
   const today = new Date();
-
-  const myCreatedList: BookClub[] = data?.data?.bookClubs || [];
 
   // 카드 클릭 이벤트
   const onClick = (clubId: number) => {
@@ -41,16 +41,15 @@ export default function CreatedClubList({ order }: ClubListProps) {
       {/* TODO: 로딩 컴포넌트 */}
       {isLoading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
-      {myCreatedList?.length === 0 ? (
+      {CreatedList?.length === 0 ? (
         <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
           <span className="whitespace-pre-wrap">
             {NO_LIST_MESSAGE['CREATED']}
           </span>
         </div>
       ) : (
-        myCreatedList
-          ?.filter((bookClub) => !bookClub.isInactive)
-          ?.map((bookClub) => (
+        CreatedList?.filter((bookClub) => !bookClub.isInactive)?.map(
+          (bookClub) => (
             <div key={bookClub.id} className="md:w-full">
               {/* TODO: imageUrl. isPast, status 수정 */}
               <Card
@@ -79,16 +78,9 @@ export default function CreatedClubList({ order }: ClubListProps) {
                 onLikeClick={() => onLikeClick(bookClub.id)}
               />
             </div>
-          ))
+          ),
+        )
       )}
-      {/* <PopUp
-        isOpen={popUpState.isOpen}
-        isLarge={true}
-        isTwoButton={true}
-        label={popUpState.label}
-        handlePopUpClose={onClosePopUp}
-        handlePopUpConfirm={onConfirmCancel}
-      /> */}
     </div>
   );
 }

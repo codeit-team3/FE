@@ -30,14 +30,15 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
   const { user } = useAuthStore();
   const today = new Date();
 
-  const userId = user?.id ?? 0;
-  const { queryKey, queryFn } = bookClubs.myJoined(userId, { order: order });
+  const { queryKey, queryFn } = bookClubs.myJoined(user?.id ?? 0, {
+    order: order,
+  });
   const { data, isLoading, error } = useQuery({
     queryKey,
     queryFn,
   });
-  const { mutateAsync: leaveClub } = useLeaveBookClub();
-  const { mutate: writeReview } = useWriteReview();
+  const { mutateAsync: leaveClub } = useLeaveBookClub(user?.id ?? 0);
+  const { mutate: writeReview } = useWriteReview(user?.id ?? 0);
 
   const myJoinedList: BookClub[] = data?.data?.bookClubs || [];
 

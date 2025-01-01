@@ -9,20 +9,22 @@ import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { clubStatus } from '@/lib/utils/clubUtils';
 import { BookClub } from '@/types/bookclubs';
 import { bookClubs } from '@/api/book-club/react-query';
-import { useUserIdFromPath } from '@/lib/hooks/useUserIdFromPath';
+import { useGetUserByPath } from '@/lib/hooks/useGetUserByPath';
 
 export default function JoinedClubList({ order }: ClubListProps) {
   const router = useRouter();
 
-  const userId = useUserIdFromPath();
+  const user = useGetUserByPath();
 
-  const { queryKey, queryFn } = bookClubs.userJoined(userId, { order: order });
+  const { queryKey, queryFn } = bookClubs.userJoined(user?.id, {
+    order: order,
+  });
   const { data, isLoading, error } = useQuery({
     queryKey,
     queryFn,
   });
 
-  const myJoinedList: BookClub[] = data?.data?.bookClubs || [];
+  const JoinedList: BookClub[] = data?.data?.bookClubs || [];
 
   const today = new Date();
 
@@ -38,16 +40,15 @@ export default function JoinedClubList({ order }: ClubListProps) {
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
       {isLoading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
-      {myJoinedList?.length === 0 ? (
+      {JoinedList?.length === 0 ? (
         <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
           <span className="whitespace-pre-wrap">
             {NO_LIST_MESSAGE['JOINED']}
           </span>
         </div>
       ) : (
-        myJoinedList
-          ?.filter((bookClub) => !bookClub.isInactive)
-          ?.map((bookClub) => (
+        JoinedList?.filter((bookClub) => !bookClub.isInactive)?.map(
+          (bookClub) => (
             <div key={bookClub.id} className="md:w-full">
               <Card
                 variant="defaultClub"
@@ -75,7 +76,8 @@ export default function JoinedClubList({ order }: ClubListProps) {
                 onLikeClick={() => onLikeClick(bookClub.id)}
               />
             </div>
-          ))
+          ),
+        )
       )}
     </div>
   );
