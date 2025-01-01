@@ -33,8 +33,11 @@ function FilterSection({
 
   const updateMemberLimitFilter = (selectedValue: string | undefined) => {
     const memberLimit = getMemberLimit(selectedValue);
-    if (selectedValue !== undefined) {
-      onFilterChange({ memberLimit });
+    if (memberLimit) {
+      onFilterChange({
+        memberLimitMin: memberLimit.min,
+        memberLimitMax: memberLimit.max,
+      });
     }
   };
 
