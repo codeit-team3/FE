@@ -11,28 +11,14 @@ import { BookClub } from '@/types/bookclubs';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useJoinClub } from '../hooks/useJoinClub';
+import { useCancelClub } from '@/lib/hooks/useCancelClub';
 
 interface HeaderSectionProps {
   clubInfo: BookClub;
-  popUpState: {
-    isOpen: boolean;
-    label: string;
-    selectedClubId: number | null;
-  };
-  onCancel: (clubId: number) => void;
-  onConfirmCancel: () => Promise<void>;
-  onClosePopUp: () => void;
   idAsNumber: number;
 }
 
-function HeaderSection({
-  clubInfo,
-  popUpState,
-  onCancel,
-  onConfirmCancel,
-  onClosePopUp,
-  idAsNumber,
-}: HeaderSectionProps) {
+function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [isMember, setIsMember] = useState<{
@@ -42,6 +28,8 @@ function HeaderSection({
   } | null>(null);
 
   const { handleJoin } = useJoinClub();
+  const { popUpState, onCancel, onConfirmCancel, onClosePopUp } =
+    useCancelClub();
   const { isLoggedIn, checkLoginStatus } = useAuthStore();
 
   const router = useRouter();
