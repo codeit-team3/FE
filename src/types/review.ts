@@ -14,6 +14,10 @@ export interface Review {
   bookClubType: 'FREE' | 'FIXED';
 }
 
+export interface DetailReview extends Omit<Review, 'userName'> {
+  userName: string;
+}
+
 export interface ClubDetailReviewFilters {
   order?: 'DESC' | 'RATE_DESC' | 'RATE_ASC';
   size?: number;

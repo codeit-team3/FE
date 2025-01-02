@@ -39,7 +39,7 @@ function ReviewList({
               comment={review.content}
               userProfile={{
                 profileImage: review.image || '/images/profile.png',
-                userName: review.nickname,
+                userName: review.userName,
                 createdAt: review.createdAt,
               }}
             />
