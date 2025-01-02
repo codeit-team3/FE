@@ -9,9 +9,10 @@ import { useAuthStore } from '@/store/authStore';
 import { BookClub } from '@/types/bookclubs';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useLeaveClub, useJoinClub } from '../hooks';
+import { useJoinClub } from '../hooks';
 import {
   useCancelClub,
+  useLeaveClub,
   useLikeWithAuthCheck,
   useUnLikeClub,
 } from '@/lib/hooks/index';
