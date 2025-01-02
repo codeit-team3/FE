@@ -26,7 +26,7 @@ export default function Info({ user, isMyPage }: ProfilePageProps) {
         role="title"
       >
         <label className="text-xl font-semibold text-green-dark-01">
-          {isMyPage ? '나' : user?.nickname + '님'}의 프로필
+          {isMyPage ? '나' : (user?.nickname ?? '북코' + '님')}의 프로필
         </label>
         {isMyPage && (
           <IconButton
@@ -52,7 +52,7 @@ export default function Info({ user, isMyPage }: ProfilePageProps) {
         {/* 프로필 정보 */}
         <div className="flex w-full flex-col">
           <div className="mb-[14px] text-2xl font-bold text-green-normal-01">
-            {user?.nickname}님
+            {user?.nickname ?? '북코'}님
           </div>
           <div className="flex flex-col gap-y-2">
             <div className="flex gap-y-1.5 sm:flex-col md:flex-row lg:flex-row">

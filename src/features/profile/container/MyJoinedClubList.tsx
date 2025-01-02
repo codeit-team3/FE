@@ -18,6 +18,7 @@ import {
 import { showToast } from '@/components/toast/toast';
 import { BookClub } from '@/types/bookclubs';
 import { useAuthStore } from '@/store/authStore';
+import Loading from '@/components/loading/Loading';
 
 export default function MyJoinedClubList({ order }: ClubListProps) {
   const router = useRouter();
@@ -131,9 +132,10 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
-      {isLoading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
-      {myJoinedList?.length === 0 ? (
+      {isLoading ? (
+        <Loading fullHeight={false} />
+      ) : myJoinedList?.length === 0 ? (
         <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
           <span className="whitespace-pre-wrap">
             {NO_LIST_MESSAGE['JOINED']}
