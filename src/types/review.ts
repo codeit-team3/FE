@@ -14,8 +14,11 @@ export interface Review {
   bookClubType: 'FREE' | 'FIXED';
 }
 
-export interface DetailReview extends Omit<Review, 'userName'> {
+export interface DetailReview
+  extends Omit<Review, 'bookClubType' | 'clubName'> {
   userName: string;
+  bookClubType?: 'FREE' | 'FIXED';
+  clubName?: string;
 }
 
 export interface ClubDetailReviewFilters {
