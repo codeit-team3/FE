@@ -8,21 +8,24 @@ import { useQuery } from '@tanstack/react-query';
 import { ClubListProps } from '../types';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
 import { Review } from '@/types/review';
+import { useAuthStore } from '@/store/authStore';
 
 export default function MyWrittenReviewList({ order }: ClubListProps) {
   const router = useRouter();
 
-  const { queryKey, queryFn } = bookClubs.myReviews({ order });
+  const { user } = useAuthStore();
+
+  const { queryKey, queryFn } = bookClubs.myReviews(user?.id ?? 0, { order });
   const { data, isLoading, error } = useQuery({
     queryKey,
     queryFn,
   });
 
   const myReviewList: Review[] = data?.data?.reviews || [];
-  // const myReviewList: Review[] = mockReviews;
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
+      {/* TODO: 로딩 컴포넌트 붙이기 */}
       {isLoading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
       {myReviewList?.length === 0 ? (
@@ -33,6 +36,7 @@ export default function MyWrittenReviewList({ order }: ClubListProps) {
         </div>
       ) : (
         myReviewList?.map((review) => (
+          // TODO:리뷰 컴포넌트로 분리
           <div key={review.id} className="md:w-full">
             <WrittenReview
               onClickReview={() =>

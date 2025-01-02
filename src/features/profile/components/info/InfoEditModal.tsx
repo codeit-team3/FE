@@ -5,7 +5,7 @@ import { useAuthStore } from '@/store/authStore';
 import Avatar from '@/components/avatar/Avatar';
 import Modal from '@/components/modal/Modal';
 import { EditIcon } from '../../../../../public/icons';
-import { EditInfoParams } from '@/types/Info';
+import { EditInfoParams } from '../../types';
 
 interface InfoEditModalProps {
   isOpen: boolean;

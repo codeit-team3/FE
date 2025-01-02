@@ -6,7 +6,7 @@ import { ClubContents } from '../container';
 import ExchangeContents from '../components/exchange/ExchangeContents';
 import { ProfilePageProps } from '../types';
 
-function MainContent({ user, isMyPage }: ProfilePageProps) {
+function MainContent({ isMyPage }: ProfilePageProps) {
   const [selectedTab, setSelectedTab] = useState<ContentTab>(CONTENT_TABS[0]);
 
   return (
@@ -20,7 +20,7 @@ function MainContent({ user, isMyPage }: ProfilePageProps) {
         />
       </div>
       {selectedTab === CONTENT_TABS[0] ? (
-        <ClubContents user={user} isMyPage={isMyPage} />
+        <ClubContents isMyPage={isMyPage} />
       ) : (
         <ExchangeContents />
       )}

@@ -49,11 +49,17 @@ export interface myJoinedParams {
   page?: number;
 }
 export interface ProfilePageProps {
-  user: User | null | undefined;
+  user?: User | null | undefined;
   isMyPage: boolean;
 }
 
 export interface ClubListProps {
   user?: User | null | undefined;
   order: orderType;
+}
+
+export interface EditInfoParams {
+  nickname?: string;
+  description?: string;
+  image?: string | null;
 }

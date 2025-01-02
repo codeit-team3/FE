@@ -10,6 +10,10 @@ export interface BookClubParams {
   searchKeyword?: string;
 }
 
+export interface MyProfileParams {
+  order?: orderType;
+}
+
 //TODO: imageUrl. isPast, clubStatus, reviewScore 수정
 export interface BookClub {
   id: number;
