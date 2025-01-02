@@ -1,7 +1,8 @@
 import ProgressBar from '@/components/progress-bar/ProgressBar';
 import RatingDisplay from '@/components/rating-display/RatingDisplay';
+import { ClubReviewResponse } from '../types';
 
-function ReviewSummarySection() {
+function ReviewSummary({ reviewInfo }: { reviewInfo: ClubReviewResponse }) {
   return (
     <section>
       <h2 className="mb-[10px] text-[20px] font-semibold text-gray-black">
@@ -15,10 +16,10 @@ function ReviewSummarySection() {
       >
         <div className="flex flex-col items-center justify-center gap-2">
           <div className="text-2xl font-semibold">
-            <span className="text-gray-black">4.0</span>
+            <span className="text-gray-black">{reviewInfo.averageScore}</span>
             <span className="text-gray-dark-01"> / 5</span>
           </div>
-          <RatingDisplay ratingCount={4} />
+          <RatingDisplay ratingCount={reviewInfo.averageScore} />
         </div>
         <div className="flex flex-col gap-1">
           {Array.from({ length: 5 }).map((_, index) => (
@@ -45,4 +46,4 @@ function ReviewSummarySection() {
     </section>
   );
 }
-export default ReviewSummarySection;
+export default ReviewSummary;

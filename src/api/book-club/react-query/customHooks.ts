@@ -4,6 +4,7 @@ import { createBookClub } from '@/features/club-create/api';
 import { bookClubs } from './queries';
 import { showToast } from '@/components/toast/toast';
 import {
+  bookClubLikeAPI,
   bookClubMainAPI,
   bookClubMemberAPI,
   bookClubReviewAPI,
@@ -51,7 +52,10 @@ export function useLeaveBookClub() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: number) => bookClubMemberAPI.leave(id),
-    onSuccess: () => {
+    onSuccess: (_, id) => {
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.detail(id).queryKey,
+      });
       queryClient.invalidateQueries({
         queryKey: bookClubs.myJoined().queryKey,
       });
@@ -103,6 +107,38 @@ export function useCancelBookClub() {
       });
       queryClient.invalidateQueries({
         queryKey: bookClubs.myJoined().queryKey,
+      });
+    },
+  });
+}
+
+export function useLikeBookClub() {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, AxiosError<{ message: string }>, number>({
+    mutationFn: (id: number) => bookClubLikeAPI.like(id),
+    onSuccess: (_, id) => {
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.all().queryKey,
+      });
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.detail(id).queryKey,
+      });
+    },
+  });
+}
+
+export function useUnLikeBookClub() {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, AxiosError<{ message: string }>, number>({
+    mutationFn: (id: number) => bookClubLikeAPI.unlike(id),
+    onSuccess: (_, id) => {
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.all().queryKey,
+      });
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.detail(id).queryKey,
       });
     },
   });

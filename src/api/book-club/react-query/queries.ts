@@ -1,13 +1,9 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory';
 import apiClient from '@/lib/utils/apiClient';
 import { BookClubParams, orderType } from '@/types/bookclubs';
+import { ClubDetailReviewFilters } from '@/types/review';
 
 // TODO: 추후 각자 구현하는 api 명세에 맞게 filter 타입 정의해주세요
-interface ReviewFilters {
-  rating?: number;
-  hasComment?: boolean;
-  sort?: 'latest' | 'rating';
-}
 
 export interface MyProfileParams {
   order?: orderType;
@@ -29,7 +25,7 @@ export const bookClubs = createQueryKeys('bookClubs', {
     queryKey: [bookClubId],
     queryFn: () => apiClient.get(`/book-clubs/${bookClubId}`),
     contextQueries: {
-      reviews: (filters?: ReviewFilters) => ({
+      reviews: (filters?: ClubDetailReviewFilters) => ({
         queryKey: [{ filters: filters || {} }],
         queryFn: (ctx) =>
           apiClient.get(`/book-clubs/${bookClubId}/reviews`, {
