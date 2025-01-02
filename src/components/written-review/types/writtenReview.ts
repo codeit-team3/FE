@@ -13,6 +13,7 @@ export interface UserProfileProps {
 export interface ClubImageProps {
   src: string | undefined;
   alt?: string;
+  className?: string;
 }
 
 export interface ClubInfoProps {

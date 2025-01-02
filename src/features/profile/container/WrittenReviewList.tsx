@@ -1,18 +1,14 @@
 'use client';
 
-import WrittenReview from '@/components/written-review/WrittenReview';
-import { formatDateSimple } from '@/lib/utils/dateUtils';
-import { useRouter } from 'next/navigation';
 // import { bookClubs } from '@/api/book-club/react-query';
 // import { useQuery } from '@tanstack/react-query';
 import { ClubListProps } from '../types';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
 import { mockReviews } from '../../../mocks/mockDatas';
 import { Review } from '@/types/review';
+import ProfileWrittenReview from '../components/clubs/ProfileWrittenReview';
 
 export default function WrittenReviewList({ user, order }: ClubListProps) {
-  const router = useRouter();
-
   console.log(user, order);
   // const { queryKey, queryFn } = bookClubs.myReviews({ order });
   // const { data, isLoading, error } = useQuery({
@@ -36,32 +32,7 @@ export default function WrittenReviewList({ user, order }: ClubListProps) {
       ) : (
         myReviewList?.map((review) => (
           <div key={review.id} className="md:w-full">
-            <WrittenReview
-              onClickReview={() =>
-                router.push(`/bookclub/${review.bookClubId}`)
-              }
-            >
-              <div className="flex items-center gap-x-6 sm:flex-col sm:items-start sm:gap-y-6 md:flex-row">
-                <WrittenReview.ClubImage
-                  src={review.image || '/images/defaultBookClub.jpg'}
-                  alt="review_club_image"
-                />
-                <div className="relative flex min-h-[180px] w-[336px] flex-1 flex-col gap-y-1.5 text-sm font-medium text-gray-darker md:w-full">
-                  <WrittenReview.Rating ratingCount={review.rating} />
-                  <div className="flex flex-col gap-y-2">
-                    <WrittenReview.ClubInfo
-                      clubName={review.clubName}
-                      bookClubType={review.bookClubType}
-                    />
-                    <WrittenReview.Comment text={review.content} />
-                    <WrittenReview.UserProfile
-                      createdAt={formatDateSimple(review.createdAt)}
-                      className="gap-x-0"
-                    />
-                  </div>
-                </div>
-              </div>
-            </WrittenReview>
+            <ProfileWrittenReview review={review} />
           </div>
         ))
       )}
