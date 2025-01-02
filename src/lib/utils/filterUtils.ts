@@ -11,7 +11,7 @@ export const getMemberLimit = (selectedValue: string | undefined) => {
     case 'TWELVE':
       return { min: 12, max: 20 };
     default:
-      return undefined;
+      return { min: 3, max: 20 };
   }
 };
 
