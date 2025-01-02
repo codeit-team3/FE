@@ -8,7 +8,7 @@ export const useUnLikeClub = () => {
     unLikeClub(selectedClubId, {
       onSuccess: () => {
         showToast({
-          message: '찜이 취소되었습니다다',
+          message: '찜이 취소되었습니다',
           type: 'success',
         });
       },

@@ -84,8 +84,8 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
 
   const handleLikeClub = () => {
     clubInfo.isLiked
-      ? onCheckAuthPopUp(clubInfo.id)
-      : onConfirmUnLike(clubInfo.id);
+      ? onConfirmUnLike(clubInfo.id)
+      : onCheckAuthPopUp(clubInfo.id);
   };
 
   const handleLikePopUpConfirm = () => {
@@ -120,7 +120,7 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
       profileImage: EXAMPLE_IMAGE,
     },
     isHost: false,
-    isParticipant: true,
+    isParticipant: false,
     hasWrittenReview: false,
     onCancel: () => onCancel(clubInfo.id),
     onParticipate: handleJoinClick,
