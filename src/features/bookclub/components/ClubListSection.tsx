@@ -32,8 +32,8 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
             isLiked={club.isLiked}
             current={club.memberCount}
             max={club.memberLimit}
-            isPast={isPastDate(club.endDate, today)} // 지난 모임 여부
-            isCanceled={false} // 모임 취소 여부 (API 값에 따라 변경 가능)
+            isPast={isPastDate(club.targetDate, today)} // 지난 모임 여부
+            isCanceled={club.isInactive} // 모임 취소 여부
             bookClubType={club.bookClubType}
             meetingType={club.meetingType}
             clubStatus={clubStatus(
@@ -44,7 +44,6 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
             )}
             onLikeClick={() => console.log(`${club.title} 좋아요 클릭`)}
             onClick={() => router.push(`/bookclub/${club.id}`)}
-            onDelete={() => console.log(`${club.title} 삭제 클릭`)}
           />
         ))
       ) : (
