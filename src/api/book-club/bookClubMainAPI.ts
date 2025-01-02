@@ -9,7 +9,7 @@ export const bookClubMainAPI = {
   },
 
   //북클럽 목록 조회
-  fetchBookClubs: async (params?: BookClubParams) => {
+  getBookClubs: async (params?: BookClubParams) => {
     await apiClient.get('/book-clubs', { params });
   },
 
