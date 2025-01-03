@@ -1,4 +1,4 @@
-import { FormContainer } from '@/features/club-create/container';
+import FormContainer from '@/features/club-create/container/FormContainer';
 
 function CreateBookClubPage() {
   return (

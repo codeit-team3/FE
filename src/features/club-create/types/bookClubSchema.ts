@@ -58,7 +58,7 @@ export const bookClubSchema = z
         required_error: '주소를 선택해주세요',
       })
       .optional(),
-    addressDetail: z
+    detailAddress: z
       .string({
         required_error: '상세 주소를 입력해주세요',
       })

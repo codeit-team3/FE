@@ -20,7 +20,7 @@ function ImageField({ register, setValue, error }: ImageUploadContainerProps) {
 
   return (
     <CreateClubFormField label="이미지" error={error} optional={true}>
-      <div className="relative flex h-[130px] w-full items-center justify-center rounded-xl bg-gray-light-02">
+      <div className="relative flex h-[130px] w-full items-center justify-center rounded-xl bg-gray-light-02 hover-dim">
         {selectedFileName ? (
           <>
             <div className="flex flex-col items-center gap-1">
