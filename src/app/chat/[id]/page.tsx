@@ -21,6 +21,9 @@ import {
   GroupedMessage,
   SystemMessageType,
 } from '@/features/chat-room/types/chatBubbleList';
+import { useQuery } from '@tanstack/react-query';
+import { bookClubs } from '@/api/book-club/react-query';
+import { formatDateForUI } from '@/lib/utils/formatDateForUI';
 
 function ChatRoomPage() {
   const pathname = usePathname();
@@ -29,6 +32,16 @@ function ChatRoomPage() {
   const [chatHistory, setChatHistory] = useState<ChatHistoryResponse>({
     historyResponses: [],
   });
+
+  const { queryKey, queryFn } = bookClubs.myJoined({ order: 'DESC' });
+  const { data } = useQuery({
+    queryKey,
+    queryFn,
+  });
+
+  const bookClubDetail = data?.data?.bookClubs?.find(
+    (club: any) => club.id === Number(chatId),
+  );
 
   useEffect(() => {
     const loadChatHistory = async () => {
@@ -142,12 +155,15 @@ function ChatRoomPage() {
           <ChatCard
             variant="chatRoomHeader"
             props={{
-              imageUrl: '/images/defaultBookClub.jpg',
-              isHost: false,
-              title: '독서모임 제목',
-              location: '강남역',
-              datetime: '12/25(월) 오후 2:00',
-              meetingType: 'OFFLINE',
+              imageUrl:
+                bookClubDetail?.imageUrl || '/images/defaultBookClub.jpg',
+              isHost: bookClubDetail?.isHost || false,
+              title: bookClubDetail?.title || '',
+              location: bookClubDetail?.town || '',
+              datetime: bookClubDetail?.targetDate
+                ? formatDateForUI(bookClubDetail.targetDate, 'KOREAN')
+                : '',
+              meetingType: bookClubDetail?.meetingType || 'OFFLINE',
               onClick: () => console.log('헤더 클릭'),
             }}
           />
