@@ -12,13 +12,11 @@ import Loading from '@/components/loading/Loading';
 export default function WrittenReviewList({ order }: ClubListProps) {
   const user = useGetUserByPath();
 
-  const { queryKey, queryFn } = bookClubs.userReviewd(user?.id, { order });
-  const { data, isLoading, error } = useQuery({
-    queryKey,
-    queryFn,
-  });
+  const { data, isLoading, error } = useQuery(
+    bookClubs.user(user?.id)._ctx.reviews({ order, page: 1, size: 10 }),
+  );
 
-  const ReviewList: Review[] = data?.data?.reviews || [];
+  const ReviewList: Review[] = data?.reviews || [];
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">

@@ -1,5 +1,5 @@
 export interface DetailClubReviewParams {
-  bookClubId: number;
+  // bookClubId: number;
   order?: 'DESC' | 'RATE_DESC' | 'RATE_ASC';
   size?: number;
   page?: number;

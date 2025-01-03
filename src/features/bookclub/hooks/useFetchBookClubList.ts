@@ -17,10 +17,10 @@ const useBookClubList = () => {
   });
 
   const { data, isLoading, error } = useQuery({
-    ...bookClubs.all(filters),
+    ...bookClubs.list(filters),
   });
 
-  const clubInfo = data?.data.bookClubs;
+  const clubInfo = data?.bookClubs;
 
   // TODO: param 추가시, useEffect 대신 clubInfo 직접 사용
   useEffect(() => {

@@ -16,15 +16,11 @@ export default function CreatedClubList({ order }: ClubListProps) {
   const router = useRouter();
   const user = useGetUserByPath();
 
-  const { queryKey, queryFn } = bookClubs.userCreated(user?.id, {
-    order: order,
-  });
-  const { data, isLoading, error } = useQuery({
-    queryKey,
-    queryFn,
-  });
+  const { data, isLoading, error } = useQuery(
+    bookClubs.user(user?.id)._ctx.created({ order, page: 1, size: 10 }),
+  );
 
-  const CreatedList: BookClub[] = data?.data?.bookClubs || [];
+  const CreatedList: BookClub[] = data?.bookClubs ?? [];
   const today = new Date();
 
   // 카드 클릭 이벤트

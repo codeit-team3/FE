@@ -14,6 +14,8 @@ export interface BookClubParams {
 
 export interface MyProfileParams {
   order?: orderType;
+  page?: number;
+  size?: number;
 }
 
 //TODO: imageUrl. isPast, clubStatus, reviewScore 수정

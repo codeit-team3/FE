@@ -1,116 +1,63 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory';
-import apiClient from '@/lib/utils/apiClient';
 import { BookClubParams, MyProfileParams } from '@/types/bookclubs';
-
 import { ClubDetailReviewFilters } from '@/types/review';
-// TODO: 추후 각자 구현하는 api 명세에 맞게 filter 타입 정의해주세요
+import { bookClubReviewAPI } from '@/api/book-club/bookClubReviewAPI';
+import { bookClubMainAPI } from '@/api/book-club/bookClubMainAPI';
 
 export const bookClubs = createQueryKeys('bookClubs', {
-  all: (filters?: BookClubParams) => ({
+  list: (filters?: BookClubParams) => ({
     queryKey: [{ filters: filters || {} }],
-    queryFn: (ctx) =>
-      apiClient.get('/book-clubs', {
-        params: {
-          ...filters,
-          page: ctx.pageParam ?? 1,
-          size: 10,
-        },
-      }),
+    queryFn: () => bookClubMainAPI.getBookClubs(filters),
   }),
 
   detail: (bookClubId: number) => ({
     queryKey: [bookClubId],
-    queryFn: () => apiClient.get(`/book-clubs/${bookClubId}`),
+    queryFn: () => bookClubMainAPI.getBookClubDetail(bookClubId),
     contextQueries: {
       reviews: (filters?: ClubDetailReviewFilters) => ({
         queryKey: [{ filters: filters || {} }],
-        queryFn: (ctx) =>
-          apiClient.get(`/book-clubs/${bookClubId}/reviews`, {
-            params: {
-              ...filters,
-              page: ctx.pageParam ?? 1,
-              size: 10,
-            },
-          }),
+        queryFn: () =>
+          bookClubReviewAPI.getReviews({ bookClubId, params: filters }),
       }),
     },
   }),
 
-  //유저가 참여한 북클럽 조회
-  userJoined: (userId: number, filters?: MyProfileParams) => ({
-    queryKey: [userId, { filter: filters || {} }],
-    queryFn: (ctx) =>
-      apiClient.get(`/book-clubs/user/${userId}/joined`, {
-        params: {
-          ...filters,
-          page: ctx.pageParam ?? 1,
-          size: 10,
-        },
+  my: () => ({
+    queryKey: [{}],
+    queryFn: () => ({}),
+    contextQueries: {
+      joined: (filters?: MyProfileParams) => ({
+        queryKey: [{ filters: filters || {} }],
+        queryFn: () => bookClubMainAPI.myJoined(filters),
       }),
+      created: (filters?: MyProfileParams) => ({
+        queryKey: [{ filters: filters || {} }],
+        queryFn: () => bookClubMainAPI.myCreated(filters),
+      }),
+      reviews: (filters?: MyProfileParams) => ({
+        queryKey: [{ filters: filters || {} }],
+        queryFn: () => bookClubReviewAPI.myReviews(filters),
+      }),
+    },
   }),
 
-  //유저가 만든 북클럽 조회
-  userCreated: (userId: number, filters?: MyProfileParams) => ({
-    queryKey: [userId, { filter: filters || {} }],
-    queryFn: (ctx) =>
-      apiClient.get(`/book-clubs/user/${userId}/created`, {
-        params: {
-          ...filters,
-          page: ctx.pageParam ?? 1,
-          size: 10,
-        },
+  user: (userId: number) => ({
+    queryKey: [userId],
+    queryFn: () => ({}),
+    contextQueries: {
+      joined: (filters?: MyProfileParams) => ({
+        queryKey: [{ filters: filters || {} }],
+        queryFn: () => bookClubMainAPI.userJoined(userId, filters),
       }),
-  }),
-
-  //유저가 작성한 리뷰 조회
-  userReviewd: (userId: number, filters?: MyProfileParams) => ({
-    queryKey: [userId, { filter: filters || {} }],
-    queryFn: (ctx) =>
-      apiClient.get(`/book-clubs/users/${userId}/reviews`, {
-        params: {
-          ...filters,
-          page: ctx.pageParam ?? 1,
-          size: 10,
-        },
+      created: (filters?: MyProfileParams) => ({
+        queryKey: [{ filters: filters || {} }],
+        queryFn: () => bookClubMainAPI.userCreated(userId, filters),
       }),
-  }),
-
-  //내가 참여한 북클럽 조회
-  myJoined: (filters?: MyProfileParams) => ({
-    queryKey: [{ filters: filters || {} }],
-    queryFn: (ctx) =>
-      apiClient.get('/book-clubs/my-joined', {
-        params: {
-          ...filters,
-          page: ctx.pageParam ?? 1,
-          size: 10,
-        },
+      reviews: (filters?: MyProfileParams) => ({
+        queryKey: [{ filters: filters || {} }],
+        queryFn: () =>
+          bookClubReviewAPI.userReviews({ userId, params: filters }),
       }),
-  }),
-
-  //내가 만든 북클럽 조회
-  myCreated: (filters?: MyProfileParams) => ({
-    queryKey: [{ filters: filters || {} }],
-    queryFn: (ctx) =>
-      apiClient.get('/book-clubs/my-created', {
-        params: {
-          ...filters,
-          page: ctx.pageParam ?? 1,
-          size: 10,
-        },
-      }),
-  }),
-
-  //내가 작성한 리뷰 조회
-  myReviews: (filters?: MyProfileParams) => ({
-    queryKey: [{ filters: filters || {} }],
-    queryFn: (ctx) =>
-      apiClient.get('/book-clubs/my-reviews', {
-        params: {
-          ...filters,
-          page: ctx.pageParam ?? 1,
-          size: 10,
-        },
-      }),
+    },
   }),
 });

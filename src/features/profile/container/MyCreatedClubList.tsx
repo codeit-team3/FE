@@ -15,15 +15,14 @@ import Loading from '@/components/loading/Loading';
 
 export default function MyCreatedClubList({ order }: ClubListProps) {
   const router = useRouter();
-
-  const { queryKey, queryFn } = bookClubs.myCreated({
-    order: order,
-  });
-  const { data, isLoading, error } = useQuery({ queryKey, queryFn });
   const { popUpState, onCancel, onConfirmCancel, onClosePopUp } =
     useCancelClub();
 
-  const myCreatedList: BookClub[] = data?.data?.bookClubs || [];
+  const { data, isLoading, error } = useQuery(
+    bookClubs.my()._ctx.created({ order, page: 1, size: 10 }),
+  );
+
+  const myCreatedList: BookClub[] = data?.bookClubs || [];
 
   const today = new Date();
 

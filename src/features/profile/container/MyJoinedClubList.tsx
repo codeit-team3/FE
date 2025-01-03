@@ -29,13 +29,10 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
 
   const today = new Date();
 
-  const { queryKey, queryFn } = bookClubs.myJoined({
-    order: order,
-  });
-  const { data, isLoading, error } = useQuery({
-    queryKey,
-    queryFn,
-  });
+  const { data, isLoading, error } = useQuery(
+    bookClubs.my()._ctx.joined({ order, page: 1, size: 10 }),
+  );
+
   const { mutateAsync: leaveClub } = useLeaveBookClub();
   const { mutate: writeReview } = useWriteReview();
 
@@ -50,7 +47,7 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
 
   // if (!user) return null;
 
-  const myJoinedList: BookClub[] = data?.data?.bookClubs || [];
+  const myJoinedList: BookClub[] = data?.bookClubs || [];
 
   // 카드 클릭 이벤트
   const onClick = (clubId: number) => {
