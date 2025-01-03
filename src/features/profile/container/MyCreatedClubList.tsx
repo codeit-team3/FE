@@ -1,38 +1,37 @@
+'use client';
+
 import Card from '@/components/card/Card';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
 import { useRouter } from 'next/navigation';
-import { BookClub } from '../types';
+import { ClubListProps } from '../types';
 import { bookClubs } from '@/api/book-club/react-query';
-import { orderType } from '@/types/bookclubs';
 import { useQuery } from '@tanstack/react-query';
 import PopUp from '@/components/pop-up/PopUp';
 import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { clubStatus } from '@/lib/utils/clubUtils';
 import { useCancelClub } from '@/lib/hooks/useCancelClub';
+import { BookClub } from '@/types/bookclubs';
+import Loading from '@/components/loading/Loading';
 
-interface CreatedClubListProps {
-  order: orderType;
-}
-
-export default function CreatedClubList({ order }: CreatedClubListProps) {
+export default function MyCreatedClubList({ order }: ClubListProps) {
   const router = useRouter();
-
-  const today = new Date();
-
-  const { queryKey, queryFn } = bookClubs.myCreated({ order: order });
-
-  const { data, isLoading, error } = useQuery({ queryKey, queryFn });
-
-  const myCreatedList: BookClub[] = data?.data?.bookClubs || [];
-
   const { popUpState, onCancel, onConfirmCancel, onClosePopUp } =
     useCancelClub();
 
+  const { data, isLoading, error } = useQuery(
+    bookClubs.my()._ctx.created({ order, page: 1, size: 10 }),
+  );
+
+  const myCreatedList: BookClub[] = data?.bookClubs || [];
+
+  const today = new Date();
+
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
-      {isLoading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
-      {myCreatedList?.length === 0 ? (
+      {isLoading ? (
+        <Loading fullHeight={false} />
+      ) : myCreatedList?.length === 0 ? (
         <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
           <span className="whitespace-pre-wrap">
             {NO_LIST_MESSAGE['CREATED']}

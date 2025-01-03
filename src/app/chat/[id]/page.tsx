@@ -37,11 +37,9 @@ function ChatRoomPage() {
 
   const [isConnected, setIsConnected] = useState(false);
 
-  const { queryKey, queryFn } = bookClubs.myJoined({ order: 'DESC' });
-  const { data } = useQuery({
-    queryKey,
-    queryFn,
-  });
+  const { data } = useQuery(
+    bookClubs.my()._ctx.joined({ order: 'DESC', page: 1, size: 10 }),
+  );
 
   const bookClubDetail = data?.data?.bookClubs?.find(
     (club: any) => club.id === Number(chatId),

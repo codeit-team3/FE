@@ -1,78 +1,63 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory';
-import apiClient from '@/lib/utils/apiClient';
-import { BookClubParams, orderType } from '@/types/bookclubs';
-
-// TODO: 추후 각자 구현하는 api 명세에 맞게 filter 타입 정의해주세요
-interface ReviewFilters {
-  rating?: number;
-  hasComment?: boolean;
-  sort?: 'latest' | 'rating';
-}
-
-export interface MyProfileParams {
-  order?: orderType;
-}
+import { BookClubParams, MyProfileParams } from '@/types/bookclubs';
+import { ClubDetailReviewFilters } from '@/types/review';
+import { bookClubReviewAPI } from '@/api/book-club/bookClubReviewAPI';
+import { bookClubMainAPI } from '@/api/book-club/bookClubMainAPI';
 
 export const bookClubs = createQueryKeys('bookClubs', {
-  all: (filters?: BookClubParams) => ({
+  list: (filters?: BookClubParams) => ({
     queryKey: [{ filters: filters || {} }],
-    queryFn: (ctx) =>
-      apiClient.get('/book-clubs', {
-        params: {
-          ...filters,
-          page: ctx.pageParam ?? 1,
-          size: 10,
-        },
-      }),
+    queryFn: () => bookClubMainAPI.getBookClubs(filters),
   }),
+
   detail: (bookClubId: number) => ({
     queryKey: [bookClubId],
-    queryFn: () => apiClient.get(`/book-clubs/${bookClubId}`),
+    queryFn: () => bookClubMainAPI.getBookClubDetail(bookClubId),
     contextQueries: {
-      reviews: (filters?: ReviewFilters) => ({
+      reviews: (filters?: ClubDetailReviewFilters) => ({
         queryKey: [{ filters: filters || {} }],
-        queryFn: (ctx) =>
-          apiClient.get(`/book-clubs/${bookClubId}/reviews`, {
-            params: {
-              ...filters,
-              page: ctx.pageParam ?? 1,
-              size: 10,
-            },
-          }),
+        queryFn: () =>
+          bookClubReviewAPI.getReviews({ bookClubId, params: filters }),
       }),
     },
   }),
-  myJoined: (filters?: MyProfileParams) => ({
-    queryKey: [{ filters: filters || {} }],
-    queryFn: (ctx) =>
-      apiClient.get('/book-clubs/my-joined', {
-        params: {
-          ...filters,
-          page: ctx.pageParam ?? 1,
-          size: 10,
-        },
+
+  my: () => ({
+    queryKey: [{}],
+    queryFn: () => ({}),
+    contextQueries: {
+      joined: (filters?: MyProfileParams) => ({
+        queryKey: [{ filters: filters || {} }],
+        queryFn: () => bookClubMainAPI.myJoined(filters),
       }),
+      created: (filters?: MyProfileParams) => ({
+        queryKey: [{ filters: filters || {} }],
+        queryFn: () => bookClubMainAPI.myCreated(filters),
+      }),
+      reviews: (filters?: MyProfileParams) => ({
+        queryKey: [{ filters: filters || {} }],
+        queryFn: () => bookClubReviewAPI.myReviews(filters),
+      }),
+    },
   }),
-  myCreated: (filters?: MyProfileParams) => ({
-    queryKey: [{ filters: filters || {} }],
-    queryFn: (ctx) =>
-      apiClient.get('/book-clubs/my-created', {
-        params: {
-          ...filters,
-          page: ctx.pageParam ?? 1,
-          size: 10,
-        },
+
+  user: (userId: number) => ({
+    queryKey: [userId],
+    queryFn: () => ({}),
+    contextQueries: {
+      joined: (filters?: MyProfileParams) => ({
+        queryKey: [{ filters: filters || {} }],
+        queryFn: () => bookClubMainAPI.userJoined(userId, filters),
       }),
-  }),
-  myReviews: (filters?: MyProfileParams) => ({
-    queryKey: [{ filters: filters || {} }],
-    queryFn: (ctx) =>
-      apiClient.get('/book-clubs/my-reviews', {
-        params: {
-          ...filters,
-          page: ctx.pageParam ?? 1,
-          size: 10,
-        },
+      created: (filters?: MyProfileParams) => ({
+        queryKey: [{ filters: filters || {} }],
+        queryFn: () => bookClubMainAPI.userCreated(userId, filters),
       }),
+      reviews: (filters?: MyProfileParams) => ({
+        queryKey: [{ filters: filters || {} }],
+        queryFn: () =>
+          bookClubReviewAPI.userReviews({ userId, params: filters }),
+      }),
+    },
   }),
 });

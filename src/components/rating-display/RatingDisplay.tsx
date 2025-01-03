@@ -5,7 +5,7 @@ export default function RatingDisplay({
 }: {
   ratingCount: number;
 }) {
-  const normalizedRating = Math.min(ratingCount, 5);
+  const normalizedRating = Math.floor(Math.min(ratingCount, 5));
 
   return (
     <div

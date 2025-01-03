@@ -23,10 +23,10 @@ const meta = {
     items: {
       control: 'select',
       options: [
-        BOOK_TABS,
-        CONTENT_TABS,
+        Object.values(BOOK_TABS),
+        Object.values(CONTENT_TABS),
         Object.values(CLUB_TABS),
-        EXCHANGE_TABS,
+        Object.values(EXCHANGE_TABS),
       ],
       mapping: {
         BOOK_TABS: BOOK_TABS,
@@ -38,10 +38,10 @@ const meta = {
     activeTab: {
       control: 'select',
       options: [
-        ...BOOK_TABS,
-        ...CONTENT_TABS,
+        ...Object.values(BOOK_TABS),
+        ...Object.values(CONTENT_TABS),
         ...Object.values(CLUB_TABS),
-        ...EXCHANGE_TABS,
+        ...Object.values(EXCHANGE_TABS),
       ],
       description: '현재 선택된 탭',
     },
@@ -53,7 +53,7 @@ type Story = StoryObj<typeof Tab>;
 
 export const Default: Story = {
   args: {
-    items: BOOK_TABS,
+    items: Object.values(BOOK_TABS),
     activeTab: '전체',
     onTabChange: (tab) => console.log(`Selected tab: ${tab}`),
     tabType: 'MAIN_TAB',

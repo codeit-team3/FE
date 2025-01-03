@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { getCookie } from '@/features/auth/utils/cookies';
-import { User } from '../features/auth/types/user';
+import { User } from '@/types/user';
 
 interface AuthState {
   isLoggedIn: boolean;

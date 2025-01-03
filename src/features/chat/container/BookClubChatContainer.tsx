@@ -19,12 +19,9 @@ export default function BookClubChatContainer() {
     }>
   >([]);
 
-  const { queryKey, queryFn } = bookClubs.myJoined({ order: 'DESC' });
-
-  const { data, isLoading, error } = useQuery({
-    queryKey,
-    queryFn,
-  });
+  const { data, isLoading, error } = useQuery(
+    bookClubs.my()._ctx.joined({ order: 'DESC', page: 1, size: 10 }),
+  );
 
   useEffect(() => {
     const fetchRecentChats = async () => {
@@ -45,7 +42,7 @@ export default function BookClubChatContainer() {
     }
   }, []);
 
-  const bookClubChats = data?.data?.bookClubs || [];
+  const bookClubChats = data?.bookClubs || [];
   console.log('bookClubChats', bookClubChats);
 
   if (isLoading) return <div>로딩중...</div>;

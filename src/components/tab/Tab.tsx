@@ -10,11 +10,14 @@ interface TabProps<T extends string> {
 
 const getTabStyles = {
   main: {
-    base: 'text-xl border-b-2 rounded-none px-4 py-2  transition-all',
+    base: 'text-xl border-b-4 rounded-none py-2 font-semibold transition-all',
     active: 'border-green-dark-01 text-green-dark-01',
     inactive: 'border-transparent text-gray-dark-02 hover:text-green-dark-01',
   },
-  container: 'flex gap-2',
+  container: {
+    MAIN_TAB: 'flex gap-4',
+    SUB_TAB: 'flex gap-2',
+  },
 };
 
 function Tab<T extends string>({
@@ -41,15 +44,16 @@ function Tab<T extends string>({
     <Button
       key={item}
       text={item}
-      size="modal"
+      size="custom"
       fillType="outline"
-      themeColor={activeTab === item ? 'green-normal-01' : 'gray-normal-02'}
+      themeColor={activeTab === item ? 'green-normal-01' : 'gray-dark-02'}
       onClick={() => onTabChange(item)}
+      className={`flex h-[40px] items-center px-3.5 py-2.5 font-medium ${activeTab === item ? 'border-green-normal-01' : 'border-gray-normal-02'}`}
     />
   );
 
   return (
-    <div className={getTabStyles.container}>
+    <div className={getTabStyles.container[tabType]}>
       {items.map((item) =>
         tabType === 'SUB_TAB' ? renderSubTab(item) : renderMainTab(item),
       )}

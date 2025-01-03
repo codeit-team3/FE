@@ -2,20 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import ChatBubbleList from './ChatBubbleList';
 import { GroupedMessage } from '@/features/chat-room/types/chatBubbleList';
 import { useAuthStore } from '@/store/authStore';
-import { User } from '@/features/auth/types/user';
 import { useEffect } from 'react';
-
-const mockUser: User = {
-  teamId: 'team1',
-  id: 2,
-  email: 'minsu@example.com',
-  name: '이민수',
-  nickname: '민수',
-  description: null,
-  image: null,
-  createdAt: new Date(),
-  updatedAt: new Date(),
-};
+import { mockUser } from '@/mocks/mockDatas';
 
 const AuthDecorator = (Story: React.ComponentType) => {
   useEffect(() => {

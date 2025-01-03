@@ -1,169 +1,93 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
 import Card from '@/components/card/Card';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
-import { BookClub, orderType } from '../types';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { WriteReviewModal } from '../components/clubs';
+import { ClubListProps } from '../types';
 import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
-import { useQuery } from '@tanstack/react-query';
-import PopUp from '@/components/pop-up/PopUp';
 import { clubStatus } from '@/lib/utils/clubUtils';
-import {
-  bookClubs,
-  useLeaveBookClub,
-  useWriteReview,
-} from '@/api/book-club/react-query';
+import { BookClub } from '@/types/bookclubs';
+import { bookClubs } from '@/api/book-club/react-query';
+import { useGetUserByPath } from '@/lib/hooks/useGetUserByPath';
 import { showToast } from '@/components/toast/toast';
+import { useEffect } from 'react';
+import Loading from '@/components/loading/Loading';
 
-interface JoinedClubListProps {
-  order: orderType;
-}
-
-export default function JoinedClubList({ order }: JoinedClubListProps) {
+export default function JoinedClubList({ order }: ClubListProps) {
   const router = useRouter();
+  const user = useGetUserByPath();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isPopUpOpen, setIsPopUpOpen] = useState(false);
-  const [label, setLabel] = useState('');
-  const [selectedClubId, setSelectedClubId] = useState<number | null>(null);
+  const { data, isLoading, isError, error } = useQuery(
+    bookClubs.user(user?.id)._ctx.joined({ order, page: 1, size: 10 }),
+  );
+
+  const JoinedList: BookClub[] = data?.bookClubs ?? [];
+
   const today = new Date();
-
-  const { queryKey, queryFn } = bookClubs.myJoined({ order: order });
-  const { data, isLoading, error } = useQuery({
-    queryKey,
-    queryFn,
-  });
-  const { mutateAsync: leaveClub } = useLeaveBookClub();
-  const { mutate: writeReview } = useWriteReview();
-
-  const myJoinedList: BookClub[] = data?.data?.bookClubs || [];
 
   // 카드 클릭 이벤트
   const onClick = (clubId: number) => {
     router.push(`/bookclub/${clubId}`);
   };
 
-  //모임 참가하기 취소 클릭 이벤트
-  const onCancel = (clubId: number) => {
-    setLabel('정말 모임 참여를 취소하시겠어요?');
-    setIsPopUpOpen(true);
-    setSelectedClubId(clubId);
+  const onLikeClick = (clubId: number) => {
+    alert(clubId);
   };
 
-  //모임 삭제하기 클릭 이벤트
-  const onDelete = async (clubId: number) => {
-    try {
-      const res = await leaveClub(clubId);
-      console.log(res);
-      if (res) {
-        showToast({
-          message: '취소된 모임을 삭제하였습니다.',
-          type: 'success',
-        });
-      }
-    } catch (error) {
+  useEffect(() => {
+    if (isError) {
       showToast({
-        message: '모임삭제를 실패하였습니다.',
+        message: '사용자 프로필 조회에 실패하였습니다. 주소를 확인해주세요 ',
         type: 'error',
       });
-      console.error(error);
     }
-  };
-
-  //리뷰 작성하기 클릭 이벤트
-  const onWriteReview = (clubId: number) => {
-    setIsModalOpen(true);
-    setSelectedClubId(clubId);
-  };
-
-  const onConfirmReview = (rating: number, content: string) => {
-    //TODO: 토스트 메시지가 뜨더라도 모달이 열린 상태로 유지되도록 수정
-    if (!rating || !content) {
-      showToast({ message: '점수와 리뷰 내용을 입력해주세요', type: 'error' });
-      return;
-    }
-
-    if (selectedClubId) {
-      writeReview({ bookClubId: selectedClubId, rating, content });
-      setIsModalOpen(false);
-      setSelectedClubId(null);
-    }
-  };
-
-  const onConfirmPopUp = async () => {
-    try {
-      if (selectedClubId) {
-        const res = await leaveClub(selectedClubId);
-        if (res) {
-          showToast({
-            message: '모임 참여를 취소하였습니다.',
-            type: 'success',
-          });
-        }
-      }
-    } catch (error) {
-      showToast({
-        message: '모임 참여를 취소를 실패하였습니다.',
-        type: 'error',
-      });
-      console.error(error);
-    } finally {
-      setIsPopUpOpen(false);
-      setSelectedClubId(null);
-    }
-  };
+  }, [isError]);
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
-      {isLoading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
-      {myJoinedList?.length === 0 ? (
+      {isLoading ? (
+        <Loading fullHeight={false} />
+      ) : JoinedList?.length === 0 ? (
         <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
           <span className="whitespace-pre-wrap">
             {NO_LIST_MESSAGE['JOINED']}
           </span>
         </div>
       ) : (
-        myJoinedList?.map((bookClub) => (
-          <div key={bookClub.id} className="md:w-full">
-            <Card
-              variant="participatedClub"
-              clubId={bookClub.id}
-              isCanceled={bookClub.isCanceled} //TODO: api 응답값에 따라 수정가능
-              imageUrl={bookClub.imageUrl || '/images/defaultBookClub.jpg'}
-              title={bookClub.title}
-              location={bookClub.town}
-              datetime={formatDateForUI(bookClub.targetDate, 'KOREAN')}
-              meetingType={bookClub.meetingType}
-              bookClubType={bookClub.bookClubType}
-              isPast={isPastDate(bookClub.targetDate, today)}
-              clubStatus={clubStatus(
-                bookClub.memberCount,
-                bookClub.memberLimit,
-                bookClub.endDate,
-                today,
-              )}
-              onClick={(clubId) => onClick(clubId)}
-              onCancel={(clubId) => onCancel(clubId)}
-              onWriteReview={(clubId) => onWriteReview(clubId)}
-              onDelete={(clubId) => onDelete(clubId)}
-            />
-          </div>
-        ))
+        JoinedList?.filter((bookClub) => !bookClub.isInactive)?.map(
+          (bookClub) => (
+            <div key={bookClub.id} className="md:w-full">
+              <Card
+                variant="defaultClub"
+                clubId={bookClub.id}
+                imageUrl={bookClub.imageUrl || '/images/defaultBookClub.jpg'}
+                imageAlt="club_image"
+                title={bookClub.title}
+                location={bookClub.town}
+                datetime={formatDateForUI(bookClub.targetDate, 'KOREAN')}
+                isLiked={bookClub.isLiked}
+                current={bookClub.memberCount}
+                max={bookClub.memberLimit}
+                isPast={isPastDate(bookClub.targetDate, today)}
+                isCanceled={bookClub.isInactive}
+                meetingType={bookClub.meetingType}
+                bookClubType={bookClub.bookClubType}
+                clubStatus={clubStatus(
+                  bookClub.memberCount,
+                  bookClub.memberLimit,
+                  bookClub.endDate,
+                  today,
+                )}
+                isMyPage={false}
+                onClick={() => onClick(bookClub.id)}
+                onLikeClick={() => onLikeClick(bookClub.id)}
+              />
+            </div>
+          ),
+        )
       )}
-      <WriteReviewModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onConfirm={(rating, content) => onConfirmReview(rating, content)}
-      />
-      <PopUp
-        isOpen={isPopUpOpen}
-        isLarge={true}
-        isTwoButton={true}
-        label={label}
-        handlePopUpClose={() => setIsPopUpOpen(false)}
-        handlePopUpConfirm={onConfirmPopUp}
-      />
     </div>
   );
 }

@@ -1,41 +1,43 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { User } from '../../types';
 import Info from './Info';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-const mockUser: User = {
-  id: 123,
-  email: 'john.doe@example.com',
-  name: 'John Doe',
-  nickname: 'DoeJon',
-  description: 'Example Company',
-  image: 'https://example.com/profile.jpg',
-  createdAt: new Date('2024-01-01T00:00:00Z'),
-  updatedAt: new Date('2024-01-10T00:00:00Z'),
-};
+import { mockUser } from '@/mocks/mockDatas';
 
 const queryClient = new QueryClient();
 
 describe('Info 테스트', () => {
-  it('Info 컴포넌트의 데이터 렌더링 확인', () => {
+  it('Info 컴포넌트의 isMyPage가 false일 때(타 유저 프로필) 렌더링 확인', () => {
     render(
       <QueryClientProvider client={queryClient}>
-        <Info user={mockUser} />
+        <Info user={mockUser} isMyPage={false} />
       </QueryClientProvider>,
     );
 
     //프로필 컴포넌트 데이터 렌더링 확인
-    expect(screen.getByText('DoeJon님의 프로필')).toBeInTheDocument;
+    expect(screen.getByText('Johnny님')).toBeInTheDocument;
     expect(screen.getByText('john.doe@example.com')).toBeInTheDocument;
-    expect(screen.getByText('Example Company')).toBeInTheDocument;
+    expect(screen.getByText('A software developer.')).toBeInTheDocument;
+  });
+
+  it('Info 컴포넌트의 isMyPage가 true일 때(마이 프로필) 렌더링 확인', () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Info user={mockUser} isMyPage={true} />
+      </QueryClientProvider>,
+    );
+
+    //프로필 컴포넌트 데이터 렌더링 확인
+    expect(screen.getByText('나의 프로필')).toBeInTheDocument;
+    expect(screen.getByText('john.doe@example.com')).toBeInTheDocument;
+    expect(screen.getByText('A software developer.')).toBeInTheDocument;
   });
 
   it('수정하기 아이콘 버튼 클릭 후 프로필 수정하기 모달 렌더링 테스트', async () => {
     render(
       <QueryClientProvider client={queryClient}>
-        <Info user={mockUser} />
+        <Info user={mockUser} isMyPage={true} />
       </QueryClientProvider>,
     );
     const editButton = screen.getByLabelText('프로필 수정');
@@ -68,7 +70,7 @@ describe('Info 테스트', () => {
   it('수정하기 모달에서 수정 후 수정하기 버튼 클릭 시 onSubmitEditInfo 함수 호출 확인', async () => {
     render(
       <QueryClientProvider client={queryClient}>
-        <Info user={mockUser} />
+        <Info user={mockUser} isMyPage={true} />
       </QueryClientProvider>,
     );
 

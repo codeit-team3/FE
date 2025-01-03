@@ -124,6 +124,10 @@
 /* 시간 목록 아이템 스타일 */
 .react-datepicker__time-list-item {
   color: #6c6c6d !important;
+  font-size: 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 /* 선택된 시간 스타일 */
@@ -158,4 +162,14 @@
 .react-datepicker-popper[data-placement^='bottom'] .react-datepicker__triangle {
   fill: white !important;
   color: #f0f0f0;
+}
+
+/* 비활성화된 날짜 스타일 */
+.react-datepicker__day--disabled {
+  color: #f0f0f0 !important;
+  cursor: not-allowed !important;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: transparent !important;
 }

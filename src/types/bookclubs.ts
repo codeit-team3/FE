@@ -8,8 +8,17 @@ export interface BookClubParams {
   page?: number;
   size?: number;
   searchKeyword?: string;
+  memberLimitMin?: number;
+  memberLimitMax?: number;
 }
 
+export interface MyProfileParams {
+  order?: orderType;
+  page?: number;
+  size?: number;
+}
+
+//TODO: imageUrl. isPast, clubStatus, reviewScore 수정
 export interface BookClub {
   id: number;
   title: string;
@@ -21,8 +30,13 @@ export interface BookClub {
   memberLimit: number;
   town: string | null;
   memberCount: number;
+  address: string;
   isLiked: boolean;
-  imageUrl?: string;
+  isInactive: boolean;
+  imageUrl?: string | undefined;
+  isPast: boolean;
+  clubStatus: 'pending' | 'confirmed' | 'closed'; // TODO: 내가 만든 모임에서 '모임 완료' 상태 추가
+  reviewScore?: number | undefined;
 }
 
 export type orderType = 'DESC' | 'ASC' | 'END' | 'RATE_DESC' | 'RATE_ASC';

@@ -1,12 +1,13 @@
 'use client';
 
 import Card from '@/components/card/Card';
-import { BookClub } from '../../../types/bookclubs';
 import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 import EmptyState from '@/components/common-layout/EmptyState';
 import { clubStatus } from '@/lib/utils/clubUtils';
+import { BookClub } from '@/types/bookclubs';
+import { useLikeClub, useUnLikeClub } from '@/lib/hooks';
 
 interface ClubListSectionProps {
   bookClubs: BookClub[];
@@ -14,11 +15,17 @@ interface ClubListSectionProps {
 
 function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
   const router = useRouter();
+  const { onConfirmUnLike } = useUnLikeClub();
+  const { onConfirmLike } = useLikeClub();
 
   const today = useMemo(() => new Date(), []);
 
+  const handleLikeClub = (isLiked: boolean, id: number) => {
+    isLiked ? onConfirmUnLike(id) : onConfirmLike(id);
+  };
+
   return (
-    <main className="flex w-full min-w-[336px] flex-col items-center gap-y-[26px] bg-gray-light-01 px-[20px] pt-[18px] sm:justify-between md:px-[24px] lg:px-[102px]">
+    <main className="flex w-full min-w-[336px] flex-1 flex-col items-center gap-y-[26px] bg-gray-light-01 px-[20px] pt-[18px] md:px-[24px] lg:px-[102px]">
       {bookClubs?.length > 0 ? (
         bookClubs.map((club) => (
           <Card
@@ -32,8 +39,8 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
             isLiked={club.isLiked}
             current={club.memberCount}
             max={club.memberLimit}
-            isPast={isPastDate(club.endDate, today)} // 지난 모임 여부
-            isCanceled={false} // 모임 취소 여부 (API 값에 따라 변경 가능)
+            isPast={isPastDate(club.targetDate, today)} // 지난 모임 여부
+            isCanceled={club.isInactive} // 모임 취소 여부
             bookClubType={club.bookClubType}
             meetingType={club.meetingType}
             clubStatus={clubStatus(
@@ -42,9 +49,8 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
               club.endDate,
               today,
             )}
-            onLikeClick={() => console.log(`${club.title} 좋아요 클릭`)}
+            onLikeClick={() => handleLikeClub(club.isLiked, club.id)}
             onClick={() => router.push(`/bookclub/${club.id}`)}
-            onDelete={() => console.log(`${club.title} 삭제 클릭`)}
           />
         ))
       ) : (

@@ -1,5 +1,5 @@
+import { EditInfoParams } from '@/features/profile/types';
 import apiClient from '@/lib/utils/apiClient';
-import { EditInfoParams } from '@/types/Info';
 
 export const authClientAPI = {
   //회원정보 확인

@@ -3,6 +3,7 @@ export const SIZE = {
   large: 'min-w-[402px] h-[44px] px-4 text-base',
   medium: 'min-w-[332px] h-[44px] px-4 text-base',
   small: 'min-w-[120px] h-[40px] px-3 text-sm',
+  custom: '',
 } as const;
 
 export const COLOR_SCHEMES = {

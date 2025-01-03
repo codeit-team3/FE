@@ -1,11 +1,12 @@
-import { useState, useEffect, useCallback } from 'react';
-import { getBookClubs } from '../api/bookclubApi';
-import { BookClub, BookClubParams } from '../../../types/bookclubs';
+import { useState, useEffect } from 'react';
+import { BookClub, BookClubParams } from '@/types/bookclubs';
+import { useQuery } from '@tanstack/react-query';
+import { bookClubs } from '@/api/book-club/react-query';
 
 const useBookClubList = () => {
-  const [bookClubs, setBookClubs] = useState<BookClub[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+  // TODO: 신청 가능 필터 param 추가시 clubList, initialBookClubs 상태 관리x
+  const [clubList, setClubList] = useState<BookClub[]>([]);
+  const [initialBookClubs, setInitialBookClubs] = useState<BookClub[]>([]);
   const [filters, setFilters] = useState<BookClubParams>({
     bookClubType: 'ALL',
     meetingType: 'ALL',
@@ -15,31 +16,29 @@ const useBookClubList = () => {
     searchKeyword: '',
   });
 
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await getBookClubs(filters); // API 호출
-      setBookClubs(data);
-    } catch (err) {
-      setError(err as Error);
-    } finally {
-      setLoading(false);
-    }
-  }, [filters]);
+  const { data, isLoading, error } = useQuery({
+    ...bookClubs.list(filters),
+  });
 
+  const clubInfo = data?.bookClubs;
+
+  // TODO: param 추가시, useEffect 대신 clubInfo 직접 사용
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    if (clubInfo) {
+      setClubList(clubInfo);
+      setInitialBookClubs(clubInfo); // 초기 데이터 설정
+    }
+  }, [clubInfo]);
 
   const updateFilters = (newFilters: Partial<BookClubParams>) => {
     setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }));
   };
 
   return {
-    bookClubs,
-    setBookClubs,
-    loading,
+    clubList,
+    initialBookClubs,
+    setClubList,
+    isLoading,
     error,
     filters,
     updateFilters,

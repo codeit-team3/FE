@@ -18,7 +18,7 @@ export const useSelectAddress = ({ setValue, name }: UseSelectAddressProps) => {
         setValue('city', undefined, { shouldValidate: true });
         setValue('town', undefined, { shouldValidate: true });
         setValue('address', undefined, { shouldValidate: true });
-        setValue('addressDetail', undefined, { shouldValidate: true });
+        setValue('detailAddress', undefined, { shouldValidate: true });
       } else if (value === 'OFFLINE') {
         new window.daum.Postcode({
           oncomplete: function (data: any) {
