@@ -8,7 +8,7 @@ export const getMemberLimit = (selectedValue: string | undefined) => {
       return { min: 6, max: 8 };
     case 'NINE_ELEVEN':
       return { min: 9, max: 11 };
-    case 'TWELVE':
+    case 'OVER_TWELVE':
       return { min: 12, max: 20 };
     default:
       return { min: 3, max: 20 };
