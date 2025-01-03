@@ -3,6 +3,7 @@ import apiClient from '@/lib/utils/apiClient';
 import { BookClubParams, orderType } from '@/types/bookclubs';
 import { ClubDetailReviewFilters } from '@/types/review';
 import { bookClubReviewAPI } from '@/api/book-club/bookClubReviewAPI';
+import { bookClubMainAPI } from '@/api/book-club/bookClubMainAPI';
 
 export interface MyProfileParams {
   order?: orderType;
@@ -11,14 +12,7 @@ export interface MyProfileParams {
 export const bookClubs = createQueryKeys('bookClubs', {
   list: (filters?: BookClubParams) => ({
     queryKey: [{ filters }],
-    queryFn: (ctx) =>
-      apiClient.get('/book-clubs', {
-        params: {
-          ...filters,
-          page: ctx.pageParam ?? 1,
-          size: 10,
-        },
-      }),
+    queryFn: () => bookClubMainAPI.getBookClubs(filters),
   }),
 
   detail: (bookClubId: number) => ({
