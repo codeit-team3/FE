@@ -118,7 +118,7 @@ function ChatRoomPage() {
   };
 
   return (
-    <div className="flex w-full flex-1 flex-col pb-10">
+    <div className="flex w-full flex-1 flex-col gap-5 pb-10">
       <header className="flex w-full min-w-[336px] items-end bg-gray-light-02 px-[20px] py-[30px] sm:justify-between md:px-[24px] lg:px-[102px]">
         <div className="flex w-full flex-col gap-5">
           <div className="flex items-center justify-between">

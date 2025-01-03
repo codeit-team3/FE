@@ -8,6 +8,7 @@ import { BookClubProps } from '@/features/chat/components/chat-card/types/varian
 import Link from 'next/link';
 import { getRecentChats, getStompClient } from '@/features/chat/utils/socket';
 import { findRecentMessage } from '@/features/chat/utils/chatRoom';
+import { formatDateForUI } from '@/lib/utils/formatDateForUI';
 
 export default function BookClubChatContainer() {
   const [recentMessages, setRecentMessages] = useState<
@@ -66,7 +67,9 @@ export default function BookClubChatContainer() {
                 props={{
                   ...bookClub,
                   lastMessage: recentMessage?.content || '',
-                  lastMessageTime: recentMessage?.date || '',
+                  lastMessageTime: recentMessage?.date
+                    ? formatDateForUI(recentMessage.date, 'CHAT_ROOM')
+                    : '',
                 }}
               />
             </Link>
