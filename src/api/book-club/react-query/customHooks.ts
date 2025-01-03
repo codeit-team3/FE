@@ -55,12 +55,9 @@ export function useLeaveBookClub() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: number) => bookClubMemberAPI.leave(id),
-    onSuccess: (_, id) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: bookClubs.detail(id).queryKey,
-      });
-      queryClient.invalidateQueries({
-        queryKey: bookClubs.my()._ctx.joined().queryKey,
+        queryKey: bookClubs._def,
       });
     },
   });
