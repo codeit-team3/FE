@@ -7,6 +7,7 @@ import { useMemo } from 'react';
 import EmptyState from '@/components/common-layout/EmptyState';
 import { clubStatus } from '@/lib/utils/clubUtils';
 import { BookClub } from '@/types/bookclubs';
+import { useLikeClub, useUnLikeClub } from '@/lib/hooks';
 
 interface ClubListSectionProps {
   bookClubs: BookClub[];
@@ -14,8 +15,14 @@ interface ClubListSectionProps {
 
 function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
   const router = useRouter();
+  const { onConfirmUnLike } = useUnLikeClub();
+  const { onConfirmLike } = useLikeClub();
 
   const today = useMemo(() => new Date(), []);
+
+  const handleLikeClub = (isLiked: boolean, id: number) => {
+    isLiked ? onConfirmUnLike(id) : onConfirmLike(id);
+  };
 
   return (
     <main className="flex w-full min-w-[336px] flex-1 flex-col items-center gap-y-[26px] bg-gray-light-01 px-[20px] pt-[18px] sm:justify-between md:px-[24px] lg:px-[102px]">
@@ -42,7 +49,7 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
               club.endDate,
               today,
             )}
-            onLikeClick={() => console.log(`${club.title} 좋아요 클릭`)}
+            onLikeClick={() => handleLikeClub(club.isLiked, club.id)}
             onClick={() => router.push(`/bookclub/${club.id}`)}
           />
         ))
