@@ -1,9 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { BookClubForm } from '@/features/club-create/types';
-import { createBookClub } from '@/features/club-create/api';
 import { bookClubs } from './queries';
 import { showToast } from '@/components/toast/toast';
 import {
+  bookClubLikeAPI,
   bookClubMainAPI,
   bookClubMemberAPI,
   bookClubReviewAPI,
@@ -15,7 +14,7 @@ export function useBookClubCreateMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: BookClubForm) => createBookClub(data),
+    mutationFn: (formData: FormData) => bookClubMainAPI.create(formData),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: bookClubs.all().queryKey,
@@ -26,6 +25,13 @@ export function useBookClubCreateMutation() {
       queryClient.invalidateQueries({
         queryKey: bookClubs.myJoined().queryKey,
       });
+      showToast({
+        message: '북클럽이 성공적으로 생성되었습니다.',
+        type: 'success',
+      });
+    },
+    onError: () => {
+      showToast({ message: '북클럽 생성에 실패했습니다.', type: 'error' });
     },
   });
 }
@@ -51,7 +57,10 @@ export function useLeaveBookClub() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: number) => bookClubMemberAPI.leave(id),
-    onSuccess: () => {
+    onSuccess: (_, id) => {
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.detail(id).queryKey,
+      });
       queryClient.invalidateQueries({
         queryKey: bookClubs.myJoined().queryKey,
       });
@@ -98,6 +107,38 @@ export function useCancelBookClub() {
       });
       queryClient.invalidateQueries({
         queryKey: bookClubs.myJoined().queryKey,
+      });
+    },
+  });
+}
+
+export function useLikeBookClub() {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, AxiosError<{ message: string }>, number>({
+    mutationFn: (id: number) => bookClubLikeAPI.like(id),
+    onSuccess: (_, id) => {
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.all().queryKey,
+      });
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.detail(id).queryKey,
+      });
+    },
+  });
+}
+
+export function useUnLikeBookClub() {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, AxiosError<{ message: string }>, number>({
+    mutationFn: (id: number) => bookClubLikeAPI.unlike(id),
+    onSuccess: (_, id) => {
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.all().queryKey,
+      });
+      queryClient.invalidateQueries({
+        queryKey: bookClubs.detail(id).queryKey,
       });
     },
   });

@@ -1,65 +1,75 @@
 'use client';
 
-import { bookClubs, useJoinBookClub } from '@/api/book-club/react-query';
 import Card from '@/components/card/Card';
 import { CardProps } from '@/components/card/types';
 import PopUp from '@/components/pop-up/PopUp';
-import { showToast } from '@/components/toast/toast';
 import { clubStatus } from '@/lib/utils/clubUtils';
 import { formatDateForUI } from '@/lib/utils/formatDateForUI';
 import { useAuthStore } from '@/store/authStore';
-import { useQuery } from '@tanstack/react-query';
-import { useParams, useRouter } from 'next/navigation';
-
+import { BookClub } from '@/types/bookclubs';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useJoinClub } from '../hooks';
+import {
+  useCancelClub,
+  useLeaveClub,
+  useLikeWithAuthCheck,
+  useUnLikeClub,
+} from '@/lib/hooks/index';
 
-function HeaderSection() {
+interface HeaderSectionProps {
+  clubInfo: BookClub;
+  idAsNumber: number;
+}
+
+function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
   const [isMember, setIsMember] = useState<{
     label: string;
     isTwoButton: boolean;
     handlePopUpConfirm?: () => void;
   } | null>(null);
 
-  const { id } = useParams();
-  const idAsString = Array.isArray(id) ? id[0] : id || '';
-  const idAsNumber = Number(idAsString);
+  const { handleJoin } = useJoinClub();
+  const { popUpState, onCancel, onConfirmCancel, onClosePopUp } =
+    useCancelClub();
+  const {
+    leavePopUpState,
+    onCancelParticipation,
+    onConfirmLeave,
+    onCloseLeavePopUp,
+  } = useLeaveClub();
+  const {
+    isLikePopUpOpen,
+    likePopUpLabel,
+    onCheckAuthPopUp,
+    onCloseCheckAuthPopup,
+  } = useLikeWithAuthCheck();
+  const { onConfirmUnLike } = useUnLikeClub();
+
   const { isLoggedIn, checkLoginStatus } = useAuthStore();
 
-  const { data, isLoading, error } = useQuery({
-    ...bookClubs.detail(idAsNumber),
-  });
-  const { mutate } = useJoinBookClub();
-
   const router = useRouter();
+
+  useEffect(() => {
+    console.log(clubInfo);
+  }, []);
 
   useEffect(() => {
     checkLoginStatus();
   }, [checkLoginStatus]);
 
   useEffect(() => {
-    if (isNaN(Number(idAsString))) {
+    if (isNaN(idAsNumber)) {
       alert('잘못된 접근입니다. 메인 페이지로 이동합니다.');
       router.replace('/');
     }
-  }, [idAsString]);
-
-  // TODO: 공통 로딩 컴포넌트로 교체
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
+  }, [idAsNumber]);
 
   // TODO: 응답값 추가 후 제거
   const EXAMPLE_IMAGE = '/images/profile.png';
 
-  const clubInfo = data?.data;
-
-  const handleJoin = () => {
+  const handleJoinClick = () => {
     if (!isLoggedIn) {
       setIsMember({
         label: '로그인 후 이용해주세요!',
@@ -70,27 +80,17 @@ function HeaderSection() {
       return;
     }
 
-    mutate(clubInfo.id, {
-      onSuccess: () => {
-        showToast({
-          message: '참여 완료! 함께하게 돼서 기뻐요🥰',
-          type: 'success',
-        });
-      },
-      onError: (error) => {
-        if (error.response?.data?.message) {
-          showToast({
-            message: error.response.data.message,
-            type: 'error',
-          });
-        } else {
-          showToast({
-            message: '참여 요청 중 문제가 발생했습니다. 다시 시도해주세요.',
-            type: 'error',
-          });
-        }
-      },
-    });
+    handleJoin(clubInfo.id);
+  };
+
+  const handleLikeClub = () => {
+    clubInfo.isLiked
+      ? onConfirmUnLike(clubInfo.id)
+      : onCheckAuthPopUp(clubInfo.id);
+  };
+
+  const handleLikePopUpConfirm = () => {
+    router.push('/login');
   };
 
   const defaultCardProps: CardProps = {
@@ -113,11 +113,9 @@ function HeaderSection() {
       clubInfo.endDate,
       new Date(), // TODO: new Date() 최적화 후 수정
     ),
-    onLikeClick: () => {
-      setIsLiked(!isLiked);
-    }, // api 연동 후 수정
-    // TODO: 응답값 추가 후 수정
+    onLikeClick: handleLikeClub,
     host: {
+      // TODO: 응답값 추가 후 수정
       id: 'host1',
       name: '호스트',
       profileImage: EXAMPLE_IMAGE,
@@ -125,9 +123,9 @@ function HeaderSection() {
     isHost: false,
     isParticipant: false,
     hasWrittenReview: false,
-    onCancel: () => alert('모임 취소하기 클릭!'),
-    onParticipate: handleJoin,
-    onCancelParticipation: () => alert('참여 취소하기 클릭!'),
+    onCancel: () => onCancel(clubInfo.id),
+    onParticipate: handleJoinClick,
+    onCancelParticipation: () => onCancelParticipation(clubInfo.id),
     onWriteReview: () => alert('리뷰 작성하기 클릭!'),
   };
 
@@ -145,6 +143,31 @@ function HeaderSection() {
           handlePopUpConfirm={isMember.handlePopUpConfirm}
         />
       )}
+      <PopUp
+        isOpen={leavePopUpState.isOpen}
+        isLarge={true}
+        isTwoButton={true}
+        label={leavePopUpState.label}
+        handlePopUpClose={onCloseLeavePopUp}
+        handlePopUpConfirm={onConfirmLeave}
+      />
+      <PopUp
+        isOpen={popUpState.isOpen}
+        isLarge={true}
+        isTwoButton={true}
+        label={popUpState.label}
+        handlePopUpClose={onClosePopUp}
+        handlePopUpConfirm={onConfirmCancel}
+      />
+      {/* 찜하기 */}
+      <PopUp
+        isOpen={isLikePopUpOpen}
+        isLarge={true}
+        isTwoButton={true}
+        label={likePopUpLabel}
+        handlePopUpClose={onCloseCheckAuthPopup}
+        handlePopUpConfirm={handleLikePopUpConfirm}
+      />
     </header>
   );
 }
