@@ -6,7 +6,7 @@ import {
   ChangeEvent,
   Dispatch,
   SetStateAction,
-  useEffect,
+  // useEffect,
   useState,
 } from 'react';
 import SortingButton from '@/components/sorting-button/SortingButton';
@@ -29,10 +29,10 @@ function FilterSection({
 }: CategoryTabsProps) {
   const [showAvailableOnly, setShowAvailableOnly] = useState(false); // 신청가능
 
-  useEffect(() => {
-    console.log('체크 상태: ', showAvailableOnly);
-    console.log('신청 가능 모임: ', bookClubs);
-  });
+  // useEffect(() => {
+  //   console.log('체크 상태: ', showAvailableOnly);
+  //   console.log('신청 가능 모임: ', bookClubs);
+  // });
 
   const toggleAvailableOnly = (e: ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked;
