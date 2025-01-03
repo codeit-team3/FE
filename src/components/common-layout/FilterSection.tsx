@@ -2,31 +2,54 @@
 
 import DropDown from '@/components/drop-down/DropDown';
 import FilterCheckbox from '@/components/filter-checkbox/FilterCheckbox';
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 import SortingButton from '@/components/sorting-button/SortingButton';
 import { BookClub, BookClubParams } from '../../types/bookclubs';
 import { getMeetingType, getMemberLimit } from '@/lib/utils/filterUtils';
+import { clubStatus } from '@/lib/utils/clubUtils';
 
 interface CategoryTabsProps {
   bookClubs: BookClub[];
+  initialBookClubs: BookClub[];
   setBookClubs: Dispatch<SetStateAction<BookClub[]>>;
   onFilterChange: (newFilters: Partial<BookClubParams>) => void;
 }
 
 function FilterSection({
   bookClubs,
+  initialBookClubs,
   setBookClubs,
   onFilterChange,
 }: CategoryTabsProps) {
   const [showAvailableOnly, setShowAvailableOnly] = useState(false); // 신청가능
+
+  useEffect(() => {
+    console.log('체크 상태: ', showAvailableOnly);
+    console.log('신청 가능 모임: ', bookClubs);
+  });
 
   const toggleAvailableOnly = (e: ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked;
     setShowAvailableOnly(isChecked);
 
     const filteredBookClubs = isChecked
-      ? bookClubs.filter((club) => club.memberCount < club.memberLimit)
-      : bookClubs;
+      ? bookClubs.filter(
+          (club) =>
+            club.memberCount < club.memberLimit &&
+            clubStatus(
+              club.memberCount,
+              club.memberLimit,
+              club.endDate,
+              new Date(),
+            ) !== 'closed',
+        )
+      : initialBookClubs;
 
     setBookClubs(filteredBookClubs);
   };
