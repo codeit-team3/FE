@@ -2,16 +2,16 @@ import { BookClubParams } from '@/types/bookclubs';
 
 export const getMemberLimit = (selectedValue: string | undefined) => {
   switch (selectedValue) {
-    case 'TWO_FOUR':
-      return 4;
-    case 'FIVE_SEVEN':
-      return 7;
-    case 'EIGHT_TEN':
-      return 10;
-    case 'OVER_ELEVEN':
-      return 11;
+    case 'THREE_FIVE':
+      return { min: 3, max: 5 };
+    case 'SIX_EIGHT':
+      return { min: 6, max: 8 };
+    case 'NINE_ELEVEN':
+      return { min: 9, max: 11 };
+    case 'TWELVE':
+      return { min: 12, max: 20 };
     default:
-      return undefined;
+      return { min: 3, max: 20 };
   }
 };
 

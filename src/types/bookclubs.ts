@@ -8,6 +8,8 @@ export interface BookClubParams {
   page?: number;
   size?: number;
   searchKeyword?: string;
+  memberLimitMin?: number;
+  memberLimitMax?: number;
 }
 
 export interface MyProfileParams {

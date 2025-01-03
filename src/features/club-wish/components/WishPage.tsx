@@ -23,6 +23,7 @@ function WishPage() {
         handleFilterChange={() => {}}
         bookClubs={mockBookClubs}
         setBookClubs={() => {}}
+        initialBookClubs={[]}
       />
       <ClubWishList bookClubs={mockBookClubs} />
     </>
