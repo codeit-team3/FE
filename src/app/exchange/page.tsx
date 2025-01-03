@@ -1,4 +1,6 @@
+import ExchangePage from '@/features/exchange/container/ExchangePage';
+
 function Exchange() {
-  return <div>Exchange</div>;
+  return <ExchangePage />;
 }
 export default Exchange;

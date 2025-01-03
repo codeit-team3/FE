@@ -26,7 +26,7 @@ export default function WrittenReviewList({ order }: ClubListProps) {
       {isLoading ? (
         <Loading />
       ) : ReviewList?.length === 0 ? (
-        <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
+        <div className="flex h-full pt-[255px] text-center font-medium text-gray-normal-03">
           <span className="whitespace-pre-wrap">
             {NO_LIST_MESSAGE['MY_REVIEW']}
           </span>
