@@ -28,7 +28,7 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
 
   const today = new Date();
 
-  const { queryKey, queryFn } = bookClubs.myJoined({
+  const { queryKey, queryFn } = bookClubs.my()._ctx.joined({
     order: order,
   });
   const { data, isLoading, error } = useQuery({

@@ -15,7 +15,7 @@ import { BookClub } from '@/types/bookclubs';
 export default function MyCreatedClubList({ order }: ClubListProps) {
   const router = useRouter();
 
-  const { queryKey, queryFn } = bookClubs.myCreated({
+  const { queryKey, queryFn } = bookClubs.my()._ctx.created({
     order: order,
   });
   const { data, isLoading, error } = useQuery({ queryKey, queryFn });

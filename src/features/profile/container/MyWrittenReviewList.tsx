@@ -12,7 +12,7 @@ import { Review } from '@/types/review';
 export default function MyWrittenReviewList({ order }: ClubListProps) {
   const router = useRouter();
 
-  const { queryKey, queryFn } = bookClubs.myReviews({ order });
+  const { queryKey, queryFn } = bookClubs.my()._ctx.reviews({ order });
   const { data, isLoading, error } = useQuery({
     queryKey,
     queryFn,
