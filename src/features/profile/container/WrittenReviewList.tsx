@@ -1,17 +1,15 @@
 'use client';
-
-import WrittenReview from '@/components/written-review/WrittenReview';
-import { formatDateSimple } from '@/lib/utils/dateUtils';
-import { useRouter } from 'next/navigation';
 import { bookClubs } from '@/api/book-club/react-query';
 import { useQuery } from '@tanstack/react-query';
 import { ClubListProps } from '../types';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
 import { Review } from '@/types/review';
+import ProfileWrittenReview from '../components/clubs/ProfileWrittenReview';
+
 import { useGetUserByPath } from '@/lib/hooks/useGetUserByPath';
+import Loading from '@/components/loading/Loading';
 
 export default function WrittenReviewList({ order }: ClubListProps) {
-  const router = useRouter();
   const user = useGetUserByPath();
 
   const { data, isLoading, error } = useQuery(
@@ -22,43 +20,19 @@ export default function WrittenReviewList({ order }: ClubListProps) {
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
-      {isLoading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
-      {ReviewList?.length === 0 ? (
-        <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
+      {isLoading ? (
+        <Loading />
+      ) : ReviewList?.length === 0 ? (
+        <div className="flex h-full pt-[255px] text-center font-medium text-gray-normal-03">
           <span className="whitespace-pre-wrap">
-            {NO_LIST_MESSAGE['MY_REVIEW']}
+            {NO_LIST_MESSAGE['CLUB_REVIEW']}
           </span>
         </div>
       ) : (
         ReviewList?.map((review) => (
           <div key={review.id} className="md:w-full">
-            <WrittenReview
-              onClickReview={() =>
-                router.push(`/bookclub/${review.bookClubId}`)
-              }
-            >
-              <div className="flex items-center gap-x-6 sm:flex-col sm:items-start sm:gap-y-6 md:flex-row">
-                <WrittenReview.ClubImage
-                  src={review.image || '/images/defaultBookClub.jpg'}
-                  alt="review_club_image"
-                />
-                <div className="relative flex min-h-[180px] w-[336px] flex-1 flex-col gap-y-1.5 text-sm font-medium text-gray-darker md:w-full">
-                  <WrittenReview.Rating ratingCount={review.rating} />
-                  <div className="flex flex-col gap-y-2">
-                    <WrittenReview.ClubInfo
-                      clubName={review.clubName}
-                      bookClubType={review.bookClubType}
-                    />
-                    <WrittenReview.Comment text={review.content} />
-                    <WrittenReview.UserProfile
-                      createdAt={formatDateSimple(review.createdAt)}
-                      className="gap-x-0"
-                    />
-                  </div>
-                </div>
-              </div>
-            </WrittenReview>
+            <ProfileWrittenReview review={review} />
           </div>
         ))
       )}

@@ -1,7 +1,7 @@
 'use client';
 
 import SortingButton from '@/components/sorting-button/SortingButton';
-import { CLUB_TABS, ClubTab } from '@/constants';
+import { CLUB_TABS, clubTab } from '@/constants';
 import { useState } from 'react';
 import Tab from '@/components/tab/Tab';
 import { orderType, ProfilePageProps } from '../types';
@@ -16,25 +16,23 @@ import {
 
 export default function ClubContents({ isMyPage }: ProfilePageProps) {
   const [order, setOrder] = useState<orderType>('DESC');
-  const [selectedList, setSelectedList] = useState<ClubTab>(
-    CLUB_TABS.MY_JOINED,
-  );
+  const [selectedList, setSelectedList] = useState<clubTab>(CLUB_TABS.JOINED);
 
-  const renderList = (selectedList: ClubTab) => {
+  const renderList = (selectedList: clubTab) => {
     switch (selectedList) {
-      case CLUB_TABS.MY_JOINED:
+      case CLUB_TABS.JOINED:
         return isMyPage ? (
           <MyJoinedClubList order={order} />
         ) : (
           <JoinedClubList order={order} />
         );
-      case CLUB_TABS.MY_CREATED:
+      case CLUB_TABS.CREATED:
         return isMyPage ? (
           <MyCreatedClubList order={order} />
         ) : (
           <CreatedClubList order={order} />
         );
-      case CLUB_TABS.MY_REVIEW:
+      case CLUB_TABS.REVIEW:
         return isMyPage ? (
           <MyWrittenReviewList order={order} />
         ) : (

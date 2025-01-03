@@ -66,9 +66,6 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
     }
   }, [idAsNumber]);
 
-  // TODO: 응답값 추가 후 제거
-  const EXAMPLE_IMAGE = '/images/profile.png';
-
   const handleJoinClick = () => {
     if (!isLoggedIn) {
       setIsMember({
@@ -96,7 +93,7 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
   const defaultCardProps: CardProps = {
     clubId: clubInfo.id,
     variant: 'detailedClub',
-    imageUrl: EXAMPLE_IMAGE,
+    imageUrl: clubInfo.imageUrl || '/images/defaultBookClub.jpg',
     imageAlt: '모임 이미지',
     title: clubInfo.title,
     location: clubInfo.town || '',
@@ -118,7 +115,7 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
       // TODO: 응답값 추가 후 수정
       id: 'host1',
       name: '호스트',
-      profileImage: EXAMPLE_IMAGE,
+      profileImage: '/images/profile.png',
     },
     isHost: false,
     isParticipant: false,

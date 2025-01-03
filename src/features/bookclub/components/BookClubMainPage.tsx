@@ -6,10 +6,17 @@ import { useAuthStore } from '@/store/authStore';
 import ClubListSection from './ClubListSection';
 import Button from '@/components/button/Button';
 import { useRouter } from 'next/navigation';
+import Loading from '@/components/loading/Loading';
 
 function BookClubMainPage() {
-  // 커스텀 훅에서 상태와 핸들러 가져오기
-  const { bookClubs, setBookClubs, filters, updateFilters } = useBookClubList();
+  const {
+    clubList,
+    initialBookClubs,
+    setClubList,
+    isLoading,
+    filters,
+    updateFilters,
+  } = useBookClubList();
 
   const router = useRouter();
 
@@ -44,10 +51,17 @@ function BookClubMainPage() {
       <FilterBar
         filters={filters}
         handleFilterChange={handleFilterChange}
-        bookClubs={bookClubs}
-        setBookClubs={setBookClubs}
+        bookClubs={clubList}
+        initialBookClubs={initialBookClubs}
+        setBookClubs={setClubList}
       />
-      <ClubListSection bookClubs={bookClubs} />
+      {isLoading ? (
+        <div className="flex h-[400px] justify-center">
+          <Loading />
+        </div>
+      ) : (
+        <ClubListSection bookClubs={clubList} />
+      )}
     </>
   );
 }
