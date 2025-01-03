@@ -17,15 +17,11 @@ export default function JoinedClubList({ order }: ClubListProps) {
   const router = useRouter();
   const user = useGetUserByPath();
 
-  const { queryKey, queryFn } = bookClubs.userJoined(user?.id, {
-    order: order,
-  });
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey,
-    queryFn,
-  });
+  const { data, isLoading, isError, error } = useQuery(
+    bookClubs.user(user?.id)._ctx.joined({ order, page: 1, size: 10 }),
+  );
 
-  const JoinedList: BookClub[] = data?.data?.bookClubs || [];
+  const JoinedList: BookClub[] = data?.bookClubs ?? [];
 
   const today = new Date();
 

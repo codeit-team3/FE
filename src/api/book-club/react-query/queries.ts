@@ -50,29 +50,15 @@ export const bookClubs = createQueryKeys('bookClubs', {
     queryFn: () => ({}),
     contextQueries: {
       joined: (filters?: MyProfileParams) => ({
-        queryKey: [{ filters: filters || {} }],
-        queryFn: (ctx) =>
-          apiClient.get(`/book-clubs/user/${userId}/joined`, {
-            params: {
-              ...filters,
-              page: ctx.pageParam ?? 1,
-              size: 10,
-            },
-          }),
+        queryKey: [{ filters }],
+        queryFn: () => bookClubMainAPI.userJoined(userId, filters),
       }),
       created: (filters?: MyProfileParams) => ({
         queryKey: [{ filters }],
-        queryFn: (ctx) =>
-          apiClient.get(`/book-clubs/user/${userId}/created`, {
-            params: {
-              ...filters,
-              page: ctx.pageParam ?? 1,
-              size: 10,
-            },
-          }),
+        queryFn: () => bookClubMainAPI.userCreated(userId, filters),
       }),
       reviews: (filters?: MyProfileParams) => ({
-        queryKey: [{ filters: filters || {} }],
+        queryKey: [{ filters }],
         queryFn: (ctx) =>
           apiClient.get(`/book-clubs/users/${userId}/reviews`, {
             params: {
