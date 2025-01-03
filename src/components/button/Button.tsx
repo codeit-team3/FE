@@ -4,7 +4,7 @@ import { COLOR_SCHEMES, SIZE } from '@/constants';
 
 export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   text: string;
-  size: 'large' | 'medium' | 'small' | 'modal';
+  size: 'large' | 'medium' | 'small' | 'modal' | 'custom';
   fillType: 'solid' | 'outline' | 'lightSolid';
   themeColor: keyof typeof COLOR_SCHEMES;
   lightColor?: keyof typeof COLOR_SCHEMES;

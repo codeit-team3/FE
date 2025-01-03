@@ -1,8 +1,8 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory';
 import apiClient from '@/lib/utils/apiClient';
 import { BookClubParams, MyProfileParams } from '@/types/bookclubs';
-import { ClubDetailReviewFilters } from '@/types/review';
 
+import { ClubDetailReviewFilters } from '@/types/review';
 // TODO: 추후 각자 구현하는 api 명세에 맞게 filter 타입 정의해주세요
 
 export const bookClubs = createQueryKeys('bookClubs', {

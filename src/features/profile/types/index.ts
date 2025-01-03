@@ -1,5 +1,4 @@
 import { User } from '@/types/user';
-
 export interface Review {
   reviewId: number;
   userId: number;

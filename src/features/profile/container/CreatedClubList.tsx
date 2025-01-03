@@ -10,6 +10,7 @@ import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { clubStatus } from '@/lib/utils/clubUtils';
 import { BookClub } from '@/types/bookclubs';
 import { useGetUserByPath } from '@/lib/hooks/useGetUserByPath';
+import Loading from '@/components/loading/Loading';
 
 export default function CreatedClubList({ order }: ClubListProps) {
   const router = useRouter();
@@ -38,10 +39,12 @@ export default function CreatedClubList({ order }: ClubListProps) {
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
-      {/* TODO: 로딩 컴포넌트 */}
-      {isLoading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
-      {CreatedList?.length === 0 ? (
+      {isLoading ? (
+        <div className="h-[400px]">
+          <Loading fullHeight={false} />
+        </div>
+      ) : CreatedList?.length === 0 ? (
         <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
           <span className="whitespace-pre-wrap">
             {NO_LIST_MESSAGE['CREATED']}
