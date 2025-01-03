@@ -8,12 +8,10 @@ export interface MyProfileParams {
 }
 
 export const bookClubs = createQueryKeys('bookClubs', {
-  // 전체 북클럽 쿼리의 base
   all: null,
 
-  // 북클럽 목록 조회
   list: (filters?: BookClubParams) => ({
-    queryKey: ['list', { filters: filters || {} }],
+    queryKey: [{ filters: filters || {} }],
     queryFn: (ctx) =>
       apiClient.get('/book-clubs', {
         params: {
@@ -24,7 +22,6 @@ export const bookClubs = createQueryKeys('bookClubs', {
       }),
   }),
 
-  // 북클럽 상세 조회
   detail: (bookClubId: number) => ({
     queryKey: [bookClubId],
     queryFn: () => apiClient.get(`/book-clubs/${bookClubId}`),
@@ -43,76 +40,83 @@ export const bookClubs = createQueryKeys('bookClubs', {
     },
   }),
 
-  myJoined: (filters?: MyProfileParams) => ({
-    queryKey: ['my', { filters: filters || {} }],
-    queryFn: (ctx) =>
-      apiClient.get('/book-clubs/my-joined', {
-        params: {
-          ...filters,
-          page: ctx.pageParam ?? 1,
-          size: 10,
-        },
+  my: () => ({
+    queryKey: ['my'],
+    queryFn: () => ({}),
+    contextQueries: {
+      joined: (filters?: MyProfileParams) => ({
+        queryKey: [{ filters: filters || {} }],
+        queryFn: (ctx) =>
+          apiClient.get('/book-clubs/my-joined', {
+            params: {
+              ...filters,
+              page: ctx.pageParam ?? 1,
+              size: 10,
+            },
+          }),
       }),
+      created: (filters?: MyProfileParams) => ({
+        queryKey: [{ filters: filters || {} }],
+        queryFn: (ctx) =>
+          apiClient.get('/book-clubs/my-created', {
+            params: {
+              ...filters,
+              page: ctx.pageParam ?? 1,
+              size: 10,
+            },
+          }),
+      }),
+      reviews: (filters?: MyProfileParams) => ({
+        queryKey: [{ filters: filters || {} }],
+        queryFn: (ctx) =>
+          apiClient.get('/book-clubs/my-reviews', {
+            params: {
+              ...filters,
+              page: ctx.pageParam ?? 1,
+              size: 10,
+            },
+          }),
+      }),
+    },
   }),
 
-  myCreated: (filters?: MyProfileParams) => ({
-    queryKey: ['my', { filters: filters || {} }],
-    queryFn: (ctx) =>
-      apiClient.get('/book-clubs/my-created', {
-        params: {
-          ...filters,
-          page: ctx.pageParam ?? 1,
-          size: 10,
-        },
+  user: (userId: number) => ({
+    queryKey: [userId],
+    queryFn: () => ({}),
+    contextQueries: {
+      joined: (filters?: MyProfileParams) => ({
+        queryKey: [{ filters: filters || {} }],
+        queryFn: (ctx) =>
+          apiClient.get(`/book-clubs/user/${userId}/joined`, {
+            params: {
+              ...filters,
+              page: ctx.pageParam ?? 1,
+              size: 10,
+            },
+          }),
       }),
-  }),
-
-  myReviews: (filters?: MyProfileParams) => ({
-    queryKey: ['my', { filters: filters || {} }],
-    queryFn: (ctx) =>
-      apiClient.get('/book-clubs/my-reviews', {
-        params: {
-          ...filters,
-          page: ctx.pageParam ?? 1,
-          size: 10,
-        },
+      created: (filters?: MyProfileParams) => ({
+        queryKey: [{ filters: filters || {} }],
+        queryFn: (ctx) =>
+          apiClient.get(`/book-clubs/user/${userId}/created`, {
+            params: {
+              ...filters,
+              page: ctx.pageParam ?? 1,
+              size: 10,
+            },
+          }),
       }),
-  }),
-
-  // 특정 유저의 북클럽 관련
-  userJoined: (userId: number, filters?: MyProfileParams) => ({
-    queryKey: ['user', userId, { filters: filters || {} }],
-    queryFn: (ctx) =>
-      apiClient.get(`/book-clubs/user/${userId}/joined`, {
-        params: {
-          ...filters,
-          page: ctx.pageParam ?? 1,
-          size: 10,
-        },
+      reviews: (filters?: MyProfileParams) => ({
+        queryKey: [{ filters: filters || {} }],
+        queryFn: (ctx) =>
+          apiClient.get(`/book-clubs/users/${userId}/reviews`, {
+            params: {
+              ...filters,
+              page: ctx.pageParam ?? 1,
+              size: 10,
+            },
+          }),
       }),
-  }),
-
-  userCreated: (userId: number, filters?: MyProfileParams) => ({
-    queryKey: ['user', userId, { filters: filters || {} }],
-    queryFn: (ctx) =>
-      apiClient.get(`/book-clubs/user/${userId}/created`, {
-        params: {
-          ...filters,
-          page: ctx.pageParam ?? 1,
-          size: 10,
-        },
-      }),
-  }),
-
-  userReviews: (userId: number, filters?: MyProfileParams) => ({
-    queryKey: ['user', userId, { filters: filters || {} }],
-    queryFn: (ctx) =>
-      apiClient.get(`/book-clubs/users/${userId}/reviews`, {
-        params: {
-          ...filters,
-          page: ctx.pageParam ?? 1,
-          size: 10,
-        },
-      }),
+    },
   }),
 });
