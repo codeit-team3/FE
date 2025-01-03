@@ -2,16 +2,15 @@ import { createQueryKeys } from '@lukemorales/query-key-factory';
 import apiClient from '@/lib/utils/apiClient';
 import { BookClubParams, orderType } from '@/types/bookclubs';
 import { ClubDetailReviewFilters } from '@/types/review';
+import { bookClubReviewAPI } from '@/api/book-club/bookClubReviewAPI';
 
 export interface MyProfileParams {
   order?: orderType;
 }
 
 export const bookClubs = createQueryKeys('bookClubs', {
-  all: null,
-
   list: (filters?: BookClubParams) => ({
-    queryKey: [{ filters: filters || {} }],
+    queryKey: [{ filters }],
     queryFn: (ctx) =>
       apiClient.get('/book-clubs', {
         params: {
@@ -27,25 +26,22 @@ export const bookClubs = createQueryKeys('bookClubs', {
     queryFn: () => apiClient.get(`/book-clubs/${bookClubId}`),
     contextQueries: {
       reviews: (filters?: ClubDetailReviewFilters) => ({
-        queryKey: [{ filters: filters || {} }],
-        queryFn: (ctx) =>
-          apiClient.get(`/book-clubs/${bookClubId}/reviews`, {
-            params: {
-              ...filters,
-              page: ctx.pageParam ?? 1,
-              size: 10,
-            },
+        queryKey: [{ filters }],
+        queryFn: () =>
+          bookClubReviewAPI.getReviews({
+            bookClubId,
+            params: filters,
           }),
       }),
     },
   }),
 
   my: () => ({
-    queryKey: ['my'],
+    queryKey: [{}],
     queryFn: () => ({}),
     contextQueries: {
       joined: (filters?: MyProfileParams) => ({
-        queryKey: [{ filters: filters || {} }],
+        queryKey: [{ filters }],
         queryFn: (ctx) =>
           apiClient.get('/book-clubs/my-joined', {
             params: {
@@ -56,7 +52,7 @@ export const bookClubs = createQueryKeys('bookClubs', {
           }),
       }),
       created: (filters?: MyProfileParams) => ({
-        queryKey: [{ filters: filters || {} }],
+        queryKey: [{ filters }],
         queryFn: (ctx) =>
           apiClient.get('/book-clubs/my-created', {
             params: {
@@ -67,7 +63,7 @@ export const bookClubs = createQueryKeys('bookClubs', {
           }),
       }),
       reviews: (filters?: MyProfileParams) => ({
-        queryKey: [{ filters: filters || {} }],
+        queryKey: [{ filters }],
         queryFn: (ctx) =>
           apiClient.get('/book-clubs/my-reviews', {
             params: {
@@ -96,7 +92,7 @@ export const bookClubs = createQueryKeys('bookClubs', {
           }),
       }),
       created: (filters?: MyProfileParams) => ({
-        queryKey: [{ filters: filters || {} }],
+        queryKey: [{ filters }],
         queryFn: (ctx) =>
           apiClient.get(`/book-clubs/user/${userId}/created`, {
             params: {

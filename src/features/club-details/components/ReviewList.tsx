@@ -11,11 +11,14 @@ function ReviewList({
   setFilters,
 }: {
   reviewInfo: ClubReviewResponse;
-  setFilters: (newFilters: Partial<DetailClubReviewParams>) => void;
+  setFilters: React.Dispatch<React.SetStateAction<DetailClubReviewParams>>;
 }) {
   const setSortingOrder = (selectedLabel: string | undefined) => {
     if (['DESC', 'RATE_DESC', 'RATE_ASC'].includes(selectedLabel || '')) {
-      setFilters({ order: selectedLabel as 'DESC' | 'RATE_DESC' | 'RATE_ASC' });
+      setFilters((prev) => ({
+        ...prev,
+        order: selectedLabel as 'DESC' | 'RATE_DESC' | 'RATE_ASC',
+      }));
     }
   };
 

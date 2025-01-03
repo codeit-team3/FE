@@ -14,6 +14,10 @@ export const bookClubMainAPI = {
   },
 
   //단일 북클럽 조회
+  getBookClubDetail: async (bookClubId: number) => {
+    const response = await apiClient.get(`/book-clubs/${bookClubId}`);
+    return response.data;
+  },
 
   //유저가 참가한 북클럽 조회
 
