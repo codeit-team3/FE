@@ -20,6 +20,7 @@ export const mockBookClubs: BookClub[] = [
     isPast: false,
     clubStatus: 'pending',
     reviewScore: 4.5,
+    address: '',
   },
   {
     id: 2,
@@ -38,6 +39,7 @@ export const mockBookClubs: BookClub[] = [
     isPast: false,
     clubStatus: 'confirmed',
     reviewScore: 4.8,
+    address: '',
   },
   {
     id: 3,
@@ -56,6 +58,7 @@ export const mockBookClubs: BookClub[] = [
     isPast: false,
     clubStatus: 'confirmed',
     reviewScore: 4.2,
+    address: '',
   },
   {
     id: 4,
@@ -74,6 +77,7 @@ export const mockBookClubs: BookClub[] = [
     isPast: false,
     clubStatus: 'pending',
     reviewScore: 4.7,
+    address: '',
   },
   {
     id: 5,
@@ -92,6 +96,7 @@ export const mockBookClubs: BookClub[] = [
     isPast: false,
     clubStatus: 'pending',
     reviewScore: 4.3,
+    address: '',
   },
   {
     id: 6,
@@ -110,6 +115,7 @@ export const mockBookClubs: BookClub[] = [
     isPast: false,
     clubStatus: 'confirmed',
     reviewScore: 4.9,
+    address: '',
   },
   {
     id: 7,
@@ -128,6 +134,7 @@ export const mockBookClubs: BookClub[] = [
     isPast: false,
     clubStatus: 'pending',
     reviewScore: 4.4,
+    address: '',
   },
   {
     id: 8,
@@ -146,6 +153,7 @@ export const mockBookClubs: BookClub[] = [
     isPast: false,
     clubStatus: 'confirmed',
     reviewScore: 4.6,
+    address: '',
   },
   {
     id: 9,
@@ -164,6 +172,7 @@ export const mockBookClubs: BookClub[] = [
     isPast: false,
     clubStatus: 'pending',
     reviewScore: 4.1,
+    address: '',
   },
   {
     id: 10,
@@ -182,6 +191,7 @@ export const mockBookClubs: BookClub[] = [
     isPast: false,
     clubStatus: 'pending',
     reviewScore: 4.5,
+    address: '',
   },
 ];
 
