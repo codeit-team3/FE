@@ -1,29 +1,26 @@
 'use client';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { useState } from 'react';
+
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false, // 윈도우가 다시 포커스될 때 데이터를 다시 가져올지 여부
+      refetchOnMount: false, // 컴포넌트가 마운트될 때 데이터를 다시 가져올지 여부
+      retry: 0, // 실패한 쿼리 재시도 횟수
+      refetchOnReconnect: false, // 네트워크 재연결시 데이터를 다시 가져올지 여부
+      retryOnMount: false, // 마운트 시 실패한 쿼리 재시도 여부
+      staleTime: 1000 * 60 * 5, // 데이터가 'fresh'한 상태로 유지되는 시간 (5분)
+      gcTime: 1000 * 60 * 10, // 사용하지 않는 캐시 데이터가 메모리에서 제거되기까지의 시간 (10분)
+    },
+  },
+});
 
 export default function ReactQueryProviders({
   children,
 }: React.PropsWithChildren) {
-  const [client] = useState(
-    new QueryClient({
-      defaultOptions: {
-        queries: {
-          refetchOnWindowFocus: false, // 윈도우 다시 포커스되었을때 데이터 refetch X
-          refetchOnMount: false, // 컴포넌트 마운트될 때 데이터 refetch X
-          retry: 0, // API 요청 실패시 재시도 X
-          refetchOnReconnect: false, // 네트워크가 재연결될 때 데이터를 refetch X
-          retryOnMount: false, // 컴포넌트가 마운트될 때 실패한 쿼리를 재시도 X
-          staleTime: 1000 * 60 * 5,
-          gcTime: 1000 * 60 * 10,
-        },
-      },
-    }),
-  );
-
   return (
-    <QueryClientProvider client={client}>
+    <QueryClientProvider client={queryClient}>
       {children}
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
