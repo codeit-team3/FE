@@ -59,14 +59,8 @@ export const bookClubs = createQueryKeys('bookClubs', {
       }),
       reviews: (filters?: MyProfileParams) => ({
         queryKey: [{ filters }],
-        queryFn: (ctx) =>
-          apiClient.get(`/book-clubs/users/${userId}/reviews`, {
-            params: {
-              ...filters,
-              page: ctx.pageParam ?? 1,
-              size: 10,
-            },
-          }),
+        queryFn: () =>
+          bookClubReviewAPI.userReviews({ userId, params: filters }),
       }),
     },
   }),

@@ -18,6 +18,23 @@ export const bookClubReviewAPI = {
     });
   },
 
+  //특정 유저의 리뷰 조회
+  userReviews: async ({
+    userId,
+    params = { order: 'DESC' },
+  }: {
+    userId: number;
+    params?: MyProfileParams;
+  }) => {
+    const response = await apiClient.get(
+      `/book-clubs/users/${userId}/reviews`,
+      {
+        params,
+      },
+    );
+    return response.data;
+  },
+
   //내가 작성한 리뷰 조회
   myReviews: async (params?: MyProfileParams) => {
     const response = await apiClient.get('/book-clubs/my-reviews', {
