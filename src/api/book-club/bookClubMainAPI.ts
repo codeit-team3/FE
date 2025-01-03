@@ -1,5 +1,5 @@
 import apiClient from '@/lib/utils/apiClient';
-import { BookClubParams } from '@/types/bookclubs';
+import { BookClubParams, MyProfileParams } from '@/types/bookclubs';
 
 export const bookClubMainAPI = {
   //북클럽 삭제
@@ -24,8 +24,16 @@ export const bookClubMainAPI = {
   //유저가 만든 북클럽 조회
 
   //내가 참여한 북클럽 조회
+  myJoined: async (params?: MyProfileParams) => {
+    const response = await apiClient.get('/book-clubs/my-joined', { params });
+    return response.data;
+  },
 
   //내가 만든 북클럽 조회
+  myCreated: async (params?: MyProfileParams) => {
+    const response = await apiClient.get('/book-clubs/my-created', { params });
+    return response.data;
+  },
 
   //북클럽 생성
   create: async (formData: FormData) => {

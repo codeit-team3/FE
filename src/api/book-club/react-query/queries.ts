@@ -1,13 +1,9 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory';
 import apiClient from '@/lib/utils/apiClient';
-import { BookClubParams, orderType } from '@/types/bookclubs';
+import { BookClubParams, MyProfileParams } from '@/types/bookclubs';
 import { ClubDetailReviewFilters } from '@/types/review';
 import { bookClubReviewAPI } from '@/api/book-club/bookClubReviewAPI';
 import { bookClubMainAPI } from '@/api/book-club/bookClubMainAPI';
-
-export interface MyProfileParams {
-  order?: orderType;
-}
 
 export const bookClubs = createQueryKeys('bookClubs', {
   list: (filters?: BookClubParams) => ({
@@ -36,25 +32,11 @@ export const bookClubs = createQueryKeys('bookClubs', {
     contextQueries: {
       joined: (filters?: MyProfileParams) => ({
         queryKey: [{ filters }],
-        queryFn: (ctx) =>
-          apiClient.get('/book-clubs/my-joined', {
-            params: {
-              ...filters,
-              page: ctx.pageParam ?? 1,
-              size: 10,
-            },
-          }),
+        queryFn: () => bookClubMainAPI.myJoined(filters),
       }),
       created: (filters?: MyProfileParams) => ({
         queryKey: [{ filters }],
-        queryFn: (ctx) =>
-          apiClient.get('/book-clubs/my-created', {
-            params: {
-              ...filters,
-              page: ctx.pageParam ?? 1,
-              size: 10,
-            },
-          }),
+        queryFn: () => bookClubMainAPI.myCreated(filters),
       }),
       reviews: (filters?: MyProfileParams) => ({
         queryKey: [{ filters }],
