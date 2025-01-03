@@ -1,5 +1,4 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory';
-import apiClient from '@/lib/utils/apiClient';
 import { BookClubParams, MyProfileParams } from '@/types/bookclubs';
 import { ClubDetailReviewFilters } from '@/types/review';
 import { bookClubReviewAPI } from '@/api/book-club/bookClubReviewAPI';
@@ -13,7 +12,7 @@ export const bookClubs = createQueryKeys('bookClubs', {
 
   detail: (bookClubId: number) => ({
     queryKey: [bookClubId],
-    queryFn: () => apiClient.get(`/book-clubs/${bookClubId}`),
+    queryFn: () => bookClubMainAPI.getBookClubDetail(bookClubId),
     contextQueries: {
       reviews: (filters?: ClubDetailReviewFilters) => ({
         queryKey: [{ filters }],
