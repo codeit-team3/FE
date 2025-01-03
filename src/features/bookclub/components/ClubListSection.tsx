@@ -25,7 +25,7 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
   };
 
   return (
-    <main className="flex w-full min-w-[336px] flex-1 flex-col items-center gap-y-[26px] bg-gray-light-01 px-[20px] pt-[18px] sm:justify-between md:px-[24px] lg:px-[102px]">
+    <main className="flex w-full min-w-[336px] flex-1 flex-col items-center gap-y-[26px] bg-gray-light-01 px-[20px] pt-[18px] md:px-[24px] lg:px-[102px]">
       {bookClubs?.length > 0 ? (
         bookClubs.map((club) => (
           <Card
