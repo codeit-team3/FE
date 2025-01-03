@@ -5,6 +5,7 @@ import { ClubReviewResponse } from '../types';
 import DropDown from '@/components/drop-down/DropDown';
 import { DetailClubReviewParams } from '@/api/book-club/types';
 import EmptyState from '@/components/common-layout/EmptyState';
+import { formatDateForUI } from '@/lib/utils/formatDateForUI';
 
 function ReviewList({
   reviewInfo,
@@ -40,7 +41,7 @@ function ReviewList({
               userProfile={{
                 profileImage: review.image || '/images/profile.png',
                 userName: review.userName,
-                createdAt: review.createdAt,
+                createdAt: formatDateForUI(review.createdAt, 'DATE_ONLY'),
               }}
             />
           ))
