@@ -1,5 +1,4 @@
 'use client';
-
 import { bookClubs } from '@/api/book-club/react-query';
 import { useQuery } from '@tanstack/react-query';
 import { ClubListProps } from '../types';

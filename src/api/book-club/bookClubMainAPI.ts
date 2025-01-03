@@ -24,4 +24,12 @@ export const bookClubMainAPI = {
   //내가 만든 북클럽 조회
 
   //북클럽 생성
+  create: async (formData: FormData) => {
+    const response = await apiClient.post('/book-clubs', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  },
 };

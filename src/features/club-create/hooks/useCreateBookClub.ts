@@ -1,29 +1,17 @@
 'use client';
 
-import { useState } from 'react';
-import { BookClubForm } from '../types';
 import { useBookClubCreateMutation } from '@/api/book-club/react-query';
-import { useAuthStore } from '@/store/authStore';
+import { toFormData } from '../utils/bookClubFormUtils';
+import { BookClubForm } from '../types';
 
 export const useCreateBookClub = () => {
-  const [error, setError] = useState<string | null>(null);
-  const { user } = useAuthStore();
-
-  const { mutateAsync: createBookClub, isPending } = useBookClubCreateMutation(
-    user?.id ?? 0,
-  );
+  const { mutateAsync: createBookClubMutation, isPending } =
+    useBookClubCreateMutation();
 
   const onSubmit = async (data: BookClubForm) => {
-    setError(null);
-
-    try {
-      const response = await createBookClub(data);
-      return response;
-    } catch (error) {
-      setError('북클럽 생성에 실패했습니다.');
-      throw error;
-    }
+    const formData = toFormData(data);
+    return await createBookClubMutation(formData);
   };
 
-  return { onSubmit, isLoading: isPending, error };
+  return { onSubmit, isLoading: isPending };
 };

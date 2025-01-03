@@ -1,5 +1,8 @@
 'use client';
 
+import 'react-datepicker/dist/react-datepicker.css';
+import '@/styles/datepicker.css';
+import { useMemo } from 'react';
 import DatePicker from 'react-datepicker';
 import { Control, Controller } from 'react-hook-form';
 import { ko } from 'date-fns/locale';
@@ -8,7 +11,6 @@ import {
   CreateClubFormField,
   InputField,
 } from '@/features/club-create/components';
-import './datepicker.css';
 
 interface DatePickerContainerProps {
   control: Control<BookClubForm>;
@@ -25,6 +27,8 @@ function DatePickerContainer({
   error,
   placeholder,
 }: DatePickerContainerProps) {
+  const minDate = useMemo(() => new Date(), []);
+
   return (
     <CreateClubFormField label={label} error={error}>
       <Controller
@@ -34,6 +38,7 @@ function DatePickerContainer({
           <DatePicker
             selected={field.value}
             onChange={field.onChange}
+            minDate={minDate}
             showTimeSelect
             timeIntervals={10}
             dateFormat="yyyy-MM-dd a HH:mm"

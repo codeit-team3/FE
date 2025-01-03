@@ -1,8 +1,7 @@
-import apiClient from '@/lib/utils/apiClient';
 import { BookClubForm } from '../types';
 import { toKoreanTime } from '@/lib/utils/dateUtils';
 
-export const createBookClub = async (data: BookClubForm) => {
+export const toFormData = (data: BookClubForm) => {
   const formData = new FormData();
 
   const imageFile = data.image instanceof File ? data.image : null;
@@ -21,7 +20,7 @@ export const createBookClub = async (data: BookClubForm) => {
     city: data.city,
     town: data.town,
     address: data.address,
-    addressDetail: data.addressDetail,
+    detailAddress: data.detailAddress,
   };
 
   formData.append(
@@ -31,11 +30,5 @@ export const createBookClub = async (data: BookClubForm) => {
     }),
   );
 
-  const response = await apiClient.post('/book-clubs', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
-
-  return response.data;
+  return formData;
 };

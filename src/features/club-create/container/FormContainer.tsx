@@ -1,16 +1,13 @@
 'use client';
 
-import 'react-datepicker/dist/react-datepicker.css';
 import Button from '@/components/button/Button';
 import {
   CreateClubFormField,
   InputField,
 } from '@/features/club-create/components';
-import {
-  RadioButtonGroup,
-  DatePickerContainer,
-  ImageField,
-} from '@/features/club-create/container';
+import ImageField from '@/features/club-create/container/ImageField';
+import RadioButtonGroup from '@/features/club-create/container/RadioButtonGroup';
+import DatePickerContainer from '@/features/club-create/container/DatePickerField';
 import { useBookClubForm } from '@/features/club-create/hooks';
 import PopUp from '@/components/pop-up/PopUp';
 
@@ -98,7 +95,7 @@ function FormContainer() {
             ]}
             selectedValue={watch('meetingType')}
             register={register('meetingType')}
-            addressRegister={register('addressDetail')}
+            addressRegister={register('detailAddress')}
             setValue={setValue}
             name="meetingType"
             town={watch('town')}
@@ -143,7 +140,7 @@ function FormContainer() {
           fillType="solid"
           themeColor="green-normal-01"
           disabled={!isValid || isLoading}
-          className="h-14"
+          className={`h-14 ${!isValid || isLoading ? '' : 'hover-dim'}`}
         />
       </form>
 

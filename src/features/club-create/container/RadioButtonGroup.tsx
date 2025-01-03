@@ -36,7 +36,7 @@ function RadioButtonGroup({
       {options.map((option) => (
         <div key={option.value} className="flex w-full flex-col gap-4">
           <label
-            className={`flex w-full cursor-pointer items-start gap-2 rounded-xl px-4 py-5 ${
+            className={`flex w-full cursor-pointer items-start gap-2 rounded-xl px-4 py-5 hover-dim ${
               selectedValue === option.value
                 ? 'bg-green-light-02'
                 : 'bg-gray-light-02'
@@ -109,7 +109,7 @@ function RadioButtonGroup({
               <CreateClubFormField
                 label={`${address ? `${address}` : '오프라인 모임 장소'}`}
                 error={errors.addressDetail?.message}
-                currentLength={watch?.('addressDetail')?.length || 0}
+                currentLength={watch?.('detailAddress')?.length || 0}
               >
                 <InputField
                   register={addressRegister}

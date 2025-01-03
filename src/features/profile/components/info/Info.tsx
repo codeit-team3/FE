@@ -11,7 +11,7 @@ import { IcEdit } from '../../../../../public/icons';
 export default function Info({ user, isMyPage }: ProfilePageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { mutate: editInfo } = useEditInfo(user?.id ?? 0);
+  const { mutate: editInfo } = useEditInfo();
 
   const onSubmitEditInfo = (formData: EditInfoParams) => {
     editInfo(formData);

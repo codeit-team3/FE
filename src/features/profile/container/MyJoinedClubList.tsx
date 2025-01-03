@@ -4,7 +4,7 @@ import Card from '@/components/card/Card';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
 import { ClubListProps } from '../types';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { WriteReviewModal } from '../components/clubs';
 import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { useQuery } from '@tanstack/react-query';
@@ -17,12 +17,10 @@ import {
 } from '@/api/book-club/react-query';
 import { showToast } from '@/components/toast/toast';
 import { BookClub } from '@/types/bookclubs';
-import { useAuthStore } from '@/store/authStore';
 import Loading from '@/components/loading/Loading';
 
 export default function MyJoinedClubList({ order }: ClubListProps) {
   const router = useRouter();
-  const { user } = useAuthStore();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
@@ -31,27 +29,26 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
 
   const today = new Date();
 
-  const userId = user?.id ?? 0;
-  const { queryKey, queryFn } = bookClubs.myJoined(userId, {
+  const { queryKey, queryFn } = bookClubs.myJoined({
     order: order,
   });
   const { data, isLoading, error } = useQuery({
     queryKey,
     queryFn,
   });
-  const { mutateAsync: leaveClub } = useLeaveBookClub(userId);
-  const { mutate: writeReview } = useWriteReview(userId);
+  const { mutateAsync: leaveClub } = useLeaveBookClub();
+  const { mutate: writeReview } = useWriteReview();
 
-  useEffect(() => {
-    if (!user) {
-      showToast({
-        message: '유효한 사용자 정보가 없습니다.',
-        type: 'error',
-      });
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     showToast({
+  //       message: '유효한 사용자 정보가 없습니다.',
+  //       type: 'error',
+  //     });
+  //   }
+  // }, [user]);
 
-  if (!user) return null;
+  // if (!user) return null;
 
   const myJoinedList: BookClub[] = data?.data?.bookClubs || [];
 

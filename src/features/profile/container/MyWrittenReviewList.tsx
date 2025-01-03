@@ -5,14 +5,11 @@ import { useQuery } from '@tanstack/react-query';
 import { ClubListProps } from '../types';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
 import { Review } from '@/types/review';
-import { useAuthStore } from '@/store/authStore';
 import Loading from '@/components/loading/Loading';
 import ProfileWrittenReview from '../components/clubs/ProfileWrittenReview';
 
 export default function MyWrittenReviewList({ order }: ClubListProps) {
-  const { user } = useAuthStore();
-
-  const { queryKey, queryFn } = bookClubs.myReviews(user?.id ?? 0, { order });
+  const { queryKey, queryFn } = bookClubs.myReviews({ order });
   const { data, isLoading, error } = useQuery({
     queryKey,
     queryFn,
@@ -33,6 +30,7 @@ export default function MyWrittenReviewList({ order }: ClubListProps) {
         </div>
       ) : (
         myReviewList?.map((review) => (
+          // TODO:리뷰 컴포넌트로 분리
           <div key={review.id} className="md:w-full">
             <ProfileWrittenReview review={review} />
           </div>

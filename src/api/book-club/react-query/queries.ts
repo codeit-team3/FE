@@ -2,12 +2,8 @@ import { createQueryKeys } from '@lukemorales/query-key-factory';
 import apiClient from '@/lib/utils/apiClient';
 import { BookClubParams, MyProfileParams } from '@/types/bookclubs';
 
+import { ClubDetailReviewFilters } from '@/types/review';
 // TODO: 추후 각자 구현하는 api 명세에 맞게 filter 타입 정의해주세요
-interface ReviewFilters {
-  rating?: number;
-  hasComment?: boolean;
-  sort?: 'latest' | 'rating';
-}
 
 export const bookClubs = createQueryKeys('bookClubs', {
   all: (filters?: BookClubParams) => ({
@@ -22,11 +18,11 @@ export const bookClubs = createQueryKeys('bookClubs', {
       }),
   }),
 
-  detail: (userId: number, bookClubId: number) => ({
-    queryKey: [userId, bookClubId],
+  detail: (bookClubId: number) => ({
+    queryKey: [bookClubId],
     queryFn: () => apiClient.get(`/book-clubs/${bookClubId}`),
     contextQueries: {
-      reviews: (filters?: ReviewFilters) => ({
+      reviews: (filters?: ClubDetailReviewFilters) => ({
         queryKey: [{ filters: filters || {} }],
         queryFn: (ctx) =>
           apiClient.get(`/book-clubs/${bookClubId}/reviews`, {
@@ -80,8 +76,8 @@ export const bookClubs = createQueryKeys('bookClubs', {
   }),
 
   //내가 참여한 북클럽 조회
-  myJoined: (userId: number, filters?: MyProfileParams) => ({
-    queryKey: [userId, { filters: filters || {} }],
+  myJoined: (filters?: MyProfileParams) => ({
+    queryKey: [{ filters: filters || {} }],
     queryFn: (ctx) =>
       apiClient.get('/book-clubs/my-joined', {
         params: {
@@ -93,8 +89,8 @@ export const bookClubs = createQueryKeys('bookClubs', {
   }),
 
   //내가 만든 북클럽 조회
-  myCreated: (userId: number, filters?: MyProfileParams) => ({
-    queryKey: [userId, { filters: filters || {} }],
+  myCreated: (filters?: MyProfileParams) => ({
+    queryKey: [{ filters: filters || {} }],
     queryFn: (ctx) =>
       apiClient.get('/book-clubs/my-created', {
         params: {
@@ -106,8 +102,8 @@ export const bookClubs = createQueryKeys('bookClubs', {
   }),
 
   //내가 작성한 리뷰 조회
-  myReviews: (userId: number, filters?: MyProfileParams) => ({
-    queryKey: [userId, { filters: filters || {} }],
+  myReviews: (filters?: MyProfileParams) => ({
+    queryKey: [{ filters: filters || {} }],
     queryFn: (ctx) =>
       apiClient.get('/book-clubs/my-reviews', {
         params: {
