@@ -7,12 +7,14 @@ export const bookClubReviewAPI = {
   //단일 북클럽 리뷰 목록 조회
   getReviews: async ({
     bookClubId,
-    params,
+    params = { order: 'DESC' },
   }: {
     bookClubId: number;
     params?: DetailClubReviewParams;
   }) => {
-    await apiClient.get(`book-clubs/${bookClubId}/reviews`, { params });
+    return await apiClient.get(`book-clubs/${bookClubId}/reviews`, {
+      params: { ...params },
+    });
   },
 
   //내가 작성한 리뷰 조회
