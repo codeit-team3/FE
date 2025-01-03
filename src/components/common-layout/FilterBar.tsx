@@ -10,6 +10,7 @@ interface FilterBarProps {
   filters: BookClubParams;
   handleFilterChange: (newFilter: Partial<BookClubParams>) => void;
   bookClubs: BookClub[];
+  initialBookClubs: BookClub[];
   setBookClubs: Dispatch<SetStateAction<BookClub[]>>;
 }
 
@@ -17,6 +18,7 @@ function FilterBar({
   filters,
   handleFilterChange,
   bookClubs,
+  initialBookClubs,
   setBookClubs,
 }: FilterBarProps) {
   return (
@@ -30,6 +32,7 @@ function FilterBar({
       />
       <FilterSection
         bookClubs={bookClubs}
+        initialBookClubs={initialBookClubs}
         setBookClubs={setBookClubs}
         onFilterChange={handleFilterChange}
       />

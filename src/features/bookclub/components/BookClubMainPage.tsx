@@ -9,7 +9,8 @@ import { useRouter } from 'next/navigation';
 
 function BookClubMainPage() {
   // 커스텀 훅에서 상태와 핸들러 가져오기
-  const { bookClubs, setBookClubs, filters, updateFilters } = useBookClubList();
+  const { bookClubs, initialBookClubs, setBookClubs, filters, updateFilters } =
+    useBookClubList();
 
   const router = useRouter();
 
@@ -45,6 +46,7 @@ function BookClubMainPage() {
         filters={filters}
         handleFilterChange={handleFilterChange}
         bookClubs={bookClubs}
+        initialBookClubs={initialBookClubs}
         setBookClubs={setBookClubs}
       />
       <ClubListSection bookClubs={bookClubs} />
