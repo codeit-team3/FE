@@ -25,7 +25,7 @@ export default function MyWrittenReviewList({ order }: ClubListProps) {
       ) : myReviewList?.length === 0 ? (
         <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
           <span className="whitespace-pre-wrap">
-            {NO_LIST_MESSAGE['MY_REVIEW']}
+            {NO_LIST_MESSAGE['CLUB_REVIEW']}
           </span>
         </div>
       ) : (
