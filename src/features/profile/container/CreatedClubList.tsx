@@ -4,28 +4,27 @@ import Card from '@/components/card/Card';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
 import { useRouter } from 'next/navigation';
 import { ClubListProps } from '../types';
-// import { bookClubs } from '@/api/book-club/react-query';
-// import { useQuery } from '@tanstack/react-query';
-// import PopUp from '@/components/pop-up/PopUp';
+import { bookClubs } from '@/api/book-club/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { clubStatus } from '@/lib/utils/clubUtils';
-// import { useCancelClub } from '@/lib/hooks/useCancelClub';
-import { mockBookClubs } from '../../../mocks/mockDatas';
 import { BookClub } from '@/types/bookclubs';
+import { useGetUserByPath } from '@/lib/hooks/useGetUserByPath';
 
-export default function CreatedClubList({ user, order }: ClubListProps) {
+export default function CreatedClubList({ order }: ClubListProps) {
   const router = useRouter();
+  const user = useGetUserByPath();
 
+  const { queryKey, queryFn } = bookClubs.userCreated(user?.id, {
+    order: order,
+  });
+  const { data, isLoading, error } = useQuery({
+    queryKey,
+    queryFn,
+  });
+
+  const CreatedList: BookClub[] = data?.data?.bookClubs || [];
   const today = new Date();
-
-  console.log(user, order);
-
-  // const { queryKey, queryFn } = bookClubs.myCreated({ order: order });
-
-  // const { data, isLoading, error } = useQuery({ queryKey, queryFn });
-
-  // const myCreatedList: BookClub[] = data?.data?.bookClubs || [];
-  const myCreatedList: BookClub[] = mockBookClubs;
 
   // 카드 클릭 이벤트
   const onClick = (clubId: number) => {
@@ -39,19 +38,20 @@ export default function CreatedClubList({ user, order }: ClubListProps) {
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">
-      {/* {isLoading && <p>Loading...</p>}
-      {error && <p>Error: {error.message}</p>} */}
-      {myCreatedList?.length === 0 ? (
+      {/* TODO: 로딩 컴포넌트 */}
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Error: {error.message}</p>}
+      {CreatedList?.length === 0 ? (
         <div className="flex h-full pt-[255px] text-center text-gray-normal-03">
           <span className="whitespace-pre-wrap">
             {NO_LIST_MESSAGE['CREATED']}
           </span>
         </div>
       ) : (
-        myCreatedList?.map((bookClub) => (
-          <div key={bookClub.id} className="md:w-full">
-            {/* TODO: imageUrl. isPast, status 수정 */}
-            {!bookClub.isInactive && (
+        CreatedList?.filter((bookClub) => !bookClub.isInactive)?.map(
+          (bookClub) => (
+            <div key={bookClub.id} className="md:w-full">
+              {/* TODO: imageUrl. isPast, status 수정 */}
               <Card
                 variant="defaultClub"
                 clubId={bookClub.id}
@@ -77,18 +77,10 @@ export default function CreatedClubList({ user, order }: ClubListProps) {
                 onClick={() => onClick(bookClub.id)}
                 onLikeClick={() => onLikeClick(bookClub.id)}
               />
-            )}
-          </div>
-        ))
+            </div>
+          ),
+        )
       )}
-      {/* <PopUp
-        isOpen={popUpState.isOpen}
-        isLarge={true}
-        isTwoButton={true}
-        label={popUpState.label}
-        handlePopUpClose={onClosePopUp}
-        handlePopUpConfirm={onConfirmCancel}
-      /> */}
     </div>
   );
 }

@@ -2,15 +2,15 @@
 
 import { useState } from 'react';
 import Avatar from '@/components/avatar/Avatar';
-import { IcEdit } from '../../../../../public/icons/index';
-import { EditInfoParams } from '@/types/Info';
 import { useEditInfo } from '@/api/auth/react-query';
 import { InfoEditModal } from './index';
-import { ProfilePageProps } from '../../types';
+import { EditInfoParams, ProfilePageProps } from '../../types';
 import IconButton from '@/components/icon-button/IconButton';
+import { IcEdit } from '../../../../../public/icons';
 
 export default function Info({ user, isMyPage }: ProfilePageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const { mutate: editInfo } = useEditInfo();
 
   const onSubmitEditInfo = (formData: EditInfoParams) => {
@@ -26,7 +26,7 @@ export default function Info({ user, isMyPage }: ProfilePageProps) {
         role="title"
       >
         <label className="text-xl font-semibold text-green-dark-01">
-          {user?.nickname}님의 프로필
+          {isMyPage ? '나' : user?.nickname + '님'}의 프로필
         </label>
         {isMyPage && (
           <IconButton

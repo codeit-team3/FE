@@ -83,11 +83,6 @@ export function useWriteReview() {
         queryKey: bookClubs.detail(bookClubId).queryKey, // bookClubId에 해당하는 모임 상세 무효화
       });
 
-      //TODO: reviews 하위 쿼리 무효화
-      // queryClient.invalidateQueries({
-      //   queryKey: bookClubs.detail(bookClubId).contextQueries.reviews().queryKey, // reviews 무효화
-      // });
-
       queryClient.invalidateQueries({
         queryKey: bookClubs.myReviews().queryKey,
       });

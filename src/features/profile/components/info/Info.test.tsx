@@ -8,7 +8,20 @@ import { mockUser } from '@/mocks/mockDatas';
 const queryClient = new QueryClient();
 
 describe('Info 테스트', () => {
-  it('Info 컴포넌트의 데이터 렌더링 확인', () => {
+  it('Info 컴포넌트의 isMyPage가 false일 때(타 유저 프로필) 렌더링 확인', () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Info user={mockUser} isMyPage={false} />
+      </QueryClientProvider>,
+    );
+
+    //프로필 컴포넌트 데이터 렌더링 확인
+    expect(screen.getByText('Johnny님의 프로필')).toBeInTheDocument;
+    expect(screen.getByText('john.doe@example.com')).toBeInTheDocument;
+    expect(screen.getByText('A software developer.')).toBeInTheDocument;
+  });
+
+  it('Info 컴포넌트의 isMyPage가 true일 때(마이 프로필) 렌더링 확인', () => {
     render(
       <QueryClientProvider client={queryClient}>
         <Info user={mockUser} isMyPage={true} />
@@ -16,7 +29,7 @@ describe('Info 테스트', () => {
     );
 
     //프로필 컴포넌트 데이터 렌더링 확인
-    expect(screen.getByText('Johnny님의 프로필')).toBeInTheDocument;
+    expect(screen.getByText('나의 프로필')).toBeInTheDocument;
     expect(screen.getByText('john.doe@example.com')).toBeInTheDocument;
     expect(screen.getByText('A software developer.')).toBeInTheDocument;
   });

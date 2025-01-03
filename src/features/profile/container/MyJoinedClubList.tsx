@@ -25,15 +25,29 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
   const [label, setLabel] = useState('');
   const [selectedClubId, setSelectedClubId] = useState<number | null>(null);
+
   const today = new Date();
 
-  const { queryKey, queryFn } = bookClubs.myJoined({ order: order });
+  const { queryKey, queryFn } = bookClubs.myJoined({
+    order: order,
+  });
   const { data, isLoading, error } = useQuery({
     queryKey,
     queryFn,
   });
   const { mutateAsync: leaveClub } = useLeaveBookClub();
   const { mutate: writeReview } = useWriteReview();
+
+  // useEffect(() => {
+  //   if (!user) {
+  //     showToast({
+  //       message: '유효한 사용자 정보가 없습니다.',
+  //       type: 'error',
+  //     });
+  //   }
+  // }, [user]);
+
+  // if (!user) return null;
 
   const myJoinedList: BookClub[] = data?.data?.bookClubs || [];
 

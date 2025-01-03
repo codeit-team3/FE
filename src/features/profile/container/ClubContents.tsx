@@ -14,7 +14,7 @@ import {
   WrittenReviewList,
 } from '../container/index';
 
-export default function ClubContents({ user, isMyPage }: ProfilePageProps) {
+export default function ClubContents({ isMyPage }: ProfilePageProps) {
   const [order, setOrder] = useState<orderType>('DESC');
   const [selectedList, setSelectedList] = useState<ClubTab>(
     CLUB_TABS.MY_JOINED,
@@ -26,19 +26,19 @@ export default function ClubContents({ user, isMyPage }: ProfilePageProps) {
         return isMyPage ? (
           <MyJoinedClubList order={order} />
         ) : (
-          <JoinedClubList user={user} order={order} />
+          <JoinedClubList order={order} />
         );
       case CLUB_TABS.MY_CREATED:
         return isMyPage ? (
           <MyCreatedClubList order={order} />
         ) : (
-          <CreatedClubList user={user} order={order} />
+          <CreatedClubList order={order} />
         );
       case CLUB_TABS.MY_REVIEW:
         return isMyPage ? (
           <MyWrittenReviewList order={order} />
         ) : (
-          <WrittenReviewList user={user} order={order} />
+          <WrittenReviewList order={order} />
         );
     }
   };
