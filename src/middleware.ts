@@ -15,7 +15,7 @@ export async function middleware(request: NextRequest) {
           const data = await refreshAccessToken(refreshToken.value);
           const nextResponse = NextResponse.next();
           nextResponse.cookies.set('auth_token', data.accessToken, {
-            maxAge: 60 * 15,
+            maxAge: 60 * 60,
           });
           return nextResponse;
         } catch (error) {
