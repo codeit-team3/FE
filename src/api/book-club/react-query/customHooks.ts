@@ -39,12 +39,9 @@ export function useJoinBookClub() {
 
   return useMutation<void, AxiosError<{ message: string }>, number>({
     mutationFn: (id: number) => bookClubMemberAPI.join(id),
-    onSuccess: (_, id) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: bookClubs.detail(id).queryKey,
-      });
-      queryClient.invalidateQueries({
-        queryKey: bookClubs.my()._ctx.joined().queryKey,
+        queryKey: bookClubs._def,
       });
     },
   });
