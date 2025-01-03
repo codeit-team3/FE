@@ -2,6 +2,7 @@ import ChatMessage from './components/ChatMessage';
 import SystemMessage from './components/SystemMessage';
 import { useMessageRenderer } from '../../hooks/useMessageRenderer';
 import { Message, GroupedMessage } from '../../types/chatBubbleList';
+import { useEffect, useRef } from 'react';
 
 export interface ChatBubbleListProps {
   groupedMessages: GroupedMessage[];
@@ -14,6 +15,14 @@ function ChatBubbleList({
   hostId,
   onProfileClick,
 }: ChatBubbleListProps) {
+  const chatRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [groupedMessages]);
+
   const { getChatMessageProps, getSystemMessageProps } = useMessageRenderer({
     hostId,
     onProfileClick,
@@ -51,6 +60,7 @@ function ChatBubbleList({
           ))}
         </div>
       ))}
+      <div ref={chatRef}></div>
     </div>
   );
 }
