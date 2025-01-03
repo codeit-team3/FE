@@ -12,13 +12,11 @@ import { Review } from '@/types/review';
 export default function MyWrittenReviewList({ order }: ClubListProps) {
   const router = useRouter();
 
-  const { queryKey, queryFn } = bookClubs.my()._ctx.reviews({ order });
-  const { data, isLoading, error } = useQuery({
-    queryKey,
-    queryFn,
-  });
+  const { data, isLoading, error } = useQuery(
+    bookClubs.my()._ctx.reviews({ order, page: 1, size: 10 }),
+  );
 
-  const myReviewList: Review[] = data?.data?.reviews || [];
+  const myReviewList: Review[] = data?.reviews || [];
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-[26px]">

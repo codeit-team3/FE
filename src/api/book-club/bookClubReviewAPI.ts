@@ -1,5 +1,6 @@
 import apiClient from '@/lib/utils/apiClient';
 import { WriteReviewParams, DetailClubReviewParams } from './types';
+import { MyProfileParams } from '@/types/bookclubs';
 
 export const bookClubReviewAPI = {
   //리뷰 삭제하기
@@ -13,11 +14,17 @@ export const bookClubReviewAPI = {
     params?: DetailClubReviewParams;
   }) => {
     return await apiClient.get(`book-clubs/${bookClubId}/reviews`, {
-      params: { ...params },
+      params,
     });
   },
 
   //내가 작성한 리뷰 조회
+  myReviews: async (params?: MyProfileParams) => {
+    const response = await apiClient.get('/book-clubs/my-reviews', {
+      params,
+    });
+    return response.data;
+  },
 
   //리뷰 작성하기
   write: async ({ bookClubId, rating, content }: WriteReviewParams) => {
