@@ -1,11 +1,10 @@
 import React from 'react';
 import ChatContainer from '@/features/chat/container/ChatContainer';
 import HeaderSection from '@/components/common-layout/HeaderSection';
-import ChatComponent from '@/features/chat/components/ChatComponents';
+
 function ChatPage() {
   return (
     <>
-      <ChatComponent />
       <HeaderSection
         title={
           <>
@@ -15,6 +14,7 @@ function ChatPage() {
           </>
         }
       />
+
       <ChatContainer />
     </>
   );

@@ -1,51 +1,124 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ChatBubbleList from '@/features/chat-room/container/chat-bubble-list/ChatBubbleList';
 import { usePathname } from 'next/navigation';
-import { GroupedMessage } from '@/features/chat-room/types/chatBubbleList';
 import ChatCard from '@/features/chat/components/chat-card/ChatCard';
 import ParticipantCounter from '@/components/participant-counter/ParticipantCounter';
 import IconButton from '@/components/icon-button/IconButton';
 import GoBackIcon from '../../../../public/icons/GoBackIcon';
 import HamburgerMenuIcon from '../../../../public/icons/HamburgerMenuIcon';
-
-const groupedMessagesExample: GroupedMessage[] = [
-  {
-    date: '2024년 3월 15일',
-    messages: [
-      {
-        type: 'join',
-        date: '2024-03-15T14:29:00',
-        user: '김철수',
-      },
-      {
-        type: 'chat',
-        date: '2024-03-15T14:30:00',
-        sender: '김철수',
-        senderId: '123',
-        content: '안녕하세요!',
-        profileImage: '/images/profile.png',
-      },
-      {
-        type: 'chat',
-        date: '2024-03-15T14:31:00',
-        sender: '이영희',
-        senderId: '456',
-        content: '환영합니다!',
-        profileImage: '/images/profile.png',
-      },
-    ],
-  },
-];
+import MessageInput from '@/components/input/message-input/MessageInput';
+import {
+  ChatHistoryResponse,
+  ChatMessage,
+  getChatHistory,
+  sendMessage,
+  subscribeToChat,
+} from '@/features/chat/utils/socket';
+import {
+  ChatMessageType,
+  GroupedMessage,
+  SystemMessageType,
+} from '@/features/chat-room/types/chatBubbleList';
 
 function ChatRoomPage() {
   const pathname = usePathname();
   const chatId = pathname?.split('/').pop() || '';
-  console.log('chatId: ', chatId);
+  const [message, setMessage] = useState('');
+  const [chatHistory, setChatHistory] = useState<ChatHistoryResponse>({
+    historyResponses: [],
+  });
+
+  useEffect(() => {
+    const loadChatHistory = async () => {
+      try {
+        const history = await getChatHistory(Number(chatId));
+        setChatHistory(history);
+      } catch (error) {
+        console.error('채팅 히스토리 로딩 실패:', error);
+      }
+    };
+
+    const handleNewMessage = (message: ChatMessage) => {
+      setChatHistory((prev: any) => {
+        if (!prev?.historyResponses?.length) {
+          return {
+            historyResponses: [
+              {
+                date: new Date().toISOString(),
+                messages: [message],
+              },
+            ],
+          };
+        }
+
+        return {
+          ...prev,
+          historyResponses: [
+            ...prev.historyResponses.slice(0, -1),
+            {
+              ...prev.historyResponses[prev.historyResponses.length - 1],
+              messages: [
+                ...prev.historyResponses[prev.historyResponses.length - 1]
+                  .messages,
+                message,
+              ],
+            },
+          ],
+        };
+      });
+    };
+
+    loadChatHistory();
+    const subscription = subscribeToChat(Number(chatId), handleNewMessage);
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [chatId]);
+
+  const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMessage(e.target.value);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (message.trim()) {
+      sendMessage(Number(chatId), message);
+      setMessage('');
+    }
+  };
+
+  const convertToGroupedMessage = (
+    history: ChatHistoryResponse,
+  ): GroupedMessage[] => {
+    return history.historyResponses.map((response) => ({
+      date: response.date,
+      messages: response.messages.map((msg) => {
+        if (msg.type === 'CHAT') {
+          return {
+            type: 'CHAT',
+            id: msg.id,
+            date: msg.date,
+            userId: msg.userId,
+            userNickname: msg.userNickname,
+            content: msg.content,
+          } as ChatMessageType;
+        } else {
+          return {
+            type: msg.type,
+            id: msg.id,
+            date: msg.date,
+            user: msg.userNickname,
+          } as SystemMessageType;
+        }
+      }),
+    }));
+  };
 
   return (
-    <div className="flex w-full flex-col gap-3">
+    <div className="flex w-full flex-1 flex-col pb-10">
       <header className="flex w-full min-w-[336px] items-end bg-gray-light-02 px-[20px] py-[30px] sm:justify-between md:px-[24px] lg:px-[102px]">
         <div className="flex w-full flex-col gap-5">
           <div className="flex items-center justify-between">
@@ -80,11 +153,16 @@ function ChatRoomPage() {
           />
         </div>
       </header>
-      <ChatBubbleList
-        groupedMessages={groupedMessagesExample}
-        hostId={chatId}
-        onProfileClick={() => {}}
-      />
+      <div className="flex-1 overflow-hidden">
+        <ChatBubbleList
+          groupedMessages={convertToGroupedMessage(chatHistory)}
+          hostId={chatId}
+          onProfileClick={() => {}}
+        />
+      </div>
+      <form onSubmit={handleSubmit}>
+        <MessageInput value={message} onChange={handleMessageChange} />
+      </form>
     </div>
   );
 }

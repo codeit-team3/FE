@@ -25,12 +25,12 @@ function ChatBubbleList({
     index: number,
   ) => {
     switch (message.type) {
-      case 'chat':
+      case 'CHAT':
         return (
           <ChatMessage {...getChatMessageProps(message, messages, index)} />
         );
-      case 'join':
-      case 'leave':
+      case 'JOIN':
+      case 'LEAVE':
         return <SystemMessage {...getSystemMessageProps(message)} />;
     }
   };
