@@ -24,6 +24,8 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { bookClubs } from '@/api/book-club/react-query';
 import { formatDateForUI } from '@/lib/utils/formatDateForUI';
+import { getCookie } from '@/features/auth/utils/cookies';
+import { initializeSocket } from '@/features/chat/utils/socket';
 
 function ChatRoomPage() {
   const pathname = usePathname();
@@ -32,6 +34,8 @@ function ChatRoomPage() {
   const [chatHistory, setChatHistory] = useState<ChatHistoryResponse>({
     historyResponses: [],
   });
+
+  const [isConnected, setIsConnected] = useState(false);
 
   const { queryKey, queryFn } = bookClubs.myJoined({ order: 'DESC' });
   const { data } = useQuery({
@@ -44,6 +48,47 @@ function ChatRoomPage() {
   );
 
   useEffect(() => {
+    const connectSocket = async () => {
+      const token = getCookie('auth_token');
+      if (token) {
+        try {
+          const client = await initializeSocket(token);
+
+          let attempts = 0;
+          const maxAttempts = 50;
+
+          await new Promise((resolve, reject) => {
+            const checkConnection = setInterval(() => {
+              console.log(`소켓 연결 시도 ${attempts + 1}회`);
+
+              if (client?.connected) {
+                console.log('소켓 연결 성공!');
+                clearInterval(checkConnection);
+                resolve(true);
+              }
+
+              attempts++;
+              if (attempts >= maxAttempts) {
+                console.log('소켓 연결 최대 시도 횟수 초과');
+                clearInterval(checkConnection);
+                reject(new Error('소켓 연결 타임아웃'));
+              }
+            }, 100);
+          });
+
+          setIsConnected(true);
+        } catch (error) {
+          console.error('소켓 연결 실패:', error);
+        }
+      }
+    };
+
+    connectSocket();
+  }, []);
+
+  useEffect(() => {
+    if (!isConnected) return;
+
     const loadChatHistory = async () => {
       try {
         const history = await getChatHistory(Number(chatId));
@@ -87,9 +132,9 @@ function ChatRoomPage() {
     const subscription = subscribeToChat(Number(chatId), handleNewMessage);
 
     return () => {
-      subscription.unsubscribe();
+      subscription?.unsubscribe();
     };
-  }, [chatId]);
+  }, [chatId, isConnected]);
 
   const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);

@@ -26,6 +26,11 @@ export interface ChatHistoryResponse {
 }
 
 export const initializeSocket = async (token: string) => {
+  if (stompClient?.connected) {
+    console.log('이미 연결된 소켓이 있습니다.');
+    return stompClient;
+  }
+
   try {
     const response = await apiClient.get('/book-clubs/my-joined', {
       params: {
@@ -71,6 +76,7 @@ export const initializeSocket = async (token: string) => {
     return client;
   } catch (error) {
     console.error('모임 정보 조회 실패:', error);
+    throw error;
   }
 };
 
@@ -184,4 +190,8 @@ export const subscribeToChat = (
     const chatMessage: ChatMessage = JSON.parse(message.body);
     callback(chatMessage);
   });
+};
+
+export const isSocketConnected = () => {
+  return stompClient?.connected ?? false;
 };
