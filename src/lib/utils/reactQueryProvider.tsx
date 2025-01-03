@@ -6,7 +6,7 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false, // 윈도우가 다시 포커스될 때 데이터를 다시 가져올지 여부
-      refetchOnMount: false, // 컴포넌트가 마운트될 때 데이터를 다시 가져올지 여부
+      refetchOnMount: true, // 컴포넌트가 마운트될 때 데이터를 다시 가져올지 여부
       retry: 0, // 실패한 쿼리 재시도 횟수
       refetchOnReconnect: false, // 네트워크 재연결시 데이터를 다시 가져올지 여부
       retryOnMount: false, // 마운트 시 실패한 쿼리 재시도 여부
