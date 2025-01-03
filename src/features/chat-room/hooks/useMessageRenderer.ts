@@ -21,15 +21,14 @@ export const useMessageRenderer = ({
     currentMessage: ChatMessageType,
     prevMessage?: Message,
   ) => {
-    if (!prevMessage || prevMessage.type !== 'chat') return false;
+    if (!prevMessage || prevMessage.type !== 'CHAT') return false;
 
     const timeDiff =
       new Date(currentMessage.date).getTime() -
       new Date(prevMessage.date).getTime();
 
     return (
-      prevMessage.senderId === currentMessage.senderId &&
-      timeDiff < 10 * 60 * 1000
+      prevMessage.userId === currentMessage.userId && timeDiff < 10 * 60 * 1000
     );
   };
 
@@ -39,7 +38,7 @@ export const useMessageRenderer = ({
     index: number,
   ) => ({
     message,
-    isMyMessage: user?.id == message.senderId,
+    isMyMessage: user?.id == message.userId,
     isConsecutive: isConsecutiveMessage(message, messages[index - 1]),
     hostId,
     time: format(new Date(message.date), 'HH:mm'),

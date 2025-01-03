@@ -13,7 +13,7 @@ function SystemMessage({ message }: SystemMessageProps) {
       variant="SYSTEM"
       props={{
         username: user,
-        action: type === 'join' ? 'JOIN' : 'LEAVE',
+        action: type === 'JOIN' ? 'JOIN' : 'LEAVE',
       }}
     />
   );

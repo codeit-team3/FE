@@ -2,6 +2,7 @@ import ChatMessage from './components/ChatMessage';
 import SystemMessage from './components/SystemMessage';
 import { useMessageRenderer } from '../../hooks/useMessageRenderer';
 import { Message, GroupedMessage } from '../../types/chatBubbleList';
+import { useEffect, useRef } from 'react';
 
 export interface ChatBubbleListProps {
   groupedMessages: GroupedMessage[];
@@ -14,6 +15,14 @@ function ChatBubbleList({
   hostId,
   onProfileClick,
 }: ChatBubbleListProps) {
+  const chatRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [groupedMessages]);
+
   const { getChatMessageProps, getSystemMessageProps } = useMessageRenderer({
     hostId,
     onProfileClick,
@@ -25,18 +34,18 @@ function ChatBubbleList({
     index: number,
   ) => {
     switch (message.type) {
-      case 'chat':
+      case 'CHAT':
         return (
           <ChatMessage {...getChatMessageProps(message, messages, index)} />
         );
-      case 'join':
-      case 'leave':
+      case 'JOIN':
+      case 'LEAVE':
         return <SystemMessage {...getSystemMessageProps(message)} />;
     }
   };
 
   return (
-    <div className="flex w-full flex-col gap-3">
+    <div className="flex w-full flex-col gap-3 px-5">
       {groupedMessages.map((group, groupIndex) => (
         <div key={groupIndex} className="flex w-full flex-col gap-3">
           <div className="flex items-center justify-center py-1.5">
@@ -51,6 +60,7 @@ function ChatBubbleList({
           ))}
         </div>
       ))}
+      <div ref={chatRef}></div>
     </div>
   );
 }

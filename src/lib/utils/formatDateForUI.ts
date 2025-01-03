@@ -1,6 +1,6 @@
 export const formatDateForUI = (
   isoString: string,
-  outputFormat: 'KOREAN' | 'DATE_ONLY',
+  outputFormat: 'KOREAN' | 'DATE_ONLY' | 'CHAT_ROOM',
 ): string => {
   const date = new Date(isoString);
 
@@ -21,6 +21,8 @@ export const formatDateForUI = (
       return `${month}/${day}(${dayOfWeek}) ${meridiem} ${hour}:${minute}`;
     case 'DATE_ONLY':
       return `${year}.${month}.${day}`;
+    case 'CHAT_ROOM':
+      return `${month}.${day} ${meridiem} ${hour}:${minute}`;
   }
 };
 

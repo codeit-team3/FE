@@ -1,18 +1,18 @@
 export interface BaseMessage {
-  type: 'chat' | 'join' | 'leave';
+  type: 'CHAT' | 'JOIN' | 'LEAVE';
   date: string;
+  id: number;
 }
 
 export interface ChatMessageType extends BaseMessage {
-  type: 'chat';
-  sender: string;
-  senderId: string | number;
+  type: 'CHAT';
+  userNickname: string;
+  userId: number;
   content: string;
-  profileImage?: string;
 }
 
 export interface SystemMessageType extends BaseMessage {
-  type: 'join' | 'leave';
+  type: 'JOIN' | 'LEAVE';
   user: string;
 }
 

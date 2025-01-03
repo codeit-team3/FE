@@ -18,7 +18,7 @@ function ChatMessage({
   time,
   onProfileClick,
 }: ChatMessageProps) {
-  const { senderId, content, sender, profileImage } = message;
+  const { userId, content, userNickname } = message;
 
   return isMyMessage ? (
     <ChatBubble variant="ME" props={{ content, time }} />
@@ -28,10 +28,9 @@ function ChatMessage({
       props={{
         content,
         time,
-        name: sender,
-        profileImage: profileImage || '',
-        isHost: senderId === hostId,
-        onProfileClick: () => onProfileClick?.(senderId),
+        name: userNickname,
+        isHost: userId === hostId,
+        onProfileClick: () => onProfileClick?.(userId),
         isConsecutive,
       }}
     />

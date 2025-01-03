@@ -38,4 +38,5 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: ['/wish', '/profile', '/login', '/bookclub/create', '/chat'],
+  unstable_allowDynamic: ['**/node_modules/sockjs-client/**'],
 };

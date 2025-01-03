@@ -32,7 +32,7 @@ function ChatCardBox({
   return (
     <div
       className={twMerge(
-        'relative flex min-h-[74px] min-w-[336px] flex-col rounded-[20px] border-2 bg-gray-light-01 p-3 md:min-h-[155px] md:p-6',
+        'relative flex min-h-[74px] w-full min-w-[336px] flex-col rounded-[20px] border-2 bg-gray-light-01 p-3 md:min-h-[155px] md:p-6',
         isHost ? 'border-green-normal-01' : 'border-gray-normal-01',
         onClick && 'cursor-pointer',
         className,
