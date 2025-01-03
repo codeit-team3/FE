@@ -1,12 +1,9 @@
 import { useCancelBookClub } from '@/api/book-club/react-query';
 import { showToast } from '@/components/toast/toast';
 import { useState } from 'react';
-import { useAuthStore } from '@/store/authStore';
 
 export function useCancelClub() {
-  const { user } = useAuthStore();
-
-  const { mutateAsync: cancelClub } = useCancelBookClub(user?.id ?? 0);
+  const { mutateAsync: cancelClub } = useCancelBookClub();
 
   const [popUpState, setPopUpState] = useState({
     isOpen: false,

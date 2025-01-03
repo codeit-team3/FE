@@ -11,7 +11,7 @@ import {
 import { WriteReviewParams } from '../types';
 import { AxiosError } from 'axios';
 
-export function useBookClubCreateMutation(userId: number) {
+export function useBookClubCreateMutation() {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -21,58 +21,46 @@ export function useBookClubCreateMutation(userId: number) {
         queryKey: bookClubs.all().queryKey,
       });
       queryClient.invalidateQueries({
-        queryKey: bookClubs.myCreated(userId).queryKey,
+        queryKey: bookClubs.myCreated().queryKey,
       });
       queryClient.invalidateQueries({
-        queryKey: bookClubs.myJoined(userId).queryKey,
-      });
-      queryClient.invalidateQueries({
-        queryKey: bookClubs.userCreated(userId).queryKey,
-      });
-      queryClient.invalidateQueries({
-        queryKey: bookClubs.userJoined(userId).queryKey,
+        queryKey: bookClubs.myJoined().queryKey,
       });
     },
   });
 }
 
-export function useJoinBookClub(userId: number) {
+export function useJoinBookClub() {
   const queryClient = useQueryClient();
 
   return useMutation<void, AxiosError<{ message: string }>, number>({
     mutationFn: (id: number) => bookClubMemberAPI.join(id),
     onSuccess: (_, id) => {
       queryClient.invalidateQueries({
-        queryKey: bookClubs.detail(userId, id).queryKey,
+        queryKey: bookClubs.detail(id).queryKey,
       });
       queryClient.invalidateQueries({
-        queryKey: bookClubs.myJoined(userId).queryKey,
-      });
-      queryClient.invalidateQueries({
-        queryKey: bookClubs.userJoined(userId).queryKey,
+        queryKey: bookClubs.myJoined().queryKey,
       });
     },
   });
 }
 
 //북클럽 참여 취소하기
-export function useLeaveBookClub(userId: number) {
+export function useLeaveBookClub() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: number) => bookClubMemberAPI.leave(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: bookClubs.myJoined(userId).queryKey,
-      });
-      queryClient.invalidateQueries({
-        queryKey: bookClubs.userJoined(userId).queryKey,
+        queryKey: bookClubs.myJoined().queryKey,
       });
     },
   });
 }
 
 //리뷰 작성하기
-export function useWriteReview(userId: number) {
+export function useWriteReview() {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -83,15 +71,11 @@ export function useWriteReview(userId: number) {
       const { bookClubId } = variables;
 
       queryClient.invalidateQueries({
-        queryKey: bookClubs.detail(userId, bookClubId).queryKey, // bookClubId에 해당하는 모임 상세 무효화
+        queryKey: bookClubs.detail(bookClubId).queryKey, // bookClubId에 해당하는 모임 상세 무효화
       });
 
       queryClient.invalidateQueries({
-        queryKey: bookClubs.userReviewd(userId).queryKey,
-      });
-
-      queryClient.invalidateQueries({
-        queryKey: bookClubs.myReviews(userId).queryKey,
+        queryKey: bookClubs.myReviews().queryKey,
       });
       showToast({ message: '리뷰 작성을 완료하였습니다', type: 'success' });
     },
@@ -104,16 +88,16 @@ export function useWriteReview(userId: number) {
 }
 
 //북클럽 취소하기
-export function useCancelBookClub(userId: number) {
+export function useCancelBookClub() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: number) => bookClubMainAPI.cancel(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: bookClubs.myCreated(userId).queryKey,
+        queryKey: bookClubs.myCreated().queryKey,
       });
       queryClient.invalidateQueries({
-        queryKey: bookClubs.myJoined(userId).queryKey,
+        queryKey: bookClubs.myJoined().queryKey,
       });
     },
   });

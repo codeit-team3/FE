@@ -8,14 +8,11 @@ import { useQuery } from '@tanstack/react-query';
 import { ClubListProps } from '../types';
 import { NO_LIST_MESSAGE } from '../constants/meassage';
 import { Review } from '@/types/review';
-import { useAuthStore } from '@/store/authStore';
 
 export default function MyWrittenReviewList({ order }: ClubListProps) {
   const router = useRouter();
 
-  const { user } = useAuthStore();
-
-  const { queryKey, queryFn } = bookClubs.myReviews(user?.id ?? 0, { order });
+  const { queryKey, queryFn } = bookClubs.myReviews({ order });
   const { data, isLoading, error } = useQuery({
     queryKey,
     queryFn,
