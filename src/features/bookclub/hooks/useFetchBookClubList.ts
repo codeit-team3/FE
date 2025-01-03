@@ -4,6 +4,7 @@ import { BookClub, BookClubParams } from '@/types/bookclubs';
 
 const useBookClubList = () => {
   const [bookClubs, setBookClubs] = useState<BookClub[]>([]);
+  const [initialBookClubs, setInitialBookClubs] = useState<BookClub[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [filters, setFilters] = useState<BookClubParams>({
@@ -21,6 +22,8 @@ const useBookClubList = () => {
     try {
       const data = await getBookClubs(filters); // API 호출
       setBookClubs(data);
+      setInitialBookClubs(data);
+      console.log(data);
     } catch (err) {
       setError(err as Error);
     } finally {
@@ -38,6 +41,7 @@ const useBookClubList = () => {
 
   return {
     bookClubs,
+    initialBookClubs,
     setBookClubs,
     loading,
     error,
