@@ -31,6 +31,7 @@ export interface BookClub {
   town: string | null;
   memberCount: number;
   address: string;
+  detailAddress: string;
   isLiked: boolean;
   isInactive: boolean;
   imageUrl?: string | undefined;

@@ -9,10 +9,12 @@ function DescriptionSection({ clubInfo }: { clubInfo: BookClub }) {
         모임 상세 설명
       </h2>
       <div className="rounded-xl border-2 border-gray-normal-01 px-12 py-6 text-gray-dark-03">
-        <p className="flex text-[16px] font-medium leading-6">
-          <LocationIcon isPast={true} />
-          {clubInfo.address}
-        </p>
+        {clubInfo.meetingType === 'OFFLINE' && (
+          <p className="flex text-[16px] font-medium leading-6">
+            <LocationIcon isPast={true} />
+            {clubInfo.address} {clubInfo.detailAddress}
+          </p>
+        )}
         <p className="pb-[10px] pt-[6px] text-[14px] leading-5">
           <span className="font-bold">마감 날짜 </span>
           {formatDateForUI(clubInfo.endDate, 'KOREAN')}
