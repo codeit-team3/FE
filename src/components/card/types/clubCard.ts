@@ -59,7 +59,7 @@ interface DetailedClubCard extends ClubCard {
 
   // 호스트 정보
   host: {
-    id?: string;
+    id?: number;
     name: string;
     profileImage?: string;
   };

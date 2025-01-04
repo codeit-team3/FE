@@ -28,8 +28,8 @@ export interface BookClub {
   targetDate: string; // 모임일
   endDate: string; // 모집마감일
   memberLimit: number;
-  town: string | null;
   memberCount: number;
+  town: string | null;
   address: string;
   detailAddress: string;
   isLiked: boolean;
@@ -38,6 +38,10 @@ export interface BookClub {
   isPast: boolean;
   clubStatus: 'pending' | 'confirmed' | 'closed'; // TODO: 내가 만든 모임에서 '모임 완료' 상태 추가
   reviewScore?: number | undefined;
+  hostId: number;
+  hostNickname: string;
+  hostProfileImage: string;
+  isJoined: boolean;
 }
 
 export type orderType = 'DESC' | 'ASC' | 'END' | 'RATE_DESC' | 'RATE_ASC';
