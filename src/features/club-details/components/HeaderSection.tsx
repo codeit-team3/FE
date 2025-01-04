@@ -123,6 +123,7 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
     onParticipate: handleJoinClick,
     onCancelParticipation: () => onCancelParticipation(clubInfo.id),
     // onWriteReview: () => alert('리뷰 작성하기 클릭!'),
+    onHostClick: () => router.push(`/profile/${clubInfo.hostId}`),
   };
 
   return (
