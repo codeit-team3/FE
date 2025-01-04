@@ -76,7 +76,7 @@ const detailedArgs = {
   current: 5,
   max: 10,
   host: {
-    id: 'host1',
+    id: 1,
     name: '호스트',
     profileImage: 'https://picsum.photos/200/200?random=host',
   },
