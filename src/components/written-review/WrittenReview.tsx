@@ -13,7 +13,7 @@ import { twMerge } from 'tailwind-merge';
 
 // 기본 이미지 (변경될 수 있음)
 const defaultProfileImage = '/images/profile.png';
-const defaultClubImage = '/images/profile.png';
+const defaultClubImage = '/images/defaultBookClub.jpg';
 
 function handleImageError(
   event: React.SyntheticEvent<HTMLImageElement>,

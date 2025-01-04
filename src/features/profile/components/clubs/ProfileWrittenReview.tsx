@@ -11,13 +11,14 @@ export default function ProfileWrittenReview({
   review,
 }: ProfileWrittenReviewProps) {
   const router = useRouter();
+  const defaultClubImage = '/images/defaultBookClub.jpg';
   return (
     <WrittenReview
       onClickReview={() => router.push(`/bookclub/${review.bookClubId}`)}
     >
       <div className="flex cursor-pointer items-center gap-x-6 sm:flex-col sm:items-start sm:gap-y-6 md:flex-row">
         <WrittenReview.ClubImage
-          src={review.image || '/images/defaultBookClub.jpg'}
+          src={review.clubImgUrl || defaultClubImage}
           alt="review_club_image"
         />
         <div className="relative flex min-h-[180px] w-[336px] flex-1 flex-col gap-y-1.5 text-sm font-medium text-gray-darker md:w-full">
