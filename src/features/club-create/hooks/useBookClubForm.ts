@@ -14,6 +14,8 @@ export const useBookClubForm = () => {
   } = usePopup();
   const form = useForm<BookClubForm>({
     resolver: zodResolver(bookClubSchema),
+    mode: 'onChange',
+    reValidateMode: 'onChange',
   });
 
   const onSubmit = form.handleSubmit(async (data: BookClubForm) => {

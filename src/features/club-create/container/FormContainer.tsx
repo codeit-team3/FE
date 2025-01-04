@@ -17,7 +17,6 @@ function FormContainer() {
     control,
     setValue,
     errors,
-    isValid,
     watch,
     onSubmit,
     isLoading,
@@ -140,8 +139,8 @@ function FormContainer() {
           size="medium"
           fillType="solid"
           themeColor="green-normal-01"
-          disabled={!isValid || isLoading}
-          className={`h-14 ${!isValid || isLoading ? '' : 'hover-dim'}`}
+          disabled={isLoading}
+          className={`h-14 ${isLoading ? '' : 'hover-dim'}`}
         />
       </form>
 

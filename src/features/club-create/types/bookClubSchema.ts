@@ -74,6 +74,16 @@ export const bookClubSchema = z
         });
       }
     }
+
+    if (data.endDate && data.targetDate) {
+      if (data.endDate >= data.targetDate) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: '모집 마감일은 모임 날짜보다 이전이어야 합니다',
+          path: ['endDate'],
+        });
+      }
+    }
   });
 
 export type BookClubForm = z.infer<typeof bookClubSchema>;
