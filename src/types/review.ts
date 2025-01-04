@@ -16,7 +16,7 @@ export interface Review {
 
 export interface DetailReview
   extends Omit<Review, 'bookClubType' | 'clubName'> {
-  userName: string;
+  nickname: string;
   bookClubType?: 'FREE' | 'FIXED';
   clubName?: string;
 }

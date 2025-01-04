@@ -54,6 +54,7 @@ function UserProfile({
   userName,
   createdAt,
   className,
+  onClick,
 }: UserProfileProps) {
   return (
     <div className={twMerge(`flex items-center gap-x-[6px]`, className)}>
@@ -63,7 +64,8 @@ function UserProfile({
           height={24}
           src={profileImage || defaultProfileImage}
           alt={`${userName}'s profile picture`}
-          className="h-6 w-6 rounded-full object-cover"
+          className="h-6 w-6 cursor-pointer rounded-full object-cover"
+          onClick={onClick}
           onError={(e) => handleImageError(e, defaultProfileImage)}
         />
       )}

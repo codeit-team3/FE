@@ -6,6 +6,7 @@ import DropDown from '@/components/drop-down/DropDown';
 import { DetailClubReviewParams } from '@/api/book-club/types';
 import EmptyState from '@/components/common-layout/EmptyState';
 import { formatDateForUI } from '@/lib/utils/formatDateForUI';
+import { useRouter } from 'next/navigation';
 
 function ReviewList({
   reviewInfo,
@@ -14,6 +15,8 @@ function ReviewList({
   reviewInfo: ClubReviewResponse;
   setFilters: React.Dispatch<React.SetStateAction<DetailClubReviewParams>>;
 }) {
+  const router = useRouter();
+
   const setSortingOrder = (selectedLabel: string | undefined) => {
     if (['DESC', 'RATE_DESC', 'RATE_ASC'].includes(selectedLabel || '')) {
       setFilters((prev) => ({
@@ -43,9 +46,10 @@ function ReviewList({
               comment={review.content}
               userProfile={{
                 profileImage: review.image || '/images/profile.png',
-                userName: review.userName,
+                userName: review.nickname,
                 createdAt: formatDateForUI(review.createdAt, 'DATE_ONLY'),
               }}
+              onClick={() => router.push(`/profile/${review.userId}`)}
             />
           ))
         ) : (

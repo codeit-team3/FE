@@ -8,9 +8,15 @@ interface ClubReviewProps {
     userName: string;
     createdAt: string;
   };
+  onClick: () => void;
 }
 
-function ClubReview({ ratingCount, comment, userProfile }: ClubReviewProps) {
+function ClubReview({
+  ratingCount,
+  comment,
+  userProfile,
+  onClick,
+}: ClubReviewProps) {
   return (
     <WrittenReview>
       <div className="flex flex-col gap-y-2">
@@ -20,6 +26,7 @@ function ClubReview({ ratingCount, comment, userProfile }: ClubReviewProps) {
           profileImage={userProfile.profileImage}
           userName={userProfile.userName}
           createdAt={userProfile.createdAt}
+          onClick={onClick}
         />
       </div>
     </WrittenReview>
