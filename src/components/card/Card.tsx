@@ -182,10 +182,7 @@ function CardHost({
         <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-normal-01">
           <Avatar
             size="md"
-            src={
-              avatar?.src ||
-              `https://picsum.photos/200/200?random=${Math.floor(Math.random() * 1000)}`
-            }
+            src={avatar?.src || '/images/profile.png'}
             alt={avatar?.alt || `${nickname}님의 프로필`}
             onClick={onClick}
           />
