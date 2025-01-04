@@ -226,7 +226,7 @@ function ChatRoomPage() {
           onProfileClick={() => {}}
         />
       </div>
-      <div className="fixed bottom-0 flex w-full justify-between px-4">
+      <div className="fixed bottom-8 left-0 right-0 flex w-full items-center justify-between gap-3 bg-white px-4 sm:px-[24px] lg:px-[102px]">
         <form className="w-full" onSubmit={handleSubmit}>
           <MessageInput value={message} onChange={handleMessageChange} />
         </form>
