@@ -30,7 +30,13 @@ function DatePickerContainer({
   targetDate,
 }: DatePickerContainerProps) {
   const minDate = useMemo(() => new Date(), []);
-  const maxDate = name === 'endDate' && targetDate ? targetDate : undefined;
+  const maxDate = useMemo(
+    () =>
+      name === 'endDate' && targetDate
+        ? new Date(targetDate.getTime() - 24 * 60 * 60 * 1000)
+        : undefined,
+    [name, targetDate],
+  );
 
   return (
     <CreateClubFormField label={label} error={error}>
