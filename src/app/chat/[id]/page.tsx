@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import ChatBubbleList from '@/features/chat-room/container/chat-bubble-list/ChatBubbleList';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import ChatCard from '@/features/chat/components/chat-card/ChatCard';
 import ParticipantCounter from '@/components/participant-counter/ParticipantCounter';
 import IconButton from '@/components/icon-button/IconButton';
@@ -26,6 +26,7 @@ import { bookClubs } from '@/api/book-club/react-query';
 import { formatDateForUI } from '@/lib/utils/formatDateForUI';
 import { getCookie } from '@/features/auth/utils/cookies';
 import { initializeSocket } from '@/features/chat/utils/socket';
+import MessageIcon from '../../../../public/icons/MessageIcon';
 
 function ChatRoomPage() {
   const pathname = usePathname();
@@ -41,9 +42,15 @@ function ChatRoomPage() {
     bookClubs.my()._ctx.joined({ order: 'DESC', page: 1, size: 10 }),
   );
 
-  const bookClubDetail = data?.data?.bookClubs?.find(
+  const bookClubDetail = data?.bookClubs?.find(
     (club: any) => club.id === Number(chatId),
   );
+
+  const router = useRouter();
+
+  const handleGoBack = () => {
+    router.push('/chat');
+  };
 
   useEffect(() => {
     const connectSocket = async () => {
@@ -181,7 +188,7 @@ function ChatRoomPage() {
             <div className="flex items-center gap-2">
               <IconButton
                 icon={<GoBackIcon />}
-                onClick={() => console.log('채팅 버튼 클릭')}
+                onClick={handleGoBack}
                 className="bg-gray-light-02"
               />
               <h3>채팅</h3>
@@ -207,7 +214,7 @@ function ChatRoomPage() {
                 ? formatDateForUI(bookClubDetail.targetDate, 'KOREAN')
                 : '',
               meetingType: bookClubDetail?.meetingType || 'OFFLINE',
-              onClick: () => console.log('헤더 클릭'),
+              onClick: () => router.push(`/bookclub/${chatId}`),
             }}
           />
         </div>
@@ -219,9 +226,17 @@ function ChatRoomPage() {
           onProfileClick={() => {}}
         />
       </div>
-      <form onSubmit={handleSubmit}>
-        <MessageInput value={message} onChange={handleMessageChange} />
-      </form>
+      <div className="fixed bottom-8 left-0 right-0 flex w-full items-center justify-between gap-3 bg-white px-4 sm:px-[24px] lg:px-[102px]">
+        <form className="w-full" onSubmit={handleSubmit}>
+          <MessageInput value={message} onChange={handleMessageChange} />
+        </form>
+        <IconButton
+          icon={<MessageIcon />}
+          aria-label="메시지 전송"
+          className="h-[52px] w-[52px] bg-green-light-01"
+          onClick={handleSubmit}
+        />
+      </div>
     </div>
   );
 }

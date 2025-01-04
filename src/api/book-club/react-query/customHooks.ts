@@ -22,11 +22,6 @@ export function useBookClubCreateMutation() {
       queryClient.invalidateQueries({
         queryKey: bookClubs.my().queryKey,
       });
-
-      showToast({
-        message: '북클럽이 성공적으로 생성되었습니다.',
-        type: 'success',
-      });
     },
     onError: () => {
       showToast({ message: '북클럽 생성에 실패했습니다.', type: 'error' });

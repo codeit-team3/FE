@@ -18,34 +18,25 @@ import {
 import { showToast } from '@/components/toast/toast';
 import { BookClub } from '@/types/bookclubs';
 import Loading from '@/components/loading/Loading';
+import { useAuthStore } from '@/store/authStore';
 
 export default function MyJoinedClubList({ order }: ClubListProps) {
   const router = useRouter();
 
+  const { user } = useAuthStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
   const [label, setLabel] = useState('');
   const [selectedClubId, setSelectedClubId] = useState<number | null>(null);
 
   const today = new Date();
-
+  const defaultClubImage = '/images/defaultBookClub.jpg';
   const { data, isLoading, error } = useQuery(
     bookClubs.my()._ctx.joined({ order, page: 1, size: 10 }),
   );
 
   const { mutateAsync: leaveClub } = useLeaveBookClub();
   const { mutate: writeReview } = useWriteReview();
-
-  // useEffect(() => {
-  //   if (!user) {
-  //     showToast({
-  //       message: '유효한 사용자 정보가 없습니다.',
-  //       type: 'error',
-  //     });
-  //   }
-  // }, [user]);
-
-  // if (!user) return null;
 
   const myJoinedList: BookClub[] = data?.bookClubs || [];
 
@@ -136,32 +127,34 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
           </span>
         </div>
       ) : (
-        myJoinedList?.map((bookClub) => (
-          <div key={bookClub.id} className="md:w-full">
-            <Card
-              variant="participatedClub"
-              clubId={bookClub.id}
-              isCanceled={bookClub.isInactive} //TODO: api 응답값에 따라 수정가능
-              imageUrl={bookClub.imageUrl || '/images/defaultBookClub.jpg'}
-              title={bookClub.title}
-              location={bookClub.town}
-              datetime={formatDateForUI(bookClub.targetDate, 'KOREAN')}
-              meetingType={bookClub.meetingType}
-              bookClubType={bookClub.bookClubType}
-              isPast={isPastDate(bookClub.targetDate, today)}
-              clubStatus={clubStatus(
-                bookClub.memberCount,
-                bookClub.memberLimit,
-                bookClub.endDate,
-                today,
-              )}
-              onClick={(clubId) => onClick(clubId)}
-              onCancel={(clubId) => onCancel(clubId)}
-              onWriteReview={(clubId) => onWriteReview(clubId)}
-              onDelete={(clubId) => onDelete(clubId)}
-            />
-          </div>
-        ))
+        myJoinedList
+          ?.filter((bookClub) => bookClub.hostId !== user?.id)
+          ?.map((bookClub) => (
+            <div key={bookClub.id} className="md:w-full">
+              <Card
+                variant="participatedClub"
+                clubId={bookClub.id}
+                isCanceled={bookClub.isInactive} //TODO: api 응답값에 따라 수정가능
+                imageUrl={bookClub.imageUrl || defaultClubImage}
+                title={bookClub.title}
+                location={bookClub.town}
+                datetime={formatDateForUI(bookClub.targetDate, 'KOREAN')}
+                meetingType={bookClub.meetingType}
+                bookClubType={bookClub.bookClubType}
+                isPast={isPastDate(bookClub.targetDate, today)}
+                clubStatus={clubStatus(
+                  bookClub.memberCount,
+                  bookClub.memberLimit,
+                  bookClub.endDate,
+                  today,
+                )}
+                onClick={(clubId) => onClick(clubId)}
+                onCancel={(clubId) => onCancel(clubId)}
+                onWriteReview={(clubId) => onWriteReview(clubId)}
+                onDelete={(clubId) => onDelete(clubId)}
+              />
+            </div>
+          ))
       )}
       <WriteReviewModal
         isOpen={isModalOpen}

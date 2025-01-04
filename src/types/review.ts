@@ -5,11 +5,11 @@ export interface Review {
   bookClubId: number;
   rating: number;
   content: string;
-  image?: string | undefined; // TODO:clubImgUrl로 변경 필요
+  image?: string | undefined;
   createdAt: string;
 
-  profileImg?: string;
-  userName?: string;
+  clubImgUrl?: string;
+  nickname?: string;
   clubName: string;
   bookClubType: 'FREE' | 'FIXED';
 }

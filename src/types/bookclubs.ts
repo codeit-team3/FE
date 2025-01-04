@@ -27,20 +27,23 @@ export interface BookClub {
   bookClubType: 'FREE' | 'FIXED';
   targetDate: string; // 모임일
   endDate: string; // 모집마감일
+  imageUrl?: string | undefined;
   memberLimit: number;
   memberCount: number;
+  city?: string | null;
   town: string | null;
   address: string;
-  detailAddress: string;
-  isLiked: boolean;
-  isInactive: boolean;
-  imageUrl?: string | undefined;
-  isPast: boolean;
-  clubStatus: 'pending' | 'confirmed' | 'closed'; // TODO: 내가 만든 모임에서 '모임 완료' 상태 추가
-  reviewScore?: number | undefined;
+  detailAddress?: string | null;
+
   hostId: number;
   hostNickname: string;
-  hostProfileImage: string;
+  hostProfileImage?: string;
+
+  averageScore?: number;
+
+  clubStatus: 'pending' | 'confirmed' | 'closed'; // TODO: 내가 만든 모임에서 '모임 완료' 상태 추가
+  isLiked: boolean;
+  isInactive: boolean;
   isJoined: boolean;
 }
 

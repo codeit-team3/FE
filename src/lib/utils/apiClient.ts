@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getCookie, deleteCookie } from '@/features/auth/utils/cookies';
 import { useAuthStore } from '@/store/authStore';
-import { refreshAccessToken } from '@/features/auth/api/auth';
+import { refreshAccessToken } from '@/features/auth/api/refreshAccessToken';
 
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,

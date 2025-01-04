@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { refreshAccessToken } from '@/features/auth/api/auth';
+import { refreshAccessToken } from '@/features/auth/api/refreshAccessToken';
 const AUTH_REQUIRED_PATHS = ['/wish', '/profile', '/bookclub/create', '/chat'];
 
 export async function middleware(request: NextRequest) {
