@@ -23,5 +23,6 @@ export const Default: Story = {
       userName: '다람쥐',
       createdAt: '2024.01.25',
     },
+    onClick: () => alert('Clicked!'),
   },
 };

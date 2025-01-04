@@ -3,6 +3,7 @@ import HeaderBar from './HeaderBar';
 import '@testing-library/jest-dom';
 import { NAV_ITEMS } from '@/constants/navigation';
 import { useAuthStore } from '@/store/authStore';
+import { mockUser } from '@/mocks/mockDatas';
 
 jest.mock('next/navigation', () => ({
   usePathname: jest.fn(() => '/exchange'),
@@ -12,6 +13,14 @@ jest.mock('next/navigation', () => ({
     back: jest.fn(),
   })),
 }));
+
+beforeAll(() => {
+  global.ResizeObserver = class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  };
+});
 
 describe('HeaderBar 컴포넌트 테스트', () => {
   beforeEach(() => {
@@ -71,16 +80,7 @@ describe('로그인 상태에 따른 버튼 렌더링', () => {
   it('로그인 상태일 때 드롭다운 버튼이 렌더링되어야 한다', () => {
     useAuthStore.setState({
       isLoggedIn: true,
-      user: {
-        image: '/images/profile.png',
-        teamId: 'team-id',
-        id: 1,
-        email: 'user@example.com',
-        name: 'User Name',
-        description: 'description',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
+      user: mockUser,
       checkLoginStatus: jest.fn(),
     });
 

@@ -1,17 +1,19 @@
 import Image from 'next/image';
 import RatingDisplay from '../rating-display/RatingDisplay';
-import { LocationIcon } from '../../../public/icons';
 import {
   ClubImageProps,
   ClubInfoProps,
   CommentProps,
   RatingProps,
   UserProfileProps,
+  WrittenReviewProps,
 } from './types/writtenReview';
+import ClubChip from '../chip/club-chip/ClubChip';
+import { twMerge } from 'tailwind-merge';
 
 // 기본 이미지 (변경될 수 있음)
 const defaultProfileImage = '/images/profile.png';
-const defaultClubImage = '/images/profile.png';
+const defaultClubImage = '/images/defaultBookClub.jpg';
 
 function handleImageError(
   event: React.SyntheticEvent<HTMLImageElement>,
@@ -22,11 +24,13 @@ function handleImageError(
 
 export default function WrittenReview({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+  onClickReview,
+}: WrittenReviewProps) {
   return (
-    <article className="flex w-full max-w-[948px] flex-col items-start sm:justify-center">
+    <article
+      className="flex w-full flex-col items-start sm:justify-center"
+      onClick={onClickReview}
+    >
       {children}
       <hr className="border-t-1 mt-4 w-full border-gray-normal-01" />
     </article>
@@ -50,16 +54,18 @@ function UserProfile({
   userName,
   createdAt,
   className,
+  onClick,
 }: UserProfileProps) {
   return (
-    <div className={`flex items-center gap-x-[6px] ${className}`}>
+    <div className={twMerge(`flex items-center gap-x-[6px]`, className)}>
       {profileImage && (
         <Image
           width={24}
           height={24}
           src={profileImage || defaultProfileImage}
           alt={`${userName}'s profile picture`}
-          className="h-6 w-6 rounded-full object-cover"
+          className="h-6 w-6 cursor-pointer rounded-full object-cover"
+          onClick={onClick}
           onError={(e) => handleImageError(e, defaultProfileImage)}
         />
       )}
@@ -73,28 +79,23 @@ function UserProfile({
 
 function ClubImage({ src, alt }: ClubImageProps) {
   return (
-    <Image
-      src={src}
-      alt={alt || 'Club image'}
-      width={0} // 너비를 Tailwind로 관리하므로 설정하지 않음
-      height={0} // 비율을 유지하며 높이는 자동으로 설정됨
-      sizes="(max-width: 744px) 311px, 280px"
-      className="h-[156px] w-[311px] rounded-3xl object-cover md:w-[280px]"
-      onError={(e) => handleImageError(e, defaultClubImage)}
-    />
+    <div className="relative min-h-[180px] w-[336px] overflow-hidden rounded-[20px] lg:w-[384px]">
+      <Image
+        src={src || defaultClubImage}
+        alt={alt || 'Club image'}
+        fill
+        className="object-cover"
+        onError={(e) => handleImageError(e, defaultClubImage)}
+      />
+    </div>
   );
 }
 
-function ClubInfo({ clubName, location }: ClubInfoProps) {
+function ClubInfo({ clubName, bookClubType }: ClubInfoProps) {
   return (
     <div className="flex items-center gap-x-2">
-      <p className="text-sm font-bold">{clubName}</p>
-      <div className="flex items-center">
-        <LocationIcon />
-        <span className="text-sm font-semibold text-gray-dark-03">
-          {location}
-        </span>
-      </div>
+      <p className="text-xl font-semibold">{clubName}</p>
+      <ClubChip variant={bookClubType} />
     </div>
   );
 }

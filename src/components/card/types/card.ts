@@ -18,8 +18,10 @@ interface CardTitleProps extends ComponentPropsWithoutRef<'h3'> {
 
 interface CardLocationProps extends ComponentPropsWithoutRef<'div'> {
   children: React.ReactNode;
+  meetingType: 'ONLINE' | 'OFFLINE';
   className?: string;
   textClassName?: string;
+  isPast?: boolean;
 }
 
 interface CardDateTimeProps extends ComponentPropsWithoutRef<'span'> {

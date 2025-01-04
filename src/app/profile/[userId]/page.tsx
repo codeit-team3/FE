@@ -1,11 +1,8 @@
+'use client';
+
+import { ProfilePage } from '@/features/profile/container';
 import React from 'react';
 
-function Profile() {
-  return (
-    <div>
-      <div className="bg-black">profile page</div>
-    </div>
-  );
+export default function Profile() {
+  return <ProfilePage isMyPage={false} />;
 }
-
-export default Profile;

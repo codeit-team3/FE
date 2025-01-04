@@ -1,39 +1,44 @@
-export interface User {
-  teamId: string;
-  id: number;
-  email: string;
-  name: string;
-  description?: string | null;
-  image?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
+import { User } from '@/types/user';
+export interface Review {
+  reviewId: number;
+  userId: number;
+  bookClubId: number;
+  clubName: string;
+  rating: number;
+  content: string;
+  clubImgUrl?: string | undefined;
+  clubImgAlt?: string | undefined;
+  profileImg?: string;
+  userName?: string;
+  createdAt: string;
+  bookClubType: 'FREE' | 'FIXED';
 }
 
+export interface myClubParams {
+  order?: orderType;
+  size?: number;
+  page?: number;
+}
+
+export type orderType = 'DESC' | 'ASC' | 'END';
+
+export interface myJoinedParams {
+  order?: orderType;
+  size?: number;
+  page?: number;
+}
 export interface ProfilePageProps {
-  user: User | null;
+  user?: User | null | undefined;
+  isMyPage: boolean;
 }
 
-export interface ProfileEditData {
-  name: string;
+export interface ClubListProps {
+  user?: User | null | undefined;
+  order: orderType;
+}
+
+export interface EditInfoParams {
+  nickname?: string;
   description?: string;
   image?: string | null;
-}
-
-//TODO: isCanceled, imageUrl. isPast, status 수정
-export interface BookClub {
-  clubId: number;
-  title: string;
-  description: string;
-  meetingType: 'ONLINE' | 'OFFLINE';
-  bookClubType: 'FREE' | 'FIXED';
-  targetDate: string;
-  endDate: string;
-  memberLimit: number;
-  town: string;
-  memberCount: number;
-  isLiked: boolean;
-  isCanceled: boolean;
-  imageUrl: string;
-  isPast: boolean;
-  clubStatus: 'pending' | 'confirmed' | 'closed';
 }

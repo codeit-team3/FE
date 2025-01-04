@@ -3,119 +3,163 @@
 import Card from '@/components/card/Card';
 import { CardProps } from '@/components/card/types';
 import PopUp from '@/components/pop-up/PopUp';
+import { clubStatus } from '@/lib/utils/clubUtils';
+import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { useAuthStore } from '@/store/authStore';
+import { BookClub } from '@/types/bookclubs';
 import { useRouter } from 'next/navigation';
-
 import { useEffect, useState } from 'react';
+import { useJoinClub } from '../hooks';
+import {
+  useCancelClub,
+  useLeaveClub,
+  useLikeWithAuthCheck,
+  useUnLikeClub,
+} from '@/lib/hooks/index';
 
-function HeaderSection() {
+interface HeaderSectionProps {
+  clubInfo: BookClub;
+  idAsNumber: number;
+}
+
+function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isMember, setIsMember] = useState<{
+    label: string;
+    isTwoButton: boolean;
+    handlePopUpConfirm?: () => void;
+  } | null>(null);
 
-  const { isLoggedIn, checkLoginStatus } = useAuthStore();
+  const { handleJoin } = useJoinClub();
+  const { popUpState, onCancel, onConfirmCancel, onClosePopUp } =
+    useCancelClub();
+  const {
+    leavePopUpState,
+    onCancelParticipation,
+    onConfirmLeave,
+    onCloseLeavePopUp,
+  } = useLeaveClub();
+  const {
+    isLikePopUpOpen,
+    likePopUpLabel,
+    onCheckAuthPopUp,
+    onCloseCheckAuthPopup,
+  } = useLikeWithAuthCheck();
+  const { onConfirmUnLike } = useUnLikeClub();
+
+  const { isLoggedIn, checkLoginStatus, user } = useAuthStore();
+
   const router = useRouter();
-
-  let isMember;
-
-  if (isLoggedIn) {
-    isMember = {
-      label: '참여 완료!', // 응답 성공시 로직에 여기서부터
-      // isParticipant: true
-      isTwoButton: false, // 여기까지 추가
-      handlePopUpConfirm: () => setIsOpen(false),
-    };
-  } else {
-    isMember = {
-      label: '로그인 후 이용해주세요!',
-      isTwoButton: true,
-      handlePopUpConfirm: () => router.replace('/login'),
-    };
-  }
 
   useEffect(() => {
     checkLoginStatus();
   }, [checkLoginStatus]);
 
-  const EXAMPLE_IMAGE = '/images/profile.png';
+  useEffect(() => {
+    if (isNaN(idAsNumber)) {
+      alert('잘못된 접근입니다. 메인 페이지로 이동합니다.');
+      router.replace('/');
+    }
+  }, [idAsNumber]);
+
+  const handleJoinClick = () => {
+    if (!isLoggedIn) {
+      setIsMember({
+        label: '로그인 후 이용해주세요!',
+        isTwoButton: true,
+        handlePopUpConfirm: () => router.replace('/login'),
+      });
+      setIsOpen(true);
+      return;
+    }
+
+    handleJoin(clubInfo.id);
+  };
+
+  const handleLikeClub = () => {
+    clubInfo.isLiked
+      ? onConfirmUnLike(clubInfo.id)
+      : onCheckAuthPopUp(clubInfo.id);
+  };
+
+  const handleLikePopUpConfirm = () => {
+    router.push('/login');
+  };
 
   const defaultCardProps: CardProps = {
-    clubId: 45,
+    clubId: clubInfo.id,
     variant: 'detailedClub',
-    imageUrl: EXAMPLE_IMAGE,
+    imageUrl: clubInfo.imageUrl || '/images/defaultBookClub.jpg',
     imageAlt: '모임 이미지',
-    title: '독서 모임',
-    location: '서울 강남구',
-    datetime: '2024-01-20 14:00',
-    isLiked: isLiked,
-    current: 3,
-    max: 8,
-    isPast: false,
-    meetingType: 'OFFLINE',
-    bookClubType: 'FIXED',
-    clubStatus: 'pending',
-    onClick: () => {},
-    onLikeClick: () => {
-      setIsLiked(!isLiked);
-    }, // api 연동 후 수정
-    participants: [
-      {
-        id: '1',
-        name: '참여자1',
-        profileImage: EXAMPLE_IMAGE,
-        profileImageAlt: '참여자1 프로필 이미지',
-      },
-      {
-        id: '2',
-        name: '참여자2',
-        profileImage: EXAMPLE_IMAGE,
-        profileImageAlt: '참여자2 프로필 이미지',
-      },
-      {
-        id: '3',
-        name: '참여자3',
-        profileImage: EXAMPLE_IMAGE,
-        profileImageAlt: '참여자3 프로필 이미지',
-      },
-      {
-        id: '4',
-        name: '참여자4',
-        profileImage: EXAMPLE_IMAGE,
-        profileImageAlt: '참여자4 프로필 이미지',
-      },
-      {
-        id: '5',
-        name: '참여자5',
-        profileImage: EXAMPLE_IMAGE,
-        profileImageAlt: '참여자5 프로필 이미지',
-      },
-    ],
+    title: clubInfo.title,
+    location: clubInfo.town || '',
+    datetime: formatDateForUI(clubInfo.targetDate, 'KOREAN'),
+    isLiked: clubInfo.isLiked,
+    current: clubInfo.memberCount,
+    max: clubInfo.memberLimit,
+    isPast: isPastDate(clubInfo.targetDate, new Date()), // TODO: new Date() 최적화
+    meetingType: clubInfo.meetingType,
+    bookClubType: clubInfo.bookClubType,
+    clubStatus: clubStatus(
+      clubInfo.memberCount,
+      clubInfo.memberLimit,
+      clubInfo.endDate,
+      new Date(), // TODO: new Date() 최적화 후 수정
+    ),
+    onLikeClick: handleLikeClub,
     host: {
-      id: 'host1',
-      name: '호스트',
-      profileImage: EXAMPLE_IMAGE,
+      id: clubInfo.hostId,
+      name: clubInfo.hostNickname,
+      profileImage: clubInfo.hostProfileImage,
     },
-    isHost: false,
-    isParticipant: false,
-    hasWrittenReview: false,
-    onCancel: () => alert('모임 취소하기 클릭!'),
-    onParticipate: () => {
-      setIsOpen(true);
-    },
-    onCancelParticipation: () => alert('참여 취소하기 클릭!'),
-    onWriteReview: () => alert('리뷰 작성하기 클릭!'),
+    isHost: clubInfo.hostId === user?.id,
+    isParticipant: clubInfo.isJoined,
+    // hasWrittenReview: false,
+    onCancel: () => onCancel(clubInfo.id),
+    onParticipate: handleJoinClick,
+    onCancelParticipation: () => onCancelParticipation(clubInfo.id),
+    // onWriteReview: () => alert('리뷰 작성하기 클릭!'),
+    onHostClick: () => router.push(`/profile/${clubInfo.hostId}`),
   };
 
   return (
     <header className="flex justify-center py-6">
       <Card {...defaultCardProps} />
+      {isMember && (
+        <PopUp
+          isOpen={isOpen}
+          isTwoButton={isMember.isTwoButton}
+          label={isMember.label}
+          handlePopUpClose={() => {
+            setIsOpen(false);
+          }}
+          handlePopUpConfirm={isMember.handlePopUpConfirm}
+        />
+      )}
       <PopUp
-        isOpen={isOpen}
-        isTwoButton={isMember.isTwoButton}
-        label={isMember.label}
-        handlePopUpClose={() => {
-          setIsOpen(false);
-        }}
-        handlePopUpConfirm={isMember.handlePopUpConfirm}
+        isOpen={leavePopUpState.isOpen}
+        isLarge={true}
+        isTwoButton={true}
+        label={leavePopUpState.label}
+        handlePopUpClose={onCloseLeavePopUp}
+        handlePopUpConfirm={onConfirmLeave}
+      />
+      <PopUp
+        isOpen={popUpState.isOpen}
+        isLarge={true}
+        isTwoButton={true}
+        label={popUpState.label}
+        handlePopUpClose={onClosePopUp}
+        handlePopUpConfirm={onConfirmCancel}
+      />
+      {/* 찜하기 */}
+      <PopUp
+        isOpen={isLikePopUpOpen}
+        isLarge={true}
+        isTwoButton={true}
+        label={likePopUpLabel}
+        handlePopUpClose={onCloseCheckAuthPopup}
+        handlePopUpConfirm={handleLikePopUpConfirm}
       />
     </header>
   );

@@ -2,7 +2,6 @@
 
 import { createContext, useContext } from 'react';
 import ParticipantCounter from '../participant-counter/ParticipantCounter';
-import AvatarGroup from '../avatar-group/AvatarGroup';
 import ProgressBar from '../progress-bar/ProgressBar';
 import Avatar from '../avatar/Avatar';
 import {
@@ -10,6 +9,7 @@ import {
   HostIcon,
   HeartIcon,
   RatingIcon,
+  OnlineIcon,
 } from '../../../public/icons';
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
@@ -97,18 +97,28 @@ function CardLocation({
   children,
   className,
   textClassName,
+  meetingType,
+  isPast,
   ...props
 }: CardLocationProps) {
+  const displayText =
+    meetingType === 'ONLINE' ? '온라인' : children || '위치 정보 없음';
+
   return (
     <div className={twMerge('flex items-center', className)} {...props}>
-      <LocationIcon />
+      {meetingType === 'ONLINE' ? (
+        <OnlineIcon isPast={isPast} />
+      ) : (
+        <LocationIcon isPast={isPast} />
+      )}
       <span
         className={twMerge(
-          'text-sm font-semibold text-gray-dark-03',
+          'text-sm font-semibold',
+          isPast ? 'text-gray-dark-03' : 'text-green-normal-02',
           textClassName,
         )}
       >
-        {children}
+        {displayText}
       </span>
     </div>
   );
@@ -163,7 +173,7 @@ function CardHost({
   avatar,
   className,
   isHost,
-  onClick,
+  onHostClick,
   ...props
 }: CardHostInfo) {
   return (
@@ -172,12 +182,9 @@ function CardHost({
         <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-normal-01">
           <Avatar
             size="md"
-            src={
-              avatar?.src ||
-              `https://picsum.photos/200/200?random=${Math.floor(Math.random() * 1000)}`
-            }
+            src={avatar?.src || '/images/profile.png'}
             alt={avatar?.alt || `${nickname}님의 프로필`}
-            onClick={onClick}
+            onClick={onHostClick}
           />
         </div>
         <div className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-gray-normal-01 bg-green-normal-01">
@@ -207,16 +214,17 @@ function Card(props: CardProps) {
           location,
           datetime,
           isLiked,
-          onLikeClick,
           current,
           max,
           isPast,
           isCanceled,
           // meetingType,
           bookClubType,
+          clubStatus,
+          onLikeClick,
           onClick,
           onDelete,
-          clubStatus,
+          meetingType,
         } = props as DefaultClubCard & { variant: 'defaultClub' };
 
         return (
@@ -230,7 +238,7 @@ function Card(props: CardProps) {
             />
 
             <Card.Box
-              onClick={() => onClick(clubId)}
+              onClick={() => onClick?.(clubId)}
               className="justify-between"
             >
               <div className="flex flex-col gap-0.5">
@@ -239,7 +247,9 @@ function Card(props: CardProps) {
                   <ClubChip variant={bookClubType} isPast={isPast} />
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <Card.Location>{location}</Card.Location>
+                  <Card.Location meetingType={meetingType} isPast={isPast}>
+                    {location}
+                  </Card.Location>
                   <Card.DateTime>{datetime}</Card.DateTime>
                 </div>
               </div>
@@ -259,7 +269,7 @@ function Card(props: CardProps) {
                 />
               </div>
             </Card.Box>
-            {isCanceled && <Card.Overlay onDelete={() => onDelete()} />}
+            {isCanceled && <Card.Overlay onDelete={() => onDelete?.()} />}
           </div>
         );
       }
@@ -269,13 +279,11 @@ function Card(props: CardProps) {
           clubId,
           imageUrl,
           imageAlt,
-          // isLiked,
-          // onLikeClick,
           isCanceled,
           onClick,
           onDelete,
           clubStatus,
-          // meetingType,
+          meetingType,
           bookClubType,
           title,
           location,
@@ -287,14 +295,9 @@ function Card(props: CardProps) {
 
         return (
           <div className="flex flex-col gap-6 md:flex-row">
-            <Card.Image
-              url={imageUrl}
-              alt={imageAlt}
-              // isLiked={isLiked}
-              // onLikeClick={onLikeClick}
-            />
+            <Card.Image url={imageUrl} alt={imageAlt} />
             <Card.Box
-              onClick={() => onClick(clubId)}
+              onClick={() => onClick?.(clubId)}
               className="justify-between"
             >
               <div className="flex flex-col gap-2.5">
@@ -308,7 +311,9 @@ function Card(props: CardProps) {
                 <div className="flex flex-col">
                   <Card.Title>{title}</Card.Title>
                   <div className="flex items-center gap-1.5">
-                    <Card.Location>{location}</Card.Location>
+                    <Card.Location meetingType={meetingType} isPast={isPast}>
+                      {location}
+                    </Card.Location>
                     <Card.DateTime>{datetime}</Card.DateTime>
                   </div>
                 </div>
@@ -321,7 +326,7 @@ function Card(props: CardProps) {
                       themeColor="green-normal-01"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onWriteReview();
+                        onWriteReview(clubId);
                       }}
                       className="w-full"
                     />
@@ -354,7 +359,7 @@ function Card(props: CardProps) {
           imageAlt,
           onClick,
           clubStatus,
-          // meetingType,
+          meetingType,
           bookClubType,
           isPast,
           title,
@@ -368,7 +373,7 @@ function Card(props: CardProps) {
           <div className="flex flex-col gap-6 md:flex-row">
             <Card.Image url={imageUrl} alt={imageAlt} />
             <Card.Box
-              onClick={() => onClick(clubId)}
+              onClick={() => onClick?.(clubId)}
               className="justify-between"
             >
               <div className="flex flex-col gap-2.5">
@@ -379,7 +384,9 @@ function Card(props: CardProps) {
                 <div className="flex flex-col">
                   <Card.Title>{title}</Card.Title>
                   <div className="flex items-center gap-1.5">
-                    <Card.Location>{location}</Card.Location>
+                    <Card.Location meetingType={meetingType} isPast={isPast}>
+                      {location}
+                    </Card.Location>
                     <Card.DateTime>{datetime}</Card.DateTime>
                   </div>
                 </div>
@@ -393,7 +400,7 @@ function Card(props: CardProps) {
                       lightColor="gray-normal-01"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onCancel();
+                        onCancel(clubId);
                       }}
                       className="w-full"
                     />
@@ -414,7 +421,7 @@ function Card(props: CardProps) {
                         </div>
                       ) : (
                         <span className="text-gray-dark-01">
-                          아직 리뷰가 달리지 않았습니다
+                          아직 작성된 리뷰가 없습니다
                         </span>
                       )}
                     </div>
@@ -436,15 +443,15 @@ function Card(props: CardProps) {
           datetime,
           isLiked,
           onLikeClick,
-          // meetingType,
           bookClubType,
+          meetingType,
           current,
           max,
           isPast,
           host,
           clubStatus,
-          participants,
           onClick,
+          onHostClick,
           isHost,
           isParticipant,
           hasWrittenReview,
@@ -556,10 +563,11 @@ function Card(props: CardProps) {
                     alt: `${host.name}님의 프로필`,
                   }}
                   isHost={isHost}
+                  onClick={onHostClick}
                 />
 
                 <Card.Box
-                  onClick={() => onClick(clubId)}
+                  onClick={() => onClick?.(clubId)}
                   className="justify-between"
                 >
                   <div className="flex flex-col gap-0.5">
@@ -568,29 +576,20 @@ function Card(props: CardProps) {
                       <ClubChip variant={bookClubType} isPast={isPast} />
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <Card.Location>{location}</Card.Location>
+                      <Card.Location meetingType={meetingType} isPast={isPast}>
+                        {location}
+                      </Card.Location>
                       <Card.DateTime>{datetime}</Card.DateTime>
                     </div>
                   </div>
 
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
-                      <div className="flex gap-2.5">
-                        <ParticipantCounter
-                          current={current}
-                          max={max}
-                          isPast={isPast}
-                        />
-                        <AvatarGroup isPast={isPast}>
-                          {participants.map((participant, index) => (
-                            <Avatar
-                              key={index}
-                              src={participant.profileImage || ''}
-                              alt={participant.profileImageAlt || ''}
-                            />
-                          ))}
-                        </AvatarGroup>
-                      </div>
+                      <ParticipantCounter
+                        current={current}
+                        max={max}
+                        isPast={isPast}
+                      />
                       <ClubChip variant={clubStatus} isPast={isPast} />
                     </div>
                     <ProgressBar

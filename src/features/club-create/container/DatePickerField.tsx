@@ -1,5 +1,8 @@
 'use client';
 
+import 'react-datepicker/dist/react-datepicker.css';
+import '@/styles/datepicker.css';
+import { useMemo } from 'react';
 import DatePicker from 'react-datepicker';
 import { Control, Controller } from 'react-hook-form';
 import { ko } from 'date-fns/locale';
@@ -15,6 +18,7 @@ interface DatePickerContainerProps {
   label: string;
   error?: string;
   placeholder: string;
+  targetDate?: Date;
 }
 
 function DatePickerContainer({
@@ -23,7 +27,17 @@ function DatePickerContainer({
   label,
   error,
   placeholder,
+  targetDate,
 }: DatePickerContainerProps) {
+  const minDate = useMemo(() => new Date(), []);
+  const maxDate = useMemo(
+    () =>
+      name === 'endDate' && targetDate
+        ? new Date(targetDate.getTime() - 24 * 60 * 60 * 1000)
+        : undefined,
+    [name, targetDate],
+  );
+
   return (
     <CreateClubFormField label={label} error={error}>
       <Controller
@@ -33,6 +47,8 @@ function DatePickerContainer({
           <DatePicker
             selected={field.value}
             onChange={field.onChange}
+            minDate={minDate}
+            maxDate={maxDate}
             showTimeSelect
             timeIntervals={10}
             dateFormat="yyyy-MM-dd a HH:mm"

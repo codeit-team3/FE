@@ -1,26 +1,43 @@
+'use client';
+
 import SortingButton from '@/components/sorting-button/SortingButton';
-import { CLUB_TABS, ClubTab } from '@/constants';
+import { CLUB_TABS, clubTab } from '@/constants';
 import { useState } from 'react';
 import Tab from '@/components/tab/Tab';
-import { ProfilePageProps } from '../types';
+import { orderType, ProfilePageProps } from '../types';
 import {
-  HostedClubList,
+  CreatedClubList,
   JoinedClubList,
-  MyReviewList,
-} from '../components/clubs';
+  MyCreatedClubList,
+  MyJoinedClubList,
+  MyWrittenReviewList,
+  WrittenReviewList,
+} from '../container/index';
 
-export default function ClubContents({ user }: ProfilePageProps) {
-  const [sortBy, setSortBy] = useState<string | undefined>('NEWEST');
-  const [selectedList, setSelectedList] = useState<ClubTab>(CLUB_TABS[0]);
+export default function ClubContents({ isMyPage }: ProfilePageProps) {
+  const [order, setOrder] = useState<orderType>('DESC');
+  const [selectedList, setSelectedList] = useState<clubTab>(CLUB_TABS.JOINED);
 
-  const renderList = (selectedList: ClubTab) => {
+  const renderList = (selectedList: clubTab) => {
     switch (selectedList) {
-      case CLUB_TABS[0]:
-        return <JoinedClubList user={user} sortBy={sortBy} />;
-      case CLUB_TABS[1]:
-        return <HostedClubList user={user} sortBy={sortBy} />;
-      case CLUB_TABS[2]:
-        return <MyReviewList user={user} sortBy={sortBy} />;
+      case CLUB_TABS.JOINED:
+        return isMyPage ? (
+          <MyJoinedClubList order={order} />
+        ) : (
+          <JoinedClubList order={order} />
+        );
+      case CLUB_TABS.CREATED:
+        return isMyPage ? (
+          <MyCreatedClubList order={order} />
+        ) : (
+          <CreatedClubList order={order} />
+        );
+      case CLUB_TABS.REVIEW:
+        return isMyPage ? (
+          <MyWrittenReviewList order={order} />
+        ) : (
+          <WrittenReviewList order={order} />
+        );
     }
   };
 
@@ -31,7 +48,7 @@ export default function ClubContents({ user }: ProfilePageProps) {
     >
       <div className="flex items-center justify-between gap-x-2 sm:overflow-auto sm:whitespace-nowrap sm:[&::-webkit-scrollbar]:hidden">
         <Tab
-          items={CLUB_TABS}
+          items={Object.values(CLUB_TABS)}
           activeTab={selectedList}
           onTabChange={(item) => setSelectedList(item)}
           tabType="SUB_TAB"
@@ -40,11 +57,11 @@ export default function ClubContents({ user }: ProfilePageProps) {
         <SortingButton
           variant="byDate"
           onClickSorting={(order) => {
-            setSortBy(order);
-            console.log(sortBy);
+            setOrder(order);
           }}
         />
       </div>
+
       <div className="pt-[18px]">{renderList(selectedList)}</div>
     </div>
   );

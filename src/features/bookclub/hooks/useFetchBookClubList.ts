@@ -1,24 +1,48 @@
-import apiClient from '@/lib/utils/apiClient';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import { BookClub, BookClubParams } from '@/types/bookclubs';
+import { useQuery } from '@tanstack/react-query';
+import { bookClubs } from '@/api/book-club/react-query';
 
-export const useFetchBookClubList = () => {
-  const [bookClubList, setBookClubList] = useState([]); // 목록 데이터 저장
-  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
+const useBookClubList = () => {
+  // TODO: 신청 가능 필터 param 추가시 clubList, initialBookClubs 상태 관리x
+  const [clubList, setClubList] = useState<BookClub[]>([]);
+  const [initialBookClubs, setInitialBookClubs] = useState<BookClub[]>([]);
+  const [filters, setFilters] = useState<BookClubParams>({
+    bookClubType: 'ALL',
+    meetingType: 'ALL',
+    order: 'DESC',
+    page: 1,
+    size: 10,
+    searchKeyword: '',
+  });
 
+  const { data, isLoading, error } = useQuery({
+    ...bookClubs.list(filters),
+  });
+
+  const clubInfo = data?.bookClubs;
+
+  // TODO: param 추가시, useEffect 대신 clubInfo 직접 사용
   useEffect(() => {
-    const fetchBookClubs = async () => {
-      setIsLoading(true);
-      try {
-        const response = await apiClient.get('/api/v1/book-clubs');
-        setBookClubList(response.data.bookClubs);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchBookClubs();
-  }, []);
+    if (clubInfo) {
+      setClubList(clubInfo);
+      setInitialBookClubs(clubInfo); // 초기 데이터 설정
+    }
+  }, [clubInfo]);
 
-  return { bookClubList, isLoading };
+  const updateFilters = (newFilters: Partial<BookClubParams>) => {
+    setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }));
+  };
+
+  return {
+    clubList,
+    initialBookClubs,
+    setClubList,
+    isLoading,
+    error,
+    filters,
+    updateFilters,
+  };
 };
+
+export default useBookClubList;

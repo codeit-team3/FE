@@ -43,16 +43,44 @@ export const bookClubSchema = z
       })
       .min(3, '최소 3명 이상 입력해주세요')
       .max(20, '최대 20명까지 가능합니다'),
-    city: z.string().optional(),
-    town: z.string().optional(),
+    city: z
+      .string({
+        required_error: '시/군/구를 선택해주세요',
+      })
+      .optional(),
+    town: z
+      .string({
+        required_error: '동/읍/면을 선택해주세요',
+      })
+      .optional(),
+    address: z
+      .string({
+        required_error: '주소를 선택해주세요',
+      })
+      .optional(),
+    detailAddress: z
+      .string({
+        required_error: '상세 주소를 입력해주세요',
+      })
+      .optional(),
   })
   .superRefine((data, ctx) => {
     if (data.meetingType === 'OFFLINE') {
-      if (!data.city?.trim() || !data.town?.trim()) {
+      if (!data.city?.trim() || !data.town?.trim() || !data.address?.trim()) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message: '모임 장소를 정해주세요!',
           path: ['meetingType'],
+        });
+      }
+    }
+
+    if (data.endDate && data.targetDate) {
+      if (data.endDate >= data.targetDate) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: '모집 마감일은 모임 날짜보다 이전이어야 합니다',
+          path: ['endDate'],
         });
       }
     }

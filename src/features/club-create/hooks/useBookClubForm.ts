@@ -12,37 +12,25 @@ export const useBookClubForm = () => {
     handlePopUpClose,
     handlePopUpConfirm,
   } = usePopup();
-
   const form = useForm<BookClubForm>({
     resolver: zodResolver(bookClubSchema),
+    mode: 'onChange',
+    reValidateMode: 'onChange',
   });
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    setValue,
-    formState: { errors, isValid },
-    watch,
-  } = form;
-
-  const onSubmit = handleSubmit(async (data) => {
-    try {
-      await createBookClub(data);
-      setShowSuccessPopup(true);
-    } catch (error) {
-      console.error(error);
-    }
+  const onSubmit = form.handleSubmit(async (data: BookClubForm) => {
+    await createBookClub(data);
+    setShowSuccessPopup(true);
   });
 
   return {
     form,
-    register,
-    control,
-    setValue,
-    errors,
-    isValid,
-    watch,
+    register: form.register,
+    control: form.control,
+    setValue: form.setValue,
+    errors: form.formState.errors,
+    isValid: form.formState.isValid,
+    watch: form.watch,
     onSubmit,
     isLoading,
     showSuccessPopup,

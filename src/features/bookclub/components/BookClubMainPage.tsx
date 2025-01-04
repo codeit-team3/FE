@@ -1,21 +1,67 @@
 'use client';
 
-import {
-  HeaderSection,
-  FilterSection,
-  ClubListSection,
-} from '@/features/bookclub/components';
-import CategoryTabs from './CategoryTabs';
+import useBookClubList from '../hooks/useFetchBookClubList';
+import { FilterBar, HeaderSection } from '@/components/common-layout';
+import { useAuthStore } from '@/store/authStore';
+import ClubListSection from './ClubListSection';
+import Button from '@/components/button/Button';
+import { useRouter } from 'next/navigation';
+import Loading from '@/components/loading/Loading';
 
 function BookClubMainPage() {
+  const {
+    clubList,
+    initialBookClubs,
+    setClubList,
+    isLoading,
+    filters,
+    updateFilters,
+  } = useBookClubList();
+
+  const router = useRouter();
+
+  const user = useAuthStore((state) => state.user);
+
+  const userName = user?.nickname || '북코';
+
+  const handleFilterChange = (newFilter: Partial<typeof filters>) => {
+    updateFilters(newFilter);
+  };
+
   return (
     <>
-      <HeaderSection />
-      <section className="flex w-full flex-col gap-y-3 px-[20px] pt-[20px] md:px-[24px] lg:px-[102px]">
-        <CategoryTabs />
-        <FilterSection />
-      </section>
-      <ClubListSection />
+      <HeaderSection
+        title={
+          <>
+            반가워요, <span className="text-green-normal-01">{userName}</span>
+            님!
+            <br />책 모임에 참여해 보세요
+          </>
+        }
+        actionElement={
+          <Button
+            text="모임 만들기"
+            size="small"
+            fillType="solid"
+            themeColor="green-normal-01"
+            onClick={() => router.push('/bookclub/create')}
+          />
+        }
+      />
+      <FilterBar
+        filters={filters}
+        handleFilterChange={handleFilterChange}
+        bookClubs={clubList}
+        initialBookClubs={initialBookClubs}
+        setBookClubs={setClubList}
+      />
+      {isLoading ? (
+        <div className="flex h-[400px] justify-center">
+          <Loading />
+        </div>
+      ) : (
+        <ClubListSection bookClubs={clubList} />
+      )}
     </>
   );
 }

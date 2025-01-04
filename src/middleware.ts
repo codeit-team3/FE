@@ -1,22 +1,35 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { refreshAccessToken } from '@/features/auth/api/refreshAccessToken';
+const AUTH_REQUIRED_PATHS = ['/wish', '/profile', '/bookclub/create', '/chat'];
 
-const AUTH_REQUIRED_PATHS = ['/wish', '/profile', '/bookclub/create'];
-
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const token = request.cookies.get('auth_token');
+  const accessToken = request.cookies.get('auth_token');
+  const refreshToken = request.cookies.get('refresh_token');
 
   if (AUTH_REQUIRED_PATHS.includes(pathname)) {
-    if (!token) {
-      const loginUrl = new URL('/login', request.url);
+    if (!accessToken) {
+      if (refreshToken) {
+        try {
+          const data = await refreshAccessToken(refreshToken.value);
+          const nextResponse = NextResponse.next();
+          nextResponse.cookies.set('auth_token', data.accessToken, {
+            maxAge: 60 * 60,
+          });
+          return nextResponse;
+        } catch (error) {
+          console.error('토큰 갱신 실패:', error);
+        }
+      }
 
+      const loginUrl = new URL('/login', request.url);
       loginUrl.searchParams.set('returnUrl', pathname);
       return NextResponse.redirect(loginUrl);
     }
   }
 
-  if (pathname === '/login' && token) {
+  if (pathname === '/login' && accessToken) {
     return NextResponse.redirect(new URL('/', request.url));
   }
 
@@ -24,5 +37,6 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/wish', '/profile', '/login', '/bookclub/create'],
+  matcher: ['/wish', '/profile', '/login', '/bookclub/create', '/chat'],
+  unstable_allowDynamic: ['**/node_modules/sockjs-client/**'],
 };

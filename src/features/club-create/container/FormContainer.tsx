@@ -1,16 +1,13 @@
 'use client';
 
-import 'react-datepicker/dist/react-datepicker.css';
 import Button from '@/components/button/Button';
 import {
   CreateClubFormField,
   InputField,
 } from '@/features/club-create/components';
-import {
-  RadioButtonGroup,
-  DatePickerContainer,
-  ImageField,
-} from '@/features/club-create/container';
+import ImageField from '@/features/club-create/container/ImageField';
+import RadioButtonGroup from '@/features/club-create/container/RadioButtonGroup';
+import DatePickerContainer from '@/features/club-create/container/DatePickerField';
 import { useBookClubForm } from '@/features/club-create/hooks';
 import PopUp from '@/components/pop-up/PopUp';
 
@@ -20,7 +17,6 @@ function FormContainer() {
     control,
     setValue,
     errors,
-    isValid,
     watch,
     onSubmit,
     isLoading,
@@ -52,7 +48,7 @@ function FormContainer() {
         >
           <InputField
             register={register('description')}
-            placeholder="모임에 대한 설명을 입력해 주세요 (오프라인 모임시 만나는 장소도 같이 입력해 주세요!)"
+            placeholder="모임에 대한 설명을 입력해 주세요"
           />
         </CreateClubFormField>
 
@@ -98,9 +94,12 @@ function FormContainer() {
             ]}
             selectedValue={watch('meetingType')}
             register={register('meetingType')}
+            addressRegister={register('detailAddress')}
             setValue={setValue}
             name="meetingType"
             town={watch('town')}
+            watch={watch}
+            errors={errors}
           />
         </CreateClubFormField>
 
@@ -118,6 +117,7 @@ function FormContainer() {
           label="언제 모임을 마감할까요?"
           error={errors.endDate?.message}
           placeholder="모임의 모집 마감 날짜를 선택해 주세요!"
+          targetDate={watch('targetDate')}
         />
 
         <CreateClubFormField
@@ -139,8 +139,8 @@ function FormContainer() {
           size="medium"
           fillType="solid"
           themeColor="green-normal-01"
-          disabled={!isValid || isLoading}
-          className="h-14"
+          disabled={isLoading}
+          className={`h-14 ${isLoading ? '' : 'hover-dim'}`}
         />
       </form>
 
