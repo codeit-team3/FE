@@ -52,10 +52,6 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(clubInfo);
-  }, []);
-
-  useEffect(() => {
     checkLoginStatus();
   }, [checkLoginStatus]);
 
