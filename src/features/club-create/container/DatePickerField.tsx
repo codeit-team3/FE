@@ -18,6 +18,7 @@ interface DatePickerContainerProps {
   label: string;
   error?: string;
   placeholder: string;
+  targetDate?: Date;
 }
 
 function DatePickerContainer({
@@ -26,8 +27,10 @@ function DatePickerContainer({
   label,
   error,
   placeholder,
+  targetDate,
 }: DatePickerContainerProps) {
   const minDate = useMemo(() => new Date(), []);
+  const maxDate = name === 'endDate' && targetDate ? targetDate : undefined;
 
   return (
     <CreateClubFormField label={label} error={error}>
@@ -39,6 +42,7 @@ function DatePickerContainer({
             selected={field.value}
             onChange={field.onChange}
             minDate={minDate}
+            maxDate={maxDate}
             showTimeSelect
             timeIntervals={10}
             dateFormat="yyyy-MM-dd a HH:mm"

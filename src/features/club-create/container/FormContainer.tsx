@@ -118,6 +118,7 @@ function FormContainer() {
           label="언제 모임을 마감할까요?"
           error={errors.endDate?.message}
           placeholder="모임의 모집 마감 날짜를 선택해 주세요!"
+          targetDate={watch('targetDate')}
         />
 
         <CreateClubFormField
