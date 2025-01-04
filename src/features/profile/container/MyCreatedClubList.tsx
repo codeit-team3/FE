@@ -15,6 +15,8 @@ import Loading from '@/components/loading/Loading';
 
 export default function MyCreatedClubList({ order }: ClubListProps) {
   const router = useRouter();
+  const defaultClubImage = '/images/defaultBookClub.jpg';
+
   const { popUpState, onCancel, onConfirmCancel, onClosePopUp } =
     useCancelClub();
 
@@ -46,7 +48,7 @@ export default function MyCreatedClubList({ order }: ClubListProps) {
               <Card
                 variant="hostedClub"
                 clubId={bookClub.id}
-                imageUrl={bookClub.imageUrl || '/images/defaultBookClub.jpg'}
+                imageUrl={bookClub.imageUrl || defaultClubImage}
                 title={bookClub.title}
                 location={bookClub.town}
                 datetime={formatDateForUI(bookClub.targetDate, 'KOREAN')}

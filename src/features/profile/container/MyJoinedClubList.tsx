@@ -30,7 +30,7 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
   const [selectedClubId, setSelectedClubId] = useState<number | null>(null);
 
   const today = new Date();
-
+  const defaultClubImage = '/images/defaultBookClub.jpg';
   const { data, isLoading, error } = useQuery(
     bookClubs.my()._ctx.joined({ order, page: 1, size: 10 }),
   );
@@ -135,7 +135,7 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
                 variant="participatedClub"
                 clubId={bookClub.id}
                 isCanceled={bookClub.isInactive} //TODO: api 응답값에 따라 수정가능
-                imageUrl={bookClub.imageUrl || '/images/defaultBookClub.jpg'}
+                imageUrl={bookClub.imageUrl || defaultClubImage}
                 title={bookClub.title}
                 location={bookClub.town}
                 datetime={formatDateForUI(bookClub.targetDate, 'KOREAN')}
