@@ -2,13 +2,7 @@
 
 import DropDown from '@/components/drop-down/DropDown';
 import FilterCheckbox from '@/components/filter-checkbox/FilterCheckbox';
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  // useEffect,
-  useState,
-} from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import SortingButton from '@/components/sorting-button/SortingButton';
 import { BookClub, BookClubParams } from '../../types/bookclubs';
 import { getMeetingType, getMemberLimit } from '@/lib/utils/filterUtils';
@@ -28,11 +22,6 @@ function FilterSection({
   onFilterChange,
 }: CategoryTabsProps) {
   const [showAvailableOnly, setShowAvailableOnly] = useState(false); // 신청가능
-
-  // useEffect(() => {
-  //   console.log('체크 상태: ', showAvailableOnly);
-  //   console.log('신청 가능 모임: ', bookClubs);
-  // });
 
   const toggleAvailableOnly = (e: ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked;

@@ -59,10 +59,11 @@ interface DetailedClubCard extends ClubCard {
 
   // 호스트 정보
   host: {
-    id?: string;
+    id?: number;
     name: string;
     profileImage?: string;
   };
+  onHostClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 
   // 호스트 여부
   isHost: boolean;

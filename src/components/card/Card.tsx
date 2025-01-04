@@ -173,7 +173,7 @@ function CardHost({
   avatar,
   className,
   isHost,
-  onClick,
+  onHostClick,
   ...props
 }: CardHostInfo) {
   return (
@@ -182,12 +182,9 @@ function CardHost({
         <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-gray-normal-01">
           <Avatar
             size="md"
-            src={
-              avatar?.src ||
-              `https://picsum.photos/200/200?random=${Math.floor(Math.random() * 1000)}`
-            }
+            src={avatar?.src || '/images/profile.png'}
             alt={avatar?.alt || `${nickname}님의 프로필`}
-            onClick={onClick}
+            onClick={onHostClick}
           />
         </div>
         <div className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-gray-normal-01 bg-green-normal-01">
@@ -454,6 +451,7 @@ function Card(props: CardProps) {
           host,
           clubStatus,
           onClick,
+          onHostClick,
           isHost,
           isParticipant,
           hasWrittenReview,
@@ -565,6 +563,7 @@ function Card(props: CardProps) {
                     alt: `${host.name}님의 프로필`,
                   }}
                   isHost={isHost}
+                  onClick={onHostClick}
                 />
 
                 <Card.Box

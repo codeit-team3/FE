@@ -37,9 +37,9 @@ function ClubWishList({ bookClubs = [] }: ClubWishListProps) {
       club.endDate,
       today,
     ) as 'closed' | 'confirmed' | 'pending',
-    onLikeClick: () => console.log(`${club.title} 좋아요 클릭`),
+    onLikeClick: () => {},
     onClick: () => router.push(`/bookclub/${club.id}`),
-    onDelete: () => console.log(`${club.title} 삭제 클릭`),
+    onDelete: () => {},
   });
 
   return (

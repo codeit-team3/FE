@@ -4,7 +4,7 @@ import Card from '@/components/card/Card';
 import { CardProps } from '@/components/card/types';
 import PopUp from '@/components/pop-up/PopUp';
 import { clubStatus } from '@/lib/utils/clubUtils';
-import { formatDateForUI } from '@/lib/utils/formatDateForUI';
+import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { useAuthStore } from '@/store/authStore';
 import { BookClub } from '@/types/bookclubs';
 import { useRouter } from 'next/navigation';
@@ -47,13 +47,9 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
   } = useLikeWithAuthCheck();
   const { onConfirmUnLike } = useUnLikeClub();
 
-  const { isLoggedIn, checkLoginStatus } = useAuthStore();
+  const { isLoggedIn, checkLoginStatus, user } = useAuthStore();
 
   const router = useRouter();
-
-  useEffect(() => {
-    console.log(clubInfo);
-  }, []);
 
   useEffect(() => {
     checkLoginStatus();
@@ -101,7 +97,7 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
     isLiked: clubInfo.isLiked,
     current: clubInfo.memberCount,
     max: clubInfo.memberLimit,
-    isPast: false, // TODO: new Date() 최적화 후 수정
+    isPast: isPastDate(clubInfo.targetDate, new Date()), // TODO: new Date() 최적화
     meetingType: clubInfo.meetingType,
     bookClubType: clubInfo.bookClubType,
     clubStatus: clubStatus(
@@ -112,18 +108,18 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
     ),
     onLikeClick: handleLikeClub,
     host: {
-      // TODO: 응답값 추가 후 수정
-      id: 'host1',
-      name: '호스트',
-      profileImage: '/images/profile.png',
+      id: clubInfo.hostId,
+      name: clubInfo.hostNickname,
+      profileImage: clubInfo.hostProfileImage,
     },
-    isHost: false,
-    isParticipant: false,
-    hasWrittenReview: false,
+    isHost: clubInfo.hostId === user?.id,
+    isParticipant: clubInfo.isJoined,
+    // hasWrittenReview: false,
     onCancel: () => onCancel(clubInfo.id),
     onParticipate: handleJoinClick,
     onCancelParticipation: () => onCancelParticipation(clubInfo.id),
-    onWriteReview: () => alert('리뷰 작성하기 클릭!'),
+    // onWriteReview: () => alert('리뷰 작성하기 클릭!'),
+    onHostClick: () => router.push(`/profile/${clubInfo.hostId}`),
   };
 
   return (
