@@ -8,7 +8,7 @@ export interface UserProfileProps {
   userName?: string;
   createdAt: string;
   className?: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export interface ClubImageProps {
