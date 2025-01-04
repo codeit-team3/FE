@@ -5,12 +5,12 @@ export interface Review {
   bookClubId: number;
   rating: number;
   content: string;
-  image?: string | undefined;
+  userImage?: string | undefined;
   createdAt: string;
 
-  clubImgUrl?: string;
   nickname?: string;
-  clubName: string;
+  bookClubImageUrl?: string;
+  bookClubTitle: string;
   bookClubType: 'FREE' | 'FIXED';
 }
 

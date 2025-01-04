@@ -2,19 +2,18 @@
 
 import { useState } from 'react';
 import Avatar from '@/components/avatar/Avatar';
-import { useEditInfo } from '@/api/auth/react-query';
 import { InfoEditModal } from './index';
 import { EditInfoParams, ProfilePageProps } from '../../types';
 import IconButton from '@/components/icon-button/IconButton';
 import { IcEdit } from '../../../../../public/icons';
+import { useEditInfo } from '../../hooks/useEditInfo';
 
 export default function Info({ user, isMyPage }: ProfilePageProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { onSubmit } = useEditInfo();
 
-  const { mutate: editInfo } = useEditInfo();
-
-  const onSubmitEditInfo = (formData: EditInfoParams) => {
-    editInfo(formData);
+  const onSubmitEditInfo = async (data: EditInfoParams) => {
+    await onSubmit(data);
     setIsModalOpen(false);
   };
 
@@ -80,9 +79,11 @@ export default function Info({ user, isMyPage }: ProfilePageProps) {
           onClose={() => setIsModalOpen(false)}
           onConfirm={(formData) => onSubmitEditInfo(formData)}
           infoData={{
-            nickname: user?.nickname || '',
-            description: user?.description || '',
-            image: user?.image,
+            image: user?.image || '',
+            user: {
+              nickname: user?.nickname || '',
+              description: user?.description || '',
+            },
           }}
         />
       )}

@@ -22,7 +22,7 @@ export const bookClubMainAPI = {
 
   //유저가 참가한 북클럽 조회
   userJoined: async (userId: number, params?: MyProfileParams) => {
-    const response = await apiClient.get(`/book-clubs/user/${userId}/joined`, {
+    const response = await apiClient.get(`/book-clubs/users/${userId}/joined`, {
       params,
     });
     return response.data;
@@ -30,9 +30,12 @@ export const bookClubMainAPI = {
 
   //유저가 만든 북클럽 조회
   userCreated: async (userId: number, params?: MyProfileParams) => {
-    const response = await apiClient.get(`/book-clubs/user/${userId}/created`, {
-      params,
-    });
+    const response = await apiClient.get(
+      `/book-clubs/users/${userId}/created`,
+      {
+        params,
+      },
+    );
     return response.data;
   },
 
