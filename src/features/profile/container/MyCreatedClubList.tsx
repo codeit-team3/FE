@@ -58,7 +58,7 @@ export default function MyCreatedClubList({ order }: ClubListProps) {
                 bookClub.endDate,
                 today,
               )}
-              reviewScore={bookClub.reviewScore}
+              reviewScore={bookClub.averageScore}
               onClick={(clubId) => router.push(`/bookclub/${clubId}`)}
               onCancel={(clubId) => onCancel(clubId)}
             />
