@@ -214,7 +214,7 @@ function ChatRoomPage() {
                 ? formatDateForUI(bookClubDetail.targetDate, 'KOREAN')
                 : '',
               meetingType: bookClubDetail?.meetingType || 'OFFLINE',
-              onClick: () => console.log('헤더 클릭'),
+              onClick: () => router.push(`/bookclub/${chatId}`),
             }}
           />
         </div>
