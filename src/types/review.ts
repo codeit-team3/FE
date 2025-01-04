@@ -9,7 +9,7 @@ export interface Review {
   createdAt: string;
 
   profileImg?: string;
-  userName?: string;
+  nickname?: string;
   clubName: string;
   bookClubType: 'FREE' | 'FIXED';
 }

@@ -35,7 +35,7 @@ export interface BookClub {
   address: string;
   detailAddress?: string | null;
 
-  hostId: string;
+  hostId: number;
   hostNickname: string;
   hostProfileImage?: string;
 
