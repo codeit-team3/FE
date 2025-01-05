@@ -9,7 +9,7 @@ import {
 } from '../index';
 import { WriteReviewParams } from '../types';
 import { AxiosError } from 'axios';
-import { BookClub, BookClubParams } from '@/types/bookclubs';
+import { likeOnError, likeOnMutate } from './likeOptimisticUpdate';
 
 export function useBookClubCreateMutation() {
   const queryClient = useQueryClient();
@@ -103,54 +103,16 @@ export function useCancelBookClub() {
 export function useLikeBookClub() {
   const queryClient = useQueryClient();
 
-  return useMutation<
-    void,
-    AxiosError<{ message: string }>,
-    number,
-    { previousBookClubs?: any }
-  >({
+  return useMutation<void, AxiosError<{ message: string }>, number>({
     mutationFn: (id: number) => bookClubLikeAPI.like(id),
 
     onMutate: async (id) => {
-      const filters: BookClubParams = {
-        bookClubType: 'ALL',
-        meetingType: 'ALL',
-        order: 'DESC',
-        page: 1,
-        size: 10,
-        searchKeyword: '',
-      };
-
-      const queryKey = bookClubs.list(filters).queryKey;
-
-      // console.log('onMutate 쿼리 키:', queryKey);
-
-      // 기존 캐시 데이터 확인
-      const previousBookClubs = queryClient.getQueryData<{
-        bookClubs: BookClub[];
-      }>(queryKey);
-
-      // console.log('onMutate 이전 캐시 데이터:', previousBookClubs);
-
-      if (previousBookClubs) {
-        queryClient.setQueryData(queryKey, {
-          ...previousBookClubs,
-          bookClubs: previousBookClubs.bookClubs.map((club: any) =>
-            club.id === id ? { ...club, isLiked: true } : club,
-          ),
-        });
-      }
-
-      return { previousBookClubs };
+      return likeOnMutate(queryClient, id, true);
     },
 
-    onError: (_error, _id, context) => {
-      // 요청 실패 시 이전 상태 복구
-      if (context?.previousBookClubs) {
-        queryClient.setQueryData(
-          bookClubs.list().queryKey,
-          context.previousBookClubs,
-        );
+    onError: (_error, id, context) => {
+      if (context) {
+        likeOnError(queryClient, id, context);
       }
     },
   });
@@ -161,13 +123,15 @@ export function useUnLikeBookClub() {
 
   return useMutation<void, AxiosError<{ message: string }>, number>({
     mutationFn: (id: number) => bookClubLikeAPI.unlike(id),
-    onSuccess: (_, id) => {
-      queryClient.invalidateQueries({
-        queryKey: bookClubs.list().queryKey,
-      });
-      queryClient.invalidateQueries({
-        queryKey: bookClubs.detail(id).queryKey,
-      });
+
+    onMutate: async (id) => {
+      return likeOnMutate(queryClient, id, false);
+    },
+
+    onError: (_error, id, context) => {
+      if (context) {
+        likeOnError(queryClient, id, context);
+      }
     },
   });
 }
