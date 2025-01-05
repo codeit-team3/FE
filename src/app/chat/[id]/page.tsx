@@ -163,6 +163,7 @@ function ChatRoomPage() {
             userId: msg.userId,
             userNickname: msg.userNickname,
             content: msg.content,
+            image: msg.image,
           } as ChatMessageType;
         } else {
           return {

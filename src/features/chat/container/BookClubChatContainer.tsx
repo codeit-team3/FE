@@ -11,6 +11,7 @@ import { findRecentMessage } from '@/features/chat/utils/chatRoom';
 import { formatDateForUI } from '@/lib/utils/formatDateForUI';
 import { useAuthStore } from '@/store/authStore';
 import Loading from '@/components/loading/Loading';
+import EmptyState from '@/components/common-layout/EmptyState';
 
 export default function BookClubChatContainer() {
   const [recentMessages, setRecentMessages] = useState<
@@ -56,30 +57,37 @@ export default function BookClubChatContainer() {
         <Loading fullHeight={false} />
       ) : (
         <div className="mx-auto flex w-full max-w-[996px] flex-col gap-5">
-          {bookClubChats
-            .filter((bookClub: BookClubProps) => !bookClub.isInactive)
-            .map((bookClub: BookClubProps, id: number) => {
-              const recentMessage = findRecentMessage(
-                recentMessages,
-                Number(bookClub.id),
-              );
+          {bookClubChats.length === 0 ? (
+            <EmptyState
+              title="진행중인 채팅방이 없어요."
+              subtitle="모임에 참여해보세요!"
+            />
+          ) : (
+            bookClubChats
+              .filter((bookClub: BookClubProps) => !bookClub.isInactive)
+              .map((bookClub: BookClubProps, id: number) => {
+                const recentMessage = findRecentMessage(
+                  recentMessages,
+                  Number(bookClub.id),
+                );
 
-              return (
-                <Link key={id} href={`/chat/${bookClub.id}`}>
-                  <ChatCard
-                    variant="bookClub"
-                    props={{
-                      ...bookClub,
-                      isHost: user?.id === bookClub.hostId,
-                      lastMessage: recentMessage?.content || '',
-                      lastMessageTime: recentMessage?.date
-                        ? formatDateForUI(recentMessage.date, 'CHAT_ROOM')
-                        : '',
-                    }}
-                  />
-                </Link>
-              );
-            })}
+                return (
+                  <Link key={id} href={`/chat/${bookClub.id}`}>
+                    <ChatCard
+                      variant="bookClub"
+                      props={{
+                        ...bookClub,
+                        isHost: user?.id === bookClub.hostId,
+                        lastMessage: recentMessage?.content || '',
+                        lastMessageTime: recentMessage?.date
+                          ? formatDateForUI(recentMessage.date, 'CHAT_ROOM')
+                          : '',
+                      }}
+                    />
+                  </Link>
+                );
+              })
+          )}
         </div>
       )}
     </section>
