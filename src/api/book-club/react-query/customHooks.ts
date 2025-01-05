@@ -112,6 +112,12 @@ export function useLikeBookClub() {
     onMutate: async (id) => {
       return likeOnMutate(queryClient, id, true);
     },
+    //TODO: 로직 확인 후 변경 필요
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: bookClubs._def,
+      });
+    },
 
     onError: (_error, id, context) => {
       if (context) {
@@ -129,6 +135,12 @@ export function useUnLikeBookClub() {
 
     onMutate: async (id) => {
       return likeOnMutate(queryClient, id, false);
+    },
+    //TODO: 로직 확인 후 변경 필요
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: bookClubs._def,
+      });
     },
 
     onError: (_error, id, context) => {

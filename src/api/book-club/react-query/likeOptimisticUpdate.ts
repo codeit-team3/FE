@@ -35,6 +35,11 @@ export const likeOnMutate = async (
     });
   }
 
+  //TODO: 로직 확인 후 변경 필요
+  queryClient.invalidateQueries({
+    queryKey: bookClubs._def,
+  });
+
   return { previousBookClubs, previousDetail };
 };
 
