@@ -7,6 +7,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
 import DropDown from '../drop-down/DropDown';
 import { logout } from '@/features/auth/api/auth';
+import { showToast } from '../toast/toast';
 
 function HeaderBar() {
   const pathname = usePathname();
@@ -17,6 +18,7 @@ function HeaderBar() {
     if (value === 'LOGOUT') {
       try {
         await logout();
+        showToast({ message: '로그아웃 되었습니다 ', type: 'success' });
         router.replace('/bookclub');
       } catch (error) {
         console.error('로그아웃 실패:', error);

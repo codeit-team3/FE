@@ -41,11 +41,11 @@ export default function Info({ user, isMyPage }: ProfilePageProps) {
         role="content"
       >
         {/* 프로필 이미지 */}
-        <div className="mr-6 h-[80px] w-[80px] rounded-full border-[3px] border-gray-normal-01">
+        <div className="mr-6 h-[80px] w-[80px] items-center justify-center rounded-full border-[3px] border-gray-normal-01">
           <Avatar
             src={user?.image || '/images/profile.png'}
             alt="profile_page_profile_image"
-            size="max"
+            size="profile"
           />
         </div>
         {/* 프로필 정보 */}
