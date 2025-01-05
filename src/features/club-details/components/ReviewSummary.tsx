@@ -7,6 +7,10 @@ import {
 } from '@/features/club-details/utils/rating';
 
 function ReviewSummary({ reviewInfo }: { reviewInfo: ClubReviewResponse }) {
+  const validAverageScore = isNaN(reviewInfo.averageScore)
+    ? 0
+    : reviewInfo.averageScore;
+
   return (
     <section>
       <h2 className="mb-[10px] text-[20px] font-semibold text-gray-black">
@@ -20,10 +24,10 @@ function ReviewSummary({ reviewInfo }: { reviewInfo: ClubReviewResponse }) {
       >
         <div className="flex flex-col items-center justify-center gap-2">
           <div className="text-2xl font-semibold">
-            <span className="text-gray-black">{reviewInfo.averageScore}</span>
+            <span className="text-gray-black">{validAverageScore}</span>
             <span className="text-gray-dark-01"> / 5</span>
           </div>
-          <RatingDisplay ratingCount={reviewInfo.averageScore} />
+          <RatingDisplay ratingCount={validAverageScore} />
         </div>
         <div className="flex flex-col gap-1">
           {[5, 4, 3, 2, 1].map((score) => (

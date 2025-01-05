@@ -10,6 +10,7 @@ export interface BookClubParams {
   searchKeyword?: string;
   memberLimitMin?: number;
   memberLimitMax?: number;
+  isAvailable?: boolean;
 }
 
 export interface MyProfileParams {
