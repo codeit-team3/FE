@@ -15,7 +15,6 @@ export const refreshAccessToken = async (refreshToken: string) => {
       throw new Error('토큰 갱신 실패');
     }
 
-    console.log('리프레시 성공');
     return response.json();
   } catch (error) {
     console.error('토큰 갱신 에러:', error);

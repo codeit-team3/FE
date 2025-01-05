@@ -30,7 +30,7 @@ export const login = async (data: LoginFormData) => {
     await getUserInfo();
 
     const token = getCookie('auth_token');
-    console.log('token', token);
+
     if (token) {
       initializeSocket(token);
     }

@@ -64,17 +64,13 @@ function ChatRoomPage() {
 
           await new Promise((resolve, reject) => {
             const checkConnection = setInterval(() => {
-              console.log(`소켓 연결 시도 ${attempts + 1}회`);
-
               if (client?.connected) {
-                console.log('소켓 연결 성공!');
                 clearInterval(checkConnection);
                 resolve(true);
               }
 
               attempts++;
               if (attempts >= maxAttempts) {
-                console.log('소켓 연결 최대 시도 횟수 초과');
                 clearInterval(checkConnection);
                 reject(new Error('소켓 연결 타임아웃'));
               }
@@ -197,7 +193,7 @@ function ChatRoomPage() {
             <div>
               <IconButton
                 icon={<HamburgerMenuIcon width={16} height={12} />}
-                onClick={() => console.log('메뉴 열기 버튼 클릭')}
+                onClick={() => {}}
                 className="bg-gray-light-02"
               />
             </div>

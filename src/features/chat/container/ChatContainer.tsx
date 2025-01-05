@@ -17,7 +17,6 @@ export default function ChatContainer() {
       const connectSocket = async () => {
         try {
           await initializeSocket(token);
-          console.log('채팅 페이지에서 소켓 재연결 성공');
         } catch (error) {
           console.error('채팅 페이지에서 소켓 재연결 실패:', error);
         }

@@ -30,7 +30,7 @@ export default function BookClubChatContainer() {
     const fetchRecentChats = async () => {
       try {
         const response = await getRecentChats();
-        console.log('최근 채팅 내용 조회 성공:', response);
+
         setRecentMessages(response || []);
       } catch (error) {
         console.error('최근 채팅 내용 조회 실패:', error);
@@ -46,7 +46,6 @@ export default function BookClubChatContainer() {
   }, []);
 
   const bookClubChats = data?.bookClubs || [];
-  console.log('bookClubChats', bookClubChats);
 
   if (isLoading) return <div>로딩중...</div>;
   if (error) return <div>에러가 발생했습니다</div>;
