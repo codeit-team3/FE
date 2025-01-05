@@ -13,6 +13,7 @@ export interface BookClubProps extends CommonProps {
   lastMessageTime?: string;
   unreadCount?: number;
   hostId?: number;
+  isInactive?: boolean;
 }
 
 export interface ChatRoomHeaderProps extends CommonProps {
