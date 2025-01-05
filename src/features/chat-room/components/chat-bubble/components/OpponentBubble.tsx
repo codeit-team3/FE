@@ -4,7 +4,7 @@ export interface OpponentProps {
   content: string;
   time?: string;
   name: string;
-  profileImage: string;
+  image?: string;
   isHost?: boolean;
   onProfileClick?: () => void;
   isConsecutive?: boolean;
@@ -14,7 +14,7 @@ function OpponentBubble({
   content,
   time,
   name,
-  profileImage,
+  image,
   isHost,
   onProfileClick,
   isConsecutive,
@@ -25,7 +25,7 @@ function OpponentBubble({
         {!isConsecutive && (
           <ChatBubble.Profile
             name={name}
-            imageUrl={profileImage}
+            image={image || ''}
             isHost={isHost}
             onClick={onProfileClick}
           />

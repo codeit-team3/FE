@@ -39,7 +39,7 @@ export const OpponentMessage: Story = {
 * 늦게 오시는 분은 미리 말씀 부탁드려요!`,
       time: '오후 2:31',
       name: '김철수',
-      profileImage: 'https://picsum.photos/200',
+      image: 'https://picsum.photos/200',
       isHost: true,
     },
   },

@@ -32,7 +32,7 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
   const today = new Date();
   const defaultClubImage = '/images/defaultBookClub.jpg';
   const { data, isLoading, error } = useQuery(
-    bookClubs.my()._ctx.joined({ order, page: 1, size: 10 }),
+    bookClubs.my()._ctx.joined({ order, page: 1, size: 100 }),
   );
 
   const { mutateAsync: leaveClub } = useLeaveBookClub();
@@ -127,7 +127,10 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
         </div>
       ) : (
         myJoinedList
-          ?.filter((bookClub) => bookClub.hostId !== user?.id)
+          ?.filter(
+            (bookClub) =>
+              bookClub.hostId !== user?.id && bookClub.isJoined === true,
+          )
           ?.map((bookClub) => (
             <div key={bookClub.id} className="md:w-full">
               <Card

@@ -8,10 +8,11 @@ interface CommonProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export interface BookClubProps extends CommonProps {
-  currentParticipants: number;
+  memberCount?: number;
   lastMessage?: string;
   lastMessageTime?: string;
   unreadCount?: number;
+  hostId?: number;
 }
 
 export interface ChatRoomHeaderProps extends CommonProps {

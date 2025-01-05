@@ -33,6 +33,7 @@ function BookClubMainPage() {
         }
         actionElement={
           <Button
+            className="hover-dim"
             text="모임 만들기"
             size="small"
             fillType="solid"

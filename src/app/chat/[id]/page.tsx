@@ -39,7 +39,7 @@ function ChatRoomPage() {
   const [isConnected, setIsConnected] = useState(false);
 
   const { data } = useQuery(
-    bookClubs.my()._ctx.joined({ order: 'DESC', page: 1, size: 10 }),
+    bookClubs.my()._ctx.joined({ order: 'DESC', page: 1, size: 100 }),
   );
 
   const bookClubDetail = data?.bookClubs?.find(
@@ -64,17 +64,13 @@ function ChatRoomPage() {
 
           await new Promise((resolve, reject) => {
             const checkConnection = setInterval(() => {
-              console.log(`소켓 연결 시도 ${attempts + 1}회`);
-
               if (client?.connected) {
-                console.log('소켓 연결 성공!');
                 clearInterval(checkConnection);
                 resolve(true);
               }
 
               attempts++;
               if (attempts >= maxAttempts) {
-                console.log('소켓 연결 최대 시도 횟수 초과');
                 clearInterval(checkConnection);
                 reject(new Error('소켓 연결 타임아웃'));
               }
@@ -181,7 +177,7 @@ function ChatRoomPage() {
   };
 
   return (
-    <div className="flex w-full flex-1 flex-col gap-5 pb-10">
+    <div className="relative flex w-full flex-1 flex-col gap-5 pb-10">
       <header className="flex w-full min-w-[336px] items-end bg-gray-light-02 px-[20px] py-[30px] sm:justify-between md:px-[24px] lg:px-[102px]">
         <div className="flex w-full flex-col gap-5">
           <div className="flex items-center justify-between">
@@ -192,12 +188,12 @@ function ChatRoomPage() {
                 className="bg-gray-light-02"
               />
               <h3>채팅</h3>
-              <ParticipantCounter current={10} />
+              <ParticipantCounter current={bookClubDetail?.memberCount} />
             </div>
             <div>
               <IconButton
                 icon={<HamburgerMenuIcon width={16} height={12} />}
-                onClick={() => console.log('메뉴 열기 버튼 클릭')}
+                onClick={() => {}}
                 className="bg-gray-light-02"
               />
             </div>
@@ -226,7 +222,7 @@ function ChatRoomPage() {
           onProfileClick={() => {}}
         />
       </div>
-      <div className="fixed bottom-8 left-0 right-0 flex w-full items-center justify-between gap-3 bg-white px-4 sm:px-[24px] lg:px-[102px]">
+      <div className="sticky bottom-0 flex w-full items-center justify-between gap-3 bg-white">
         <form className="w-full" onSubmit={handleSubmit}>
           <MessageInput value={message} onChange={handleMessageChange} />
         </form>

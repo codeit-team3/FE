@@ -13,8 +13,6 @@ const useBookClubList = () => {
 
   const clubList = data?.bookClubs;
 
-  // console.log('useQuery 데이터:', clubList);
-
   const updateFilters = (newFilters: Partial<BookClubParams>) => {
     setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }));
   };

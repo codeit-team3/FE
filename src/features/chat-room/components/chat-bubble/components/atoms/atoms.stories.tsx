@@ -33,7 +33,7 @@ export const Time: StoryObj<typeof ChatBubble.Time> = {
 export const Profile: StoryObj<typeof ChatBubble.Profile> = {
   render: () => (
     <ChatBubble.Profile
-      imageUrl="https://picsum.photos/200"
+      image="https://picsum.photos/200"
       name="홍길동"
       isHost={true}
     />
