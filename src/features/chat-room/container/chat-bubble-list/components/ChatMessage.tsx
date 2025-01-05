@@ -10,6 +10,7 @@ interface ChatMessageProps {
   isConsecutive: boolean;
   hostId: string | number;
   time: string;
+  image?: string;
   onProfileClick?: (userId: string | number) => void;
 }
 
@@ -21,7 +22,7 @@ function ChatMessage({
   time,
   // onProfileClick,
 }: ChatMessageProps) {
-  const { userId, content, userNickname } = message;
+  const { userId, content, userNickname, image } = message;
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
   const router = useRouter();
 
@@ -36,6 +37,7 @@ function ChatMessage({
             content,
             time,
             name: userNickname,
+            image: image,
             isHost: userId === hostId,
             onProfileClick: () => setIsPopUpOpen(true),
             isConsecutive,
