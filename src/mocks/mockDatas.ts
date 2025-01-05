@@ -253,11 +253,11 @@ export const mockReviews: Review[] = [
     rating: 5,
     content:
       '이 책클럽은 정말 좋았습니다. 책 선정도 훌륭하고, 참여자들 간의 토론도 활발했어요.',
-    image: 'https://example.com/images/review1.jpg',
+    userImage: 'https://example.com/images/review1.jpg',
     createdAt: '2025-01-10T14:30:00Z',
-    clubImgUrl: 'https://example.com/images/club1.jpg',
+    bookClubImageUrl: 'https://example.com/images/club1.jpg',
     nickname: '진영',
-    clubName: '문학 사랑 모임',
+    bookClubTitle: '문학 사랑 모임',
     bookClubType: 'FREE',
   },
   {
@@ -267,11 +267,11 @@ export const mockReviews: Review[] = [
     rating: 4,
     content:
       '모임 분위기는 좋았지만, 책의 주제가 조금 어려웠어요. 그래도 유익한 시간이었어요.',
-    image: 'https://example.com/images/review2.jpg',
+    userImage: 'https://example.com/images/review2.jpg',
     createdAt: '2025-01-12T16:45:00Z',
-    clubImgUrl: 'https://example.com/images/club2.jpg',
+    bookClubImageUrl: 'https://example.com/images/club2.jpg',
     nickname: '민지',
-    clubName: '책과 커피 모임',
+    bookClubTitle: '책과 커피 모임',
     bookClubType: 'FREE',
   },
   {
@@ -282,9 +282,9 @@ export const mockReviews: Review[] = [
     content:
       '책은 좋았지만, 온라인 모임이라 참여자들과의 소통이 부족했던 것 같아요.',
     createdAt: '2025-01-14T17:00:00Z',
-    clubImgUrl: 'https://example.com/images/club3.jpg',
+    bookClubImageUrl: 'https://example.com/images/club3.jpg',
     nickname: '수연',
-    clubName: 'SF 소설 모임',
+    bookClubTitle: 'SF 소설 모임',
     bookClubType: 'FIXED',
   },
   {
@@ -295,9 +295,9 @@ export const mockReviews: Review[] = [
     content:
       '좋은 모임이었지만, 장소가 조금 좁았어요. 그 외엔 정말 유익한 시간이었습니다.',
     createdAt: '2025-01-15T18:10:00Z',
-    clubImgUrl: 'https://example.com/images/club4.jpg',
+    bookClubImageUrl: 'https://example.com/images/club4.jpg',
     nickname: '지훈',
-    clubName: '역사 탐방 모임',
+    bookClubTitle: '역사 탐방 모임',
     bookClubType: 'FREE',
   },
   {
@@ -307,11 +307,11 @@ export const mockReviews: Review[] = [
     rating: 5,
     content:
       '시집에 대한 다양한 해석을 나누어서 매우 흥미로운 모임이었어요. 다음 모임이 기대됩니다.',
-    image: 'https://example.com/images/review5.jpg',
+    userImage: 'https://example.com/images/review5.jpg',
     createdAt: '2025-01-16T12:00:00Z',
-    clubImgUrl: 'https://example.com/images/club5.jpg',
+    bookClubImageUrl: 'https://example.com/images/club5.jpg',
     nickname: '정민',
-    clubName: '시집 독서 모임',
+    bookClubTitle: '시집 독서 모임',
     bookClubType: 'FIXED',
   },
   {
@@ -322,9 +322,9 @@ export const mockReviews: Review[] = [
     content:
       '경제학 토론이 매우 유익했고, 다른 사람들의 의견을 들을 수 있어 좋았습니다.',
     createdAt: '2025-01-17T13:30:00Z',
-    clubImgUrl: 'https://example.com/images/club6.jpg',
+    bookClubImageUrl: 'https://example.com/images/club6.jpg',
     nickname: '현수',
-    clubName: '경제학 토론 모임',
+    bookClubTitle: '경제학 토론 모임',
     bookClubType: 'FREE',
   },
   {
@@ -335,9 +335,9 @@ export const mockReviews: Review[] = [
     content:
       '영화와 책을 비교하는 재미는 있었으나, 일부 영화가 책의 내용을 잘 반영하지 못한 것 같아요.',
     createdAt: '2025-01-18T19:00:00Z',
-    clubImgUrl: 'https://example.com/images/club7.jpg',
+    bookClubImageUrl: 'https://example.com/images/club7.jpg',
     nickname: '태영',
-    clubName: '문학과 영화 모임',
+    bookClubTitle: '문학과 영화 모임',
     bookClubType: 'FIXED',
   },
   {
@@ -347,11 +347,11 @@ export const mockReviews: Review[] = [
     rating: 5,
     content:
       '여행 사진과 이야기를 나누는 모임은 정말 즐거웠어요. 다른 사람들의 경험을 듣는 것이 너무 흥미로웠습니다.',
-    image: 'https://example.com/images/review8.jpg',
+    userImage: 'https://example.com/images/review8.jpg',
     createdAt: '2025-01-19T20:30:00Z',
-    clubImgUrl: 'https://example.com/images/club8.jpg',
+    bookClubImageUrl: 'https://example.com/images/club8.jpg',
     nickname: '수아',
-    clubName: '여행 사진 모임',
+    bookClubTitle: '여행 사진 모임',
     bookClubType: 'FREE',
   },
   {
@@ -362,9 +362,9 @@ export const mockReviews: Review[] = [
     content:
       '디지털 기술에 대한 최신 정보를 나눌 수 있어 좋았고, 많은 토론이 이루어졌습니다.',
     createdAt: '2025-01-20T21:45:00Z',
-    clubImgUrl: 'https://example.com/images/club9.jpg',
+    bookClubImageUrl: 'https://example.com/images/club9.jpg',
     nickname: '정호',
-    clubName: '디지털 기술 토론 모임',
+    bookClubTitle: '디지털 기술 토론 모임',
     bookClubType: 'FREE',
   },
   {
@@ -375,9 +375,9 @@ export const mockReviews: Review[] = [
     content:
       '고전 문학을 다시 한번 되새길 수 있는 좋은 시간이었어요. 다만, 책 선정이 조금 아쉬웠습니다.',
     createdAt: '2025-01-21T22:30:00Z',
-    clubImgUrl: 'https://example.com/images/club10.jpg',
+    bookClubImageUrl: 'https://example.com/images/club10.jpg',
     nickname: '지은',
-    clubName: '고전 문학 독서 모임',
+    bookClubTitle: '고전 문학 독서 모임',
     bookClubType: 'FREE',
   },
 ];

@@ -56,7 +56,6 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
   const onDelete = async (clubId: number) => {
     try {
       const res = await leaveClub(clubId);
-      console.log(res);
       if (res) {
         showToast({
           message: '취소된 모임을 삭제하였습니다.',
@@ -134,7 +133,7 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
               <Card
                 variant="participatedClub"
                 clubId={bookClub.id}
-                isCanceled={bookClub.isInactive} //TODO: api 응답값에 따라 수정가능
+                isCanceled={bookClub.isInactive}
                 imageUrl={bookClub.imageUrl || defaultClubImage}
                 title={bookClub.title}
                 location={bookClub.town}

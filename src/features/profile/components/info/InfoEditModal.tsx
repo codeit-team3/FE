@@ -10,7 +10,7 @@ import { EditInfoParams } from '../../types';
 interface InfoEditModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: (updatedData: EditInfoParams) => void;
+  onConfirm: (formData: EditInfoParams) => void;
   infoData: EditInfoParams;
 }
 
@@ -31,7 +31,9 @@ function InfoEditContent({
         <div className="relative">
           <div className="rounded-full border-2 border-gray-normal-01">
             <Avatar
-              src={preview || formData.image || '/images/profile.png'}
+              src={
+                preview || formData.image?.toString() || '/images/profile.png'
+              }
               alt="프로필 이미지"
               size="xl"
             />
@@ -63,7 +65,7 @@ function InfoEditContent({
               type="text"
               name="nickname"
               aria-label="nickname"
-              value={formData.nickname}
+              value={formData.user?.nickname}
               onChange={handleChange}
               className="w-full rounded-lg bg-gray-light-02 p-2 font-medium"
             />
@@ -74,7 +76,7 @@ function InfoEditContent({
               type="text"
               name="description"
               aria-label="description"
-              value={formData.description}
+              value={formData.user?.description}
               onChange={handleChange}
               className="w-full rounded-lg bg-gray-light-02 p-2 font-medium"
             />
@@ -93,21 +95,23 @@ export default function InfoEditModal({
 }: InfoEditModalProps) {
   const { user } = useAuthStore();
   const [formData, setFormData] = useState<EditInfoParams>({
-    nickname: infoData.nickname || user?.name || '',
-    description: infoData.description || user?.description || '',
     image: infoData.image || user?.image || '/images/profile.png',
+    user: {
+      nickname: infoData.user?.nickname || user?.name || '',
+      description: infoData.user?.description || user?.description || '',
+    },
   });
   const [preview, setPreview] = useState<string | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null;
+    const file = e.target.files?.[0];
 
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         const fileResult = reader.result as string;
         setPreview(fileResult);
-        setFormData((prev) => ({ ...prev, image: fileResult }));
+        setFormData((prev) => ({ ...prev, image: file }));
       };
       reader.readAsDataURL(file);
     }
@@ -115,7 +119,10 @@ export default function InfoEditModal({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      user: { ...prev.user, [name]: value },
+    }));
   };
 
   const handleConfirm = () => {
