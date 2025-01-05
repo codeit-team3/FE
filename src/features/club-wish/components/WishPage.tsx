@@ -18,13 +18,7 @@ function WishPage() {
         }
       />
 
-      <FilterBar
-        filters={filters}
-        handleFilterChange={() => {}}
-        bookClubs={mockBookClubs}
-        setBookClubs={() => {}}
-        initialBookClubs={[]}
-      />
+      <FilterBar filters={filters} handleFilterChange={() => {}} />
       <ClubWishList bookClubs={mockBookClubs} />
     </>
   );
