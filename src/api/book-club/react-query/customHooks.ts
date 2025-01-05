@@ -104,12 +104,9 @@ export function useLikeBookClub() {
 
   return useMutation<void, AxiosError<{ message: string }>, number>({
     mutationFn: (id: number) => bookClubLikeAPI.like(id),
-    onSuccess: (_, id) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: bookClubs.list().queryKey,
-      });
-      queryClient.invalidateQueries({
-        queryKey: bookClubs.detail(id).queryKey,
+        queryKey: bookClubs._def,
       });
     },
   });
@@ -120,12 +117,9 @@ export function useUnLikeBookClub() {
 
   return useMutation<void, AxiosError<{ message: string }>, number>({
     mutationFn: (id: number) => bookClubLikeAPI.unlike(id),
-    onSuccess: (_, id) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: bookClubs.list().queryKey,
-      });
-      queryClient.invalidateQueries({
-        queryKey: bookClubs.detail(id).queryKey,
+        queryKey: bookClubs._def,
       });
     },
   });
