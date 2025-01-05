@@ -91,6 +91,9 @@ export function useCancelBookClub() {
     mutationFn: (id: number) => bookClubMainAPI.cancel(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
+        queryKey: bookClubs.list().queryKey,
+      });
+      queryClient.invalidateQueries({
         queryKey: bookClubs.my()._ctx.created().queryKey,
       });
       queryClient.invalidateQueries({
