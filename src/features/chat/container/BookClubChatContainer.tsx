@@ -51,33 +51,35 @@ export default function BookClubChatContainer() {
   if (error) return <div>에러가 발생했습니다</div>;
 
   return (
-    <section className="flex flex-1 items-center justify-center bg-gray-light-02 px-6 py-5">
+    <section className="flex flex-1 justify-center bg-gray-light-02 px-6 py-5">
       {isLoading ? (
         <Loading fullHeight={false} />
       ) : (
         <div className="mx-auto flex w-full max-w-[996px] flex-col gap-5">
-          {bookClubChats.map((bookClub: BookClubProps, id: number) => {
-            const recentMessage = findRecentMessage(
-              recentMessages,
-              Number(bookClub.id),
-            );
+          {bookClubChats
+            .filter((bookClub: BookClubProps) => !bookClub.isInactive)
+            .map((bookClub: BookClubProps, id: number) => {
+              const recentMessage = findRecentMessage(
+                recentMessages,
+                Number(bookClub.id),
+              );
 
-            return (
-              <Link key={id} href={`/chat/${bookClub.id}`}>
-                <ChatCard
-                  variant="bookClub"
-                  props={{
-                    ...bookClub,
-                    isHost: user?.id === bookClub.hostId,
-                    lastMessage: recentMessage?.content || '',
-                    lastMessageTime: recentMessage?.date
-                      ? formatDateForUI(recentMessage.date, 'CHAT_ROOM')
-                      : '',
-                  }}
-                />
-              </Link>
-            );
-          })}
+              return (
+                <Link key={id} href={`/chat/${bookClub.id}`}>
+                  <ChatCard
+                    variant="bookClub"
+                    props={{
+                      ...bookClub,
+                      isHost: user?.id === bookClub.hostId,
+                      lastMessage: recentMessage?.content || '',
+                      lastMessageTime: recentMessage?.date
+                        ? formatDateForUI(recentMessage.date, 'CHAT_ROOM')
+                        : '',
+                    }}
+                  />
+                </Link>
+              );
+            })}
         </div>
       )}
     </section>
