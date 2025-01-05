@@ -181,7 +181,7 @@ function ChatRoomPage() {
   };
 
   return (
-    <div className="flex w-full flex-1 flex-col gap-5 pb-10">
+    <div className="relative flex w-full flex-1 flex-col gap-5 pb-10">
       <header className="flex w-full min-w-[336px] items-end bg-gray-light-02 px-[20px] py-[30px] sm:justify-between md:px-[24px] lg:px-[102px]">
         <div className="flex w-full flex-col gap-5">
           <div className="flex items-center justify-between">
@@ -192,7 +192,7 @@ function ChatRoomPage() {
                 className="bg-gray-light-02"
               />
               <h3>채팅</h3>
-              <ParticipantCounter current={10} />
+              <ParticipantCounter current={data?.bookClubs.memberCount} />
             </div>
             <div>
               <IconButton
@@ -226,7 +226,7 @@ function ChatRoomPage() {
           onProfileClick={() => {}}
         />
       </div>
-      <div className="fixed bottom-8 left-0 right-0 flex w-full items-center justify-between gap-3 bg-white px-4 sm:px-[24px] lg:px-[102px]">
+      <div className="sticky bottom-0 flex w-full items-center justify-between gap-3 bg-white">
         <form className="w-full" onSubmit={handleSubmit}>
           <MessageInput value={message} onChange={handleMessageChange} />
         </form>
