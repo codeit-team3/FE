@@ -2,17 +2,11 @@ import { useState } from 'react';
 import { BookClubParams } from '@/types/bookclubs';
 import { useQuery } from '@tanstack/react-query';
 import { bookClubs } from '@/api/book-club/react-query';
+import { DEFAULT_FILTERS } from '@/lib/constants/filters';
 // import { queryClient } from '@/lib/utils/reactQueryProvider';
 
 const useBookClubList = () => {
-  const [filters, setFilters] = useState<BookClubParams>({
-    bookClubType: 'ALL',
-    meetingType: 'ALL',
-    order: 'DESC',
-    page: 1,
-    size: 10,
-    searchKeyword: '',
-  });
+  const [filters, setFilters] = useState<BookClubParams>(DEFAULT_FILTERS);
 
   const { data, isLoading, error } = useQuery({
     ...bookClubs.list(filters),
