@@ -5,20 +5,20 @@ export interface Review {
   bookClubId: number;
   rating: number;
   content: string;
+  nickname: string;
   userImage?: string | undefined;
   createdAt: string;
 
-  nickname?: string;
   bookClubImageUrl?: string;
   bookClubTitle: string;
   bookClubType: 'FREE' | 'FIXED';
 }
 
 export interface DetailReview
-  extends Omit<Review, 'bookClubType' | 'clubName'> {
-  nickname: string;
+  extends Omit<Review, 'bookClubType' | 'bookClubTitle' | 'bookClubImageUrl'> {
   bookClubType?: 'FREE' | 'FIXED';
-  clubName?: string;
+  bookClubTitle?: string;
+  bookClubImageUrl?: string;
 }
 
 export interface ClubDetailReviewFilters {
