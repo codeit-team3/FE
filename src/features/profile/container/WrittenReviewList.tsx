@@ -13,7 +13,7 @@ export default function WrittenReviewList({ order }: ClubListProps) {
   const user = useGetUserByPath();
 
   const { data, isLoading, error } = useQuery(
-    bookClubs.user(user?.id)._ctx.reviews({ order, page: 1, size: 10 }),
+    bookClubs.user(user?.id)._ctx.reviews({ order, page: 1, size: 100 }),
   );
 
   const ReviewList: Review[] = data?.reviews || [];

@@ -32,7 +32,7 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
   const today = new Date();
   const defaultClubImage = '/images/defaultBookClub.jpg';
   const { data, isLoading, error } = useQuery(
-    bookClubs.my()._ctx.joined({ order, page: 1, size: 10 }),
+    bookClubs.my()._ctx.joined({ order, page: 1, size: 100 }),
   );
 
   const { mutateAsync: leaveClub } = useLeaveBookClub();

@@ -13,7 +13,8 @@ export interface ChatMessage {
   userNickname: string;
   type: 'CHAT' | 'JOIN' | 'LEAVE';
   content: string;
-  user?: string;
+  user: string;
+  image?: string;
 }
 
 export interface HistoryResponse {
@@ -35,7 +36,7 @@ export const initializeSocket = async (token: string) => {
     const response = await apiClient.get('/book-clubs/my-joined', {
       params: {
         order: 'DESC',
-        size: 10,
+        size: 100,
         page: 1,
       },
     });

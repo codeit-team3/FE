@@ -21,7 +21,7 @@ export default function JoinedClubList({ order }: ClubListProps) {
   const defaultClubImage = '/images/defaultBookClub.jpg';
 
   const { data, isLoading, error } = useQuery(
-    bookClubs.user(user?.id)._ctx.joined({ order, page: 1, size: 10 }),
+    bookClubs.user(user?.id)._ctx.joined({ order, page: 1, size: 100 }),
   );
 
   const { onConfirmUnLike } = useUnLikeClub();

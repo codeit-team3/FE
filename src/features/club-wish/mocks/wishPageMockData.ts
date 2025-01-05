@@ -5,6 +5,6 @@ export const filters: BookClubParams = {
   meetingType: 'ALL',
   order: 'DESC',
   page: 1,
-  size: 10,
+  size: 100,
   searchKeyword: '',
 };

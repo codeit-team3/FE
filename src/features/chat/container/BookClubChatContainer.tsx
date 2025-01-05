@@ -21,7 +21,7 @@ export default function BookClubChatContainer() {
   >([]);
 
   const { data, isLoading, error } = useQuery(
-    bookClubs.my()._ctx.joined({ order: 'DESC', page: 1, size: 10 }),
+    bookClubs.my()._ctx.joined({ order: 'DESC', page: 1, size: 100 }),
   );
 
   const { user } = useAuthStore();
