@@ -21,7 +21,7 @@ export default function MyCreatedClubList({ order }: ClubListProps) {
     useCancelClub();
 
   const { data, isLoading, error } = useQuery(
-    bookClubs.my()._ctx.created({ order, page: 1, size: 10 }),
+    bookClubs.my()._ctx.created({ order, page: 1, size: 100 }),
   );
 
   const myCreatedList: BookClub[] = data?.bookClubs || [];

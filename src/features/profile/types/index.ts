@@ -38,7 +38,9 @@ export interface ClubListProps {
 }
 
 export interface EditInfoParams {
-  nickname?: string;
-  description?: string;
-  image?: string | null;
+  image?: string | File;
+  user?: {
+    nickname?: string;
+    description?: string;
+  };
 }

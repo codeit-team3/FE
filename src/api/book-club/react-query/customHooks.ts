@@ -9,6 +9,7 @@ import {
 } from '../index';
 import { WriteReviewParams } from '../types';
 import { AxiosError } from 'axios';
+import { likeOnError, likeOnMutate } from './likeOptimisticUpdate';
 
 export function useBookClubCreateMutation() {
   const queryClient = useQueryClient();
@@ -90,6 +91,9 @@ export function useCancelBookClub() {
     mutationFn: (id: number) => bookClubMainAPI.cancel(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
+        queryKey: bookClubs.list().queryKey,
+      });
+      queryClient.invalidateQueries({
         queryKey: bookClubs.my()._ctx.created().queryKey,
       });
       queryClient.invalidateQueries({
@@ -104,13 +108,21 @@ export function useLikeBookClub() {
 
   return useMutation<void, AxiosError<{ message: string }>, number>({
     mutationFn: (id: number) => bookClubLikeAPI.like(id),
-    onSuccess: (_, id) => {
+
+    onMutate: async (id) => {
+      return likeOnMutate(queryClient, id, true);
+    },
+    //TODO: 로직 확인 후 변경 필요
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: bookClubs.list().queryKey,
+        queryKey: bookClubs._def,
       });
-      queryClient.invalidateQueries({
-        queryKey: bookClubs.detail(id).queryKey,
-      });
+    },
+
+    onError: (_error, id, context) => {
+      if (context) {
+        likeOnError(queryClient, id, context);
+      }
     },
   });
 }
@@ -120,13 +132,21 @@ export function useUnLikeBookClub() {
 
   return useMutation<void, AxiosError<{ message: string }>, number>({
     mutationFn: (id: number) => bookClubLikeAPI.unlike(id),
-    onSuccess: (_, id) => {
+
+    onMutate: async (id) => {
+      return likeOnMutate(queryClient, id, false);
+    },
+    //TODO: 로직 확인 후 변경 필요
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: bookClubs.list().queryKey,
+        queryKey: bookClubs._def,
       });
-      queryClient.invalidateQueries({
-        queryKey: bookClubs.detail(id).queryKey,
-      });
+    },
+
+    onError: (_error, id, context) => {
+      if (context) {
+        likeOnError(queryClient, id, context);
+      }
     },
   });
 }

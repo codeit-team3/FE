@@ -9,14 +9,7 @@ import { useRouter } from 'next/navigation';
 import Loading from '@/components/loading/Loading';
 
 function BookClubMainPage() {
-  const {
-    clubList,
-    initialBookClubs,
-    setClubList,
-    isLoading,
-    filters,
-    updateFilters,
-  } = useBookClubList();
+  const { clubList, isLoading, filters, updateFilters } = useBookClubList();
 
   const router = useRouter();
 
@@ -40,6 +33,7 @@ function BookClubMainPage() {
         }
         actionElement={
           <Button
+            className="hover-dim"
             text="모임 만들기"
             size="small"
             fillType="solid"
@@ -48,13 +42,7 @@ function BookClubMainPage() {
           />
         }
       />
-      <FilterBar
-        filters={filters}
-        handleFilterChange={handleFilterChange}
-        bookClubs={clubList}
-        initialBookClubs={initialBookClubs}
-        setBookClubs={setClubList}
-      />
+      <FilterBar filters={filters} handleFilterChange={handleFilterChange} />
       {isLoading ? (
         <div className="flex h-[400px] justify-center">
           <Loading />

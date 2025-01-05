@@ -10,7 +10,7 @@ import ProfileWrittenReview from '../components/clubs/ProfileWrittenReview';
 
 export default function MyWrittenReviewList({ order }: ClubListProps) {
   const { data, isLoading, error } = useQuery(
-    bookClubs.my()._ctx.reviews({ order, page: 1, size: 10 }),
+    bookClubs.my()._ctx.reviews({ order, page: 1, size: 100 }),
   );
 
   const myReviewList: Review[] = data?.reviews || [];

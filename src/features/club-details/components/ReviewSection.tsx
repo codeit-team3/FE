@@ -10,7 +10,7 @@ function ReviewSection({ idAsNumber }: { idAsNumber: number }) {
   const [filters, setFilters] = useState<ClubDetailReviewFilters>({
     order: 'DESC',
     page: 1,
-    size: 10,
+    size: 100,
   });
 
   const { data, isLoading, error } = useQuery({

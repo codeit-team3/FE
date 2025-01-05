@@ -45,7 +45,7 @@ function ReviewList({
               ratingCount={review.rating}
               comment={review.content}
               userProfile={{
-                profileImage: review.image || '/images/profile.png',
+                profileImage: review.userImage || '/images/profile.png',
                 userName: review.nickname,
                 createdAt: formatDateForUI(review.createdAt, 'DATE_ONLY'),
               }}

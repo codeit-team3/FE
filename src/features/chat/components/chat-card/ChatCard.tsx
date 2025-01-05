@@ -185,7 +185,7 @@ function ChatCard<T extends ChatCardVariant>({
           imageUrl,
           isHost,
           title,
-          currentParticipants,
+          memberCount,
           lastMessage,
           lastMessageTime,
           unreadCount,
@@ -202,7 +202,7 @@ function ChatCard<T extends ChatCardVariant>({
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex min-w-0 items-center gap-1">
                     <ChatCardTitle>{title}</ChatCardTitle>
-                    <ParticipantCounter current={currentParticipants} />
+                    <ParticipantCounter current={memberCount || 0} />
                   </div>
                   {unreadCount && unreadCount > 0 && (
                     <>

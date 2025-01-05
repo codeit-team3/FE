@@ -1,6 +1,6 @@
 import { BookClubParams } from '@/types/bookclubs';
 
-export const filters: BookClubParams = {
+export const DEFAULT_FILTERS: BookClubParams = {
   bookClubType: 'ALL',
   meetingType: 'ALL',
   order: 'DESC',

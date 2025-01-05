@@ -31,7 +31,7 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
           <Card
             key={club.id}
             clubId={club.id}
-            imageUrl={club.imageUrl || '/images/profile.png'}
+            imageUrl={club.imageUrl || '/images/defaultBookClub.jpg'}
             imageAlt={club.title}
             title={club.title}
             location={club.town || ''}

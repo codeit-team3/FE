@@ -2,12 +2,11 @@ import { useMutation } from '@tanstack/react-query';
 import { showToast } from '@/components/toast/toast';
 import { authClientAPI } from '../authClientAPI';
 import { getUserInfo } from '@/features/auth/api/auth';
-import { EditInfoParams } from '@/features/profile/types';
 
 //프로필 수정하기
-export function useEditInfo() {
+export function useEditInfoMutation() {
   return useMutation({
-    mutationFn: (data: EditInfoParams) => authClientAPI.editInfo(data),
+    mutationFn: (formData: FormData) => authClientAPI.editInfo(formData),
     onSuccess: () => {
       getUserInfo();
       showToast({ message: '프로필 수정이 완료되었습니다.', type: 'success' });
