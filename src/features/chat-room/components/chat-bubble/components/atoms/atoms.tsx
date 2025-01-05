@@ -80,12 +80,13 @@ export function ChatBubbleTime({
 
 interface ChatBubbleProfileProps extends HTMLAttributes<HTMLDivElement> {
   name: string;
-  imageUrl: string;
+  image?: string;
   isHost?: boolean;
 }
 
 export function ChatBubbleProfile({
   name,
+  image,
   isHost,
   className,
   onClick,
@@ -98,7 +99,7 @@ export function ChatBubbleProfile({
         onClick={onClick}
         data-testid="profile-image"
       >
-        <Avatar src={'/images/profile.png'} alt={name} size={'mdLg'} />
+        <Avatar src={image || '/images/profile.png'} alt={name} size={'mdLg'} />
         {isHost && (
           <div className="absolute -right-1 -top-1 flex h-[18px] w-[18px] items-center justify-center rounded-full border-2 border-gray-normal-01 bg-green-normal-01">
             <HostIcon width={9} height={9} data-testid="host-icon" />

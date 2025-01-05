@@ -9,6 +9,7 @@ export interface ChatMessageType extends BaseMessage {
   userNickname: string;
   userId: number;
   content: string;
+  image?: string;
 }
 
 export interface SystemMessageType extends BaseMessage {

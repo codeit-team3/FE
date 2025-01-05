@@ -192,7 +192,7 @@ function ChatRoomPage() {
                 className="bg-gray-light-02"
               />
               <h3>채팅</h3>
-              <ParticipantCounter current={data?.bookClubs.memberCount} />
+              <ParticipantCounter current={bookClubDetail?.memberCount} />
             </div>
             <div>
               <IconButton

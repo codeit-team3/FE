@@ -57,7 +57,10 @@ export default function JoinedClubList({ order }: ClubListProps) {
         </div>
       ) : (
         JoinedList?.filter(
-          (bookClub) => !bookClub.isInactive && bookClub.hostId !== user.id,
+          (bookClub) =>
+            !bookClub.isInactive &&
+            bookClub.hostId !== user.id &&
+            bookClub.isJoined === true,
         )?.map((bookClub) => (
           <div key={bookClub.id} className="md:w-full">
             <Card

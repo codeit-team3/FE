@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { getRecentChats, getStompClient } from '@/features/chat/utils/socket';
 import { findRecentMessage } from '@/features/chat/utils/chatRoom';
 import { formatDateForUI } from '@/lib/utils/formatDateForUI';
+import { useAuthStore } from '@/store/authStore';
 
 export default function BookClubChatContainer() {
   const [recentMessages, setRecentMessages] = useState<
@@ -22,6 +23,8 @@ export default function BookClubChatContainer() {
   const { data, isLoading, error } = useQuery(
     bookClubs.my()._ctx.joined({ order: 'DESC', page: 1, size: 10 }),
   );
+
+  const { user } = useAuthStore();
 
   useEffect(() => {
     const fetchRecentChats = async () => {
@@ -63,6 +66,7 @@ export default function BookClubChatContainer() {
                 variant="bookClub"
                 props={{
                   ...bookClub,
+                  isHost: user?.id === bookClub.hostId,
                   lastMessage: recentMessage?.content || '',
                   lastMessageTime: recentMessage?.date
                     ? formatDateForUI(recentMessage.date, 'CHAT_ROOM')

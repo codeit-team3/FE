@@ -127,7 +127,10 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
         </div>
       ) : (
         myJoinedList
-          ?.filter((bookClub) => bookClub.hostId !== user?.id)
+          ?.filter(
+            (bookClub) =>
+              bookClub.hostId !== user?.id && bookClub.isJoined === true,
+          )
           ?.map((bookClub) => (
             <div key={bookClub.id} className="md:w-full">
               <Card
