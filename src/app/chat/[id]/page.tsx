@@ -178,61 +178,70 @@ function ChatRoomPage() {
   };
 
   return (
-    <div className="relative flex w-full flex-1 flex-col gap-5 pb-10">
-      <header className="flex w-full min-w-[336px] items-end bg-gray-light-02 px-[20px] py-[30px] sm:justify-between md:px-[24px] lg:px-[102px]">
-        <div className="flex w-full flex-col gap-5">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <IconButton
-                icon={<GoBackIcon />}
-                onClick={handleGoBack}
-                className="bg-gray-light-02"
-              />
-              <h3>채팅</h3>
-              <ParticipantCounter current={bookClubDetail?.memberCount} />
+    <div className="absolute bottom-0 left-0 right-0 top-[60px] flex justify-center">
+      <div className="flex h-full w-full max-w-[996px] flex-col">
+        <header className="w-full bg-gray-light-02 px-[20px] py-[30px] sm:justify-between md:px-[24px] lg:px-[102px]">
+          <div className="flex w-full flex-col gap-5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <IconButton
+                  icon={<GoBackIcon />}
+                  onClick={handleGoBack}
+                  className="bg-gray-light-02"
+                />
+                <h3>채팅</h3>
+                <ParticipantCounter current={bookClubDetail?.memberCount} />
+              </div>
+              <div>
+                <IconButton
+                  icon={<HamburgerMenuIcon width={16} height={12} />}
+                  onClick={() => {}}
+                  className="bg-gray-light-02"
+                />
+              </div>
             </div>
-            <div>
-              <IconButton
-                icon={<HamburgerMenuIcon width={16} height={12} />}
-                onClick={() => {}}
-                className="bg-gray-light-02"
-              />
-            </div>
+            <ChatCard
+              variant="chatRoomHeader"
+              props={{
+                imageUrl:
+                  bookClubDetail?.imageUrl || '/images/defaultBookClub.jpg',
+                isHost: bookClubDetail?.isHost || false,
+                title: bookClubDetail?.title || '',
+                location: bookClubDetail?.town || '',
+                datetime: bookClubDetail?.targetDate
+                  ? formatDateForUI(bookClubDetail.targetDate, 'KOREAN')
+                  : '',
+                meetingType: bookClubDetail?.meetingType || 'OFFLINE',
+                onClick: () => router.push(`/bookclub/${chatId}`),
+              }}
+            />
           </div>
-          <ChatCard
-            variant="chatRoomHeader"
-            props={{
-              imageUrl:
-                bookClubDetail?.imageUrl || '/images/defaultBookClub.jpg',
-              isHost: bookClubDetail?.isHost || false,
-              title: bookClubDetail?.title || '',
-              location: bookClubDetail?.town || '',
-              datetime: bookClubDetail?.targetDate
-                ? formatDateForUI(bookClubDetail.targetDate, 'KOREAN')
-                : '',
-              meetingType: bookClubDetail?.meetingType || 'OFFLINE',
-              onClick: () => router.push(`/bookclub/${chatId}`),
-            }}
+        </header>
+
+        <div className="flex-1 overflow-y-auto">
+          <ChatBubbleList
+            groupedMessages={convertToGroupedMessage(chatHistory)}
+            hostId={chatId}
+            onProfileClick={() => {}}
           />
         </div>
-      </header>
-      <div className="flex-1 overflow-y-auto">
-        <ChatBubbleList
-          groupedMessages={convertToGroupedMessage(chatHistory)}
-          hostId={chatId}
-          onProfileClick={() => {}}
-        />
-      </div>
-      <div className="sticky bottom-0 flex w-full items-center justify-between gap-3 bg-white">
-        <form className="w-full" onSubmit={handleSubmit}>
-          <MessageInput value={message} onChange={handleMessageChange} />
-        </form>
-        <IconButton
-          icon={<MessageIcon />}
-          aria-label="메시지 전송"
-          className="h-[52px] w-[52px] bg-green-light-01"
-          onClick={handleSubmit}
-        />
+
+        <div className="w-full bg-white p-4">
+          <form
+            className="flex w-full items-center gap-3"
+            onSubmit={handleSubmit}
+          >
+            <div className="flex-1">
+              <MessageInput value={message} onChange={handleMessageChange} />
+            </div>
+            <IconButton
+              icon={<MessageIcon />}
+              aria-label="메시지 전송"
+              className="h-[52px] w-[52px] bg-green-light-01"
+              onClick={handleSubmit}
+            />
+          </form>
+        </div>
       </div>
     </div>
   );
