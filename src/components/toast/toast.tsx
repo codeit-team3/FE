@@ -14,7 +14,11 @@ const defaultOptions: ToastOptions = {
 };
 
 export const showToast = ({ message, type }: ToastProps) => {
-  toast[type](message, defaultOptions);
+  if (type === 'success') {
+    toast.success(message, defaultOptions);
+  } else if (type === 'error') {
+    toast.error(message, defaultOptions);
+  }
 };
 
 export const Toast = () => {
