@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { showToast } from '@/components/toast/toast';
+import { TOAST_MESSAGES } from '@/constants/messages/toast';
 import { authClientAPI } from '../authClientAPI';
 import { getUserInfo } from '@/features/auth/api/auth';
 
@@ -9,10 +10,16 @@ export function useEditInfoMutation() {
     mutationFn: (formData: FormData) => authClientAPI.editInfo(formData),
     onSuccess: () => {
       getUserInfo();
-      showToast({ message: '프로필 수정이 완료되었습니다.', type: 'success' });
+      showToast({
+        message: TOAST_MESSAGES.SUCCESS.PROFILE_EDIT,
+        type: 'success',
+      });
     },
     onError: (error) => {
-      showToast({ message: '프로필 수정을 실패하였습니다', type: 'error' });
+      showToast({
+        message: TOAST_MESSAGES.ERROR.PROFILE_EDIT_FAILED,
+        type: 'error',
+      });
       console.error(error);
     },
   });

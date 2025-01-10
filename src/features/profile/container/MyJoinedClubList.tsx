@@ -16,6 +16,7 @@ import {
   useWriteReview,
 } from '@/api/book-club/react-query';
 import { showToast } from '@/components/toast/toast';
+import { TOAST_MESSAGES } from '@/constants/messages/toast';
 import { BookClub } from '@/types/bookclubs';
 import Loading from '@/components/loading/Loading';
 import { useAuthStore } from '@/store/authStore';
@@ -58,7 +59,7 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
       const res = await leaveClub(clubId);
       if (res) {
         showToast({
-          message: '취소된 모임을 삭제하였습니다.',
+          message: TOAST_MESSAGES.SUCCESS.CLUB_DELETE,
           type: 'success',
         });
       }
@@ -80,7 +81,10 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
   const onConfirmReview = (rating: number, content: string) => {
     //TODO: 토스트 메시지가 뜨더라도 모달이 열린 상태로 유지되도록 수정
     if (!rating || !content) {
-      showToast({ message: '점수와 리뷰 내용을 입력해주세요', type: 'error' });
+      showToast({
+        message: TOAST_MESSAGES.ERROR.REVIEW_VALIDATION,
+        type: 'error',
+      });
       return;
     }
 
@@ -97,14 +101,14 @@ export default function MyJoinedClubList({ order }: ClubListProps) {
         const res = await leaveClub(selectedClubId);
         if (res) {
           showToast({
-            message: '모임 참여를 취소하였습니다.',
+            message: TOAST_MESSAGES.SUCCESS.CLUB_LEAVE,
             type: 'success',
           });
         }
       }
     } catch (error) {
       showToast({
-        message: '모임 참여를 취소를 실패하였습니다.',
+        message: TOAST_MESSAGES.ERROR.CLUB_LEAVE_FAILED,
         type: 'error',
       });
       console.error(error);

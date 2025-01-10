@@ -1,5 +1,6 @@
 import { useLeaveBookClub } from '@/api/book-club/react-query';
 import { showToast } from '@/components/toast/toast';
+import { TOAST_MESSAGES } from '@/constants/messages/toast';
 import { useState } from 'react';
 
 export const useLeaveClub = () => {
@@ -26,14 +27,17 @@ export const useLeaveClub = () => {
     try {
       if (popUpState.selectedClubId) {
         await leaveClub(popUpState.selectedClubId);
-        showToast({ message: '모임 참여를 취소하였습니다.', type: 'success' });
+        showToast({
+          message: TOAST_MESSAGES.SUCCESS.CLUB_LEAVE,
+          type: 'success',
+        });
       }
     } catch (error) {
       if (error instanceof Error) {
         showToast({ message: error.message, type: 'error' });
       } else {
         showToast({
-          message: '알 수 없는 오류가 발생했습니다.',
+          message: TOAST_MESSAGES.ERROR.UNKNOWN,
           type: 'error',
         });
       }

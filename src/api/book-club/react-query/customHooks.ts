@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { bookClubs } from './queries';
 import { showToast } from '@/components/toast/toast';
+import { TOAST_MESSAGES } from '@/constants/messages/toast';
 import {
   bookClubLikeAPI,
   bookClubMainAPI,
@@ -25,7 +26,10 @@ export function useBookClubCreateMutation() {
       });
     },
     onError: () => {
-      showToast({ message: '북클럽 생성에 실패했습니다.', type: 'error' });
+      showToast({
+        message: TOAST_MESSAGES.ERROR.CLUB_CREATE_FAILED,
+        type: 'error',
+      });
     },
   });
 }
@@ -74,12 +78,18 @@ export function useWriteReview() {
       queryClient.invalidateQueries({
         queryKey: bookClubs.my()._ctx.reviews().queryKey,
       });
-      showToast({ message: '리뷰 작성을 완료하였습니다', type: 'success' });
+      showToast({
+        message: TOAST_MESSAGES.SUCCESS.REVIEW_CREATE,
+        type: 'success',
+      });
     },
     onError: (error) => {
       console.error(error);
 
-      showToast({ message: '리뷰 작성을 실패하였습니다.', type: 'error' });
+      showToast({
+        message: TOAST_MESSAGES.ERROR.REVIEW_CREATE_FAILED,
+        type: 'error',
+      });
     },
   });
 }

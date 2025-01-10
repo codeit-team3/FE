@@ -1,5 +1,6 @@
 import { useCancelBookClub } from '@/api/book-club/react-query';
 import { showToast } from '@/components/toast/toast';
+import { TOAST_MESSAGES } from '@/constants/messages/toast';
 import { useState } from 'react';
 
 export function useCancelClub() {
@@ -29,14 +30,14 @@ export function useCancelClub() {
         const res = await cancelClub(popUpState.selectedClubId);
         if (res) {
           showToast({
-            message: '모임을 취소하였습니다.',
+            message: TOAST_MESSAGES.SUCCESS.CLUB_CANCEL,
             type: 'success',
           });
         }
       }
     } catch (error) {
       showToast({
-        message: '모임 취소를 실패하였습니다.',
+        message: TOAST_MESSAGES.ERROR.CLUB_CANCEL_FAILED,
         type: 'error',
       });
       console.error(error);
