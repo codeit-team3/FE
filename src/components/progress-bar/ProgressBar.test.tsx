@@ -16,4 +16,13 @@ describe('ProgressBar', () => {
     const fillBar = screen.getByRole('progressbar').children[0];
     expect(fillBar).toHaveStyle({ width: '25%' });
   });
+
+  it('percentage가 100을 초과할 경우 100%로 제한되는지 확인', () => {
+    render(<ProgressBar percentage={150} />);
+    const progressbar = screen.getByRole('progressbar');
+    const fillBar = progressbar.children[0];
+
+    expect(progressbar).toHaveAttribute('aria-valuenow', '100');
+    expect(fillBar).toHaveStyle({ width: '100%' });
+  });
 });
