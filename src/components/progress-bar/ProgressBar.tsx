@@ -16,10 +16,12 @@ function ProgressBar({
   const fillColor =
     color || (isPast ? 'bg-gray-dark-02' : 'bg-green-normal-01');
 
+  const limitedPercentage = Math.min(100, Math.max(0, percentage));
+
   return (
     <div
       role="progressbar"
-      aria-valuenow={percentage}
+      aria-valuenow={limitedPercentage}
       aria-valuemin={0}
       aria-valuemax={100}
       className={`h-1 w-full rounded-md bg-gray-normal-01 ${className || ''}`}
@@ -28,7 +30,7 @@ function ProgressBar({
       <div
         className={`h-full rounded-md transition-all duration-300 ${fillColor}`}
         style={{
-          width: `${percentage}%`,
+          width: `${limitedPercentage}%`,
         }}
       />
     </div>
