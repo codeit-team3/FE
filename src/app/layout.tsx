@@ -31,7 +31,6 @@ export default function RootLayout({
             <MSWComponent>{children}</MSWComponent>
           </main>
         </ReactQueryProviders>
-        <Toast />
       </body>
     </html>
   );
