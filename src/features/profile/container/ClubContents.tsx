@@ -13,6 +13,9 @@ import {
   MyWrittenReviewList,
   WrittenReviewList,
 } from '../container/index';
+import ErrorHandlingWrapper from '@/app/ErrorHandlingWrapper';
+import ErrorFallback from '@/app/ErrorFallback';
+import Loading from '@/components/loading/Loading';
 
 export default function ClubContents({ isMyPage }: ProfilePageProps) {
   const [order, setOrder] = useState<orderType>('DESC');
@@ -62,7 +65,14 @@ export default function ClubContents({ isMyPage }: ProfilePageProps) {
         />
       </div>
 
-      <div className="pt-[18px]">{renderList(selectedList)}</div>
+      <div className="pt-[18px]">
+        <ErrorHandlingWrapper
+          fallbackComponent={ErrorFallback}
+          suspenseFallback={<Loading />}
+        >
+          {renderList(selectedList)}
+        </ErrorHandlingWrapper>
+      </div>
     </div>
   );
 }
