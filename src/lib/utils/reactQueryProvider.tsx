@@ -1,8 +1,35 @@
 'use client';
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import {
+  QueryClientProvider,
+  QueryClient,
+  QueryCache,
+  // MutationCache,
+} from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { showToast } from '@/components/toast/toast';
+import { AxiosError } from 'axios';
 
 export const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        showToast({
+          message: '데이터를 조회하는 중 에러가 발생했습니다.',
+          type: 'error',
+        });
+      }
+    },
+  }),
+  // mutationCache: new MutationCache({
+  //   onError: (error) => {
+  //     if (error instanceof AxiosError) {
+  //       showToast({
+  //         message: '요청을 처리하는 중 오류가 발생했습니다',
+  //         type: 'error',
+  //       });
+  //     }
+  //   },
+  // }),
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false, // 윈도우가 다시 포커스될 때 데이터를 다시 가져올지 여부
