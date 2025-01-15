@@ -12,6 +12,10 @@ export const queryClient = new QueryClient({
       retryOnMount: false, // 마운트 시 실패한 쿼리 재시도 여부
       staleTime: 1000 * 60 * 5, // 데이터가 'fresh'한 상태로 유지되는 시간 (5분)
       gcTime: 1000 * 60 * 10, // 사용하지 않는 캐시 데이터가 메모리에서 제거되기까지의 시간 (10분)
+      throwOnError: true,
+    },
+    mutations: {
+      throwOnError: true,
     },
   },
 });
