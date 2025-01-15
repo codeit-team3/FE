@@ -5,6 +5,6 @@ export const DEFAULT_FILTERS: BookClubParams = {
   meetingType: 'ALL',
   order: 'DESC',
   page: 1,
-  size: 100,
+  size: 10,
   searchKeyword: '',
 };

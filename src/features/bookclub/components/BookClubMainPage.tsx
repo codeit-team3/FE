@@ -7,9 +7,14 @@ import ClubListSection from './ClubListSection';
 import Button from '@/components/button/Button';
 import { useRouter } from 'next/navigation';
 import Loading from '@/components/loading/Loading';
+import { BookClub } from '@/types/bookclubs';
 
-function BookClubMainPage() {
-  const { clubList, isLoading, filters, updateFilters } = useBookClubList();
+function BookClubMainPage({ initialData }: { initialData: BookClub[] }) {
+  const { clubList, isLoading, isFetching, filters, updateFilters } =
+    useBookClubList({
+      initialData,
+      // defaultFilters,
+    });
 
   const router = useRouter();
 
@@ -43,7 +48,7 @@ function BookClubMainPage() {
         }
       />
       <FilterBar filters={filters} handleFilterChange={handleFilterChange} />
-      {isLoading ? (
+      {isLoading || isFetching ? (
         <div className="flex h-[400px] justify-center">
           <Loading />
         </div>
