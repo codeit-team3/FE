@@ -42,7 +42,7 @@ export interface BookClub {
 
   averageScore?: number;
 
-  clubStatus: 'pending' | 'confirmed' | 'closed'; // TODO: 내가 만든 모임에서 '모임 완료' 상태 추가
+  clubStatus?: 'pending' | 'confirmed' | 'closed'; // TODO: 내가 만든 모임에서 '모임 완료' 상태 추가
   isLiked: boolean;
   isInactive: boolean;
   isJoined: boolean;

@@ -3,19 +3,26 @@ import { BookClub, BookClubParams } from '@/types/bookclubs';
 import { useQuery } from '@tanstack/react-query';
 import { bookClubs } from '@/api/book-club/react-query';
 import { DEFAULT_FILTERS } from '@/lib/constants/filters';
+import { bookClubMainAPI } from '@/api/book-club';
 
 const useBookClubList = ({ initialData }: { initialData: BookClub[] }) => {
-  // const [filters, setFilters] = useState<BookClubParams>(defaultFilters);
   const [filters, setFilters] = useState<BookClubParams>(DEFAULT_FILTERS);
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, isFetching, error } = useQuery({
     ...bookClubs.list(filters),
+    //[데이터 그룹 식별, 세부 데이터 유형, 추가 정보(보통 객체로 전달)]
+    queryKey: ['bookClubs', 'list', ...(filters ? Object.values(filters) : [])],
+    queryFn: () => bookClubMainAPI.getBookClubs(filters),
     initialData: { bookClubs: initialData }, // SSR로 전달받은 초기 데이터 설정
-    staleTime: 1000 * 60 * 5, // 5분 동안 데이터를 Fresh 상태로 유지
+    staleTime: 0,
+    // enabled: !!filters, // filters가 존재할 때만 요청 실행
   });
 
   const clubList = data?.bookClubs;
   console.log(clubList);
+
+  // console.log('queryKey:', ['bookClubs', 'list', ...(filters ? Object.values(filters) : [])]);
+  // console.log('filters: ',filters);
 
   const updateFilters = (newFilters: Partial<BookClubParams>) => {
     setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }));
@@ -24,6 +31,7 @@ const useBookClubList = ({ initialData }: { initialData: BookClub[] }) => {
   return {
     clubList,
     isLoading,
+    isFetching,
     error,
     filters,
     updateFilters,

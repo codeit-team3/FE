@@ -3,19 +3,13 @@ import BookClubMainPage from '@/features/bookclub/components/BookClubMainPage';
 export default async function Home() {
   console.log('SSR 함수 실행됨');
 
-  const DEFAULT_PAGE = 1;
-  const DEFAULT_SIZE = 10;
-
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/book-clubs?page=${DEFAULT_PAGE}&size=${DEFAULT_SIZE}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/book-clubs`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    );
+    });
 
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
