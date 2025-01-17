@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+<img width="652"  alt="image" src="https://github.com/user-attachments/assets/ddde3e13-b5d5-4dc0-880b-29dec240bdd1" />
 
-## Getting Started
+> 📖 당신의 독서 생활에 새로운 페이지를 열어보세요!
+<br/> 새로운 사람들과 함께 읽고 나누는 특별한 독서 경험, **북코**가 함께합니다.
+> <br/>
+<br/>[![Bookco](https://img.shields.io/badge/BOOKCO.SITE-00a991?style=for-the-badge)](https://bookco.vercel.app/)
+</div
 
-First, run the development server:
+<br/>
+<br/>
+<br/>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🎯 Bookco에서 할 수 있는 일
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **👥 독서 모임**
+    
+    비슷한 취향을 가진 사람들과 함께 책을 읽고 이야기를 나눌 수 있습니다.
+    - 정해진 책으로 독서 모임에 참여하거나, 직접 모임을 만들 수 있습니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 💬 **채팅하기**
+    
+    다른 북코 유저들과 채팅 기능을 통해 소통할 수 있습니다.
+    - 모임의 호스트나 교환하고 싶은 책을 가진 유저와 대화를 나눌 수 있습니다.
+ 
+- **📚 교환하기 (추후 개발 예정..)**
+    
+    안 보게 된 책을 등록하면, 다른 사람의 책과 바꿔 읽을 수 있습니다.
+    - 집에서 방치되던 책을 다른 유저와 공유할 수 있습니다.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+<br/>
+<br/>
 
-## Learn More
+## 📚 서비스 소개
 
-To learn more about Next.js, take a look at the following resources:
+<br/>
+<br/>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ 기술스택
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+<br/>
+<br/>
 
-## Deploy on Vercel
+## 📂 폴더 구조
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+<br/>
+<br/>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🤝 팀 협업 방식, 브랜치 전략
+
+<br/>
+<br/>
+
+## 👥 팀원 구성
+
+<br/>
+<br/>
+
+
