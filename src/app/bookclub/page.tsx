@@ -1,29 +1,8 @@
 import BookClubMainPage from '@/features/bookclub/components/BookClubMainPage';
+import { fetchBookClubs } from '@/lib/utils/fetchBookClubs';
 
 export default async function Home() {
-  console.log('SSR 함수 실행됨');
+  const initialData = await fetchBookClubs();
 
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/book-clubs`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
-
-    const response = await res.json();
-    const initialData = response.bookClubs;
-
-    console.log('SSR로 가져온 데이터:', initialData);
-
-    return <BookClubMainPage initialData={initialData} />;
-  } catch (error) {
-    console.error('SSR 데이터 가져오기 실패:', error);
-
-    return <BookClubMainPage initialData={[]} />;
-  }
+  return <BookClubMainPage initialData={initialData} />;
 }

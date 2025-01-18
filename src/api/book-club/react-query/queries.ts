@@ -6,11 +6,8 @@ import { bookClubMainAPI } from '@/api/book-club/bookClubMainAPI';
 
 export const bookClubs = createQueryKeys('bookClubs', {
   list: (filters?: BookClubParams) => ({
-    queryKey: ['bookClubs', 'list', ...(filters ? Object.values(filters) : [])],
-    queryFn: () => {
-      console.log('Fetching data with filters:', filters);
-      bookClubMainAPI.getBookClubs(filters);
-    },
+    queryKey: [{ filters: filters || {} }],
+    queryFn: () => bookClubMainAPI.getBookClubs(filters),
   }),
 
   detail: (bookClubId: number) => ({
