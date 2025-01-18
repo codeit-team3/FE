@@ -13,7 +13,6 @@ function BookClubMainPage({ initialData }: { initialData: BookClub[] }) {
   const { clubList, isLoading, isFetching, filters, updateFilters } =
     useBookClubList({
       initialData,
-      // defaultFilters,
     });
 
   const router = useRouter();
