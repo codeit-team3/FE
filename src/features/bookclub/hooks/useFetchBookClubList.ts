@@ -3,7 +3,6 @@ import { BookClub, BookClubParams } from '@/types/bookclubs';
 import { useQuery } from '@tanstack/react-query';
 import { bookClubs } from '@/api/book-club/react-query';
 import { DEFAULT_FILTERS } from '@/lib/constants/filters';
-import { bookClubMainAPI } from '@/api/book-club';
 
 const useBookClubList = ({ initialData }: { initialData: BookClub[] }) => {
   const [filters, setFilters] = useState<BookClubParams>(DEFAULT_FILTERS);
