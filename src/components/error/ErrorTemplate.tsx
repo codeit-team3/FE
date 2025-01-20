@@ -1,6 +1,7 @@
 'use client';
 
 import Button from '@/components/button/Button';
+import Image from 'next/image';
 
 interface ErrorTemplateProps {
   error: Error;
@@ -19,6 +20,12 @@ export default function ErrorTemplate({
 }: ErrorTemplateProps) {
   return (
     <div className="flex h-[calc(100vh-80px)] flex-col items-center justify-center gap-4">
+      <Image
+        src="/images/errorImage.png"
+        alt="에러 이미지"
+        width={300}
+        height={200}
+      />
       <h2 className="text-xl font-bold">{title}</h2>
       <p className="text-gray-600">{message || error.message}</p>
 
