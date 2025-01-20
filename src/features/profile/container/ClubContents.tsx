@@ -13,8 +13,8 @@ import {
   MyWrittenReviewList,
   WrittenReviewList,
 } from '../container/index';
-import ErrorHandlingWrapper from '@/app/ErrorHandlingWrapper';
-import ErrorFallback from '@/app/ErrorFallback';
+import ErrorHandlingWrapper from '@/components/error/ErrorHandlingWrapper';
+import ErrorFallback from '@/components/error/ErrorFallback';
 import Loading from '@/components/loading/Loading';
 
 export default function ClubContents({ isMyPage }: ProfilePageProps) {

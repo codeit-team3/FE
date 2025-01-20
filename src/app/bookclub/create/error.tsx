@@ -1,6 +1,6 @@
 'use client';
 
-import ErrorTemplate from '@/app/ErrorTemplate';
+import ErrorTemplate from '@/components/error/ErrorTemplate';
 
 export default function BookClubCreateError({
   error,
