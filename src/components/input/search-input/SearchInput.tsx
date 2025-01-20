@@ -9,12 +9,14 @@ interface SearchInputProps {
 
 function SearchInput({ value, onChange }: SearchInputProps) {
   return (
-    <Input
-      value={value}
-      onChange={onChange}
-      placeholder={'검색어를 입력해주세요'}
-      icon={<SearchIcon />}
-    />
+    <div className="bg-white">
+      <Input
+        value={value}
+        onChange={onChange}
+        placeholder={'검색어를 입력해주세요'}
+        icon={<SearchIcon />}
+      />
+    </div>
   );
 }
 
