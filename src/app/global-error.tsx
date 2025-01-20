@@ -1,6 +1,7 @@
 'use client';
 
 import Button from '@/components/button/Button';
+import Image from 'next/image';
 
 export default function GlobalError({
   error,
@@ -14,6 +15,13 @@ export default function GlobalError({
       <head></head>
       <body>
         <div className="flex h-screen flex-col items-center justify-center gap-4">
+          <Image
+            src="/images/errorImage.png"
+            alt="에러 이미지"
+            width={300}
+            height={200}
+            priority
+          />
           <h2 className="text-xl font-bold">치명적인 오류가 발생했습니다</h2>
           <p className="text-gray-600">
             {error.message || '서비스에 문제가 발생했습니다'}
