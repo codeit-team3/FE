@@ -1,11 +1,14 @@
 export async function fetchBookClubs() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/book-clubs`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/book-clubs?size=100`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
-    });
+    );
 
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
