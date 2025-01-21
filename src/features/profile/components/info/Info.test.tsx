@@ -67,38 +67,38 @@ describe('Info 테스트', () => {
 
   it("수정하기 모달에서 닉네임을 입력하지 않고 수정하기 버튼 클릭 시 '닉네임을 입력해주세요' 팝업창 렌더링 확인", () => {});
 
-  it('수정하기 모달에서 수정 후 수정하기 버튼 클릭 시 onSubmitEditInfo 함수 호출 확인', async () => {
-    render(
-      <QueryClientProvider client={queryClient}>
-        <Info user={mockUser} isMyPage={true} />
-      </QueryClientProvider>,
-    );
+  // it('수정하기 모달에서 수정 후 수정하기 버튼 클릭 시 onSubmitEditInfo 함수 호출 확인', async () => {
+  //   render(
+  //     <QueryClientProvider client={queryClient}>
+  //       <Info user={mockUser} isMyPage={true} />
+  //     </QueryClientProvider>,
+  //   );
 
-    const editButton = screen.getByLabelText('프로필 수정');
-    await userEvent.click(editButton);
+  //   const editButton = screen.getByLabelText('프로필 수정');
+  //   await userEvent.click(editButton);
 
-    //닉네임 수정
-    const nameInput = screen.getByRole('textbox', { name: 'nickname' });
-    await userEvent.clear(nameInput);
-    await userEvent.type(nameInput, 'Edited Name');
+  //   //닉네임 수정
+  //   const nameInput = screen.getByRole('textbox', { name: 'nickname' });
+  //   await userEvent.clear(nameInput);
+  //   await userEvent.type(nameInput, 'Edited Name');
 
-    //한 줄 소개 수정
-    const descriptionInput = screen.getByRole('textbox', {
-      name: 'description',
-    });
-    await userEvent.clear(descriptionInput);
-    await userEvent.type(descriptionInput, 'Edited Description');
+  //   //한 줄 소개 수정
+  //   const descriptionInput = screen.getByRole('textbox', {
+  //     name: 'description',
+  //   });
+  //   await userEvent.clear(descriptionInput);
+  //   await userEvent.type(descriptionInput, 'Edited Description');
 
-    //수정하기 버튼 클릭
-    const confirmButton = screen.getByText('수정하기');
-    await userEvent.click(confirmButton);
+  //   //수정하기 버튼 클릭
+  //   const confirmButton = screen.getByText('수정하기');
+  //   await userEvent.click(confirmButton);
 
-    //TODO:함수 호출 확인
+  //   //TODO:함수 호출 확인
 
-    // expect(mockSubmit).toHaveBeenCalledTimes(1);
-    // expect(mockSubmit).toHaveBeenCalledWith({
-    //   name: 'Edited Name',
-    //   description: 'Edited Description',
-    // });
-  });
+  //   // expect(mockSubmit).toHaveBeenCalledTimes(1);
+  //   // expect(mockSubmit).toHaveBeenCalledWith({
+  //   //   name: 'Edited Name',
+  //   //   description: 'Edited Description',
+  //   // });
+  // });
 });

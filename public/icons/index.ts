@@ -19,3 +19,4 @@ export { default as OnlineIcon } from './OnlineIcon';
 export { default as MessageIcon } from './MessageIcon';
 export { default as PencilIcon } from './PencilIcon';
 export { default as IcCheckOnly } from './IcCheckOnly';
+export { default as AlertCircleIcon } from './AlertCircleIcon';
