@@ -48,7 +48,9 @@ function BookClubMainPage() {
           <Loading />
         </div>
       ) : (
-        <ClubListSection bookClubs={clubList} />
+        <div className="pb-12">
+          <ClubListSection bookClubs={clubList} />
+        </div>
       )}
     </>
   );
