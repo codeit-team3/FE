@@ -396,7 +396,7 @@ function Card(props: CardProps) {
                       size="modal"
                       fillType="lightSolid"
                       themeColor="gray-dark-01"
-                      lightColor="gray-normal-01"
+                      lightColor="gray-normal-02"
                       onClick={(e) => {
                         e.stopPropagation();
                         onCancel(clubId);
