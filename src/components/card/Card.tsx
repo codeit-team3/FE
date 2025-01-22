@@ -218,7 +218,6 @@ function Card(props: CardProps) {
           max,
           isPast,
           isCanceled,
-          // meetingType,
           bookClubType,
           clubStatus,
           onLikeClick,
@@ -228,7 +227,7 @@ function Card(props: CardProps) {
         } = props as DefaultClubCard & { variant: 'defaultClub' };
 
         return (
-          <div className="flex flex-col gap-6 md:flex-row">
+          <div className="flex flex-col gap-6 transition-transform hover:-translate-y-1 md:flex-row">
             <Card.Image
               url={imageUrl}
               alt={imageAlt}
@@ -294,7 +293,7 @@ function Card(props: CardProps) {
         } = props as ParticipatedClubCard & { variant: 'participatedClub' };
 
         return (
-          <div className="flex flex-col gap-6 md:flex-row">
+          <div className="flex flex-col gap-6 transition-transform hover:-translate-y-1 md:flex-row">
             <Card.Image url={imageUrl} alt={imageAlt} />
             <Card.Box
               onClick={() => onClick?.(clubId)}
@@ -328,7 +327,7 @@ function Card(props: CardProps) {
                         e.stopPropagation();
                         onWriteReview(clubId);
                       }}
-                      className="w-full"
+                      className="w-full hover-dim"
                     />
                   ) : (
                     <Button
@@ -336,12 +335,12 @@ function Card(props: CardProps) {
                       size="modal"
                       fillType="lightSolid"
                       themeColor="gray-dark-01"
-                      lightColor="gray-normal-01"
+                      lightColor="gray-normal-02"
                       onClick={(e) => {
                         e.stopPropagation();
                         onCancel(clubId);
                       }}
-                      className="w-full"
+                      className="w-full hover-dim"
                     />
                   )}
                 </div>
@@ -370,7 +369,7 @@ function Card(props: CardProps) {
         } = props as HostedClubCard & { variant: 'hostedClub' };
 
         return (
-          <div className="flex flex-col gap-6 md:flex-row">
+          <div className="flex flex-col gap-6 transition-transform hover:-translate-y-1 md:flex-row">
             <Card.Image url={imageUrl} alt={imageAlt} />
             <Card.Box
               onClick={() => onClick?.(clubId)}
@@ -397,7 +396,7 @@ function Card(props: CardProps) {
                       size="modal"
                       fillType="lightSolid"
                       themeColor="gray-dark-01"
-                      lightColor="gray-normal-01"
+                      lightColor="gray-normal-02"
                       onClick={(e) => {
                         e.stopPropagation();
                         onCancel(clubId);
