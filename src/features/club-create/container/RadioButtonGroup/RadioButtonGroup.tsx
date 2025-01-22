@@ -114,6 +114,7 @@ function RadioButtonGroup({
                 <InputField
                   register={addressRegister}
                   placeholder="상세 주소를 입력해 주세요"
+                  data-testid="address-input"
                 />
               </CreateClubFormField>
 
