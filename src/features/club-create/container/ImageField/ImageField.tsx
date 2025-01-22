@@ -1,10 +1,10 @@
 'use client';
 
 import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
-import { BookClubForm } from '../types';
-import { CreateClubFormField } from '../components';
+import { BookClubForm } from '../../types';
+import { CreateClubFormField } from '../../components';
 import { useImageField } from '@/features/club-create/hooks';
-import { CameraIcon, ImageIcon } from '../../../../public/icons';
+import { CameraIcon, ImageIcon } from '../../../../../public/icons';
 
 interface ImageUploadContainerProps {
   register: UseFormRegister<BookClubForm>;
@@ -24,7 +24,9 @@ function ImageField({ register, setValue, error }: ImageUploadContainerProps) {
         {selectedFileName ? (
           <>
             <div className="flex flex-col items-center gap-1">
-              <ImageIcon />
+              <div data-testid="image-icon">
+                <ImageIcon />
+              </div>
               <span className="text-sm text-blue-light-active">
                 {selectedFileName}
               </span>
@@ -32,7 +34,9 @@ function ImageField({ register, setValue, error }: ImageUploadContainerProps) {
           </>
         ) : (
           <div className="flex flex-col items-center gap-1">
-            <CameraIcon />
+            <div data-testid="camera-icon">
+              <CameraIcon />
+            </div>
             <span className="text-sm text-gray-dark-01">
               이미지를 첨부해 주세요 (jpg, jpeg)
             </span>
@@ -43,6 +47,7 @@ function ImageField({ register, setValue, error }: ImageUploadContainerProps) {
           accept="image/*"
           className="absolute inset-0 cursor-pointer opacity-0"
           onChange={handleFileChange}
+          data-testid="file-input"
         />
       </div>
     </CreateClubFormField>
