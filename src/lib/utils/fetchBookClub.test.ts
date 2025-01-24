@@ -30,7 +30,7 @@ describe('fetchBookClub', () => {
 
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(
-      `https://d3eoy4ym225l85.cloudfront.net/api/v1/book-clubs?size=100`,
+      `${process.env.NEXT_PUBLIC_API_URL}/book-clubs?size=100`,
       {
         method: 'GET',
         headers: {
