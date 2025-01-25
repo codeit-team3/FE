@@ -1,3 +1,4 @@
+import { mockBookClubs } from '@/mocks/mockDatas';
 import { fetchBookClubs } from './fetchBookClubs';
 
 describe('fetchBookClub', () => {
@@ -11,19 +12,11 @@ describe('fetchBookClub', () => {
     jest.resetAllMocks();
   });
 
-  it('요청 성공시 bookCluns를 반환해야 한다', async () => {
-    // 모의 응답 데이터
-    const mockResponse = {
-      bookClubs: [
-        { id: 1, title: 'bookclub 1' },
-        { id: 2, title: 'bookclub 2' },
-      ],
-    };
-
+  it('요청 성공시 bookClubs를 반환해야 한다', async () => {
     // fetch 모킹
     (global.fetch as jest.Mock).mockResolvedValue({
       ok: true,
-      json: jest.fn().mockResolvedValue(mockResponse),
+      json: jest.fn().mockResolvedValue({ bookClubs: mockBookClubs }),
     });
 
     const result = await fetchBookClubs();
@@ -38,7 +31,7 @@ describe('fetchBookClub', () => {
         },
       },
     );
-    expect(result).toEqual(mockResponse.bookClubs);
+    expect(result).toEqual(mockBookClubs);
   });
 
   it('HTTP 에러가 발생하면 빈 배열을 반환해야 한다', async () => {
