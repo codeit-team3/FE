@@ -13,6 +13,7 @@ import { useJoinClub } from '../hooks';
 import {
   useCancelClub,
   useLeaveClub,
+  useLikeClub,
   useLikeWithAuthCheck,
   useUnLikeClub,
 } from '@/lib/hooks/index';
@@ -42,9 +43,10 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
   const {
     isLikePopUpOpen,
     likePopUpLabel,
-    onCheckAuthPopUp,
+    onShowAuthPopUp,
     onCloseCheckAuthPopup,
   } = useLikeWithAuthCheck();
+  const { onConfirmLike } = useLikeClub();
   const { onConfirmUnLike } = useUnLikeClub();
 
   const { isLoggedIn, checkLoginStatus, user } = useAuthStore();
@@ -72,14 +74,17 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
       setIsOpen(true);
       return;
     }
-
-    handleJoin(clubInfo.id);
+    !isLoggedIn ? router.replace('/login') : handleJoin(clubInfo.id);
   };
 
   const handleLikeClub = () => {
+    if (!isLoggedIn) {
+      onShowAuthPopUp();
+      return;
+    }
     clubInfo.isLiked
       ? onConfirmUnLike(clubInfo.id)
-      : onCheckAuthPopUp(clubInfo.id);
+      : onConfirmLike(clubInfo.id);
   };
 
   const handleLikePopUpConfirm = () => {
