@@ -1,7 +1,7 @@
 import { QueryClient } from '@tanstack/react-query';
 import { BookClub } from '@/types/bookclubs';
 import { bookClubs } from './queries';
-import { DEFAULT_FILTERS } from '@/lib/constants/filters';
+import { DEFAULT_FILTERS } from '@/constants/filters';
 
 export const likeOnMutate = async (
   queryClient: QueryClient,
