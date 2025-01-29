@@ -30,6 +30,9 @@ interface DefaultClubCard extends ClubCard {
   current: number;
   max: number;
 
+  // 호스트 여부
+  isHost?: boolean;
+
   //마이페이지 판별
   isMyPage?: boolean;
 }

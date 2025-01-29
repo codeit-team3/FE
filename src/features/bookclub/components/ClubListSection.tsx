@@ -25,7 +25,7 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
   } = useLikeWithAuthCheck();
   const { onConfirmUnLike } = useUnLikeClub();
   const { onConfirmLike } = useLikeClub();
-  const { isLoggedIn, checkLoginStatus } = useAuthStore();
+  const { isLoggedIn, checkLoginStatus, user } = useAuthStore();
 
   useEffect(() => {
     checkLoginStatus();
@@ -74,6 +74,7 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
               club.endDate,
               today,
             )}
+            isHost={club.hostId === user?.id}
             onLikeClick={() => handleLikeClub(club.isLiked, club.id)}
             onClick={() => router.push(`/bookclub/${club.id}`)}
           />

@@ -56,6 +56,7 @@ function CardImage({
   onLikeClick,
   className,
   isPast,
+  isHost,
   ...props
 }: CardImageProps) {
   return (
@@ -73,7 +74,7 @@ function CardImage({
         fill
         className={twMerge('object-cover', isPast && 'grayscale')}
       />
-      {isLiked !== undefined && (
+      {isLiked !== undefined && !isHost && (
         <div className="absolute right-5 top-[15px] z-10">
           <HeartIcon isLiked={isLiked} onClick={onLikeClick} />
         </div>
@@ -218,6 +219,7 @@ function Card(props: CardProps) {
           max,
           isPast,
           isCanceled,
+          isHost,
           // meetingType,
           bookClubType,
           clubStatus,
@@ -234,6 +236,7 @@ function Card(props: CardProps) {
               alt={imageAlt}
               isLiked={isLiked}
               isPast={isPast}
+              isHost={isHost}
               onLikeClick={onLikeClick}
             />
 
