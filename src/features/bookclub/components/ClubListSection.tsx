@@ -6,19 +6,22 @@ import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 import EmptyState from '@/components/common-layout/EmptyState';
 import { clubStatus } from '@/lib/utils/clubUtils';
-import { BookClub } from '@/types/bookclubs';
+import { BookClub, BookClubParams } from '@/types/bookclubs';
 import { useLikeClub, useUnLikeClub } from '@/lib/hooks';
 
 interface ClubListSectionProps {
   bookClubs: BookClub[];
+  filter: BookClubParams;
 }
 
-function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
+function ClubListSection({ bookClubs = [], filter }: ClubListSectionProps) {
   const router = useRouter();
-  const { onConfirmUnLike } = useUnLikeClub();
-  const { onConfirmLike } = useLikeClub();
+  const { onConfirmUnLike } = useUnLikeClub(filter);
+  const { onConfirmLike } = useLikeClub(filter);
 
   const today = useMemo(() => new Date(), []);
+
+  // console.log('🔍 ClubListSection 데이터:', bookClubs);
 
   const handleLikeClub = (isLiked: boolean, id: number) => {
     isLiked ? onConfirmUnLike(id) : onConfirmLike(id);
