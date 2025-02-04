@@ -1,19 +1,6 @@
 import type { Preview } from '@storybook/react';
 import '../src/styles/globals.css';
 
-// useRouter Mocking
-jest.mock('next/router', () => ({
-  useRouter: () => ({
-    push: jest.fn(),
-    replace: jest.fn(),
-    back: jest.fn(),
-    prefetch: jest.fn(),
-    pathname: '/',
-    query: {},
-    asPath: '/',
-  }),
-}));
-
 const preview: Preview = {
   parameters: {
     controls: {
