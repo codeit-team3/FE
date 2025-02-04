@@ -1,5 +1,5 @@
+import { DEFAULT_FILTERS } from '@/constants/filters';
 import BookClubMainPage from '@/features/bookclub/components/BookClubMainPage';
-import { DEFAULT_FILTERS } from '@/lib/constants/filters';
 import { fetchBookClubs } from '@/lib/utils/fetchBookClubs';
 import {
   dehydrate,
