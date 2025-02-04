@@ -1,9 +1,11 @@
 import { useUnLikeBookClub } from '@/api/book-club/react-query';
 import { showToast } from '@/components/toast/toast';
 import { TOAST_MESSAGES } from '@/constants/messages/toast';
+import { BookClubParams } from '@/types/bookclubs';
+import { DEFAULT_FILTERS } from '@/constants/filters';
 
-export const useUnLikeClub = () => {
-  const { mutate: unLikeClub } = useUnLikeBookClub();
+export const useUnLikeClub = (filter?: BookClubParams) => {
+  const { mutate: unLikeClub } = useUnLikeBookClub(filter || DEFAULT_FILTERS);
 
   const onConfirmUnLike = (selectedClubId: number) => {
     unLikeClub(selectedClubId, {

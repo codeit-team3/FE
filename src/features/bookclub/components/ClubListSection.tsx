@@ -6,16 +6,17 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 import EmptyState from '@/components/common-layout/EmptyState';
 import { clubStatus } from '@/lib/utils/clubUtils';
-import { BookClub } from '@/types/bookclubs';
+import { BookClub, BookClubParams } from '@/types/bookclubs';
 import { useLikeClub, useLikeWithAuthCheck, useUnLikeClub } from '@/lib/hooks';
 import { useAuthStore } from '@/store/authStore';
 import PopUp from '@/components/pop-up/PopUp';
 
 interface ClubListSectionProps {
   bookClubs: BookClub[];
+  filter: BookClubParams;
 }
 
-function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
+function ClubListSection({ bookClubs = [], filter }: ClubListSectionProps) {
   const router = useRouter();
   const {
     isLikePopUpOpen,
@@ -23,8 +24,8 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
     onShowAuthPopUp,
     onCloseCheckAuthPopup,
   } = useLikeWithAuthCheck();
-  const { onConfirmUnLike } = useUnLikeClub();
-  const { onConfirmLike } = useLikeClub();
+  const { onConfirmUnLike } = useUnLikeClub(filter);
+  const { onConfirmLike } = useLikeClub(filter);
   const { isLoggedIn, checkLoginStatus, user } = useAuthStore();
 
   useEffect(() => {
@@ -32,6 +33,8 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
   }, [checkLoginStatus]);
 
   const today = useMemo(() => new Date(), []);
+
+  // console.log('🔍 ClubListSection 데이터:', bookClubs);
 
   const handleLikeClub = (isLiked: boolean, id: number) => {
     if (!isLoggedIn) {
