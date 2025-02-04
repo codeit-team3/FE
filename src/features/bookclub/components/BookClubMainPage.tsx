@@ -7,18 +7,19 @@ import ClubListSection from './ClubListSection';
 import Button from '@/components/button/Button';
 import { useRouter } from 'next/navigation';
 import Loading from '@/components/loading/Loading';
-import { BookClub } from '@/types/bookclubs';
+import { useQuery } from '@tanstack/react-query';
+import { fetchBookClubs } from '@/lib/utils/fetchBookClubs';
 
-function BookClubMainPage({ initialData }: { initialData: BookClub[] }) {
-  const { clubList, isLoading, isFetching, filters, updateFilters } =
-    useBookClubList({
-      initialData,
-    });
+function BookClubMainPage() {
+  const { filters, updateFilters } = useBookClubList();
+  const { data, isLoading, isFetching } = useQuery({
+    queryKey: ['bookClubs', 'list', filters],
+    queryFn: () => fetchBookClubs(filters),
+    staleTime: 1000 * 30,
+  });
 
   const router = useRouter();
-
   const user = useAuthStore((state) => state.user);
-
   const userName = user?.nickname || '북코';
 
   const handleFilterChange = (newFilter: Partial<typeof filters>) => {
@@ -52,7 +53,7 @@ function BookClubMainPage({ initialData }: { initialData: BookClub[] }) {
           <Loading />
         </div>
       ) : (
-        <ClubListSection bookClubs={clubList} />
+        <ClubListSection bookClubs={data} filter={filters} />
       )}
     </>
   );
