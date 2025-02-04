@@ -15,7 +15,7 @@ function BookClubMainPage() {
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ['bookClubs', 'list', filters],
     queryFn: () => fetchBookClubs(filters),
-    staleTime: 1000 * 30,
+    staleTime: 1000 * 60,
   });
 
   const router = useRouter();

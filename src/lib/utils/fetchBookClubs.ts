@@ -1,6 +1,6 @@
 import { BookClubParams } from '@/types/bookclubs';
 
-export async function fetchBookClubs(filters: BookClubParams) {
+export async function fetchBookClubs(filters: BookClubParams, token?: string) {
   try {
     // filters 객체를 URLSearchParams로 변환
     const queryParams = new URLSearchParams(
@@ -15,6 +15,7 @@ export async function fetchBookClubs(filters: BookClubParams) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
       },
     );
