@@ -15,8 +15,9 @@ export const likeOnMutate = async (
   await queryClient.cancelQueries({ queryKey: listQueryKey });
   await queryClient.cancelQueries({ queryKey: detailQueryKey });
 
-  // console.log('🔍 수정된 listQueryKey:', listQueryKey);
-  // console.log('🔍 현재 활성화된 모든 쿼리키:', queryClient.getQueriesData({}));
+  console.log('📌 listQueryKey:', listQueryKey);
+  console.log('📌 detailQueryKey:', detailQueryKey);
+  console.log('📌 현재 캐시된 쿼리들:', queryClient.getQueriesData({}));
 
   const previousBookClubs = queryClient.getQueryData<{ bookClubs: BookClub[] }>(
     listQueryKey,

@@ -17,6 +17,7 @@ import {
   useLikeWithAuthCheck,
   useUnLikeClub,
 } from '@/lib/hooks/index';
+import { useLikeContext } from '@/lib/contexts/LikeContext';
 
 interface HeaderSectionProps {
   clubInfo: BookClub;
@@ -45,6 +46,8 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
   } = useLikeWithAuthCheck();
   const { onConfirmLike } = useLikeClub();
   const { onConfirmUnLike } = useUnLikeClub();
+  const { likedClubs, toggleLike } = useLikeContext();
+  const isLiked = likedClubs?.has(clubInfo.id) ?? clubInfo.isLiked;
 
   const { isLoggedIn, checkLoginStatus, user } = useAuthStore();
 
@@ -70,7 +73,10 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
       onShowAuthPopUp();
       return;
     }
-    if (clubInfo.isLiked) {
+
+    toggleLike(clubInfo.id, !isLiked); // ✅ 전역 상태 업데이트
+
+    if (isLiked) {
       onConfirmUnLike(clubInfo.id);
     } else {
       onConfirmLike(clubInfo.id);
@@ -89,7 +95,7 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
     title: clubInfo.title,
     location: clubInfo.town || '',
     datetime: formatDateForUI(clubInfo.targetDate, 'KOREAN'),
-    isLiked: clubInfo.isLiked,
+    isLiked: isLiked,
     current: clubInfo.memberCount,
     max: clubInfo.memberLimit,
     isPast: isPastDate(clubInfo.targetDate, new Date()), // TODO: new Date() 최적화
