@@ -11,7 +11,6 @@ import { useLikeClub, useLikeWithAuthCheck, useUnLikeClub } from '@/lib/hooks';
 import { useAuthStore } from '@/store/authStore';
 import PopUp from '@/components/pop-up/PopUp';
 import { queryClient } from '@/lib/utils/reactQueryProvider';
-import { useLikeContext } from '@/lib/contexts/LikeContext';
 
 interface ClubListSectionProps {
   bookClubs: BookClub[];
@@ -29,33 +28,21 @@ function ClubListSection({ bookClubs = [], filter }: ClubListSectionProps) {
   const { onConfirmUnLike } = useUnLikeClub(filter);
   const { onConfirmLike } = useLikeClub(filter);
   const { isLoggedIn, checkLoginStatus, user } = useAuthStore();
-  const { likedClubs, toggleLike } = useLikeContext();
 
   useEffect(() => {
     checkLoginStatus();
+    console.log('메인 페이지: ', bookClubs);
   }, [checkLoginStatus]);
 
   const today = useMemo(() => new Date(), []);
 
   // console.log('🔍 ClubListSection 데이터:', bookClubs);
 
-  // ✅ `useState` 사용 대신 `useMemo`를 사용하여 SSR과 CSR의 `isLiked` 상태를 동기화
-  const clientBookClubs = useMemo(() => {
-    // ✅ Hydration 오류 방지: `likedClubs`가 `undefined`일 경우 빈 배열 반환
-    if (likedClubs === undefined) return [];
-    return bookClubs.map((club) => ({
-      ...club,
-      isLiked: likedClubs.has(club.id) ? true : club.isLiked,
-    }));
-  }, [bookClubs, likedClubs]);
-
   const handleLikeClub = (isLiked: boolean, id: number) => {
     if (!isLoggedIn) {
       onShowAuthPopUp();
       return;
     }
-
-    toggleLike(id, !isLiked); // ✅ 전역 상태 업데이트
 
     if (isLiked) {
       onConfirmUnLike(id);
@@ -76,8 +63,8 @@ function ClubListSection({ bookClubs = [], filter }: ClubListSectionProps) {
 
   return (
     <main className="flex w-full min-w-[336px] flex-1 flex-col items-center gap-y-[26px] bg-gray-light-01 px-[20px] pt-[18px] md:px-[24px] lg:px-[102px]">
-      {clientBookClubs?.length > 0 ? (
-        clientBookClubs.map((club) => (
+      {bookClubs?.length > 0 ? (
+        bookClubs.map((club) => (
           <Card
             key={club.id}
             clubId={club.id}

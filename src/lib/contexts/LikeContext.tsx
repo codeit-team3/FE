@@ -15,6 +15,7 @@ interface LikeContextType {
   isLiked: (clubId: number) => boolean;
 }
 
+// 초깃값과 함께 컨텍스트 생성
 const LikeContext = createContext<LikeContextType | undefined>(undefined);
 
 export const LikeProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -25,7 +26,7 @@ export const LikeProvider: React.FC<{ children: React.ReactNode }> = ({
   );
   const { isLoggedIn } = useAuthStore();
 
-  // ✅ localStorage에서 찜한 목록 불러오기 (초기 로드)
+  // // ✅ localStorage에서 찜한 목록 불러오기 (초기 로드)
   useEffect(() => {
     const storedLikes = localStorage.getItem('likedClubs');
     if (storedLikes) {
@@ -34,6 +35,24 @@ export const LikeProvider: React.FC<{ children: React.ReactNode }> = ({
       setLikedClubs(new Set());
     }
   }, []);
+
+  // ✅ `localStorage`에서 찜 목록 다시 불러오기 (새로고침 시)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedLikes = localStorage.getItem('likedClubs');
+      setLikedClubs(storedLikes ? new Set(JSON.parse(storedLikes)) : new Set());
+    }
+  }, []);
+
+  // ✅ likedClubs가 변경될 때마다 `localStorage`에 저장
+  useEffect(() => {
+    if (typeof window !== 'undefined' && likedClubs) {
+      localStorage.setItem(
+        'likedClubs',
+        JSON.stringify(Array.from(likedClubs)),
+      );
+    }
+  }, [likedClubs]);
 
   // ✅ 로그아웃 시 찜한 목록 초기화
   useEffect(() => {
@@ -62,6 +81,7 @@ export const LikeProvider: React.FC<{ children: React.ReactNode }> = ({
     [likedClubs],
   );
 
+  // 컨텍스트 생서자로 데이터 제공
   return (
     <LikeContext.Provider value={{ likedClubs, toggleLike, isLiked }}>
       {children}
@@ -70,6 +90,7 @@ export const LikeProvider: React.FC<{ children: React.ReactNode }> = ({
 };
 
 export const useLikeContext = () => {
+  // 컨텍스트 사용으로 데이터 얻기
   const context = useContext(LikeContext);
   if (context === undefined) {
     throw new Error('useLikeContext must be used within a LikeProvider');

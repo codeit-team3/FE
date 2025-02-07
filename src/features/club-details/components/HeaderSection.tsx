@@ -95,7 +95,7 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
     title: clubInfo.title,
     location: clubInfo.town || '',
     datetime: formatDateForUI(clubInfo.targetDate, 'KOREAN'),
-    isLiked: isLiked,
+    isLiked: clubInfo.isLiked,
     current: clubInfo.memberCount,
     max: clubInfo.memberLimit,
     isPast: isPastDate(clubInfo.targetDate, new Date()), // TODO: new Date() 최적화

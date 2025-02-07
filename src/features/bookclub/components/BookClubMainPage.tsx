@@ -15,6 +15,8 @@ function BookClubMainPage() {
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ['bookClubs', 'list', filters],
     queryFn: () => fetchBookClubs(filters),
+    enabled: false, // ✅ 서버에서 이미 가져왔기 때문에 클라이언트에서 다시 요청하지 않음
+    refetchOnMount: false, // ✅ 마운트 시 다시 데이터를 불러오지 않음
     staleTime: 1000 * 60,
   });
 
