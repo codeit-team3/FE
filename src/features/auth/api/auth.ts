@@ -62,6 +62,7 @@ export const logout = async () => {
     const { setIsLoggedIn, setUser } = useAuthStore.getState();
     setIsLoggedIn(false);
     setUser(null);
+    showToast({ message: '로그아웃 되었습니다 ', type: 'success' });
     return response;
   } catch (error) {
     console.error('로그아웃 에러:', error);
