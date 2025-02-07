@@ -126,9 +126,8 @@ export function useLikeBookClub(filter: BookClubParams) {
     //TODO: 로직 확인 후 변경 필요
     // onSuccess: () => {
     //   queryClient.invalidateQueries({
-    //     queryKey: ['bookClubs', 'list', DEFAULT_FILTERS],
+    //     queryKey: bookClubs._def,
     //   });
-    //   // console.log(bookClubs._def)
     // },
 
     onError: (_error, id, context) => {

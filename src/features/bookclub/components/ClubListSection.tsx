@@ -3,11 +3,14 @@
 import Card from '@/components/card/Card';
 import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { useRouter } from 'next/navigation';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import EmptyState from '@/components/common-layout/EmptyState';
 import { clubStatus } from '@/lib/utils/clubUtils';
 import { BookClub, BookClubParams } from '@/types/bookclubs';
-import { useLikeClub, useUnLikeClub } from '@/lib/hooks';
+import { useLikeClub, useLikeWithAuthCheck, useUnLikeClub } from '@/lib/hooks';
+import { useAuthStore } from '@/store/authStore';
+import PopUp from '@/components/pop-up/PopUp';
+import { queryClient } from '@/lib/utils/reactQueryProvider';
 
 interface ClubListSectionProps {
   bookClubs: BookClub[];
@@ -16,15 +19,46 @@ interface ClubListSectionProps {
 
 function ClubListSection({ bookClubs = [], filter }: ClubListSectionProps) {
   const router = useRouter();
+  const {
+    isLikePopUpOpen,
+    likePopUpLabel,
+    onShowAuthPopUp,
+    onCloseCheckAuthPopup,
+  } = useLikeWithAuthCheck();
   const { onConfirmUnLike } = useUnLikeClub(filter);
   const { onConfirmLike } = useLikeClub(filter);
+  const { isLoggedIn, checkLoginStatus, user } = useAuthStore();
+
+  useEffect(() => {
+    checkLoginStatus();
+    console.log('메인 페이지: ', bookClubs);
+  }, [checkLoginStatus]);
 
   const today = useMemo(() => new Date(), []);
 
   // console.log('🔍 ClubListSection 데이터:', bookClubs);
 
   const handleLikeClub = (isLiked: boolean, id: number) => {
-    isLiked ? onConfirmUnLike(id) : onConfirmLike(id);
+    if (!isLoggedIn) {
+      onShowAuthPopUp();
+      return;
+    }
+
+    if (isLiked) {
+      onConfirmUnLike(id);
+    } else {
+      onConfirmLike(id);
+    }
+
+    queryClient.setQueryData(['bookClubs', 'list', filter], (oldData: any) =>
+      oldData.map((club: BookClub) =>
+        club.id === id ? { ...club, isLiked: !isLiked } : club,
+      ),
+    );
+  };
+
+  const handleLikePopUpConfirm = () => {
+    router.push('/login');
   };
 
   return (
@@ -52,6 +86,7 @@ function ClubListSection({ bookClubs = [], filter }: ClubListSectionProps) {
               club.endDate,
               today,
             )}
+            isHost={club.hostId === user?.id}
             onLikeClick={() => handleLikeClub(club.isLiked, club.id)}
             onClick={() => router.push(`/bookclub/${club.id}`)}
           />
@@ -62,6 +97,14 @@ function ClubListSection({ bookClubs = [], filter }: ClubListSectionProps) {
           subtitle="지금 바로 책 모임을 만들어보세요."
         />
       )}
+      <PopUp
+        isOpen={isLikePopUpOpen}
+        isLarge={true}
+        isTwoButton={true}
+        label={likePopUpLabel}
+        handlePopUpClose={onCloseCheckAuthPopup}
+        handlePopUpConfirm={handleLikePopUpConfirm}
+      />
     </main>
   );
 }

@@ -1,6 +1,6 @@
 import { mockBookClubs } from '@/mocks/mockDatas';
 import { fetchBookClubs } from './fetchBookClubs';
-import { DEFAULT_FILTERS } from '@/lib/constants/filters';
+import { DEFAULT_FILTERS } from '@/constants/filters';
 
 describe('fetchBookClubs', () => {
   beforeEach(() => {

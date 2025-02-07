@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import useBookClubList from '@/features/bookclub/hooks/useFetchBookClubList';
-import { DEFAULT_FILTERS } from '@/lib/constants/filters';
+import { DEFAULT_FILTERS } from '@/constants/filters';
 
 describe('useBookClubList', () => {
   it('초기 필터 상태는 DEFAULT_FILTERS와 동일해야 한다', () => {

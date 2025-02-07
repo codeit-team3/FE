@@ -8,14 +8,16 @@ import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { useAuthStore } from '@/store/authStore';
 import { BookClub } from '@/types/bookclubs';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useJoinClub } from '../hooks';
 import {
   useCancelClub,
   useLeaveClub,
+  useLikeClub,
   useLikeWithAuthCheck,
   useUnLikeClub,
 } from '@/lib/hooks/index';
+import { useLikeContext } from '@/lib/contexts/LikeContext';
 
 interface HeaderSectionProps {
   clubInfo: BookClub;
@@ -23,16 +25,13 @@ interface HeaderSectionProps {
 }
 
 function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isMember, setIsMember] = useState<{
-    label: string;
-    isTwoButton: boolean;
-    handlePopUpConfirm?: () => void;
-  } | null>(null);
-
   const { handleJoin } = useJoinClub();
-  const { popUpState, onCancel, onConfirmCancel, onClosePopUp } =
-    useCancelClub();
+  const {
+    popUpState: cancelPopUpState,
+    onCancel,
+    onConfirmCancel,
+    onClosePopUp: onCloseCancelPopUp,
+  } = useCancelClub();
   const {
     leavePopUpState,
     onCancelParticipation,
@@ -42,10 +41,13 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
   const {
     isLikePopUpOpen,
     likePopUpLabel,
-    onCheckAuthPopUp,
+    onShowAuthPopUp,
     onCloseCheckAuthPopup,
   } = useLikeWithAuthCheck();
+  const { onConfirmLike } = useLikeClub();
   const { onConfirmUnLike } = useUnLikeClub();
+  const { likedClubs, toggleLike } = useLikeContext();
+  const isLiked = likedClubs?.has(clubInfo.id) ?? clubInfo.isLiked;
 
   const { isLoggedIn, checkLoginStatus, user } = useAuthStore();
 
@@ -63,23 +65,22 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
   }, [idAsNumber]);
 
   const handleJoinClick = () => {
-    if (!isLoggedIn) {
-      setIsMember({
-        label: '로그인 후 이용해주세요!',
-        isTwoButton: true,
-        handlePopUpConfirm: () => router.replace('/login'),
-      });
-      setIsOpen(true);
-      return;
-    }
-
-    handleJoin(clubInfo.id);
+    !isLoggedIn ? router.push('/login') : handleJoin(clubInfo.id);
   };
 
   const handleLikeClub = () => {
-    clubInfo.isLiked
-      ? onConfirmUnLike(clubInfo.id)
-      : onCheckAuthPopUp(clubInfo.id);
+    if (!isLoggedIn) {
+      onShowAuthPopUp();
+      return;
+    }
+
+    toggleLike(clubInfo.id, !isLiked); // ✅ 전역 상태 업데이트
+
+    if (isLiked) {
+      onConfirmUnLike(clubInfo.id);
+    } else {
+      onConfirmLike(clubInfo.id);
+    }
   };
 
   const handleLikePopUpConfirm = () => {
@@ -125,17 +126,6 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
   return (
     <header className="flex justify-center py-6">
       <Card {...defaultCardProps} />
-      {isMember && (
-        <PopUp
-          isOpen={isOpen}
-          isTwoButton={isMember.isTwoButton}
-          label={isMember.label}
-          handlePopUpClose={() => {
-            setIsOpen(false);
-          }}
-          handlePopUpConfirm={isMember.handlePopUpConfirm}
-        />
-      )}
       <PopUp
         isOpen={leavePopUpState.isOpen}
         isLarge={true}
@@ -145,11 +135,11 @@ function HeaderSection({ clubInfo, idAsNumber }: HeaderSectionProps) {
         handlePopUpConfirm={onConfirmLeave}
       />
       <PopUp
-        isOpen={popUpState.isOpen}
+        isOpen={cancelPopUpState.isOpen}
         isLarge={true}
         isTwoButton={true}
-        label={popUpState.label}
-        handlePopUpClose={onClosePopUp}
+        label={cancelPopUpState.label}
+        handlePopUpClose={onCloseCancelPopUp}
         handlePopUpConfirm={onConfirmCancel}
       />
       {/* 찜하기 */}
