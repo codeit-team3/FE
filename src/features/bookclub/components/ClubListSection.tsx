@@ -3,11 +3,13 @@
 import Card from '@/components/card/Card';
 import { formatDateForUI, isPastDate } from '@/lib/utils/formatDateForUI';
 import { useRouter } from 'next/navigation';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import EmptyState from '@/components/common-layout/EmptyState';
 import { clubStatus } from '@/lib/utils/clubUtils';
 import { BookClub } from '@/types/bookclubs';
-import { useLikeClub, useUnLikeClub } from '@/lib/hooks';
+import { useLikeClub, useLikeWithAuthCheck, useUnLikeClub } from '@/lib/hooks';
+import { useAuthStore } from '@/store/authStore';
+import PopUp from '@/components/pop-up/PopUp';
 
 interface ClubListSectionProps {
   bookClubs: BookClub[];
@@ -15,13 +17,37 @@ interface ClubListSectionProps {
 
 function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
   const router = useRouter();
+  const {
+    isLikePopUpOpen,
+    likePopUpLabel,
+    onShowAuthPopUp,
+    onCloseCheckAuthPopup,
+  } = useLikeWithAuthCheck();
   const { onConfirmUnLike } = useUnLikeClub();
   const { onConfirmLike } = useLikeClub();
+  const { isLoggedIn, checkLoginStatus, user } = useAuthStore();
+
+  useEffect(() => {
+    checkLoginStatus();
+  }, [checkLoginStatus]);
 
   const today = useMemo(() => new Date(), []);
 
   const handleLikeClub = (isLiked: boolean, id: number) => {
-    isLiked ? onConfirmUnLike(id) : onConfirmLike(id);
+    if (!isLoggedIn) {
+      onShowAuthPopUp();
+      return;
+    }
+
+    if (isLiked) {
+      onConfirmUnLike(id);
+    } else {
+      onConfirmLike(id);
+    }
+  };
+
+  const handleLikePopUpConfirm = () => {
+    router.push('/login');
   };
 
   return (
@@ -49,6 +75,7 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
               club.endDate,
               today,
             )}
+            isHost={club.hostId === user?.id}
             onLikeClick={() => handleLikeClub(club.isLiked, club.id)}
             onClick={() => router.push(`/bookclub/${club.id}`)}
           />
@@ -59,6 +86,14 @@ function ClubListSection({ bookClubs = [] }: ClubListSectionProps) {
           subtitle="지금 바로 책 모임을 만들어보세요."
         />
       )}
+      <PopUp
+        isOpen={isLikePopUpOpen}
+        isLarge={true}
+        isTwoButton={true}
+        label={likePopUpLabel}
+        handlePopUpClose={onCloseCheckAuthPopup}
+        handlePopUpConfirm={handleLikePopUpConfirm}
+      />
     </main>
   );
 }
