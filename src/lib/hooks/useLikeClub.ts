@@ -2,7 +2,7 @@ import { useLikeBookClub } from '@/api/book-club/react-query';
 import { showToast } from '@/components/toast/toast';
 import { TOAST_MESSAGES } from '@/constants/messages/toast';
 import { BookClubParams } from '@/types/bookclubs';
-import { DEFAULT_FILTERS } from '../constants/filters';
+import { DEFAULT_FILTERS } from '@/constants/filters';
 
 export const useLikeClub = (filter?: BookClubParams) => {
   const { mutate: likeClub } = useLikeBookClub(filter || DEFAULT_FILTERS);

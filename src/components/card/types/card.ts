@@ -34,6 +34,7 @@ interface CardImageProps extends ComponentPropsWithoutRef<'div'> {
   alt?: string;
   isLiked?: boolean;
   isPast?: boolean;
+  isHost?: boolean;
   onLikeClick?: () => void;
 }
 

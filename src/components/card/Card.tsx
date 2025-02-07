@@ -7,7 +7,7 @@ import Avatar from '../avatar/Avatar';
 import {
   LocationIcon,
   HostIcon,
-  HeartIcon,
+  // HeartIcon,
   RatingIcon,
   OnlineIcon,
 } from '../../../public/icons';
@@ -52,10 +52,11 @@ function CardBox({ children, className = '', ...props }: CardBoxProps) {
 function CardImage({
   url,
   alt = '모임 이미지',
-  isLiked,
-  onLikeClick,
+  // isLiked,
+  // onLikeClick,
   className,
   isPast,
+  // isHost,
   ...props
 }: CardImageProps) {
   return (
@@ -73,11 +74,11 @@ function CardImage({
         fill
         className={twMerge('object-cover', isPast && 'grayscale')}
       />
-      {isLiked !== undefined && (
+      {/* {isLiked !== undefined && !isHost && (
         <div className="absolute right-5 top-[15px] z-10">
           <HeartIcon isLiked={isLiked} onClick={onLikeClick} />
         </div>
-      )}
+      )} */}
     </div>
   );
 }
@@ -233,6 +234,7 @@ function Card(props: CardProps) {
               alt={imageAlt}
               isLiked={isLiked}
               isPast={isPast}
+              isHost={isHost}
               onLikeClick={onLikeClick}
             />
 

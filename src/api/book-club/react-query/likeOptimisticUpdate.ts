@@ -1,7 +1,7 @@
 import { QueryClient } from '@tanstack/react-query';
 import { BookClub, BookClubParams } from '@/types/bookclubs';
 import { bookClubs } from './queries';
-import { DEFAULT_FILTERS } from '@/lib/constants/filters';
+import { DEFAULT_FILTERS } from '@/constants/filters';
 
 export const likeOnMutate = async (
   queryClient: QueryClient,
@@ -12,22 +12,17 @@ export const likeOnMutate = async (
   const listQueryKey = ['bookClubs', 'list', filter || DEFAULT_FILTERS];
   const detailQueryKey = bookClubs.detail(id).queryKey;
 
+  // 기존 요청을 취소(데이터 충돌 방지)
   await queryClient.cancelQueries({ queryKey: listQueryKey });
   await queryClient.cancelQueries({ queryKey: detailQueryKey });
 
-  // console.log('🔍 수정된 listQueryKey:', listQueryKey);
-  // console.log('🔍 현재 활성화된 모든 쿼리키:', queryClient.getQueriesData({}));
-
+  // 기존 캐시 데이터 저장
   const previousBookClubs = queryClient.getQueryData<{ bookClubs: BookClub[] }>(
     listQueryKey,
   );
   const previousDetail = queryClient.getQueryData<BookClub>(detailQueryKey);
 
-  // if (!previousBookClubs) {
-  //   console.warn('⚠️ 캐시된 데이터가 없습니다. queryKey 확인 필요:', listQueryKey);
-  //   queryClient.invalidateQueries({ queryKey: listQueryKey });
-  // }
-
+  // 캐시 데이터 업데이트
   if (previousBookClubs) {
     queryClient.setQueryData(listQueryKey, (old: any) =>
       old?.map((club: BookClub) =>
@@ -35,11 +30,11 @@ export const likeOnMutate = async (
       ),
     );
   }
-
   if (previousDetail) {
     queryClient.setQueryData(detailQueryKey, { ...previousDetail, isLiked });
   }
 
+  // API 요청이 실패 시 이전 상태로 복구할 수 있도록 기존 데이터를 반환
   return { previousBookClubs, previousDetail };
 };
 
