@@ -2,8 +2,8 @@ import Card from '@/components/card/Card';
 import { useSelectAddress } from '@/features/club-create/hooks';
 import { BookClubForm } from '@/features/club-create/types';
 import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
-import InputField from '../components/InputField';
-import CreateClubFormField from '../components/CreateClubFormField';
+import InputField from '../../components/InputField';
+import CreateClubFormField from '../../components/CreateClubFormField';
 
 interface RadioButtonGroupProps {
   options: { label: string; value: string; description?: string }[];
@@ -114,6 +114,7 @@ function RadioButtonGroup({
                 <InputField
                   register={addressRegister}
                   placeholder="상세 주소를 입력해 주세요"
+                  data-testid="address-input"
                 />
               </CreateClubFormField>
 

@@ -4,15 +4,14 @@ import { usePathname } from 'next/navigation';
 
 export function useGetUserByPath() {
   const pathname = usePathname();
-  const userId = Number(pathname?.split('/')[2]);
+  const userId = pathname?.split('/')[2];
 
-  const { queryKey, queryFn } = users.userInfo(userId);
+  const isValidUserId: boolean = Boolean(userId && !isNaN(Number(userId)));
+
   const { data } = useQuery({
-    queryKey,
-    queryFn,
+    ...users.userInfo(Number(userId)),
+    enabled: isValidUserId,
   });
 
-  const user = data?.data;
-
-  return user;
+  return data?.data;
 }
