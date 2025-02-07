@@ -11,6 +11,7 @@ import {
 import { WriteReviewParams } from '../types';
 import { AxiosError } from 'axios';
 import { likeOnError, likeOnMutate } from './likeOptimisticUpdate';
+import { BookClubParams } from '@/types/bookclubs';
 
 export function useBookClubCreateMutation() {
   const queryClient = useQueryClient();
@@ -113,21 +114,22 @@ export function useCancelBookClub() {
   });
 }
 
-export function useLikeBookClub() {
+export function useLikeBookClub(filter: BookClubParams) {
   const queryClient = useQueryClient();
 
   return useMutation<void, AxiosError<{ message: string }>, number>({
     mutationFn: (id: number) => bookClubLikeAPI.like(id),
 
     onMutate: async (id) => {
-      return likeOnMutate(queryClient, id, true);
+      return likeOnMutate(queryClient, id, true, filter);
     },
     //TODO: 로직 확인 후 변경 필요
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: bookClubs._def,
-      });
-    },
+    // onSuccess: () => {
+    //   queryClient.invalidateQueries({
+    //     queryKey: ['bookClubs', 'list', DEFAULT_FILTERS],
+    //   });
+    //   // console.log(bookClubs._def)
+    // },
 
     onError: (_error, id, context) => {
       if (context) {
@@ -137,21 +139,21 @@ export function useLikeBookClub() {
   });
 }
 
-export function useUnLikeBookClub() {
+export function useUnLikeBookClub(filter: BookClubParams) {
   const queryClient = useQueryClient();
 
   return useMutation<void, AxiosError<{ message: string }>, number>({
     mutationFn: (id: number) => bookClubLikeAPI.unlike(id),
 
     onMutate: async (id) => {
-      return likeOnMutate(queryClient, id, false);
+      return likeOnMutate(queryClient, id, false, filter);
     },
     //TODO: 로직 확인 후 변경 필요
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: bookClubs._def,
-      });
-    },
+    // onSuccess: () => {
+    //   queryClient.invalidateQueries({
+    //     queryKey: bookClubs._def,
+    //   });
+    // },
 
     onError: (_error, id, context) => {
       if (context) {
