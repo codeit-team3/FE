@@ -12,7 +12,6 @@ const config = {
   testEnvironment: 'jsdom',
   // setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   moduleNameMapper: {
-    // 절대 경로 매핑
     '^@/(.*)$': '<rootDir>/src/$1',
   },
 };
