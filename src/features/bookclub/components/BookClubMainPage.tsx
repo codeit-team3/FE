@@ -53,7 +53,9 @@ function BookClubMainPage() {
           <Loading />
         </div>
       ) : (
-        <ClubListSection bookClubs={data} filter={filters} />
+        <div className="pb-12">
+          <ClubListSection bookClubs={data} filter={filters} />
+        </div>
       )}
     </>
   );
