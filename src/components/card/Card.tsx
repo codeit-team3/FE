@@ -234,7 +234,6 @@ function Card(props: CardProps) {
               alt={imageAlt}
               isLiked={isLiked}
               isPast={isPast}
-              isHost={isHost}
               onLikeClick={onLikeClick}
             />
 
