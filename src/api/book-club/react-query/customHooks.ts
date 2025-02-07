@@ -123,6 +123,12 @@ export function useLikeBookClub(filter: BookClubParams) {
     onMutate: async (id) => {
       return likeOnMutate(queryClient, id, true, filter);
     },
+    //TODO: 로직 확인 후 변경 필요
+    // onSuccess: () => {
+    //   queryClient.invalidateQueries({
+    //     queryKey: bookClubs._def,
+    //   });
+    // },
 
     onError: (_error, id, context) => {
       if (context) {

@@ -4,6 +4,7 @@ import { GroupedMessage } from '@/features/chat-room/types/chatBubbleList';
 import { useAuthStore } from '@/store/authStore';
 import { useEffect } from 'react';
 import { mockUser } from '@/mocks/mockDatas';
+import { useRouter } from 'next/navigation';
 
 const AuthDecorator = (Story: React.ComponentType) => {
   useEffect(() => {
@@ -16,10 +17,27 @@ const AuthDecorator = (Story: React.ComponentType) => {
   return <Story />;
 };
 
+const MockNextRouter = (Story: React.ComponentType) => {
+  const mockRouter = {
+    push: () => Promise.resolve(),
+    replace: () => Promise.resolve(),
+    prefetch: () => Promise.resolve(),
+    back: () => Promise.resolve(),
+    forward: () => Promise.resolve(),
+    refresh: () => Promise.resolve(),
+    pathname: '/',
+    query: {},
+  };
+
+  (useRouter as any).mockImplementation(() => mockRouter);
+
+  return <Story />;
+};
+
 const meta: Meta<typeof ChatBubbleList> = {
   title: 'Features/ChatRoom/ChatBubbleList',
   component: ChatBubbleList,
-  decorators: [AuthDecorator],
+  decorators: [AuthDecorator, MockNextRouter],
   parameters: {
     layout: 'centered',
   },
