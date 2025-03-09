@@ -12,19 +12,20 @@ export const likeOnMutate = async (
   const listQueryKey = ['bookClubs', 'list', filter || DEFAULT_FILTERS];
   const detailQueryKey = bookClubs.detail(id).queryKey;
 
+  const cachedData = queryClient.getQueryData(listQueryKey);
+  console.log('캐시된 데이터:', cachedData);
+
   // 기존 요청을 취소(데이터 충돌 방지)
   await queryClient.cancelQueries({ queryKey: listQueryKey });
   await queryClient.cancelQueries({ queryKey: detailQueryKey });
 
   // 기존 캐시 데이터 저장
-  const previousBookClubs = queryClient.getQueryData<{ bookClubs: BookClub[] }>(
-    listQueryKey,
-  );
+  const previousBookClubs = queryClient.getQueryData<BookClub[]>(listQueryKey);
   const previousDetail = queryClient.getQueryData<BookClub>(detailQueryKey);
 
   // 캐시 데이터 업데이트
   if (previousBookClubs) {
-    queryClient.setQueryData(listQueryKey, (old: any) =>
+    queryClient.setQueryData(listQueryKey, (old: BookClub[] | undefined) =>
       old?.map((club: BookClub) =>
         club.id === id ? { ...club, isLiked } : club,
       ),
@@ -42,7 +43,7 @@ export const likeOnError = (
   queryClient: QueryClient,
   id: number,
   context: {
-    previousBookClubs?: { bookClubs: BookClub[] };
+    previousBookClubs?: BookClub[];
     previousDetail?: BookClub;
   },
 ) => {
