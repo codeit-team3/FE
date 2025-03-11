@@ -10,10 +10,12 @@ import Loading from '@/components/loading/Loading';
 import { useQuery } from '@tanstack/react-query';
 import { fetchBookClubs } from '@/lib/utils/fetchBookClubs';
 import { useEffect, useState } from 'react';
+import ErrorHandlingWrapper from '@/components/error/ErrorHandlingWrapper';
+import ErrorFallback from '@/components/error/ErrorFallback';
 
 function BookClubMainPage() {
   const { filters, updateFilters } = useBookClubList();
-  const { data, isLoading, isFetching } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['bookClubs', 'list', filters],
     queryFn: () => fetchBookClubs(filters),
   });
@@ -54,14 +56,20 @@ function BookClubMainPage() {
         }
       />
       <FilterBar filters={filters} handleFilterChange={handleFilterChange} />
-      {isLoading || isFetching || !isHydrated ? (
+
+      {isLoading || !isHydrated ? (
         <div className="flex h-[400px] justify-center">
           <Loading />
         </div>
       ) : (
-        <div className="pb-12">
-          <ClubListSection bookClubs={data} filter={filters} />
-        </div>
+        <ErrorHandlingWrapper
+          fallbackComponent={ErrorFallback}
+          suspenseFallback={<Loading />}
+        >
+          <div className="pb-12">
+            <ClubListSection bookClubs={data} filter={filters} />
+          </div>
+        </ErrorHandlingWrapper>
       )}
     </>
   );
