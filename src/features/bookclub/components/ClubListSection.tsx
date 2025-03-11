@@ -10,7 +10,6 @@ import { BookClub, BookClubParams } from '@/types/bookclubs';
 import { useLikeClub, useLikeWithAuthCheck, useUnLikeClub } from '@/lib/hooks';
 import { useAuthStore } from '@/store/authStore';
 import PopUp from '@/components/pop-up/PopUp';
-import { queryClient } from '@/lib/utils/reactQueryProvider';
 
 interface ClubListSectionProps {
   bookClubs: BookClub[];
@@ -19,6 +18,7 @@ interface ClubListSectionProps {
 
 function ClubListSection({ bookClubs = [], filter }: ClubListSectionProps) {
   const router = useRouter();
+
   const {
     isLikePopUpOpen,
     likePopUpLabel,
@@ -31,12 +31,9 @@ function ClubListSection({ bookClubs = [], filter }: ClubListSectionProps) {
 
   useEffect(() => {
     checkLoginStatus();
-    console.log('메인 페이지: ', bookClubs);
   }, [checkLoginStatus]);
 
   const today = useMemo(() => new Date(), []);
-
-  // console.log('🔍 ClubListSection 데이터:', bookClubs);
 
   const handleLikeClub = (isLiked: boolean, id: number) => {
     if (!isLoggedIn) {
@@ -49,12 +46,6 @@ function ClubListSection({ bookClubs = [], filter }: ClubListSectionProps) {
     } else {
       onConfirmLike(id);
     }
-
-    queryClient.setQueryData(['bookClubs', 'list', filter], (oldData: any) =>
-      oldData.map((club: BookClub) =>
-        club.id === id ? { ...club, isLiked: !isLiked } : club,
-      ),
-    );
   };
 
   const handleLikePopUpConfirm = () => {

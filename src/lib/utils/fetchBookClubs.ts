@@ -17,7 +17,6 @@ export async function fetchBookClubs(filters: BookClubParams, token?: string) {
       },
     });
 
-    console.log('서버 응답:', response.data.bookClubs); // 응답 데이터 확인
     return response.data.bookClubs;
   } catch (error) {
     if (process.env.NODE_ENV === 'development') {
