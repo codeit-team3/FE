@@ -3,10 +3,7 @@ import axios from 'axios';
 
 export async function fetchBookClubs(filters: BookClubParams, token?: string) {
   try {
-    const baseURL =
-      typeof window === 'undefined'
-        ? process.env.NEXT_PUBLIC_API_URL // 서버사이드일 때 전체 URL
-        : ''; // 클라이언트일 때는 상대 경로 사용
+    const baseURL = process.env.NEXT_PUBLIC_API_URL;
 
     const response = await axios.get(`${baseURL}/book-clubs`, {
       params: filters,

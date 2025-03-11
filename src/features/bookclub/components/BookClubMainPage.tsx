@@ -12,12 +12,16 @@ import { fetchBookClubs } from '@/lib/utils/fetchBookClubs';
 import { useEffect, useState } from 'react';
 import ErrorHandlingWrapper from '@/components/error/ErrorHandlingWrapper';
 import ErrorFallback from '@/components/error/ErrorFallback';
+import { getCookie } from '@/features/auth/utils/cookies';
 
 function BookClubMainPage() {
   const { filters, updateFilters } = useBookClubList();
   const { data, isLoading } = useQuery({
     queryKey: ['bookClubs', 'list', filters],
-    queryFn: () => fetchBookClubs(filters),
+    queryFn: () => {
+      const token = getCookie('auth_token');
+      return fetchBookClubs(filters, token || undefined);
+    },
   });
   // console.log('클라이언트 데이터:', data); // 클라이언트의 데이터 확인
 
