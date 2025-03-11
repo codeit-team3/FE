@@ -12,9 +12,6 @@ export const likeOnMutate = async (
   const listQueryKey = ['bookClubs', 'list', filter || DEFAULT_FILTERS];
   const detailQueryKey = bookClubs.detail(id).queryKey;
 
-  const cachedData = queryClient.getQueryData(listQueryKey);
-  console.log('캐시된 데이터:', cachedData);
-
   // 기존 요청을 취소(데이터 충돌 방지)
   await queryClient.cancelQueries({ queryKey: listQueryKey });
   await queryClient.cancelQueries({ queryKey: detailQueryKey });
