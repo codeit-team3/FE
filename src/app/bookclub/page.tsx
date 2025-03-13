@@ -7,8 +7,6 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 import { getServerSideToken } from '@/lib/utils/getServerSideToken';
-import { Suspense } from 'react';
-import Loading from '@/components/loading/Loading';
 
 export default async function Home() {
   const queryClient = new QueryClient();
@@ -20,10 +18,8 @@ export default async function Home() {
   });
 
   return (
-    <Suspense fallback={<Loading />}>
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <BookClubMainPage />
-      </HydrationBoundary>
-    </Suspense>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <BookClubMainPage />
+    </HydrationBoundary>
   );
 }
