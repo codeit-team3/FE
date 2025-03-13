@@ -6,7 +6,6 @@ import { Toast } from '@/components/toast/toast';
 
 import { MSWComponent } from '@/components/MSWComponent';
 import '@/styles/globals.css';
-import { LikeProvider } from '@/lib/contexts/LikeContext';
 
 export const metadata: Metadata = {
   title: 'Bookco',
@@ -26,13 +25,11 @@ export default function RootLayout({
           strategy="beforeInteractive"
         />
         <ReactQueryProviders>
-          <LikeProvider>
-            <HeaderBar />
-            <main className="mx-auto flex w-full max-w-[1200px] flex-1 flex-col bg-white">
-              <Toast />
-              <MSWComponent>{children}</MSWComponent>
-            </main>
-          </LikeProvider>
+          <HeaderBar />
+          <main className="mx-auto flex w-full max-w-[1200px] flex-1 flex-col bg-white">
+            <Toast />
+            <MSWComponent>{children}</MSWComponent>
+          </main>
         </ReactQueryProviders>
       </body>
     </html>

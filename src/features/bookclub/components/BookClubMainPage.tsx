@@ -9,20 +9,30 @@ import { useRouter } from 'next/navigation';
 import Loading from '@/components/loading/Loading';
 import { useQuery } from '@tanstack/react-query';
 import { fetchBookClubs } from '@/lib/utils/fetchBookClubs';
+import { useEffect, useState } from 'react';
+import ErrorHandlingWrapper from '@/components/error/ErrorHandlingWrapper';
+import ErrorFallback from '@/components/error/ErrorFallback';
+import { getCookie } from '@/features/auth/utils/cookies';
 
 function BookClubMainPage() {
   const { filters, updateFilters } = useBookClubList();
-  const { data, isLoading, isFetching } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['bookClubs', 'list', filters],
-    queryFn: () => fetchBookClubs(filters),
-    // enabled: false, // ✅ 서버에서 이미 가져왔기 때문에 클라이언트에서 다시 요청하지 않음
-    // refetchOnMount: false, // ✅ 마운트 시 다시 데이터를 불러오지 않음
-    staleTime: 1000 * 60,
+    queryFn: () => {
+      const token = getCookie('auth_token');
+      return fetchBookClubs(filters, token || undefined);
+    },
   });
+  // console.log('클라이언트 데이터:', data); // 클라이언트의 데이터 확인
 
+  const [isHydrated, setIsHydrated] = useState(false);
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
   const userName = user?.nickname || '북코';
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   const handleFilterChange = (newFilter: Partial<typeof filters>) => {
     updateFilters(newFilter);
@@ -50,14 +60,20 @@ function BookClubMainPage() {
         }
       />
       <FilterBar filters={filters} handleFilterChange={handleFilterChange} />
-      {isLoading || isFetching ? (
+
+      {isLoading || !isHydrated ? (
         <div className="flex h-[400px] justify-center">
           <Loading />
         </div>
       ) : (
-        <div className="pb-12">
-          <ClubListSection bookClubs={data} filter={filters} />
-        </div>
+        <ErrorHandlingWrapper
+          fallbackComponent={ErrorFallback}
+          suspenseFallback={<Loading />}
+        >
+          <div className="pb-12">
+            <ClubListSection bookClubs={data} filter={filters} />
+          </div>
+        </ErrorHandlingWrapper>
       )}
     </>
   );
